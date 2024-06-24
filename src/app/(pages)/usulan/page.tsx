@@ -1,108 +1,53 @@
 "use client"
 
-import '@mantine/core/styles.css';
-import '@mantine/dates/styles.css'; //if using mantine date picker features
-import 'mantine-react-table/styles.css'; //make sure MRT styles were imported in your app root (once)
-import { useMemo } from 'react';
-import {
-  MantineReactTable,
-  useMantineReactTable,
-  type MRT_ColumnDef,
-} from 'mantine-react-table';
+import React, { useState } from 'react';
+import Sidebar from '../../components/Sidebar';
+import Header from '../../components/Header';
+import DaftarProposal from '../../components/usulan/proposal/CreateProposal';
+import DaftarAnggota from '../../components/usulan/ListAnggota';
 
-type Person = {
-  name: {
-    firstName: string;
-    lastName: string;
+const ProposalDetail: React.FC = () => {
+  const [activeTab, setActiveTab] = useState('proposal');
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'proposal':
+        return <DaftarProposal />;
+      case 'anggota':
+        return <DaftarAnggota />;
+      // Tambahkan case lain untuk tab lainnya
+      default:
+        return <DaftarProposal />;
+    }
   };
-  address: string;
-  city: string;
-  state: string;
-};
 
-//nested data is ok, see accessorKeys in ColumnDef below
-const data: Person[] = [
-  {
-    name: {
-      firstName: 'Zachary',
-      lastName: 'Davis',
-    },
-    address: '261 Battle Ford',
-    city: 'Columbus',
-    state: 'Ohio',
-  },
-  {
-    name: {
-      firstName: 'Robert',
-      lastName: 'Smith',
-    },
-    address: '566 Brakus Inlet',
-    city: 'Westerville',
-    state: 'West Virginia',
-  },
-  {
-    name: {
-      firstName: 'Kevin',
-      lastName: 'Yan',
-    },
-    address: '7777 Kuhic Knoll',
-    city: 'South Linda',
-    state: 'West Virginia',
-  },
-  {
-    name: {
-      firstName: 'John',
-      lastName: 'Upton',
-    },
-    address: '722 Emie Stream',
-    city: 'Huntington',
-    state: 'Washington',
-  },
-  {
-    name: {
-      firstName: 'Nathan',
-      lastName: 'Harris',
-    },
-    address: '1 Kuhic Knoll',
-    city: 'Ohiowa',
-    state: 'Nebraska',
-  },
-];
-
-const Example = () => {
-  //should be memoized or stable
-  const columns = useMemo(
-    () => [
-      {
-        accessorKey: 'name.firstName', //access nested data with dot notation
-        header: 'First Name',
-      },
-      {
-        accessorKey: 'name.lastName',
-        header: 'Last Name',
-      },
-      {
-        accessorKey: 'address', //normal accessorKey
-        header: 'Address',
-      },
-      {
-        accessorKey: 'city',
-        header: 'City',
-      },
-      {
-        accessorKey: 'state',
-        header: 'State',
-      },
-    ],
-    [],
+  return (
+    <div className="flex w-screen">
+      <Sidebar role="dosen" />
+      <div className="ml-64 flex-1">
+        <Header />
+        <div className="p-4">
+          <nav className="text-sm text-gray-600 mb-4">
+            Usulan {'>'} Pengmas {'>'} Detail Usulan
+          </nav>
+          <div className="bg-white shadow rounded-lg p-6">
+            <div className="mb-4 flex justify-between items-center border-b">
+              <div className="flex space-x-4">
+                <button className={`px-4 py-2 border-b-2 font-semibold ${activeTab === 'proposal' ? 'border-[#132963] text-[#132963]' : 'text-gray-600'}`} onClick={() => setActiveTab('proposal')}>
+                  Proposal
+                </button>
+                <button className={`px-4 py-2 border-b-2 font-semibold ${activeTab === 'anggota' ? 'border-[#132963] text-[#132963]' : 'text-gray-600'}`} onClick={() => setActiveTab('anggota')}>
+                  Anggota
+                </button>
+                {/* Tambahkan tombol lain untuk tab lainnya */}
+              </div>
+            </div>
+            {renderContent()}
+          </div>
+        </div>
+      </div>
+    </div>
   );
-
-  const table = useMantineReactTable({
-    columns,
-    data,
-  });
-
-  return <MantineReactTable table={table} />;
 };
 
-export default Example;
+export default ProposalDetail;

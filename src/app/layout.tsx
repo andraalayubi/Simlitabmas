@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
+import '@mantine/tiptap/styles.css';
 import 'mantine-react-table/styles.css';
 import { MantineProvider, createTheme } from "@mantine/core";
 

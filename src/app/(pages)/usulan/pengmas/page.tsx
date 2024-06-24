@@ -97,12 +97,6 @@ const Pengmas: React.FC = () => {
   const table = useMantineReactTable({
     columns,
     data: proposals,
-    // mantineTableProps: {
-    //   style: { tableLayout: "fixed", width: "50%" },
-    // },
-    // mantineTableBodyProps: {
-    //   style: { overflowX: "auto", width: "50%" },
-    // },
   });
 
   if (loading) {
@@ -111,13 +105,13 @@ const Pengmas: React.FC = () => {
 
   return (
     <div className="flex w-full">
-      <Sidebar />
+      <Sidebar role="rg"/>
       <div className="ms-64 flex-1">
         <Header />
         <div className="p-4">
           <nav className="text-sm text-gray-600 mb-4">Usulan {">"} Pengmas</nav>
           <div className="bg-white shadow rounded-lg py-6">
-            <div className="mb-4 flex justify-between items-center border-b">
+            <div className="mb-4 mx-4 flex justify-between items-center border-b">
               <div className="flex space-x-4">
                 <button
                   className={`px-4 py-2 border-b-2 font-semibold ${
@@ -140,17 +134,10 @@ const Pengmas: React.FC = () => {
                   Usulan Saya
                 </button>
               </div>
-              <Button className="px-4 py-2 bg-blue-500 text-white rounded-lg">
+              <Button className="px-4 py-2 bg-blue-800 text-white rounded-lg">
                 Buat Usulan
               </Button>
             </div>
-            {/* <div className="mb-4 border-b pb-4">
-              <Input
-                type="text"
-                placeholder="Cari berdasarkan judul proposal"
-                className="w-full px-4 py-2 border rounded-lg"
-              />
-            </div> */}
             <div className="w-full">
               <MantineReactTable table={table} />
             </div>
