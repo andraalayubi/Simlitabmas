@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card, SimpleGrid, Text, Container, Badge } from '@mantine/core';
+import { Card, SimpleGrid, Text, Container } from '@mantine/core';
 import { MantineReactTable, MRT_ColumnDef } from 'mantine-react-table';
 
 interface Proposal {
