@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { usePathname } from 'next/navigation';
-import { AppShell, Burger } from '@mantine/core';
+import { Burger } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import Link from 'next/link';
 
@@ -75,12 +75,11 @@ const Sidebar: React.FC<{ role: string }> = ({ role }) => {
   const sectionTitle = getSectionTitle();
 
   return (
-    <div className={`fixed h-screen bg-white shadow-md p-4 transition-width duration-500 ${opened ? 'w-64' : 'w-16'}`}>
+    <div className={`fixed h-full bg-white shadow-md p-4 transition-width duration-500 ${opened ? 'w-64' : 'w-16'}`}>
       <div className="flex justify-between items-center mb-6">
         <Burger
           opened={opened}
           onClick={toggle}
-          // hiddenFrom="sm"
           size="md"
         />
         {opened && <h1 className="text-2xl font-bold">SIMLITABMAS UNIVERSITAS A</h1>}
@@ -105,16 +104,20 @@ const Sidebar: React.FC<{ role: string }> = ({ role }) => {
           </Link>
         ))}
       </div>
-      <h2 className={`text-base font-semibold mb-2 ${!opened && 'hidden'}`}>{sectionTitle}</h2>
-      <hr className={`border-t-2 border-black mb-2 ${!opened && 'hidden'}`} />
-      {menuItems.slice(3).map((item) => (
-        <Link key={item.name} href={item.path}>
-          <div className={`flex items-center p-2 mb-2 cursor-pointer rounded ${pathname === item.path ? 'bg-blue-800 text-white' : 'text-gray-400 hover:bg-gray-200'}`}>
-            <span className="material-icons mr-2">{item.icon}</span>
-            {opened && item.name}
-          </div>
-        </Link>
-      ))}
+      {role !== 'dosen' &&
+        <>
+          <h2 className={`text-base font-semibold mb-2 ${!opened && 'hidden'}`}>{sectionTitle}</h2>
+          <hr className={`border-t-2 border-black mb-2 ${!opened && 'hidden'}`} />
+          {menuItems.slice(3).map((item) => (
+            <Link key={item.name} href={item.path}>
+              <div className={`flex items-center p-2 mb-2 cursor-pointer rounded ${pathname === item.path ? 'bg-blue-800 text-white' : 'text-gray-400 hover:bg-gray-200'}`}>
+                <span className="material-icons mr-2">{item.icon}</span>
+                {opened && item.name}
+              </div>
+            </Link>
+          ))}
+        </>
+      }
     </div>
   );
 };

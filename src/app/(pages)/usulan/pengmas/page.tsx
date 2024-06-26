@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import Sidebar from "../../../components/Sidebar";
 import Header from "../../../components/Header";
-import { Button, Input } from "@mantine/core";
+import { Button } from "@mantine/core";
 import {
   MantineReactTable,
   useMantineReactTable,
@@ -94,17 +94,12 @@ const Pengmas: React.FC = () => {
     []
   );
 
-  const table = useMantineReactTable({
-    columns,
-    data: proposals,
-  });
-
   if (loading) {
     return <p>Loading...</p>;
   }
 
   return (
-    <div className="flex w-full">
+    <div className="flex w-full overflow-x-scroll">
       <Sidebar role="rg"/>
       <div className="ms-64 flex-1">
         <Header />
@@ -139,7 +134,7 @@ const Pengmas: React.FC = () => {
               </Button>
             </div>
             <div className="w-full">
-              <MantineReactTable table={table} />
+              <MantineReactTable columns={columns} data={proposals}  />
             </div>
           </div>
         </div>
