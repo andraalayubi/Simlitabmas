@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { usePathname } from 'next/navigation';
-import { Burger } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { Burger, useMantineTheme } from '@mantine/core';
 import Link from 'next/link';
 
 interface MenuItem {
@@ -12,9 +11,16 @@ interface MenuItem {
   path: string;
 }
 
-const Sidebar: React.FC<{ role: string }> = ({ role }) => {
+interface SidebarProps {
+  role: string;
+  opened: boolean;
+  toggle: () => void;
+  close: () => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ role, opened, toggle, close }) => {
   const pathname = usePathname();
-  const [opened, { toggle }] = useDisclosure(true);
+  const theme = useMantineTheme();
 
   const adminMenu: MenuItem[] = [
     { name: 'Dashboard', icon: '', path: '/' },
@@ -82,7 +88,7 @@ const Sidebar: React.FC<{ role: string }> = ({ role }) => {
           onClick={toggle}
           size="md"
         />
-        {opened && <h1 className="text-2xl font-bold">SIMLITABMAS UNIVERSITAS A</h1>}
+        {opened && <h1 className="text-2xl font-bold">PERGURUAN TINGGI</h1>}
       </div>
       <div className="mb-4">
         <Link key={menuItems[0].name} href={menuItems[0].path}>
@@ -97,7 +103,7 @@ const Sidebar: React.FC<{ role: string }> = ({ role }) => {
       <div className='mb-4'>
         {menuItems.slice(1, 3).map((item) => (
           <Link key={item.name} href={item.path}>
-            <div className={`flex items-center p-2 mb-2 cursor-pointer rounded ${pathname === item.path ? 'bg-blue-800 text-white' : 'text-gray-400 hover:bg-gray-200'}`}>
+            <div className={`flex items-center p-2 mb-2 cursor-pointer rounded ${pathname.startsWith(item.path) ? 'bg-blue-800 text-white' : 'text-gray-400 hover:bg-gray-200'}`}>
               <span className="material-icons mr-2">{item.icon}</span>
               {opened && item.name}
             </div>

@@ -2,14 +2,13 @@
 
 import { useEffect, useState, useMemo } from "react";
 import axios from "axios";
-import Sidebar from "../../../components/Sidebar";
-import Header from "../../../components/Header";
 import { Button } from "@mantine/core";
 import {
   MantineReactTable,
-  useMantineReactTable,
   MRT_ColumnDef,
 } from "mantine-react-table";
+import MainLayout from "@/app/components/layouts/MainLayout";
+import { useParams } from "next/navigation";
 
 interface Proposal {
   id: number;
@@ -23,6 +22,8 @@ interface Proposal {
 }
 
 const Pengmas: React.FC = () => {
+  const params = useParams();
+  const category = params.category;
   const [navigation, setNavigation] = useState(0);
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [loading, setLoading] = useState(true);
@@ -99,47 +100,41 @@ const Pengmas: React.FC = () => {
   }
 
   return (
-    <div className="flex w-full overflow-x-scroll">
-      <Sidebar role="rg"/>
-      <div className="ms-64 flex-1">
-        <Header />
-        <div className="p-4">
-          <nav className="text-sm text-gray-600 mb-4">Usulan {">"} Pengmas</nav>
-          <div className="bg-white shadow rounded-lg py-6">
-            <div className="mb-4 mx-4 flex justify-between items-center border-b">
-              <div className="flex space-x-4">
-                <button
-                  className={`px-4 py-2 border-b-2 font-semibold ${
-                    navigation == 0
-                      ? "border-[#132963] text-[#132963]"
-                      : "text-gray-600"
-                  }`}
-                  onClick={changeNavigation(0)}
-                >
-                  Usulan
-                </button>
-                <button
-                  className={`px-4 py-2 border-b-2 font-semibold ${
-                    navigation == 1
-                      ? "border-[#132963] text-[#132963]"
-                      : "text-gray-600"
-                  }`}
-                  onClick={changeNavigation(1)}
-                >
-                  Usulan Saya
-                </button>
-              </div>
-              <Button className="px-4 py-2 bg-blue-800 text-white rounded-lg">
-                Buat Usulan
-              </Button>
-            </div>
-            <div className="w-full">
-              <MantineReactTable columns={columns} data={proposals}  />
-            </div>
+    <MainLayout role="dosen">
+      <nav className="text-sm text-gray-600 mb-4">
+        Usulan {category ? `> ${category}` : ''}
+      </nav>
+      <div className="bg-white shadow rounded-lg py-6">
+        <div className="mb-4 mx-4 flex justify-between items-center border-b">
+          <div className="flex space-x-4">
+            <button
+              className={`px-4 py-2 border-b-2 font-semibold ${navigation == 0
+                ? "border-[#132963] text-[#132963]"
+                : "text-gray-600"
+                }`}
+              onClick={changeNavigation(0)}
+            >
+              Usulan
+            </button>
+            <button
+              className={`px-4 py-2 border-b-2 font-semibold ${navigation == 1
+                ? "border-[#132963] text-[#132963]"
+                : "text-gray-600"
+                }`}
+              onClick={changeNavigation(1)}
+            >
+              Usulan Saya
+            </button>
           </div>
+          <Button className="px-4 py-2 bg-blue-800 text-white rounded-lg">
+            Buat Usulan
+          </Button>
+        </div>
+        <div className="w-full">
+          <MantineReactTable columns={columns} data={proposals} />
         </div>
       </div>
-    </div>
+    </MainLayout>
   );
 };
 
