@@ -1,30 +1,104 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DaftarProposal from '../../../../components/usulan/proposal/CreateProposal';
 import DaftarAnggota from '../../../../components/usulan/anggota/ListAnggota';
 import LogbookForm from '@/app/components/usulan/Logbook';
 import Evaluations from '@/app/components/usulan/Evaluations';
 import MainLayout from '@/app/components/layouts/MainLayout';
-import Overview from '@/app/components/overview/Overview';
+import Overview from '@/app/components/usulan/overview/Overview';
+import axios from 'axios';
+import { Loader } from '@mantine/core';
+import LoadingPage from '@/app/components/usulan/LoadingPage';
+
+interface Member {
+  id: number;
+  name: string;
+  role: string;
+  activityCount: string;
+}
+
+interface Proposal {
+  title: string;
+  abstrak: string;
+  latarBelakang: string;
+  tujuan: string;
+}
 
 const ProposalDetail: React.FC = () => {
   const [activeTab, setActiveTab] = useState('proposal');
+  const [members, setMembers] = useState<Member[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [proposal, setProposal] = useState<Proposal>({
+    title: '',
+    abstrak: '',
+    latarBelakang: '',
+    tujuan: '',
+  });
+
+  //Proposal Handler
+  const handleChange = (field: keyof Proposal, value: string) => {
+    setProposal((prevProposal) => ({
+      ...prevProposal,
+      [field]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('api/usulan', proposal);
+      if (response.status === 201) {
+        console.log('Proposal submitted:', response.data);
+      }
+    } catch (error) {
+      console.error('There was an error submitting the proposal!', error);
+    }
+  };
+
+  //Anggota Handler
+  useEffect(() => {
+    const fetchMembers = async () => {
+      try {
+        const response = await axios.get('/api/members');
+        setMembers(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('There was an error fetching the members!', error);
+        setLoading(false);
+      }
+    };
+
+    fetchMembers();
+  }, []);
+
+  const handleAddMember = async (newMember: Omit<Member, 'id' | 'activityCount'>) => {
+    const memberWithId = { ...newMember, id: members.length + 1, activityCount: '0' };
+
+    try {
+      const response = await axios.post('/api/members', memberWithId);
+      if (response.status === 201) {
+        setMembers((prevMembers) => [...prevMembers, memberWithId]);
+      }
+    } catch (error) {
+      console.error('Error adding member:', error);
+    }
+  };
 
   const renderContent = () => {
     switch (activeTab) {
       case 'overview':
-        return <Overview />;
+        return <Overview role={'dosen'} />;
       case 'proposal':
-        return <DaftarProposal />;
+        return <DaftarProposal proposal={proposal} onChange={handleChange} onSubmit={handleSubmit} />;
       case 'anggota':
-        return <DaftarAnggota />;
+        return <DaftarAnggota members={members} onAddMember={handleAddMember} />;
       case 'biaya':
         return <div>biaya</div>;
-      case 'logbook':
-        return <LogbookForm />;
       case 'luaran':
         return <div>Luaran</div>;
+      case 'logbook':
+        return <LogbookForm />;
       case 'dokumen-tambahan':
         return <div>Dokumen Tambahan</div>;
       case 'laporan-akhir':
@@ -32,12 +106,16 @@ const ProposalDetail: React.FC = () => {
       case 'evaluasi':
         return <Evaluations />;
       default:
-        return <DaftarProposal />;
+        return <Overview role={'dosen'} />;
     }
   };
 
+  if (loading) {
+    return <LoadingPage />;
+  }
+
   return (
-    <MainLayout role={'dosen'}>
+    <MainLayout>
       <nav className="text-sm text-gray-600 mb-4">
         Usulan {'>'} Pengmas {'>'} Detail Usulan
       </nav>

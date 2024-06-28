@@ -1,11 +1,10 @@
 "use client"
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Card, SimpleGrid, Text, Container } from '@mantine/core';
+import React from 'react';
+import { Card, SimpleGrid, Text } from '@mantine/core';
 import { MantineReactTable, MRT_ColumnDef } from 'mantine-react-table';
 
-interface Proposal {
+type Usulan = {
     id: number;
     title: string;
     date: string;
@@ -16,26 +15,8 @@ interface Proposal {
     statusClass: string;
 }
 
-const Dashboard: React.FC = () => {
-    const [proposals, setProposals] = useState<Proposal[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchProposals = async () => {
-            try {
-                const response = await axios.get('/api/proposals');
-                setProposals(response.data);
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching proposals:', error);
-                setLoading(false);
-            }
-        };
-
-        fetchProposals();
-    }, []);
-
-    const columns = React.useMemo<MRT_ColumnDef<Proposal>[]>(
+const Dashboard: React.FC<{ usulan: Usulan[] }> = ({ usulan }) => {
+    const columns = React.useMemo<MRT_ColumnDef<Usulan>[]>(
         () => [
             {
                 accessorKey: 'title',
@@ -57,7 +38,7 @@ const Dashboard: React.FC = () => {
                 accessorKey: 'status',
                 header: 'Status',
                 Cell: ({ cell }) => {
-                    const proposal = cell.row.original as Proposal;
+                    const proposal = cell.row.original as Usulan;
                     return (
                         <span className={proposal.statusClass}>{proposal.status}</span>
                     );
@@ -68,7 +49,7 @@ const Dashboard: React.FC = () => {
     );
 
     return (
-        <Container>
+        <div className='w-full'>
             <SimpleGrid cols={3} spacing="lg" mb="lg">
                 <Card shadow="sm" padding="lg">
                     <Text size="xl" fw={700} ta="center">3</Text>
@@ -85,13 +66,9 @@ const Dashboard: React.FC = () => {
             </SimpleGrid>
             <Card shadow="sm" padding="lg">
                 <Text size="lg" fw={500} mb="md">Usulan Terbaru</Text>
-                {loading ? (
-                    <Text>Loading...</Text>
-                ) : (
-                    <MantineReactTable columns={columns} data={proposals} />
-                )}
+                <MantineReactTable columns={columns} data={usulan} />
             </Card>
-        </Container>
+        </div>
     );
 };
 

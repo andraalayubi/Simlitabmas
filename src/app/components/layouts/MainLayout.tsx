@@ -9,11 +9,10 @@ import Header from './Header';
 const theme: MantineThemeOverride = {};
 
 interface MainLayoutProps {
-  role: string;
   children: React.ReactNode;
 }
 
-const MainLayout: React.FC<MainLayoutProps> = ({ role, children }) => {
+const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const [opened, { toggle, close }] = useDisclosure(true);
   const mantineTheme = useMantineTheme();
 
@@ -32,7 +31,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ role, children }) => {
   return (
     <MantineProvider theme={theme}>
       <div className="flex w-full">
-        <Sidebar role={role} opened={opened} toggle={toggle} close={close} />
+        <Sidebar opened={opened} toggle={toggle} close={close} />
         <div className={`transition-all duration-500 ${opened ? 'ml-64' : 'ml-16'} flex-1`}>
           <Header />
           <div className="p-4">

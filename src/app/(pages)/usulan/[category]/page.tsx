@@ -2,15 +2,16 @@
 
 import { useEffect, useState, useMemo } from "react";
 import axios from "axios";
-import { Button } from "@mantine/core";
+import { Button, Loader } from "@mantine/core";
 import {
   MantineReactTable,
   MRT_ColumnDef,
 } from "mantine-react-table";
 import MainLayout from "@/app/components/layouts/MainLayout";
 import { useParams } from "next/navigation";
+import LoadingPage from "@/app/components/usulan/LoadingPage";
 
-interface Proposal {
+interface Usulan {
   id: number;
   title: string;
   date: string;
@@ -25,7 +26,7 @@ const Pengmas: React.FC = () => {
   const params = useParams();
   const category = params.category;
   const [navigation, setNavigation] = useState(0);
-  const [proposals, setProposals] = useState<Proposal[]>([]);
+  const [usulans, setUsulans] = useState<Usulan[]>([]);
   const [loading, setLoading] = useState(true);
 
   const changeNavigation =
@@ -35,28 +36,28 @@ const Pengmas: React.FC = () => {
     };
 
   useEffect(() => {
-    const fetchProposals = async () => {
+    const fetchUsulans = async () => {
       try {
-        const response = await axios.get("/api/proposals");
-        setProposals(response.data);
+        const response = await axios.get("api/usulan");
+        setUsulans(response.data);
         setLoading(false);
       } catch (error) {
-        console.error("There was an error fetching the proposals!", error);
+        console.error("There was an error fetching the Usulans!", error);
         setLoading(false);
       }
     };
 
-    fetchProposals();
+    fetchUsulans();
   }, []);
 
-  const columns = useMemo<MRT_ColumnDef<Proposal>[]>(
+  const columns = useMemo<MRT_ColumnDef<Usulan>[]>(
     () => [
       {
         accessorKey: "title",
         header: "Title",
         size: 300,
         Cell: ({ cell }) => {
-          const proposal = cell.row.original as Proposal;
+          const proposal = cell.row.original as Usulan;
           return (
             <div>
               <div className="font-semibold">{proposal.title}</div>
@@ -85,7 +86,7 @@ const Pengmas: React.FC = () => {
         header: "Status",
         size: 130,
         Cell: ({ cell }) => {
-          const proposal = cell.row.original as Proposal;
+          const proposal = cell.row.original as Usulan;
           return (
             <span className={proposal.statusClass}>{proposal.status}</span>
           );
@@ -96,11 +97,11 @@ const Pengmas: React.FC = () => {
   );
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <LoadingPage />;
   }
 
   return (
-    <MainLayout role="dosen">
+    <MainLayout>
       <nav className="text-sm text-gray-600 mb-4">
         Usulan {category ? `> ${category}` : ''}
       </nav>
@@ -131,7 +132,7 @@ const Pengmas: React.FC = () => {
           </Button>
         </div>
         <div className="w-full">
-          <MantineReactTable columns={columns} data={proposals} />
+          <MantineReactTable columns={columns} data={usulans} />
         </div>
       </div>
     </MainLayout>

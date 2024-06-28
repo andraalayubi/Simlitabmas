@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Collapse, Button, Card, Text } from '@mantine/core';
+import { Collapse, Button, Card, Text, Loader } from '@mantine/core';
 import { MantineReactTable, MRT_ColumnDef } from 'mantine-react-table';
 
 interface EvaluationDetail {
@@ -65,7 +65,9 @@ const Evaluations: React.FC = () => {
   );
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <div className='w-screen h-screen flex items-center justify-center'>
+      <Loader color="blue" />
+    </div>;
   }
 
   return (
@@ -80,7 +82,7 @@ const Evaluations: React.FC = () => {
             </Button>
           </div>
           <Collapse in={expandedId === evaluation.id}>
-            <MantineReactTable columns={columns} data={evaluation.details} enablePagination={false} enableColumnActions={false} enableColumnFilters={false} enableSorting={false}/>
+            <MantineReactTable columns={columns} data={evaluation.details} enablePagination={false} enableColumnActions={false} enableColumnFilters={false} enableSorting={false} />
           </Collapse>
         </Card>
       ))}

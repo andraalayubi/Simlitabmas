@@ -1,27 +1,37 @@
-"use client"
+'use client';
 
 import { RichTextEditor, Link } from '@mantine/tiptap';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import Placeholder from '@tiptap/extension-placeholder';
-import { useState } from 'react';
+import { useEffect } from 'react';
 
-function RichTextEditors({ placeholder }: { placeholder: string }) {
-  const [data, setData] = useState('');
+interface RichTextEditorsProps {
+  placeholder: string;
+  value: string;
+  onChange: (value: string) => void;
+}
 
+function RichTextEditors({ placeholder, value, onChange }: RichTextEditorsProps) {
   const editor = useEditor({
-    extensions: [StarterKit, Link, Underline, Placeholder.configure({ placeholder: placeholder })],
-    content: data,
+    extensions: [StarterKit, Link, Underline, Placeholder.configure({ placeholder })],
+    content: value,
     onUpdate: ({ editor }) => {
-      setData(editor.getHTML());
+      onChange(editor.getHTML());
     },
   });
 
+  useEffect(() => {
+    if (editor && value !== editor.getHTML()) {
+      editor.commands.setContent(value);
+    }
+  }, [value, editor]);
+
   return (
-    <div className='w-full'>
+    <div className="w-full">
       <RichTextEditor editor={editor}>
-        <RichTextEditor.Toolbar sticky >
+        <RichTextEditor.Toolbar sticky>
           <RichTextEditor.ControlsGroup>
             <RichTextEditor.Bold />
             <RichTextEditor.Italic />
@@ -56,4 +66,4 @@ function RichTextEditors({ placeholder }: { placeholder: string }) {
   );
 }
 
-export default RichTextEditors
+export default RichTextEditors;

@@ -1,8 +1,13 @@
 import React from 'react';
 import { Card, Text, Badge, Button } from '@mantine/core';
 import TableOverview from './TableOverview';
+import InputKomentar from './InputKomentar';
 
-const Overview: React.FC = () => {
+interface OverviewProps {
+    role: string;
+};
+
+const Overview: React.FC<OverviewProps> = ({ role }) => {
     return (
         <Card shadow="sm" padding="lg" mb="lg">
             <div className='flex justify-between'>
@@ -20,7 +25,10 @@ const Overview: React.FC = () => {
                 <Text>Studi Program:</Text> <Text>Teknik Informatika</Text>
                 <Text>Komentar:</Text> <Text>Proposal kurang lengkap dan jelas</Text>
             </div>
-            <TableOverview />
+            {role === 'dosen' ?
+                <TableOverview /> :
+                <InputKomentar />
+            }
         </Card>
     );
 };

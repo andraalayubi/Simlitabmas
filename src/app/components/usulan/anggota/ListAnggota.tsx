@@ -1,6 +1,6 @@
-"use client"
+'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from "axios";
 import { Button, Input, InputWrapper, Select, Modal } from '@mantine/core';
 import { MantineReactTable, MRT_ColumnDef } from 'mantine-react-table';
@@ -11,42 +11,23 @@ interface Member {
   role: string;
   activityCount: string;
 }
-const DaftarAnggota: React.FC = () => {
+
+interface DaftarAnggotaProps {
+  members: Member[];
+  onAddMember: (newMember: Omit<Member, 'id' | 'activityCount'>) => void;
+}
+
+const DaftarAnggota: React.FC<DaftarAnggotaProps> = ({ members, onAddMember }) => {
   const [name, setName] = useState('');
   const [role, setRole] = useState('');
   const [opened, setOpened] = useState(false);
-  const [members, setMembers] = useState<Member[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchProposals = async () => {
-      try {
-        const response = await axios.get("/api/members");
-        setMembers(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("There was an error fetching the proposals!", error);
-        setLoading(false);
-      }
-    };
-
-    fetchProposals();
-  }, []);
 
   const handleAddMember = async () => {
-    const newMember = { name, role, activityCount: '0' };
-    
-    try {
-      const response = await axios.post('/api/members', newMember);
-      if (response.status === 201) {
-        setMembers([...members, { ...newMember, id: members.length + 1 }]);
-        setName('');
-        setRole('');
-        setOpened(false);
-      }
-    } catch (error) {
-      console.error('Error adding member:', error);
-    }
+    const newMember = { name, role };
+    onAddMember(newMember);
+    setName('');
+    setRole('');
+    setOpened(false);
   };
 
   const columns = React.useMemo<MRT_ColumnDef<Member>[]>(
@@ -70,10 +51,6 @@ const DaftarAnggota: React.FC = () => {
     ],
     [],
   );
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
 
   return (
     <div className='bg-white shadow sm:rounded-lg py-6'>
@@ -102,7 +79,6 @@ const DaftarAnggota: React.FC = () => {
           onChange={(value) => setRole(value!)}
           placeholder="Pilih role"
           data={[
-            // { value: 'Ketua', label: 'Ketua' },
             { value: 'Dosen', label: 'Dosen' },
             { value: 'Mahasiswa', label: 'Mahasiswa' },
           ]}

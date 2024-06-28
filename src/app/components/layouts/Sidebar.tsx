@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { Burger, useMantineTheme } from '@mantine/core';
 import Link from 'next/link';
@@ -12,40 +12,54 @@ interface MenuItem {
 }
 
 interface SidebarProps {
-  role: string;
   opened: boolean;
   toggle: () => void;
   close: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ role, opened, toggle, close }) => {
+const Sidebar: React.FC<SidebarProps> = ({ opened, toggle, close }) => {
   const pathname = usePathname();
   const theme = useMantineTheme();
+  const [role, setRole] = useState<string | null>(null);
+
+  const saveRoleToLocalStorage = ({role}: any) => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('userRole', role);
+    }
+  };
+  useEffect(() => {
+    saveRoleToLocalStorage({role: 'admin'});
+    const userRole = localStorage.getItem('userRole');
+    if (userRole) {
+      setRole(userRole);
+    }
+  }, []);
 
   const adminMenu: MenuItem[] = [
-    { name: 'Dashboard', icon: '', path: '/' },
+    { name: 'Dashboard', icon: '', path: '/dashboard' },
     { name: 'Penelitian', icon: '', path: '/usulan/penelitian' },
     { name: 'Pengmas', icon: '', path: '/usulan/pengmas' },
     { name: 'Skema', icon: '', path: '/audit/skema' },
+    { name: 'Akun', icon: '', path: '/audit/akun' },
     { name: 'Tahun', icon: '', path: '/audit/tahun' },
   ];
 
   const kaprodiMenu: MenuItem[] = [
-    { name: 'Dashboard', icon: '', path: '/' },
+    { name: 'Dashboard', icon: '', path: '/dashboard' },
     { name: 'Penelitian', icon: '', path: '/usulan/penelitian' },
     { name: 'Pengmas', icon: '', path: '/usulan/pengmas' },
     { name: 'Pengmas', icon: '', path: '/prodi' },
   ];
 
   const rgMenu: MenuItem[] = [
-    { name: 'Dashboard', icon: '', path: '/' },
+    { name: 'Dashboard', icon: '', path: '/dashboard' },
     { name: 'Penelitian', icon: '', path: '/usulan/penelitian' },
     { name: 'Pengmas', icon: '', path: '/usulan/pengmas' },
     { name: 'Penelitian', icon: '', path: '/rg' },
   ];
 
   const dosenMenu: MenuItem[] = [
-    { name: 'Dashboard', icon: '', path: '/' },
+    { name: 'Dashboard', icon: '', path: '/dashboard' },
     { name: 'Penelitian', icon: '', path: '/usulan/penelitian' },
     { name: 'Pengmas', icon: '', path: '/usulan/pengmas' },
   ];
@@ -63,7 +77,7 @@ const Sidebar: React.FC<SidebarProps> = ({ role, opened, toggle, close }) => {
     }
   };
 
-  const menuItems = getMenuItems(role);
+  const menuItems = getMenuItems(role ?? '');
 
   const getSectionTitle = (): string => {
     switch (role) {
