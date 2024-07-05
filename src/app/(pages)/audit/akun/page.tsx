@@ -43,25 +43,34 @@ const AkunPage: React.FC = () => {
       <nav className="text-sm text-gray-600 mb-4">
         Audit {'>'} Akun
       </nav>
-      <Tabs defaultValue="researchGroup" variant="outline" radius="md">
-        <Tabs.List grow>
-          <Tabs.Tab value="researchGroup">Research Group</Tabs.Tab>
-          <Tabs.Tab value="programStudi">Program Studi</Tabs.Tab>
-          <Tabs.Tab value="dosen">Dosen</Tabs.Tab>
-        </Tabs.List>
+      <div className='max-w-screen'>
+        <Tabs color="rgba(19, 41, 99, 1)" defaultValue="researchGroup" radius="md" keepMounted={false}>
+          <Tabs.List grow className="flex flex-wrap">
+            <Tabs.Tab value="researchGroup" className="whitespace-nowrap">Research Group</Tabs.Tab>
+            <Tabs.Tab value="programStudi" className="whitespace-nowrap">Program Studi</Tabs.Tab>
+            <Tabs.Tab value="dosen" className="whitespace-nowrap">Dosen</Tabs.Tab>
+          </Tabs.List>
 
-        <Tabs.Panel value="researchGroup" pt="xs">
-          <DaftarResearchGroup researchGroups={researchGroups} />
-        </Tabs.Panel>
+          <Tabs.Panel value="researchGroup" pt="xs">
+            <div className="overflow-x-auto">
+              <DaftarResearchGroup researchGroups={researchGroups} />
+            </div>
+          </Tabs.Panel>
 
-        <Tabs.Panel value="programStudi" pt="xs">
-          <DaftarProgramStudi programs={programs} />
-        </Tabs.Panel>
+          <Tabs.Panel value="programStudi" pt="xs">
+            <div className="overflow-x-auto">
+              <DaftarProgramStudi programs={programs} />
+            </div>
+          </Tabs.Panel>
 
-        <Tabs.Panel value="dosen" pt="xs">
-          <DaftarDosen dosenList={dosens} />
-        </Tabs.Panel>
-      </Tabs>
+          <Tabs.Panel value="dosen" pt="xs">
+            <div className="overflow-x-auto">
+              <DaftarDosen dosenList={dosens} />
+            </div>
+          </Tabs.Panel>
+        </Tabs>
+      </div>
+
     </MainLayout>
   );
 };

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Button, TextInput, Modal, Group } from '@mantine/core';
 import { MantineReactTable, MRT_ColumnDef } from 'mantine-react-table';
@@ -73,7 +73,7 @@ const DaftarDosen: React.FC<DaftarDosenProps> = ({ dosenList }) => {
   );
 
   return (
-    <div className="bg-white shadow sm:rounded-lg p-6">
+    <div className="bg-white shadow sm:rounded-lg p-6 overflow-x-auto">
       <div className="flex justify-between mb-4">
         <h2 className="text-xl font-semibold">Dosen</h2>
         <Button onClick={() => setOpened(true)}>Tambah Dosen</Button>

@@ -30,8 +30,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   return (
     <MantineProvider theme={theme}>
-      <div className="flex w-full">
-        <Sidebar opened={opened} toggle={toggle} close={close} />
+      <div className="flex w-full min-h-screen">
+        <Sidebar opened={opened} toggle={toggle} />
         <div className={`transition-all duration-500 ${opened ? 'ml-64' : 'ml-16'} flex-1`}>
           <Header />
           <div className="p-4">

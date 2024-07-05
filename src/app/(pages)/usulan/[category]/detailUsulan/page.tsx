@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState } from 'react';
 import DaftarProposal from '../../../../components/usulan/proposal/CreateProposal';
@@ -8,8 +8,9 @@ import Evaluations from '@/app/components/usulan/Evaluations';
 import MainLayout from '@/app/components/layouts/MainLayout';
 import Overview from '@/app/components/usulan/overview/Overview';
 import axios from 'axios';
-import { Loader } from '@mantine/core';
 import LoadingPage from '@/app/components/usulan/LoadingPage';
+import { Tabs } from '@mantine/core';
+import DokumenTambahan from '@/app/components/usulan/DokumenTambahan';
 
 interface Member {
   id: number;
@@ -26,9 +27,18 @@ interface Proposal {
 }
 
 const ProposalDetail: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('proposal');
-  const [members, setMembers] = useState<Member[]>([]);
+  const [activeTab, setActiveTab] = useState<string | null>('overview');
   const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    const userRole = localStorage.getItem('userRole');
+    if (userRole) {
+      setRole(userRole);
+    }
+  }, []);
+
+  const [members, setMembers] = useState<Member[]>([]);
   const [proposal, setProposal] = useState<Proposal>({
     title: '',
     abstrak: '',
@@ -88,7 +98,7 @@ const ProposalDetail: React.FC = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 'overview':
-        return <Overview role={'dosen'} />;
+        return <Overview role={role ?? ''} />;
       case 'proposal':
         return <DaftarProposal proposal={proposal} onChange={handleChange} onSubmit={handleSubmit} />;
       case 'anggota':
@@ -100,13 +110,13 @@ const ProposalDetail: React.FC = () => {
       case 'logbook':
         return <LogbookForm />;
       case 'dokumen-tambahan':
-        return <div>Dokumen Tambahan</div>;
+        return <DokumenTambahan />;
       case 'laporan-akhir':
         return <div>Laporan Akhir</div>;
       case 'evaluasi':
         return <Evaluations />;
       default:
-        return <Overview role={'dosen'} />;
+        return <Overview role={role ?? ''} />;
     }
   };
 
@@ -120,38 +130,47 @@ const ProposalDetail: React.FC = () => {
         Usulan {'>'} Pengmas {'>'} Detail Usulan
       </nav>
       <div className="bg-white shadow rounded-lg py-6">
-        <div className="mb-4 flex justify-between items-center border-b px-6">
-          <div className="flex space-x-4 justify-between w-full">
-            <button className={`py-2 border-b-2 font-semibold ${activeTab === 'overview' ? 'border-[#132963] text-[#132963]' : 'text-gray-600'}`} onClick={() => setActiveTab('overview')}>
-              Overview
-            </button>
-            <button className={`py-2 border-b-2 font-semibold ${activeTab === 'proposal' ? 'border-[#132963] text-[#132963]' : 'text-gray-600'}`} onClick={() => setActiveTab('proposal')}>
-              Proposal
-            </button>
-            <button className={`py-2 border-b-2 font-semibold ${activeTab === 'anggota' ? 'border-[#132963] text-[#132963]' : 'text-gray-600'}`} onClick={() => setActiveTab('anggota')}>
-              Anggota
-            </button>
-            <button className={`py-2 border-b-2 font-semibold ${activeTab === 'biaya' ? 'border-[#132963] text-[#132963]' : 'text-gray-600'}`} onClick={() => setActiveTab('biaya')}>
-              Biaya
-            </button>
-            <button className={`py-2 border-b-2 font-semibold ${activeTab === 'luaran' ? 'border-[#132963] text-[#132963]' : 'text-gray-600'}`} onClick={() => setActiveTab('luaran')}>
-              Luaran
-            </button>
-            <button className={`py-2 border-b-2 font-semibold ${activeTab === 'logbook' ? 'border-[#132963] text-[#132963]' : 'text-gray-600'}`} onClick={() => setActiveTab('logbook')}>
-              Logbook
-            </button>
-            <button className={`py-2 border-b-2 font-semibold ${activeTab === 'dokumen-tambahan' ? 'border-[#132963] text-[#132963]' : 'text-gray-600'}`} onClick={() => setActiveTab('dokumen-tambahan')}>
-              Dokumen Tambahan
-            </button>
-            <button className={`py-2 border-b-2 font-semibold ${activeTab === 'laporan-akhir' ? 'border-[#132963] text-[#132963]' : 'text-gray-600'}`} onClick={() => setActiveTab('laporan-akhir')}>
-              Laporan Akhir
-            </button>
-            <button className={`py-2 border-b-2 font-semibold ${activeTab === 'evaluasi' ? 'border-[#132963] text-[#132963]' : 'text-gray-600'}`} onClick={() => setActiveTab('evaluasi')}>
-              Evaluasi
-            </button>
-          </div>
-        </div>
-        {renderContent()}
+        <Tabs value={activeTab} onChange={setActiveTab}>
+          <Tabs.List grow>
+            <Tabs.Tab value="overview">Overview</Tabs.Tab>
+            <Tabs.Tab value="proposal">Proposal</Tabs.Tab>
+            <Tabs.Tab value="anggota">Anggota</Tabs.Tab>
+            <Tabs.Tab value="biaya">Biaya</Tabs.Tab>
+            <Tabs.Tab value="luaran">Luaran</Tabs.Tab>
+            <Tabs.Tab value="logbook">Logbook</Tabs.Tab>
+            <Tabs.Tab value="dokumen-tambahan">Dokumen Tambahan</Tabs.Tab>
+            <Tabs.Tab value="laporan-akhir">Laporan Akhir</Tabs.Tab>
+            <Tabs.Tab value="evaluasi">Evaluasi</Tabs.Tab>
+          </Tabs.List>
+
+          <Tabs.Panel value="overview">
+            {renderContent()}
+          </Tabs.Panel>
+          <Tabs.Panel value="proposal">
+            {renderContent()}
+          </Tabs.Panel>
+          <Tabs.Panel value="anggota">
+            {renderContent()}
+          </Tabs.Panel>
+          <Tabs.Panel value="biaya">
+            {renderContent()}
+          </Tabs.Panel>
+          <Tabs.Panel value="luaran">
+            {renderContent()}
+          </Tabs.Panel>
+          <Tabs.Panel value="logbook">
+            {renderContent()}
+          </Tabs.Panel>
+          <Tabs.Panel value="dokumen-tambahan">
+            {renderContent()}
+          </Tabs.Panel>
+          <Tabs.Panel value="laporan-akhir">
+            {renderContent()}
+          </Tabs.Panel>
+          <Tabs.Panel value="evaluasi">
+            {renderContent()}
+          </Tabs.Panel>
+        </Tabs>
       </div>
     </MainLayout>
   );

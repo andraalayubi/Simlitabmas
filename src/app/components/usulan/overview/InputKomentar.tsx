@@ -1,18 +1,19 @@
 import React from 'react'
-import { Text, TextInput } from '@mantine/core';
+import { Text, Textarea, Button } from '@mantine/core';
 
 function InputKomentar() {
     return (
         <div>
             <form>
                 <Text>Komentar</Text>
-                <TextInput
-                    label="Komentar"
+                <Textarea
+                    // label="Komentar"
                     placeholder="Masukkan Komentar"
+                    className='mb-6'
                 />
-                <div className='flex'>
-                    <button className='text-white p-4 rounded-lg bg-red-500'>Tolak Usulan</button>
-                    <button className='text-white p-4 rounded-lg bg-green-500'>Terima Usulan</button>
+                <div className='flex space-x-4'>
+                    <Button color="red">Tolak Usulan</Button>
+                    <Button >Terima Usulan</Button>
                 </div>
             </form>
         </div>

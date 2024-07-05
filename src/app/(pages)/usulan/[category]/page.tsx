@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
-import { Button, Loader } from "@mantine/core";
+import { Button, Tabs } from "@mantine/core";
 import {
   MantineReactTable,
   MRT_ColumnDef,
 } from "mantine-react-table";
 import MainLayout from "@/app/components/layouts/MainLayout";
-import { useParams } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import LoadingPage from "@/app/components/usulan/LoadingPage";
 
 interface Usulan {
@@ -24,6 +24,7 @@ interface Usulan {
 
 const Pengmas: React.FC = () => {
   const params = useParams();
+  const router = useRouter();
   const category = params.category;
   const [navigation, setNavigation] = useState(0);
   const [usulans, setUsulans] = useState<Usulan[]>([]);
@@ -38,7 +39,7 @@ const Pengmas: React.FC = () => {
   useEffect(() => {
     const fetchUsulans = async () => {
       try {
-        const response = await axios.get("api/usulan");
+        const response = await axios.get("/api/usulan");
         setUsulans(response.data);
         setLoading(false);
       } catch (error) {
@@ -107,32 +108,25 @@ const Pengmas: React.FC = () => {
       </nav>
       <div className="bg-white shadow rounded-lg py-6">
         <div className="mb-4 mx-4 flex justify-between items-center border-b">
-          <div className="flex space-x-4">
-            <button
-              className={`px-4 py-2 border-b-2 font-semibold ${navigation == 0
-                ? "border-[#132963] text-[#132963]"
-                : "text-gray-600"
-                }`}
-              onClick={changeNavigation(0)}
-            >
-              Usulan
-            </button>
-            <button
-              className={`px-4 py-2 border-b-2 font-semibold ${navigation == 1
-                ? "border-[#132963] text-[#132963]"
-                : "text-gray-600"
-                }`}
-              onClick={changeNavigation(1)}
-            >
-              Usulan Saya
-            </button>
-          </div>
+          <Tabs value={String(navigation)} onChange={(value) => setNavigation(Number(value))}>
+            <Tabs.List>
+              <Tabs.Tab value="0">Usulan</Tabs.Tab>
+              <Tabs.Tab value="1">Usulan Saya</Tabs.Tab>
+            </Tabs.List>
+          </Tabs>
           <Button className="px-4 py-2 bg-blue-800 text-white rounded-lg">
             Buat Usulan
           </Button>
         </div>
         <div className="w-full">
-          <MantineReactTable columns={columns} data={usulans} />
+          <MantineReactTable
+            columns={columns}
+            data={usulans}
+            mantineTableBodyRowProps={({ row }) => ({
+              onClick: () => router.push(`/usulan/pengmas/detailUsulan?id=${row.original.id}`),
+              style: { cursor: 'pointer' },
+            })}
+          />
         </div>
       </div>
     </MainLayout>

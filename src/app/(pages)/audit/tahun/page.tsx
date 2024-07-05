@@ -39,20 +39,26 @@ const TahunPage: React.FC = () => {
       <nav className="text-sm text-gray-600 mb-4">
         Audit {'>'} Tahun
       </nav>
-      <Tabs defaultValue="tahun" variant="outline" radius="md">
-        <Tabs.List grow>
-          <Tabs.Tab value="tahun">Tahun</Tabs.Tab>
-          <Tabs.Tab value="rekapProgress">Rekap Progress</Tabs.Tab>
+      <div className='max-w-screen'>
+      <Tabs color="rgba(19, 41, 99, 1)" defaultValue="tahun" radius="md" keepMounted={false}>
+        <Tabs.List grow className="flex flex-wrap">
+          <Tabs.Tab value="tahun" className="whitespace-nowrap">Tahun</Tabs.Tab>
+          <Tabs.Tab value="rekapProgress" className="whitespace-nowrap">Rekap Progress</Tabs.Tab>
         </Tabs.List>
 
         <Tabs.Panel value="tahun" pt="xs">
-          <DaftarTahun tahunList={tahunList} />
+          <div className="overflow-x-auto">
+            <DaftarTahun tahunList={tahunList} />
+          </div>
         </Tabs.Panel>
 
         <Tabs.Panel value="rekapProgress" pt="xs">
-          <RekapProgress usulans={usulans} />
+          <div className="overflow-x-auto">
+            <RekapProgress usulans={usulans} />
+          </div>
         </Tabs.Panel>
       </Tabs>
+      </div>
     </MainLayout>
   );
 };

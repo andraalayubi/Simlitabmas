@@ -13,15 +13,10 @@ interface ProgramStudi {
 }
 
 const DaftarProgramStudi: React.FC<{ programs: ProgramStudi[] }> = ({ programs }) => {
-    const [search, setSearch] = useState('');
     const [opened, setOpened] = useState(false);
     const [name, setName] = useState('');
     const [head, setHead] = useState('');
     const [serviceCount, setServiceCount] = useState(0);
-
-    const filteredPrograms = programs.filter((program) =>
-        program.name.toLowerCase().includes(search.toLowerCase())
-    );
 
     const handleAddProgramStudi = async () => {
         const newProgram = { id: programs.length + 1, name, head, serviceCount };
@@ -73,7 +68,7 @@ const DaftarProgramStudi: React.FC<{ programs: ProgramStudi[] }> = ({ programs }
             </div>
             <MantineReactTable
                 columns={columns}
-                data={filteredPrograms}
+                data={programs}
                 enablePagination
                 enableColumnActions={false}
             />

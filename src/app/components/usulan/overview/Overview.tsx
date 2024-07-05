@@ -11,7 +11,7 @@ const Overview: React.FC<OverviewProps> = ({ role }) => {
     return (
         <Card shadow="sm" padding="lg" mb="lg">
             <div className='flex justify-between'>
-                <Text size="lg" fw={500} mb="md">Ringkasan Usulan</Text>
+                <h2 className="text-xl font-semibold">Ringkasan Usulan</h2>
                 <div className="flex space-x-4">
                     <Button color="green">Ajukan Usulan</Button>
                     <Button color="blue">Simpan Usulan</Button>

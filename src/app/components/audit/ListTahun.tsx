@@ -15,7 +15,6 @@ interface Tahun {
 }
 
 const DaftarTahun: React.FC<{ tahunList: Tahun[] }> = ({ tahunList }) => {
-    const [search, setSearch] = useState('');
     const [opened, setOpened] = useState(false);
     const [tahun, setTahun] = useState<number | null>(null);
     const [tanggalBuka, setTanggalBuka] = useState('');

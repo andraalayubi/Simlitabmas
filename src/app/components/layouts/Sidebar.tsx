@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { Burger, useMantineTheme } from '@mantine/core';
+import { Burger } from '@mantine/core';
 import Link from 'next/link';
 
 interface MenuItem {
@@ -14,12 +14,10 @@ interface MenuItem {
 interface SidebarProps {
   opened: boolean;
   toggle: () => void;
-  close: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ opened, toggle, close }) => {
+const Sidebar: React.FC<SidebarProps> = ({ opened, toggle }) => {
   const pathname = usePathname();
-  const theme = useMantineTheme();
   const [role, setRole] = useState<string | null>(null);
 
   const saveRoleToLocalStorage = ({role}: any) => {
@@ -96,7 +94,7 @@ const Sidebar: React.FC<SidebarProps> = ({ opened, toggle, close }) => {
 
   return (
     <div className={`fixed h-full bg-white shadow-md p-4 transition-width duration-500 ${opened ? 'w-64' : 'w-16'}`}>
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-6 gap-6">
         <Burger
           opened={opened}
           onClick={toggle}
