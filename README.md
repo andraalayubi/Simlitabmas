@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+keterangan API
 
-## Getting Started
+protected khusus session role admin
+/api/admin/
 
-First, run the development server:
+buat akun
+/api/admin/akun POST --> buat akun dosen dan user role dosen
+/api/admin/akun GET --> list akun dosen
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+/api/admin/akun/[id] GET --> detail akun dosen
+/api/admin/akun/[id] POST --> tambah akun user role ketua rg / kaprodi pada dosen
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# akun admin
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+endpoint logout sebelum login akun berbeda --> /logout
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Dr dosen 1
+role dosen (dosen1@gmail.com, dosen1)
+role admin (admin@gmail.com, admin123)
 
-## Learn More
+Dr dosen 2
+role dosen (dosen2@gmail.com, dosen2)
+role rg (rgrg@gmail.com , rgrgrg1)
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Dr dosen 3
+role dosen (dosen3@gmail.com, dosen3)
+role kp (kap1@gmail.com , kaprodi)

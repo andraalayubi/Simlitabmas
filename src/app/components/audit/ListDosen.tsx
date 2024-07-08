@@ -1,17 +1,9 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import axios from 'axios';
-import { Button, TextInput, Modal, Group } from '@mantine/core';
-import { MantineReactTable, MRT_ColumnDef } from 'mantine-react-table';
-
-interface Dosen {
-  id: number;
-  nama: string;
-  nip: string;
-  rg: string;
-  prodi: string;
-}
+import React, { useState } from "react";
+import axios from "axios";
+import { Button, TextInput, Modal, Group } from "@mantine/core";
+import { MantineReactTable, MRT_ColumnDef } from "mantine-react-table";
 
 interface DaftarDosenProps {
   dosenList: Dosen[];
@@ -19,53 +11,53 @@ interface DaftarDosenProps {
 
 const DaftarDosen: React.FC<DaftarDosenProps> = ({ dosenList }) => {
   const [opened, setOpened] = useState(false);
-  const [nama, setNama] = useState('');
-  const [nip, setNip] = useState('');
-  const [rg, setRg] = useState('');
-  const [prodi, setProdi] = useState('');
+  const [nama, setNama] = useState("");
+  const [nip, setNip] = useState("");
+  const [rg, setRg] = useState("");
+  const [prodi, setProdi] = useState("");
 
   const handleAddDosen = async () => {
     const newDosen = { id: dosenList.length + 1, nama, nip, rg, prodi };
     try {
-      const response = await axios.post('/api/dosen', newDosen);
+      const response = await axios.post("/api/dosen", newDosen);
       if (response.status === 201) {
         // setDosenList([...dosenList, newDosen]);
-        setNama('');
-        setNip('');
-        setRg('');
-        setProdi('');
+        setNama("");
+        setNip("");
+        setRg("");
+        setProdi("");
         setOpened(false);
       }
     } catch (error) {
-      console.error('Error adding dosen:', error);
+      console.error("Error adding dosen:", error);
     }
   };
 
   const columns = React.useMemo<MRT_ColumnDef<Dosen>[]>(
     () => [
       {
-        accessorKey: 'id',
-        header: 'No',
+        accessorKey: "id",
+        header: "No",
         size: 50,
       },
       {
-        accessorKey: 'nama',
-        header: 'Nama Dosen',
+        accessorKey: "nama",
+        header: "Nama Dosen",
         size: 200,
       },
       {
-        accessorKey: 'nip',
-        header: 'NIP',
+        accessorKey: "nip",
+        header: "NIP",
         size: 150,
       },
       {
-        accessorKey: 'rg',
-        header: 'Research Group',
+        accessorKey: "rg",
+        header: "Research Group",
         size: 200,
       },
       {
-        accessorKey: 'prodi',
-        header: 'Program Studi',
+        accessorKey: "prodi",
+        header: "Program Studi",
         size: 200,
       },
     ],
@@ -84,7 +76,11 @@ const DaftarDosen: React.FC<DaftarDosenProps> = ({ dosenList }) => {
         enablePagination
         enableColumnActions={false}
       />
-      <Modal opened={opened} onClose={() => setOpened(false)} title="Tambah Dosen">
+      <Modal
+        opened={opened}
+        onClose={() => setOpened(false)}
+        title="Tambah Dosen"
+      >
         <TextInput
           label="Nama Dosen"
           placeholder="Masukkan nama dosen"
@@ -113,7 +109,7 @@ const DaftarDosen: React.FC<DaftarDosenProps> = ({ dosenList }) => {
           onChange={(e) => setProdi(e.currentTarget.value)}
           required
         />
-        <Group justify='flex-end' mt="md">
+        <Group justify="flex-end" mt="md">
           <Button onClick={handleAddDosen}>Simpan</Button>
         </Group>
       </Modal>

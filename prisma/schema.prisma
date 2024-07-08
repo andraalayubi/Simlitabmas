@@ -1,0 +1,291 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum user_type {
+  ketua_rg
+  kaprodi
+  dosen
+  admin
+}
+
+enum gelar {
+  S1
+  S2
+  S3
+}
+
+enum status_usulan {
+  tersimpan
+  menunggu
+  ditolak
+  diterima
+  aktif
+  selesai
+}
+
+enum tahap_evaluasi {
+  proposal
+  progress
+  akhir
+}
+
+model user {
+  id        Int      @id @default(autoincrement())
+  dosen_id  Int
+  user_type user_type
+  password  String
+  email     String   @unique
+
+  dosen     dosen?   @relation(fields: [dosen_id], references: [id])
+  log       log[]
+}
+
+model dosen {
+  id                 Int      @id @default(autoincrement())
+  nama               String
+  research_group_id  Int?
+  program_studi_id   Int?
+  nidn               String
+  nip                String
+  gelar_tertinggi    gelar
+  is_ketua_rg        Boolean
+  jabatan_id         Int?
+  ttd_url            String
+
+  research_group     research_group?   @relation(fields: [research_group_id], references: [id])
+  program_studi      program_studi?    @relation(fields: [program_studi_id], references: [id])
+  jabatan            jabatan?          @relation(fields: [jabatan_id], references: [id])
+  user               user[]
+
+  usulan             usulan[]
+  anggota_dosen      anggota_dosen[]
+  review             review[]
+}
+
+model research_group {
+  id          Int    @id @default(autoincrement())
+  nama        String
+  deskripsi   String
+
+  dosen       dosen[]
+  usulan      usulan[]
+}
+
+model program_studi {
+  id          Int    @id @default(autoincrement())
+  nama        String
+  deskripsi   String
+
+  dosen       dosen[]
+}
+
+model tahun_penelitian {
+  id          Int      @id @default(autoincrement())
+  tahun       Int
+  waktu_buka  DateTime
+  waktu_tutup DateTime
+
+  usulan      usulan[]
+}
+
+model jabatan {
+  id          Int    @id @default(autoincrement())
+  nama        String
+
+  dosen       dosen[]
+  skema_jabatan skema_jabatan[]
+}
+
+model skema_jabatan {
+  id          Int    @id @default(autoincrement())
+  skema_id    Int
+  jabatan_id  Int
+
+  skema       skema  @relation(fields: [skema_id], references: [id])
+  jabatan     jabatan  @relation(fields: [jabatan_id], references: [id])
+}
+
+model skema {
+  id                 Int      @id @default(autoincrement())
+  nama               String
+  deskripsi          String
+  maks_biaya         BigInt
+  min_gelar_dosen    gelar
+  is_mhs             Boolean
+  is_mitra           Boolean
+  is_regular_dosen   Boolean
+
+  skema_jabatan      skema_jabatan[]
+  usulan             usulan[]
+  kategori_biaya     kategori_biaya[]
+  penilaian          penilaian[]
+  jenis_luaran       jenis_luaran[]
+}
+
+model usulan {
+  id                 Int      @id @default(autoincrement())
+  tahun_id           Int
+  skema_id           Int
+  dosen_id           Int
+  research_group_id  Int
+  status_usulan      status_usulan
+  created_at         DateTime
+  updated_at         DateTime
+  is_active          Boolean
+
+  tahun_penelitian   tahun_penelitian  @relation(fields: [tahun_id], references: [id])
+  skema              skema             @relation(fields: [skema_id], references: [id])
+  dosen              dosen             @relation(fields: [dosen_id], references: [id])
+  research_group     research_group    @relation(fields: [research_group_id], references: [id])
+  proposal           proposal?
+  anggota_dosen      anggota_dosen[]
+  anggota_mahasiswa  anggota_mahasiswa[]
+  anggota_mitra      anggota_mitra[]
+  biaya_usulan       biaya_usulan[]
+  dokumen_pendukung  dokumen_pendukung[]
+  luaran_usulan      luaran_usulan[]
+  review             review[]
+}
+
+model proposal {
+  id                  Int      @id @default(autoincrement())
+  usulan_id           Int      @unique
+  judul_usulan        String
+  abstrak             String
+  keyword             String
+  latar_belakang      String
+  tujuan              String
+  metode              String
+  tinjauan_pustaka    String
+  daftar_pustaka      String
+  updated_at          DateTime
+  created_at          DateTime
+
+  usulan              usulan   @relation(fields: [usulan_id], references: [id])
+}
+
+model anggota_dosen {
+  id        Int    @id @default(autoincrement())
+  usulan_id Int
+  dosen_id  Int
+
+  usulan    usulan  @relation(fields: [usulan_id], references: [id])
+  dosen     dosen   @relation(fields: [dosen_id], references: [id])
+}
+
+model anggota_mahasiswa {
+  id        Int    @id @default(autoincrement())
+  usulan_id Int
+  nama      String
+  nrp       String
+
+  usulan    usulan  @relation(fields: [usulan_id], references: [id])
+}
+
+model anggota_mitra {
+  id        Int    @id @default(autoincrement())
+  usulan_id Int
+  nama      String
+  keterangan String
+
+  usulan    usulan  @relation(fields: [usulan_id], references: [id])
+}
+
+model biaya_usulan {
+  id                Int      @id @default(autoincrement())
+  usulan_id         Int
+  kategori_biaya_id Int
+  jumlah_biaya      Float
+  rincian_biaya     String
+  created_at        DateTime
+
+  usulan            usulan  @relation(fields: [usulan_id], references: [id])
+  kategori_biaya    kategori_biaya  @relation(fields: [kategori_biaya_id], references: [id])
+}
+
+model kategori_biaya {
+  id                Int      @id @default(autoincrement())
+  skema_id          Int
+  nama_kategori     String
+
+  skema             skema  @relation(fields: [skema_id], references: [id])
+  biaya_usulan      biaya_usulan[]
+}
+
+model dokumen_pendukung {
+  id                Int      @id @default(autoincrement())
+  usulan_id         Int
+  nama              String
+  konten            String?
+  file_url          String?
+  created_at        DateTime
+
+  usulan            usulan  @relation(fields: [usulan_id], references: [id])
+}
+
+model luaran_usulan {
+  id                Int      @id @default(autoincrement())
+  usulan_id         Int
+  jenis_luaran_id   Int
+  deskripsi_luaran  String
+  file_url          String
+  created_at        DateTime
+
+  usulan            usulan  @relation(fields: [usulan_id], references: [id])
+  jenis_luaran      jenis_luaran  @relation(fields: [jenis_luaran_id], references: [id])
+}
+
+model log {
+  id        Int    @id @default(autoincrement())
+  tabel     String
+  audit     String
+  created_at DateTime
+  user_id   Int
+
+  user      user   @relation(fields: [user_id], references: [id])
+}
+
+model penilaian {
+  id                 Int      @id @default(autoincrement())
+  skema_id           Int
+  tahap_evaluasi     tahap_evaluasi
+  aspek              String
+
+  skema              skema  @relation(fields: [skema_id], references: [id])
+  review             review[]
+}
+
+model review {
+  id                 Int      @id @default(autoincrement())
+  penilaian_id       Int
+  dosen_id           Int
+  usulan_id          Int
+  catatan            String
+  nilai              Float
+
+  penilaian          penilaian  @relation(fields: [penilaian_id], references: [id])
+  dosen              dosen      @relation(fields: [dosen_id], references: [id])
+  usulan             usulan     @relation(fields: [usulan_id], references: [id])
+}
+
+model jenis_luaran {
+  id                 Int      @id @default(autoincrement())
+  skema_id           Int
+  nama_luaran        String
+
+  skema              skema  @relation(fields: [skema_id], references: [id])
+  luaran_usulan      luaran_usulan[]
+}
