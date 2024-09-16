@@ -4,7 +4,7 @@ import { decrypt, updateSession } from '@/app/lib/session';
 import { cookies } from 'next/headers';
 
 const protectedRoutes = [/^\/dashboard/, /^\/api(?!\/login)/];
-const publicRoutes = [/^\/api\/login$/, /^\/login$/,];
+const publicRoutes = [/^\/api\/login$/, /^\/login$/, /^\/file-page$/];
 
 export default async function middleware(req: NextRequest, ev: NextResponse) {
 
