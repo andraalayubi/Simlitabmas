@@ -1,4 +1,4 @@
-FROM node:20-alpine AS builder
+FROM node:20-alpine
 
 WORKDIR /app
 
@@ -7,11 +7,11 @@ WORKDIR /app
 
 # COPY supervisord.conf /etc/supervisord.conf
 
-COPY package.json ./
-
-COPY . .
+COPY package*.json ./
 
 RUN npm install
+
+COPY . .
 
 RUN npx prisma generate
 
