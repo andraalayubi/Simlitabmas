@@ -9,6 +9,7 @@ services:
     container_name: nextjs_app
     ports:
       - "3000:3000"
+      - "5555:5555"
     environment:
       - DATABASE_URL=${DATABASE_URL}
       - MINIO_ENDPOINT=${MINIO_ENDPOINT}
@@ -17,9 +18,11 @@ services:
     depends_on:
       - db
       - minio
+    networks:
+      - simlitabmas_network
     volumes:
       - .:/app
-    command: yarn dev
+    command: sh -c "npx prisma studio & npm run dev"
 
   # Layanan PostgreSQL
   db:
@@ -31,6 +34,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
+    networks:
+      - simlitabmas_network
     volumes:
       - pgdata:/var/lib/postgresql/data
 
@@ -48,8 +53,14 @@ services:
     ports:
       - "9000:9000"
       - "9001:9001"
+    networks:
+      - simlitabmas_network
     command: server /data --console-address ":9001"
 
 volumes:
   pgdata:
   miniodata:
+
+networks:
+  simlitabmas_network:
+    external: true
