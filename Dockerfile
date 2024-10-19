@@ -9,13 +9,13 @@ WORKDIR /app
 
 COPY package.json ./
 
-RUN npm install
-
 COPY . .
+
+RUN npm install
 
 RUN npx prisma generate
 
-RUN npx prisma migrate deploy
+# RUN npx prisma migrate deploy
 
 # RUN npm run build
 
