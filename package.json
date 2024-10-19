@@ -24,6 +24,7 @@
     "@mantine/tiptap": "^7.6.1",
     "@mantinex/mantine-logo": "^1.0.1",
     "@prisma/client": "^5.19.1",
+    "@prisma/extension-accelerate": "^1.2.1",
     "@tabler/icons-react": "^2.47.0",
     "@tiptap/extension-highlight": "^2.2.4",
     "@tiptap/extension-link": "^2.2.4",
@@ -44,17 +45,19 @@
     "json-server": "^1.0.0-beta.2",
     "mantine-react-table": "^2.0.0-beta.0",
     "minio": "^8.0.1",
-    "next": "14.2.4",
+    "next": "^14.2.13",
+    "next-auth": "^4.24.8",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.0.1",
     "recharts": "^2.12.2",
     "sharp": "^0.33.5",
     "tabler": "^1.0.0-alpha.8",
-    "tiptap": "^1.32.2",
+    "tiptap": "^0.15.0",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
+    "@edgedb/generate": "^0.5.6",
     "@types/bcrypt": "^5.0.2",
     "@types/formidable": "^3.4.5",
     "@types/node": "^20",
@@ -67,6 +70,7 @@
     "postcss-preset-mantine": "^1.15.0",
     "postcss-simple-vars": "^7.0.1",
     "prisma": "^5.16.1",
+    "prisma-generator-typescript-interfaces": "^1.5.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

@@ -5,13 +5,17 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["typedSql"]
+}
+
+generator typescriptInterfaces {
+  provider = "prisma-generator-typescript-interfaces"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 enum user_type {
@@ -21,13 +25,13 @@ enum user_type {
   admin
 }
 
-enum gelar {
-  S1
-  S2
-  S3
+enum config_type {
+  system
+  user
+  proposal
 }
 
-enum status_usulan {
+enum proposal_suggestion_status {
   tersimpan
   menunggu
   ditolak
@@ -36,256 +40,445 @@ enum status_usulan {
   selesai
 }
 
-enum tahap_evaluasi {
+enum degree {
+  S1
+  S2
+  S3
+}
+
+enum evaluation_phase {
   proposal
-  progress
-  akhir
+  progress_1
+  progress_2
+  progress_3
+  final
+}
+
+model config {
+  id          Int          @id @default(autoincrement())
+  name        String?
+  value       Json?
+  file        String?
+  default     Boolean?
+  config_type config_type?
+
+  @@map("configs")
 }
 
 model user {
-  id        Int      @id @default(autoincrement())
-  dosen_id  Int
-  user_type user_type
-  password  String
-  email     String   @unique
+  id        Int        @id @default(autoincrement())
+  name      String?
+  user_type user_type?
+  password  String?
+  username  String?
+  email     String?    @unique
 
-  dosen     dosen?   @relation(fields: [dosen_id], references: [id])
-  log       log[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  log           log[]
+  user_profile  user_profile?
+  lecturer      lecturer[]
+  refresh_token refresh_token?
+
+  @@map("users")
 }
 
-model dosen {
-  id                 Int      @id @default(autoincrement())
-  nama               String
-  research_group_id  Int?
-  program_studi_id   Int?
-  nidn               String
-  nip                String
-  gelar_tertinggi    gelar
-  is_ketua_rg        Boolean
-  jabatan_id         Int?
-  ttd_url            String
+model refresh_token {
+  id      Int    @id @default(autoincrement())
+  token   String
+  user_id Int    @unique
 
-  research_group     research_group?   @relation(fields: [research_group_id], references: [id])
-  program_studi      program_studi?    @relation(fields: [program_studi_id], references: [id])
-  jabatan            jabatan?          @relation(fields: [jabatan_id], references: [id])
-  user               user[]
+  user user? @relation(fields: [user_id], references: [id])
 
-  usulan             usulan[]
-  anggota_dosen      anggota_dosen[]
-  review             review[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  @@map("refresh_tokens")
+}
+
+model user_profile {
+  id          Int     @id @default(autoincrement())
+  user_id     Int     @unique
+  lecturer_id Int     @unique
+  bio         String?
+  gender      String?
+  profile_pic String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user     user?     @relation(fields: [user_id], references: [id])
+  lecturer lecturer? @relation(fields: [lecturer_id], references: [id])
+
+  @@map("user_profiles")
+}
+
+model lecturer {
+  id                Int      @id @default(autoincrement())
+  name              String
+  research_group_id Int?
+  department_id     Int?
+  nidn              String?
+  nip               String?
+  degree            Json?
+  is_ketua_rg       Boolean?
+  position_id       Int?
+  signature_url     String?
+  user_id           Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  research_group research_group? @relation(fields: [research_group_id], references: [id])
+  department     department?     @relation(fields: [department_id], references: [id])
+  position       position?       @relation(fields: [position_id], references: [id])
+  user           user?           @relation(fields: [user_id], references: [id])
+
+  proposal_suggestion proposal_suggestion[]
+  lecturer_member     lecturer_member[]
+  review              review[]
+  user_profile        user_profile?
+
+  @@map("lecturers")
 }
 
 model research_group {
-  id          Int    @id @default(autoincrement())
-  nama        String
-  deskripsi   String
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
 
-  dosen       dosen[]
-  usulan      usulan[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  lecturer            lecturer[]
+  proposal_suggestion proposal_suggestion[]
+
+  @@map("research_groups")
 }
 
-model program_studi {
-  id          Int    @id @default(autoincrement())
-  nama        String
-  deskripsi   String
+model department {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
 
-  dosen       dosen[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  lecturer lecturer[]
+
+  @@map("departments")
 }
 
-model tahun_penelitian {
+model year_research {
   id          Int      @id @default(autoincrement())
-  tahun       Int
-  waktu_buka  DateTime
-  waktu_tutup DateTime
+  year        Int
+  open_date   DateTime
+  closed_date DateTime
 
-  usulan      usulan[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  proposal_suggestion proposal_suggestion[]
+
+  @@map("year_researches")
 }
 
-model jabatan {
-  id          Int    @id @default(autoincrement())
-  nama        String
+model position {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
 
-  dosen       dosen[]
-  skema_jabatan skema_jabatan[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  lecturer        lecturer[]
+  position_schema position_schema[]
+
+  @@map("postions")
 }
 
-model skema_jabatan {
-  id          Int    @id @default(autoincrement())
-  skema_id    Int
-  jabatan_id  Int
+model position_schema {
+  id          Int @id @default(autoincrement())
+  schema_id   Int
+  position_id Int
 
-  skema       skema  @relation(fields: [skema_id], references: [id])
-  jabatan     jabatan  @relation(fields: [jabatan_id], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  schema   schema?   @relation(fields: [schema_id], references: [id])
+  position position? @relation(fields: [position_id], references: [id])
+
+  @@map("position_schemas")
 }
 
-model skema {
-  id                 Int      @id @default(autoincrement())
-  nama               String
-  deskripsi          String
-  maks_biaya         BigInt
-  min_gelar_dosen    gelar
-  is_mhs             Boolean
-  is_mitra           Boolean
-  is_regular_dosen   Boolean
+model schema {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  max_cost    BigInt?
+  min_degree  degree?
+  is_student  Boolean?
+  is_partner  Boolean?
+  is_lecturer Boolean?
 
-  skema_jabatan      skema_jabatan[]
-  usulan             usulan[]
-  kategori_biaya     kategori_biaya[]
-  penilaian          penilaian[]
-  jenis_luaran       jenis_luaran[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  position_schema            position_schema[]
+  proposal_suggestion        proposal_suggestion[]
+  cost_category              cost_category[]
+  evaluation                 evaluation[]
+  external_document_category external_document_category[]
+
+  @@map("schemas")
 }
 
-model usulan {
-  id                 Int      @id @default(autoincrement())
-  tahun_id           Int
-  skema_id           Int
-  dosen_id           Int
-  research_group_id  Int
-  status_usulan      status_usulan
-  created_at         DateTime
-  updated_at         DateTime
-  is_active          Boolean
+model proposal_suggestion {
+  id                Int                         @id @default(autoincrement())
+  year_research_id  Int?
+  schema_id         Int?
+  lecturer_id       Int?
+  research_group_id Int?
+  status            proposal_suggestion_status?
+  is_active         Boolean?
 
-  tahun_penelitian   tahun_penelitian  @relation(fields: [tahun_id], references: [id])
-  skema              skema             @relation(fields: [skema_id], references: [id])
-  dosen              dosen             @relation(fields: [dosen_id], references: [id])
-  research_group     research_group    @relation(fields: [research_group_id], references: [id])
-  proposal           proposal?
-  anggota_dosen      anggota_dosen[]
-  anggota_mahasiswa  anggota_mahasiswa[]
-  anggota_mitra      anggota_mitra[]
-  biaya_usulan       biaya_usulan[]
-  dokumen_pendukung  dokumen_pendukung[]
-  luaran_usulan      luaran_usulan[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  year_research  year_research?  @relation(fields: [year_research_id], references: [id])
+  schema         schema?         @relation(fields: [schema_id], references: [id])
+  lecturer       lecturer?       @relation(fields: [lecturer_id], references: [id])
+  research_group research_group? @relation(fields: [research_group_id], references: [id])
+
+  lecturer_member    lecturer_member[]
+  student_member     student_member[]
+  vendor_member      vendor_member[]
+  suggestion_cost    suggestion_cost[]
+  additonal_document additional_document[]
+  external_document  external_document[]
   review             review[]
+  proposal           proposal?
+
+  @@map("proposal_suggestions")
 }
 
 model proposal {
-  id                  Int      @id @default(autoincrement())
-  usulan_id           Int      @unique
-  judul_usulan        String
-  abstrak             String
-  keyword             String
-  latar_belakang      String
-  tujuan              String
-  metode              String
-  tinjauan_pustaka    String
-  daftar_pustaka      String
-  updated_at          DateTime
-  created_at          DateTime
+  id                     Int    @id @default(autoincrement())
+  proposal_suggestion_id Int    @unique
+  name                   String
+  title                  String
+  abstract               Json?
+  keyword                Json?
+  background             Json?
+  purpose                Json?
+  method                 Json?
+  literature_review      Json?
+  bibliography           Json?
 
-  usulan              usulan   @relation(fields: [usulan_id], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  suggestion proposal_suggestion @relation(fields: [proposal_suggestion_id], references: [id])
+
+  @@map("proposals")
 }
 
-model anggota_dosen {
+model lecturer_member {
+  id                     Int      @id @default(autoincrement())
+  proposal_suggestion_id Int
+  lecturer_id            Int
+  name                   String
+  research_group_id      Int?
+  department_id          Int?
+  nip                    String?
+  degree                 Json?
+  is_ketua_rg            Boolean?
+  position_id            Int?
+  signature_url          String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  proposal_suggestion proposal_suggestion @relation(fields: [proposal_suggestion_id], references: [id])
+  lecturer            lecturer            @relation(fields: [lecturer_id], references: [id])
+
+  @@map("lecturer_members")
+}
+
+model student_member {
+  id                     Int    @id @default(autoincrement())
+  proposal_suggestion_id Int
+  name                   String
+  nrp                    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  proposal_suggestion proposal_suggestion @relation(fields: [proposal_suggestion_id], references: [id])
+
+  @@map("student_members")
+}
+
+model vendor_member {
+  id                     Int     @id @default(autoincrement())
+  proposal_suggestion_id Int
+  name                   String
+  description            String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  proposal_suggestion proposal_suggestion @relation(fields: [proposal_suggestion_id], references: [id])
+
+  @@map("vendor_members")
+}
+
+model suggestion_cost {
+  id                     Int     @id @default(autoincrement())
+  name                   String
+  proposal_suggestion_id Int
+  cost_category_id       Int
+  total                  Float?
+  description            String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  proposal_suggestion proposal_suggestion @relation(fields: [proposal_suggestion_id], references: [id])
+  cost_category       cost_category       @relation(fields: [cost_category_id], references: [id])
+
+  @@map("suggestion_costs")
+}
+
+model cost_category {
   id        Int    @id @default(autoincrement())
-  usulan_id Int
-  dosen_id  Int
+  schema_id Int
+  name      String
 
-  usulan    usulan  @relation(fields: [usulan_id], references: [id])
-  dosen     dosen   @relation(fields: [dosen_id], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  schema          schema            @relation(fields: [schema_id], references: [id])
+  suggestion_cost suggestion_cost[]
+
+  @@map("cost_categories")
 }
 
-model anggota_mahasiswa {
-  id        Int    @id @default(autoincrement())
-  usulan_id Int
-  nama      String
-  nrp       String
+model additional_document {
+  id                     Int     @id @default(autoincrement())
+  proposal_suggestion_id Int
+  name                   String
+  content                String?
+  file_url               String?
 
-  usulan    usulan  @relation(fields: [usulan_id], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  proposal_suggestion proposal_suggestion @relation(fields: [proposal_suggestion_id], references: [id])
+
+  @@map("additional_documents")
 }
 
-model anggota_mitra {
-  id        Int    @id @default(autoincrement())
-  usulan_id Int
-  nama      String
-  keterangan String
+model external_document {
+  id                            Int     @id @default(autoincrement())
+  name                          String
+  proposal_suggestion_id        Int
+  external_document_category_id Int
+  description                   String?
+  file_url                      String?
 
-  usulan    usulan  @relation(fields: [usulan_id], references: [id])
-}
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
 
-model biaya_usulan {
-  id                Int      @id @default(autoincrement())
-  usulan_id         Int
-  kategori_biaya_id Int
-  jumlah_biaya      Float
-  rincian_biaya     String
-  created_at        DateTime
+  proposal_suggestion        proposal_suggestion        @relation(fields: [proposal_suggestion_id], references: [id])
+  external_document_category external_document_category @relation(fields: [external_document_category_id], references: [id])
 
-  usulan            usulan  @relation(fields: [usulan_id], references: [id])
-  kategori_biaya    kategori_biaya  @relation(fields: [kategori_biaya_id], references: [id])
-}
-
-model kategori_biaya {
-  id                Int      @id @default(autoincrement())
-  skema_id          Int
-  nama_kategori     String
-
-  skema             skema  @relation(fields: [skema_id], references: [id])
-  biaya_usulan      biaya_usulan[]
-}
-
-model dokumen_pendukung {
-  id                Int      @id @default(autoincrement())
-  usulan_id         Int
-  nama              String
-  konten            String?
-  file_url          String?
-  created_at        DateTime
-
-  usulan            usulan  @relation(fields: [usulan_id], references: [id])
-}
-
-model luaran_usulan {
-  id                Int      @id @default(autoincrement())
-  usulan_id         Int
-  jenis_luaran_id   Int
-  deskripsi_luaran  String
-  file_url          String
-  created_at        DateTime
-
-  usulan            usulan  @relation(fields: [usulan_id], references: [id])
-  jenis_luaran      jenis_luaran  @relation(fields: [jenis_luaran_id], references: [id])
+  @@map("external_documents")
 }
 
 model log {
-  id        Int    @id @default(autoincrement())
-  tabel     String
-  audit     String
-  created_at DateTime
-  user_id   Int
+  id      Int     @id @default(autoincrement())
+  table   String
+  audit   String?
+  user_id Int?
 
-  user      user   @relation(fields: [user_id], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  user user? @relation(fields: [user_id], references: [id])
+
+  @@map("logs")
 }
 
-model penilaian {
-  id                 Int      @id @default(autoincrement())
-  skema_id           Int
-  tahap_evaluasi     tahap_evaluasi
-  aspek              String
+model evaluation {
+  id               Int               @id @default(autoincrement())
+  name             String
+  schema_id        Int
+  evaluation_phase evaluation_phase?
+  score_weight     Int?
 
-  skema              skema  @relation(fields: [skema_id], references: [id])
-  review             review[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  schema schema   @relation(fields: [schema_id], references: [id])
+  review review[]
+
+  @@map("evaluations")
 }
 
 model review {
-  id                 Int      @id @default(autoincrement())
-  penilaian_id       Int
-  dosen_id           Int
-  usulan_id          Int
-  catatan            String
-  nilai              Float
+  id                     Int     @id @default(autoincrement())
+  evaluation_id          Int
+  lecturer_id            Int
+  proposal_suggestion_id Int
+  note                   String?
+  score                  Float?
+  status                 String?
 
-  penilaian          penilaian  @relation(fields: [penilaian_id], references: [id])
-  dosen              dosen      @relation(fields: [dosen_id], references: [id])
-  usulan             usulan     @relation(fields: [usulan_id], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  evaluation          evaluation          @relation(fields: [evaluation_id], references: [id])
+  lecturer            lecturer            @relation(fields: [lecturer_id], references: [id])
+  proposal_suggestion proposal_suggestion @relation(fields: [proposal_suggestion_id], references: [id])
+
+  @@map("reviews")
 }
 
-model jenis_luaran {
-  id                 Int      @id @default(autoincrement())
-  skema_id           Int
-  nama_luaran        String
+model external_document_category {
+  id          Int     @id @default(autoincrement())
+  schema_id   Int
+  name        String
+  description String?
 
-  skema              skema  @relation(fields: [skema_id], references: [id])
-  luaran_usulan      luaran_usulan[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  schema            schema              @relation(fields: [schema_id], references: [id])
+  external_document external_document[]
+
+  @@map("external_document_categories")
 }
