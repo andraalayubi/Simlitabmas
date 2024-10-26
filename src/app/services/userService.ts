@@ -2,7 +2,6 @@
 import prisma from '../client/prisma'
 import { user } from '../../../prisma/interfaces';
 
-
 export const getFilteredUsers = async (filters: Partial<user>): Promise<user[]> => {
     const users = await prisma.user.findMany({
         where: {

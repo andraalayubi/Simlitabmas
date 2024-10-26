@@ -7,12 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest, res: NextResponse) {
 
     try {
-        const dosen = await prisma.dosen.findMany({
-            include: {
-                research_group: true,
-                program_studi: true,
-            }
-        });
+        const dosen = await prisma.lecturer.findMany({});
 
 
         return NextResponse.json({
