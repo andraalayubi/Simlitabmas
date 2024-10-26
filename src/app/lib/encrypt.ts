@@ -5,7 +5,7 @@ const secretKey = process.env.SESSION_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)
 
 interface Payload extends JWTPayload {
-    userId: string;
+    user_id: string;
     expiresAt: Date;
     user_type: UserType;
     gelar: Gelar;

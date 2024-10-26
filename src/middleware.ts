@@ -3,34 +3,46 @@ import { NextResponse } from 'next/server';
 import { decrypt, updateSession } from '@/app/lib/session';
 import { cookies } from 'next/headers';
 
-const protectedRoutes = [/^\/dashboard/, /^\/api(?!\/login)/];
+const protectedRoutes = [
+    { path: /^\/dashboard/, roles: ['admin', 'dosen', 'user'] },
+    { path: /^\/admin/, roles: ['admin'] },
+    { path: /^\/dashboard\/lecturer/, roles: ['admin', 'dosen'] }
+];
 const publicRoutes = [/^\/api\/login$/, /^\/login$/, /^\/file-page$/];
 
 export default async function middleware(req: NextRequest, ev: NextResponse) {
 
-    const rawPath = req.nextUrl.pathname;
-    const isProtectedRoute = protectedRoutes.some((route) => route.test(rawPath));
-    const isPublicRoute = publicRoutes.some((route) => route.test(rawPath));
+    const cookie = req.cookies.get('session')?.value;
+    const path = req.nextUrl.pathname
 
-    const cookie = cookies().get('session')?.value;
+    const isProtectedRoute = protectedRoutes.find((route) => route.path.test(path));
+    const isPublicRoute = publicRoutes.some((route) => route.test(path));
+
+    console.log("path ", path)
+    console.log("isProtectedRoute ", isProtectedRoute)
+    console.log("isPublicRoute ", isPublicRoute)
+
+    // const cookie = cookies().get('session')?.value;
     const session = await decrypt(cookie);
+    console.log("session ", session);
 
-    console.log('Request:', rawPath);
-
-    // jika protected 
     if (isProtectedRoute) {
-        console.log("protected route")
-        if ((typeof session === 'undefined')) {
-            return NextResponse.redirect(new URL('/login', req.nextUrl.origin));
+        if (!session || !session.user_type) {
+            return NextResponse.redirect(new URL('/login', req.nextUrl));
+
+        } else if (!isProtectedRoute.roles.includes(session.user_type.toString())) {
+            return NextResponse.redirect(new URL('/', req.nextUrl));
+
         } else {
-            // jika terdapat cookie pada local storage
-            // updateSession();
+            // If user has the correct role, update session and proceed
+            updateSession();
+            return NextResponse.next();
         }
     }
 
     // jika sudah login dan akses public
     if (isPublicRoute &&
-        session?.userId && !rawPath.startsWith('/dashboard')) {
+        session?.userId && !path.startsWith('/dashboard')) {
         // updateSession();
         return NextResponse.redirect(new URL('/', req.url));
     }
@@ -38,13 +50,14 @@ export default async function middleware(req: NextRequest, ev: NextResponse) {
     return NextResponse.next();
 }
 
-// Routes Middleware should not run on
-export const config = {
 
+export const config = {
+    // middleware only used to detect this reqeust
     matcher: [
         '/dashboard/:path*',
         '/api/admin/:path*',
         '/api/admin/:path*',
         '/api/admin/:path*',
-        '/((?!api|_next/static|_next/image|.*\\.png$).*)']
+        '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)'
+    ]
 }

@@ -16,9 +16,9 @@ export async function getSession() {
 
 
 // membuat sesi
-export async function createSession(userId: string, user_type: UserType, gelar: Gelar, jabatan: string) {
+export async function createSession(user_id: string, user_type: UserType, gelar: Gelar, jabatan: string) {
     const expiresAt = new Date(Date.now() + 1 * 60 * 60 * 1000);  // 1 jam
-    const session = await encrypt({ userId, expiresAt, user_type, gelar, jabatan })
+    const session = await encrypt({ user_id, expiresAt, user_type, gelar, jabatan })
 
     cookies().set('session', session, {
         httpOnly: true,
