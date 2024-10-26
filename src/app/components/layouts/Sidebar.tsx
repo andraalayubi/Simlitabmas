@@ -121,7 +121,7 @@ const Sidebar: React.FC<SidebarProps> = ({ opened, toggle }) => {
       case "kaprodi":
         return "PRODI";
       default:
-        return "";
+        return "TES";
     }
   };
 
