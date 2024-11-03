@@ -42,9 +42,9 @@ const Home: React.FC = () => {
   }
 
   return (
-    <MainLayout>
+    // <MainLayout>
       <Dashboard usulan={usulan} />
-    </MainLayout>
+    // </MainLayout>
   );
 };
 

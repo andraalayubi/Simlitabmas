@@ -102,7 +102,7 @@ const Pengmas: React.FC = () => {
   }
 
   return (
-    <MainLayout>
+    <>
       <nav className="text-sm text-gray-600 mb-4">
         Usulan {category ? `> ${category}` : ''}
       </nav>
@@ -129,7 +129,7 @@ const Pengmas: React.FC = () => {
           />
         </div>
       </div>
-    </MainLayout>
+    </>
   );
 };
 

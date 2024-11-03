@@ -35,7 +35,7 @@ const TahunPage: React.FC = () => {
   }
 
   return (
-    <MainLayout>
+    <>
       <nav className="text-sm text-gray-600 mb-4">
         Audit {'>'} Tahun
       </nav>
@@ -59,7 +59,7 @@ const TahunPage: React.FC = () => {
         </Tabs.Panel>
       </Tabs>
       </div>
-    </MainLayout>
+    </>
   );
 };
 

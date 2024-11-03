@@ -1,10 +1,14 @@
-'use client';
+"use client";
 
-import React, { useEffect } from 'react';
-import { MantineProvider, MantineThemeOverride, useMantineTheme } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import Sidebar from './Sidebar';
-import Header from './Header';
+import React, { useEffect } from "react";
+import {
+  MantineProvider,
+  MantineThemeOverride,
+  useMantineTheme,
+} from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import Sidebar from "./Sidebar";
+import Header from "./Header";
 
 const theme: MantineThemeOverride = {};
 
@@ -23,23 +27,23 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       }
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     handleResize();
-    return () => window.removeEventListener('resize', handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [close, toggle, mantineTheme.breakpoints.sm]);
 
   return (
-    <MantineProvider theme={theme}>
-      <div className="flex w-full min-h-screen">
-        <Sidebar opened={opened} toggle={toggle} />
-        <div className={`transition-all duration-500 ${opened ? 'ml-64' : 'ml-16'} flex-1`}>
-          <Header />
-          <div className="p-4">
-            {children}
-          </div>
-        </div>
+    <div className="w-full min-h-screen">
+      <Sidebar opened={opened} toggle={toggle} />
+      <div
+        className={`transition-all duration-500 ${
+          opened ? "ml-64" : "ml-16"
+        } flex-1`}
+      >
+        <Header />
+        <div className="p-4">{children}</div>
       </div>
-    </MantineProvider>
+    </div>
   );
 };
 

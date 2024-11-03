@@ -125,7 +125,7 @@ const ProposalDetail: React.FC = () => {
   }
 
   return (
-    <MainLayout>
+    <>
       <nav className="text-sm text-gray-600 mb-4">
         Usulan {'>'} Pengmas {'>'} Detail Usulan
       </nav>
@@ -172,7 +172,7 @@ const ProposalDetail: React.FC = () => {
           </Tabs.Panel>
         </Tabs>
       </div>
-    </MainLayout>
+    </>
   );
 };
 

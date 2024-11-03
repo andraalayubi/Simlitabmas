@@ -31,12 +31,12 @@ const SkemaPage: React.FC = () => {
   }
 
   return (
-    <MainLayout>
+    <>
       <nav className="text-sm text-gray-600 mb-4">
         Audit {'>'} Skema
       </nav>
       <DaftarSkema skemaList={skemaList} />
-    </MainLayout>
+    </>
   );
 };
 

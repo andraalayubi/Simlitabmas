@@ -49,7 +49,7 @@ const Dashboard: React.FC<{ usulan: Usulan[] }> = ({ usulan }) => {
     );
 
     return (
-        <div className='w-full'>
+        <div >
             <SimpleGrid cols={3} spacing="lg" mb="lg">
                 <Card shadow="sm" padding="lg">
                     <Text size="xl" fw={700} ta="center">3</Text>
