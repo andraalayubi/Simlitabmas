@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers'
 import { encrypt, decrypt } from './encrypt'
-import { Gelar, UserType } from '../../../prisma/models'
+import { user } from 'prisma/interfaces'
 
 // get sesi
 export async function getSession() {
@@ -16,9 +16,11 @@ export async function getSession() {
 
 
 // membuat sesi
-export async function createSession(user_id: string, user_type: UserType, gelar: Gelar, jabatan: string) {
-    const expiresAt = new Date(Date.now() + 1 * 60 * 60 * 1000);  // 1 jam
-    const session = await encrypt({ user_id, expiresAt, user_type, gelar, jabatan })
+export async function createSession(user: user) {
+    const expiresAt = new Date(Date.now() + 1 * 60 * 60 * 1000);
+
+    // 1 jam
+    const session = await encrypt({ user_id: user.id, expiresAt: expiresAt, name: user.name, email: user.email, username: user.username, user_type: user.user_type })
 
     cookies().set('session', session, {
         httpOnly: true,
@@ -27,6 +29,8 @@ export async function createSession(user_id: string, user_type: UserType, gelar:
         sameSite: 'lax',
         path: '/',
     })
+
+    return session;
 }
 
 

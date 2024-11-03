@@ -10,6 +10,7 @@ export const loginAction = async (
   setLoading(true);
   setError(null); // Reset error before new request
   try {
+    console.log(values);
     const response = await axios.post("/api/login", values);
     if (response.status === 200 && response.data.success) {
       setSuccess(true);

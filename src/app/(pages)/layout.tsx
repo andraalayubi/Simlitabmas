@@ -1,12 +1,21 @@
-"use client";
-
+// this has to be server component
+import { cookies } from "next/headers";
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import MainLayout from "@/app/components/layouts/MainLayout";
+import { decrypt, SessionPayload } from "../lib/encrypt";
 
-export default function PageLayout({
+export default async function PageLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <MainLayout>{ children } </MainLayout>;
+
+    const cookieStore = cookies();
+    const sessionToken = cookieStore.get('session')
+
+    const decoded = await decrypt(sessionToken?.value);
+
+    console.log('decoded:', decoded);
+
+  return <MainLayout session={decoded} >{ children } </MainLayout>;
 }

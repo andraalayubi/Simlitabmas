@@ -1,16 +1,51 @@
+import { SessionPayload } from '@/app/lib/encrypt';
 import React from 'react';
 
-const Header: React.FC = () => {
+
+interface HeaderProps {
+  session?: SessionPayload;
+}
+
+const Header: React.FC<HeaderProps> = ({ session }) => {
+  let greeting = "Selamat Datang";
+  let title = "";
+
+  switch (session?.user_type) {
+    case "admin":
+      greeting = `Selamat Datang, ${session.name}`;
+      title = "Administrator";
+      break;
+    case "dosen":
+      greeting = `Selamat Datang, ${session.name}`;
+      title = "Gelar Dosen";
+      break;
+    case "ketua_rg":
+      greeting = `Selamat Datang, ${session.name}`;
+      title = "Ketua RG";
+      break;
+    case "kaprodi":
+      greeting = `Selamat Datang, ${session.name}`;
+      title = "Kepala Program Studi";
+      break;
+    default:
+      greeting = "Selamat Datang, Tamu";
+      title = "Role Tidak Dikenal";
+  }
+
   return (
     <header className="header">
       <div className="header-content">
         <div className="header-text">
-          <h1>Selamat Datang, Jamal</h1>
-          <p>Gelar Dosen</p>
+          <h1>{greeting}</h1>
+          <p>{title}</p>
         </div>
         <div className="header-profile">
-          <img src="/path-to-profile-image.jpg" alt="Profile" className="profile-image" />
-          <span>Jamal</span>
+          <img
+            src="/path-to-profile-image.jpg"
+            alt="Profile"
+            className="profile-image"
+          />
+          <span>{session?.name || "Pengguna"}</span>
         </div>
       </div>
       <style jsx>{`

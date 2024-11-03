@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Burger } from "@mantine/core";
 import Link from "next/link";
-import axios from "axios";
+import { SessionPayload } from "@/app/lib/encrypt";
 
 interface MenuItem {
   name: string;
@@ -13,60 +13,14 @@ interface MenuItem {
 }
 
 interface SidebarProps {
+  session?: SessionPayload;
   opened: boolean;
   toggle: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ opened, toggle }) => {
+const Sidebar: React.FC<SidebarProps> = ({ session, opened, toggle }) => {
   const pathname = usePathname();
-  const [role, setRole] = useState<string | null>("");
-
-  // const saveRoleToLocalStorage = ({ role }: any) => {
-  //   if (typeof window !== "undefined") {
-  //     localStorage.setItem("userRole", role);
-  //   }
-  // };
-
-  const getPayload = async () => {
-    const storedPayload = localStorage.getItem("payload");
-    if (!storedPayload) {
-      try {
-        const response = await axios.get("/api/login");
-        if (response.data.success) {
-          const payload = response.data.payload;
-          localStorage.setItem("payload", JSON.stringify(payload));
-          setRole(payload.user_type);
-          console.log("Payload: ", payload);
-        }
-      } catch (error) {
-        console.error("Failed to fetch payload: ", error);
-      }
-    } else {
-      try {
-        const parsedPayload = JSON.parse(storedPayload);
-        setRole(parsedPayload.user_type);
-        console.log(role);
-        console.log("Stored Payload: ", parsedPayload.user_type);
-      } catch (error) {
-        console.error("Failed to parse stored payload: ", error);
-      }
-    }
-  };
-
-  useEffect(() => {
-    getPayload();
-    console.log("Role: ", role);
-    // saveRoleToLocalStorage({ role: "rg" });
-    // const userRole = localStorage.getItem("userRole");
-    // if (userRole) {
-    //   setRole(userRole);
-    //   // setRole();
-    // }
-  }, []);
-
-  useEffect(() => {
-    console.log("Role has been set to: ", role);
-  }, [role]);
+  const [role, setRole] = useState<string | null>(session?.user_type || "");
 
   const adminMenu: MenuItem[] = [
     { name: "Dashboard", icon: "", path: "/dashboard" },
@@ -81,14 +35,14 @@ const Sidebar: React.FC<SidebarProps> = ({ opened, toggle }) => {
     { name: "Dashboard", icon: "", path: "/dashboard" },
     { name: "Penelitian", icon: "", path: "/usulan/penelitian" },
     { name: "Pengmas", icon: "", path: "/usulan/pengmas" },
-    { name: "Pengmas", icon: "", path: "/prodi" },
+    { name: "Prodi", icon: "", path: "/prodi" },
   ];
 
   const rgMenu: MenuItem[] = [
     { name: "Dashboard", icon: "", path: "/dashboard" },
     { name: "Penelitian", icon: "", path: "/usulan/penelitian" },
     { name: "Pengmas", icon: "", path: "/usulan/pengmas" },
-    { name: "Penelitian", icon: "", path: "/rg" },
+    { name: "Research Group", icon: "", path: "/rg" },
   ];
 
   const dosenMenu: MenuItem[] = [
@@ -101,10 +55,10 @@ const Sidebar: React.FC<SidebarProps> = ({ opened, toggle }) => {
     switch (role) {
       case "admin":
         return adminMenu;
-      case "ketua_rg":
-        return rgMenu;
       case "kaprodi":
         return kaprodiMenu;
+      case "ketua_rg":
+        return rgMenu;
       default:
         return dosenMenu;
     }
@@ -116,10 +70,10 @@ const Sidebar: React.FC<SidebarProps> = ({ opened, toggle }) => {
     switch (role) {
       case "admin":
         return "AUDIT";
-      case "ketua_rg":
-        return "RESEARCH GROUP";
       case "kaprodi":
         return "PRODI";
+      case "ketua_rg":
+        return "RESEARCH GROUP";
       default:
         return "TES";
     }

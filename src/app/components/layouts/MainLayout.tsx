@@ -9,14 +9,16 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
+import { SessionPayload } from "@/app/lib/encrypt";
 
 const theme: MantineThemeOverride = {};
 
 interface MainLayoutProps {
+  session?: any; 
   children: React.ReactNode;
 }
 
-const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+const MainLayout: React.FC<MainLayoutProps> = ({ session, children }) => {
   const [opened, { toggle, close }] = useDisclosure(true);
   const mantineTheme = useMantineTheme();
 
@@ -34,13 +36,13 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   return (
     <div className="w-full min-h-screen">
-      <Sidebar opened={opened} toggle={toggle} />
+      <Sidebar session={session} opened={opened} toggle={toggle} />
       <div
         className={`transition-all duration-500 ${
           opened ? "ml-64" : "ml-16"
         } flex-1`}
       >
-        <Header />
+        <Header session={session} />
         <div className="p-4">{children}</div>
       </div>
     </div>
