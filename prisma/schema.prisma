@@ -70,7 +70,7 @@ model user {
   name      String?
   user_type user_type?
   password  String?
-  username  String?
+  username  String?    @unique
   email     String?    @unique
 
   createdAt DateTime @default(now())
