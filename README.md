@@ -1,27 +1,79 @@
-keterangan API
+# Project SIMLITABMAS
 
-protected khusus session role admin
-/api/admin/
+This project is a [brief description of the project, e.g., web application, API service, etc.], developed using Next.js, Prisma, PostgreSQL, and MinIO. This guide will help you set up and get started with development.
 
-buat akun
-/api/admin/akun POST --> buat akun dosen dan user role dosen
-/api/admin/akun GET --> list akun dosen
+## Prerequisites
 
-/api/admin/akun/[id] GET --> detail akun dosen
-/api/admin/akun/[id] POST --> tambah akun user role ketua rg / kaprodi pada dosen
+Make sure you have the following tools installed:
 
-# akun admin
+- **Git**: For version control.
+- **Docker**: To run the database and MinIO services in containers.
+- **Node.js**: To run the Next.js application.
+- **Prisma**: For managing and running database migrations.
 
-endpoint logout sebelum login akun berbeda --> /logout
+## Setup and Development Steps
 
-Dr dosen 1
-role dosen (dosen1@gmail.com, dosen1)
-role admin (admin@gmail.com, admin123)
+1. **Clone the Repository**
 
-Dr dosen 2
-role dosen (dosen2@gmail.com, dosen2)
-role rg (rgrg@gmail.com , rgrgrg1)
+   Start by cloning the repository to your local machine:
 
-Dr dosen 3
-role dosen (dosen3@gmail.com, dosen3)
-role kp (kap1@gmail.com , kaprodi)
+   ```bash
+   git pull origin dev
+   ```
+
+2. **Install Dependencies**
+
+   Install all the necessary dependencies for the project:
+
+   ```bash
+   npm install
+   ```
+
+3. **Run Database and MinIO with Docker**
+
+   This project uses PostgreSQL as the database and MinIO as bucket storage. You can run these services with Docker:
+
+   ```bash
+   docker-compose up -d db
+   docker-compose up -d minio
+   ```
+
+4. **Apply Database Migrations**
+
+   Once the database services are running, apply the schema migrations defined in Prisma:
+
+   ```bash
+   npx prisma migrate deploy
+   ```
+5. **Built Prisma Client**
+
+   Built Prisma client to generate client and interfaces:
+
+   ```bash
+   npx prisma generate
+   ```
+
+6. **Run the Development Server**
+
+   Start by cloning the repository to your local machine:
+
+   ```bash
+   npm run dev
+   ```
+
+   The server will be running at http://localhost:3000
+
+7. **Open Prisma Studio**
+
+   Prisma Studio provides a graphical interface for manipulating data in the database. To open it, use the command:
+
+   ```bash
+   npx prisma studio
+   ```
+
+   The server will be running at http://localhost:5555
+
+
+## Dummy Account
+
+Open file at /prisma/seeder/seed.ts
