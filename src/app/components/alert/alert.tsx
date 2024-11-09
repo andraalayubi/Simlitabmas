@@ -11,7 +11,7 @@ interface AlertNotificationProps {
   message: string;
 }
 
-const AlertNotification = ({ status, message }: AlertNotificationProps) => {
+const AlertComponent = ({ status, message }: AlertNotificationProps) => {
   const [opened, { close }] = useDisclosure(true); // Alert is initially opened
 
   // Set icon and color based on status
@@ -58,4 +58,4 @@ const AlertNotification = ({ status, message }: AlertNotificationProps) => {
   );
 };
 
-export default AlertNotification;
+export default AlertComponent;

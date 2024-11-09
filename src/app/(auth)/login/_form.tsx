@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import { useState } from "react";
 import { useForm } from "@mantine/form";
@@ -15,15 +15,13 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "mantine-form-zod-resolver";
 import { loginSchema } from "./_schema";
 import { loginAction } from "./_action";
-import AlertNotification from "../../components/alert/alert";
+import useNotification from "@/app/components/notification/notification";
 
 export const LoginForm = () => {
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [success, setSuccess] = useState<boolean>(false);
+  const { showNotification } = useNotification();
   const router = useRouter();
 
-  // form
   const form = useForm({
     initialValues: {
       email: "",
@@ -32,9 +30,15 @@ export const LoginForm = () => {
     validate: zodResolver(loginSchema),
   });
 
-  // Call loginAction on form submit
-  const handleSubmit = (values: { email: string; password: string }) => {
-    loginAction(values, setLoading, setError, setSuccess, router);
+  const handleSubmit = async (values: { email: string; password: string }) => {
+    const result = await loginAction(values, setLoading);
+
+    if (result.success) {
+      showNotification({ status: "success", message: result.message });
+      setTimeout(() => router.push("/dashboard"), 2000);
+    } else {
+      showNotification({ status: "error", message: result.message });
+    }
   };
 
   return (
@@ -44,23 +48,6 @@ export const LoginForm = () => {
       </Title>
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        {/* Display error or success alerts */}
-        {error && (
-          <>
-            <AlertNotification status="error" message={error} />
-            <Space h="md" />
-          </>
-        )}
-        {success && (
-          <>
-            <AlertNotification
-              status="success"
-              message="Login successful! Redirecting to dashboard..."
-            />
-            <Space h="md" />
-          </>
-        )}
-
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <TextInput
             label="Email"

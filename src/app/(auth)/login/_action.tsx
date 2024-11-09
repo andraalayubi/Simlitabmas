@@ -2,26 +2,28 @@ import axios from "axios";
 
 export const loginAction = async (
   values: { email: string; password: string },
-  setLoading: (loading: boolean) => void,
-  setError: (error: string | null) => void,
-  setSuccess: (success: boolean) => void,
-  router: any
+  setLoading: (loading: boolean) => void
 ) => {
   setLoading(true);
-  setError(null); // Reset error before new request
+
   try {
-    console.log(values);
     const response = await axios.post("/api/login", values);
     if (response.status === 200 && response.data.success) {
-      setSuccess(true);
-      setTimeout(() => {
-        router.push("/dashboard"); // Redirect to dashboard page
-      }, 2000);
+      return {
+        success: true,
+        message: "Login successful! Redirecting to dashboard...",
+      };
     } else {
-      setError(response.data?.message || "Login failed. Please try again.");
+      return {
+        success: false,
+        message: response.data?.message || "Login failed. Please try again.",
+      };
     }
   } catch (error: any) {
-    setError(error.response?.data?.message || "An unexpected error occurred");
+    return {
+      success: false,
+      message: error.response?.data?.message || "An unexpected error occurred",
+    };
   } finally {
     setLoading(false);
   }
