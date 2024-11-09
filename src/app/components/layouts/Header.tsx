@@ -1,12 +1,126 @@
-import { SessionPayload } from '@/app/lib/encrypt';
-import React from 'react';
-
+import { SessionPayload } from "@/app/lib/encrypt";
+import { useState } from "react";
+import {
+  IconActivity,
+  IconLogout,
+  IconHeart,
+  IconSettings,
+  IconChevronDown,
+  IconUserCog,
+  IconUsersGroup,
+  IconSettingsExclamation,
+  IconClockHour2,
+} from "@tabler/icons-react";
+import {
+  Avatar,
+  Group,
+  Text,
+  Menu,
+  rem,
+  useMantineTheme,
+  MenuDropdown,
+} from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import styles from "./Header.module.css";
+import React from "react";
+import Link from "next/link";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import useNotification from "../notification/notification";
 
 interface HeaderProps {
   session?: SessionPayload;
 }
 
+const menuProfiles = {
+  admin: [
+    {
+      label: "Profile",
+      icon: <IconUserCog />,
+      color: "blue",
+      route: "/profile",
+    },
+    {
+      label: "Admin Settings",
+      icon: <IconSettingsExclamation />,
+      color: "blue",
+      route: "/admin",
+    },
+  ],
+  dosen: [
+    {
+      label: "Profile",
+      icon: <IconUserCog />,
+      color: "blue",
+      route: "/profile",
+    },
+  ],
+  ketua_rg: [
+    {
+      label: "Profile",
+      icon: <IconUserCog />,
+      color: "blue",
+      route: "/profile",
+    },
+  ],
+  kaprodi: [
+    {
+      label: "Profile",
+      icon: <IconUserCog />,
+      color: "blue",
+      route: "/profile",
+    },
+  ],
+  default: [
+    {
+      label: "General Info",
+      icon: <IconHeart />,
+      color: "red",
+      route: "/not-found",
+    },
+  ],
+};
+
+const menuSettings = {
+  admin: [
+    { label: "Config Settings", icon: <IconSettings />, color: "yellow" },
+    { label: "Scheduler Settings", icon: <IconClockHour2 />, color: "blue" },
+    { label: "Manage Users", icon: <IconUsersGroup />, color: "yellow" },
+    { label: "Logs", icon: <IconActivity />, color: "yellow" },
+  ],
+  dosen: [],
+  ketua_rg: [
+    {
+      label: "Manage Research Groups",
+      icon: <IconUsersGroup />,
+      color: "yellow",
+    },
+  ],
+  kaprodi: [
+    { label: "Manage Departments", icon: <IconUsersGroup />, color: "yellow" },
+  ],
+  default: [{ label: "General Info", icon: <IconHeart />, color: "red" }],
+};
+
 const Header: React.FC<HeaderProps> = ({ session }) => {
+  const router = useRouter();
+  const theme = useMantineTheme();
+  const { showNotification } = useNotification();
+  const [opened, { toggle }] = useDisclosure(false);
+  const [userMenuOpened, setUserMenuOpened] = useState(false);
+
+  const handleLogout = async () => {  
+    const response = await axios.post("/api/logout", {});
+
+    if (response.status == 200) {
+      showNotification({
+        status: response.data.success ? 'success' : 'error',
+        message: response.data.message
+      })
+    router.push("/login"); 
+    }
+  }
+
   let greeting = "Selamat Datang";
   let title = "";
 
@@ -32,58 +146,90 @@ const Header: React.FC<HeaderProps> = ({ session }) => {
       title = "Role Tidak Dikenal";
   }
 
+  const itemsProfiles =
+    menuProfiles[session?.user_type!] || menuProfiles.default;
+  const itemsSettings =
+    menuSettings[session?.user_type!] || menuSettings.default;
+
   return (
-    <header className="header">
-      <div className="header-content">
-        <div className="header-text">
+    <header className={styles.header}>
+      <div className={styles.headerContent}>
+        <div className={styles.headerText}>
           <h1>{greeting}</h1>
           <p>{title}</p>
         </div>
-        <div className="header-profile">
-          <img
-            src="/path-to-profile-image.jpg"
-            alt="Profile"
-            className="profile-image"
-          />
-          <span>{session?.name || "Pengguna"}</span>
+        <div className={styles.headerProfile}>
+          <Menu
+            width={260}
+            position="bottom-end"
+            transitionProps={{ transition: "pop-bottom-right" }}
+            onClose={() => setUserMenuOpened(false)}
+            onOpen={() => setUserMenuOpened(true)}
+            withinPortal={false}
+          >
+            <Menu.Target>
+              <Group variant="light" className={styles.profileButton}>
+                <Avatar
+                  src="/path-to-profile-image.jpg"
+                  alt="Profile"
+                  radius="xl"
+                  size={30}
+                />
+                <Text size="xl">{session?.name || "Pengguna"}</Text>
+
+                <IconChevronDown
+                  style={{ width: rem(12), height: rem(12) }}
+                  stroke={1.5}
+                />
+              </Group>
+            </Menu.Target>
+            <MenuDropdown>
+              {/* PROFILE MENU SECTION */}
+              <Menu.Label>Profiles</Menu.Label>
+              {itemsProfiles.map((item, index) => (
+                <Menu.Item
+                  key={index}
+                  leftSection={React.cloneElement(item.icon, {
+                    style: { width: rem(16), height: rem(16) },
+                    color: theme.colors[item.color][6],
+                    stroke: 1.5,
+                  })}
+                >
+                  <Link href={item.route!}>{item.label}</Link>
+                </Menu.Item>
+              ))}
+
+              {/* LOGOUT MENU */}
+              <Menu.Item
+                onClick={handleLogout}
+                leftSection={
+                  <IconLogout
+                    style={{ width: rem(16), height: rem(16) }}
+                    color={theme.colors.red[6]}
+                    stroke={1.5}
+                  />
+                }
+              >Log Out</Menu.Item>
+
+              {/* SETTING MENU SECTION */}
+              <Menu.Divider />
+              <Menu.Label>Settings</Menu.Label>
+              {itemsSettings.map((item, index) => (
+                <Menu.Item
+                  key={index}
+                  leftSection={React.cloneElement(item.icon, {
+                    style: { width: rem(16), height: rem(16) },
+                    color: theme.colors[item.color][6],
+                    stroke: 1.5,
+                  })}
+                >
+                  {item.label}
+                </Menu.Item>
+              ))}
+            </MenuDropdown>
+          </Menu>
         </div>
       </div>
-      <style jsx>{`
-        .header {
-          background-color: #f8f9fa;
-          padding: 20px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .header-content {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          width: 100%;
-        }
-        .header-text h1 {
-          margin: 0;
-          font-size: 1.5rem;
-          color: #333;
-        }
-        .header-text p {
-          margin: 0;
-          font-size: 1rem;
-          color: #666;
-        }
-        .header-profile {
-          display: flex;
-          align-items: center;
-        }
-        .profile-image {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          margin-right: 10px;
-        }
-      `}</style>
     </header>
   );
 };
