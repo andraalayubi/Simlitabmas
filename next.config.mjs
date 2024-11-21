@@ -7,6 +7,14 @@ export default {
     AppName: "SIMLITABMAS",
     SchoolName: "PENS",
   },
+  experimental: {
+    optimizePackageImports: ["@mantine/core", "@mantine/hooks"],
+  },
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
   async redirects() {
     return [
       {
