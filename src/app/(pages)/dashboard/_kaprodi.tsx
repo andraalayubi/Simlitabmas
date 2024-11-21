@@ -15,7 +15,7 @@ type Usulan = {
   statusClass: string;
 };
 
-const DashboardKetuaRG: React.FC<{ usulan: Usulan[] }> = ({ usulan }) => {
+const DashboardKaprodi: React.FC<{ usulan: Usulan[] }> = ({ usulan }) => {
   const columns = React.useMemo<MRT_ColumnDef<Usulan>[]>(
     () => [
       {
@@ -55,13 +55,13 @@ const DashboardKetuaRG: React.FC<{ usulan: Usulan[] }> = ({ usulan }) => {
           <Text size="xl" fw={700} ta="center">
             10
           </Text>
-          <Text ta="center">Usulan Penelitian Research Group</Text>
+          <Text ta="center">Usulan Departement</Text>
         </Card>
         <Card shadow="sm" padding="lg">
           <Text size="xl" fw={700} ta="center">
             2
           </Text>
-          <Text ta="center">Total Usulan Penelitian</Text>
+          <Text ta="center">Total Usulan Pengabdian Masyarakat</Text>
         </Card>
         <Card shadow="sm" padding="lg">
           <Text size="xl" fw={700} ta="center">
@@ -80,4 +80,4 @@ const DashboardKetuaRG: React.FC<{ usulan: Usulan[] }> = ({ usulan }) => {
   );
 };
 
-export default DashboardKetuaRG;
+export default DashboardKaprodi;

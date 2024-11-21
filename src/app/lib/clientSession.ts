@@ -1,14 +1,23 @@
 // this is for client component
 
 // src/lib/getSession.ts
-import axios from 'axios';
 import { SessionPayload } from './encrypt';
 
 export async function getClientSession() {
     try {
-        const response = await axios.get("/api/login");
+        const response = await fetch("/api/login", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
 
-        const session: SessionPayload = response.data.payload;
+        if (!response.ok) {
+            throw new Error(`Error fetching session: ${response.status} - ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        const session: SessionPayload = data.payload;
 
         return session;
     } catch (error) {

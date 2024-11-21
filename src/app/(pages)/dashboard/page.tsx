@@ -1,15 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Dashboard from "../../components/Dashboard";
 import axios from "axios";
 import LoadingPage from "@/app/components/usulan/LoadingPage";
-import { getClientSession } from "@/app/lib/clientSession";
 import DashboardAdmin from "./_admin";
 import DashboardKetuaRG from "./_ketuaRg";
 import DashboardLecturer from "./_lecturer";
-import { SessionPayload } from "@/app/lib/encrypt";
-
+import DashboardKaprodi from "./_kaprodi";
+import { useSession } from "@/app/components/session/session";
+import { notFound } from "next/navigation";
 
 interface Usulan {
   id: number;
@@ -22,16 +21,13 @@ interface Usulan {
   statusClass: string;
 }
 
-export default function Home() {
+export default function Dashboard() {
   const [usulan, setUsulan] = useState<Usulan[]>([]);
-  const [session, setSession] = useState<SessionPayload| null>();
+  const { session, loading: sessionLoading } = useSession();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const initializeData = async () => {
-      const sessionData = await getClientSession();
-      setSession(sessionData);
-
+    const fetchUsulan = async () => {
       try {
         const response = await axios.get("/api/usulan");
         setUsulan(response.data);
@@ -42,10 +38,12 @@ export default function Home() {
       }
     };
 
-    initializeData();
-  }, []);
+    if (!sessionLoading) {
+      fetchUsulan();
+    }
+  }, [sessionLoading]);
 
-  if (loading) {
+  if (loading || sessionLoading) {
     return <LoadingPage />;
   }
 
@@ -54,8 +52,10 @@ export default function Home() {
   } else if (session?.user_type === "dosen") {
     return <DashboardLecturer usulan={usulan} />;
   } else if (session?.user_type === "ketua_rg") {
-    return <Dashboard usulan={usulan} />;
-  } else {
     return <DashboardKetuaRG usulan={usulan} />;
+  } else if (session?.user_type === "kaprodi") {
+    return <DashboardKaprodi usulan={usulan} />;
+  } else {
+    return notFound()
   }
 }
