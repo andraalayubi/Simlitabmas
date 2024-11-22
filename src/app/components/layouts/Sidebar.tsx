@@ -22,6 +22,7 @@ const Sidebar: React.FC<SidebarProps> = ({ session, opened, toggle }) => {
   const pathname = usePathname();
   const [role, setRole] = useState<string | null>(session?.user_type || "");
 
+
   const adminMenu: MenuItem[] = [
     { name: "Dashboard", icon: "", path: "/dashboard" },
     { name: "Penelitian", icon: "", path: "/usulan/penelitian" },
@@ -83,70 +84,80 @@ const Sidebar: React.FC<SidebarProps> = ({ session, opened, toggle }) => {
 
   return (
     <div
-      className={`fixed h-full bg-white shadow-md p-4 transition-width duration-500 ${
+      className={`fixed h-full bg-white shadow-md p-2 transition-width duration-500 ${
         opened ? "w-64" : "w-16"
       }`}
     >
-      <div className="flex justify-between items-center mb-6 gap-6">
+      <div className="flex justify-between items-center gap-6 m-3">
         <Burger opened={opened} onClick={toggle} size="md" />
-        {opened && <h1 className="text-2xl font-bold">PERGURUAN TINGGI</h1>}
+        {opened && <h1 className="text-xl font-bold">PERGURUAN TINGGI</h1>}
       </div>
-      <div className="mb-4">
-        <Link key={menuItems[0].name} href={menuItems[0].path}>
-          <div
-            className={`flex items-center p-2 mb-2 cursor-pointer rounded ${
-              pathname === menuItems[0].path
-                ? "bg-blue-800 text-white"
-                : "text-gray-400 hover:bg-gray-200"
-            }`}
-          >
-            <span className="material-icons mr-2">{menuItems[0].icon}</span>
-            {opened && menuItems[0].name}
-          </div>
-        </Link>
-      </div>
-      <h2 className={`text-base font-semibold mb-2 ${!opened && "hidden"}`}>
-        USULAN
-      </h2>
-      <hr className={`border-t-2 border-black mb-2 ${!opened && "hidden"}`} />
-      <div className="mb-4">
-        {menuItems.slice(1, 3).map((item) => (
-          <Link key={item.name} href={item.path}>
-            <div
-              className={`flex items-center p-2 mb-2 cursor-pointer rounded ${
-                pathname.startsWith(item.path)
-                  ? "bg-blue-800 text-white"
-                  : "text-gray-400 hover:bg-gray-200"
-              }`}
-            >
-              <span className="material-icons mr-2">{item.icon}</span>
-              {opened && item.name}
-            </div>
-          </Link>
-        ))}
-      </div>
-      {role !== "dosen" && (
+      {opened && (
         <>
-          <h2 className={`text-base font-semibold mb-2 ${!opened && "hidden"}`}>
-            {sectionTitle}
-          </h2>
-          <hr
-            className={`border-t-2 border-black mb-2 ${!opened && "hidden"}`}
-          />
-          {menuItems.slice(3).map((item) => (
-            <Link key={item.name} href={item.path}>
+          <div className="mb-4">
+            <Link key={menuItems[0].name} href={menuItems[0].path}>
               <div
                 className={`flex items-center p-2 mb-2 cursor-pointer rounded ${
-                  pathname === item.path
+                  pathname === menuItems[0].path
                     ? "bg-blue-800 text-white"
                     : "text-gray-400 hover:bg-gray-200"
                 }`}
               >
-                <span className="material-icons mr-2">{item.icon}</span>
-                {opened && item.name}
+                <span className="material-icons mr-2">{menuItems[0].icon}</span>
+                {opened && menuItems[0].name}
               </div>
             </Link>
-          ))}
+          </div>
+          <h3 className={`text-md font-semibold mb-1 ${!opened && "hidden"}`}>
+            KATEGORI
+          </h3>
+          <hr
+            className={`border-t-2 border-black mb-1 ${!opened && "hidden"}`}
+          />
+          <div className="mb-4">
+            {menuItems.slice(1, 3).map((item) => (
+              <Link key={item.name} href={item.path}>
+                <div
+                  className={`flex items-center p-1 mb-1 cursor-pointer rounded ${
+                    pathname.startsWith(item.path)
+                      ? "bg-blue-800 text-white"
+                      : "text-gray-400 hover:bg-gray-200"
+                  }`}
+                >
+                  <span className="material-icons mr-2">{item.icon}</span>
+                  {opened && item.name}
+                </div>
+              </Link>
+            ))}
+          </div>
+          {role !== "dosen" && (
+            <>
+              <h2
+                className={`text-md font-semibold mb-1 ${!opened && "hidden"}`}
+              >
+                {sectionTitle}
+              </h2>
+              <hr
+                className={`border-t-2 border-black mb-1 ${
+                  !opened && "hidden"
+                }`}
+              />
+              {menuItems.slice(3).map((item) => (
+                <Link key={item.name} href={item.path}>
+                  <div
+                    className={`flex items-center p-1 mb-1 cursor-pointer rounded ${
+                      pathname === item.path
+                        ? "bg-blue-800 text-white"
+                        : "text-gray-400 hover:bg-gray-200"
+                    }`}
+                  >
+                    <span className="material-icons mr-2">{item.icon}</span>
+                    {opened && item.name}
+                  </div>
+                </Link>
+              ))}
+            </>
+          )}
         </>
       )}
     </div>
