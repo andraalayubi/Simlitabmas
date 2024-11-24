@@ -25,8 +25,8 @@ const Sidebar: React.FC<SidebarProps> = ({ session, opened, toggle }) => {
 
   const adminMenu: MenuItem[] = [
     { name: "Dashboard", icon: "", path: "/dashboard" },
-    { name: "Penelitian", icon: "", path: "/usulan/penelitian" },
-    { name: "Pengmas", icon: "", path: "/usulan/pengmas" },
+    { name: "Penelitian", icon: "", path: "/penelitian" },
+    { name: "Pengmas", icon: "", path: "/pengmas" },
     { name: "Skema", icon: "", path: "/audit/skema" },
     { name: "Akun", icon: "", path: "/audit/akun" },
     { name: "Tahun", icon: "", path: "/audit/tahun" },
@@ -34,22 +34,22 @@ const Sidebar: React.FC<SidebarProps> = ({ session, opened, toggle }) => {
 
   const kaprodiMenu: MenuItem[] = [
     { name: "Dashboard", icon: "", path: "/dashboard" },
-    { name: "Penelitian", icon: "", path: "/usulan/penelitian" },
-    { name: "Pengmas", icon: "", path: "/usulan/pengmas" },
+    { name: "Penelitian", icon: "", path: "/penelitian" },
+    { name: "Pengmas", icon: "", path: "/pengmas" },
     { name: "Prodi", icon: "", path: "/prodi" },
   ];
 
   const rgMenu: MenuItem[] = [
     { name: "Dashboard", icon: "", path: "/dashboard" },
-    { name: "Penelitian", icon: "", path: "/usulan/penelitian" },
-    { name: "Pengmas", icon: "", path: "/usulan/pengmas" },
+    { name: "Penelitian", icon: "", path: "/penelitian" },
+    { name: "Pengmas", icon: "", path: "/pengmas" },
     { name: "Research Group", icon: "", path: "/rg" },
   ];
 
   const dosenMenu: MenuItem[] = [
     { name: "Dashboard", icon: "", path: "/dashboard" },
-    { name: "Penelitian", icon: "", path: "/usulan/penelitian" },
-    { name: "Pengmas", icon: "", path: "/usulan/pengmas" },
+    { name: "Penelitian", icon: "", path: "/penelitian" },
+    { name: "Pengmas", icon: "", path: "/pengmas" },
   ];
 
   const getMenuItems = (role: string): MenuItem[] => {
