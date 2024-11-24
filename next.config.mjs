@@ -15,6 +15,7 @@ export default {
       fullUrl: true,
     },
   },
+  distDir: 'build',
   async redirects() {
     return [
       {
