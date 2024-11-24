@@ -14,7 +14,7 @@ const BreadcrumbItems = [
   </Anchor>
 ));
 
-export default function PenelitianPage() {
+export default function AllSuggestionPage() {
   const { session, loading: sessionLoading } = useSession();
   const [loading, setLoading] = useState(true);
 
@@ -31,11 +31,6 @@ export default function PenelitianPage() {
   if (session?.user_type === "admin") {
     return (
       <>
-        <nav className="text-sm text-gray-600 mb-4">
-          <Breadcrumbs separator="→" separatorMargin="md" mt="xs">
-            {BreadcrumbItems}
-          </Breadcrumbs>
-        </nav>
 
       </>
     );

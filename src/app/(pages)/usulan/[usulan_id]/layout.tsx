@@ -6,16 +6,6 @@ import { useRouter, usePathname, useParams } from "next/navigation";
 import { useSession } from "@/app/components/session/session";
 import LoadingPage from "@/app/components/usulan/LoadingPage";
 
-// Data breadcrumbs untuk navigasi
-const BreadcrumbItems = [
-  { title: "Usulan", href: "/usulan2/penelitian" },
-  { title: "Penelitian", href: "/usulan2/penelitian" },
-].map((item, index) => (
-  <Anchor href={item.href} key={index}>
-    {item.title}
-  </Anchor>
-));
-
 // Data tab menu
 const TabMenus = [
   { value: "overview", path: "overview", tabName: "Overview" },
@@ -56,28 +46,25 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     TabMenus.find((tab) => pathname.includes(tab.value))?.value || "overview";
 
   const handleTabChange = (value: string | null) => {
-    router.push(`/usulan2/penelitian/${usulan_id}/${value}`);
+    router.push(`/usulan/${usulan_id}/${value}`);
   };
 
   return (
-    <div>
-      {/* Breadcrumb navigation */}
-      <nav className="text-sm text-gray-600 mb-4">
-        <Breadcrumbs separator="→" separatorMargin="md" mt="xs">
-          {BreadcrumbItems}
-        </Breadcrumbs>
-      </nav>
-
-      {/* Tabs navigation */}
-      <div className="bg-white shadow rounded-lg py-6">
+    <div className="container mx-auto px-4 py-6">
+      {/* Tabs Navigation */}
+      <div className="bg-white shadow-md rounded-lg">
         <Tabs
           defaultValue="overview"
           value={activeTab}
           onChange={(value) => handleTabChange(value)}
         >
-          <Tabs.List grow>
-            {TabMenus.map((tab) => (
-              <Tabs.Tab key={tab.value} value={tab.value}>
+          <Tabs.List className="flex border-b border-gray-200">
+            {TabMenus.map((tab: any) => (
+              <Tabs.Tab
+                key={tab.value}
+                value={tab.value}
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 focus:outline-none"
+              >
                 {tab.tabName}
               </Tabs.Tab>
             ))}
@@ -85,8 +72,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </Tabs>
       </div>
 
-      {/* Child component */}
-      <div className="mt-4">{children}</div>
+      {/* Tab Content */}
+      <div className="bg-white shadow rounded-lg mt-4 p-4">
+        {children}
+      </div>
     </div>
-  );
-}
+  );}
