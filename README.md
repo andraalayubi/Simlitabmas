@@ -53,7 +53,15 @@ Make sure you have the following tools installed:
    npx prisma generate
    ```
 
-6. **Run the Development Server**
+6. **Seeding Database**
+
+   Seeding the database by run this command:
+
+   ```bash
+   npx prisma db seed
+   ```
+
+7. **Run the Development Server**
 
    Start by cloning the repository to your local machine:
 
@@ -63,7 +71,7 @@ Make sure you have the following tools installed:
 
    The server will be running at http://localhost:3000
 
-7. **Open Prisma Studio**
+8. **Open Prisma Studio**
 
    Prisma Studio provides a graphical interface for manipulating data in the database. To open it, use the command:
 
