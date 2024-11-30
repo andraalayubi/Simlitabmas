@@ -6,7 +6,10 @@ import { cookies } from 'next/headers';
 const protectedRoutes = [
     { path: /^\/dashboard/, roles: ['admin', 'dosen', 'user'] },
     { path: /^\/admin/, roles: ['admin'] },
-    { path: /^\/dashboard\/lecturer/, roles: ['admin', 'dosen'] }
+    { path: /^\/usulan/, roles: ['admin', 'dosen', 'kaprodi', 'ketua_rg']},
+    { path: /^\/penelitian/, roles: ['admin', 'dosen', 'kaprodi', 'ketua_rg']},
+    { path: /^\/pengmas/, roles: ['admin', 'dosen', 'kaprodi', 'ketua_rg']},
+    { path: /^\/dashboard\/lecturer/, roles: ['admin', 'dosen'] },
 ];
 const publicRoutes = [/^\/api\/login$/, /^\/login$/, /^\/file-page$/];
 
