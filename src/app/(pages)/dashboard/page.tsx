@@ -26,10 +26,16 @@ export default function Dashboard() {
   const { session, loading: sessionLoading } = useSession();
   const [loading, setLoading] = useState(true);
 
+  const user_type = session?.user_type === 'ketua_rg' 
+    ? 'research_group' 
+    : session?.user_type === 'dosen' 
+    ? 'lecturer' 
+    : session?.user_type;
+
   useEffect(() => {
     const fetchUsulan = async () => {
       try {
-        const response = await axios.get("/api/usulan");
+        const response = await axios.get("/api/{$user_type}/dashboard");
         setUsulan(response.data);
       } catch (error) {
         console.error("Error fetching proposals:", error);

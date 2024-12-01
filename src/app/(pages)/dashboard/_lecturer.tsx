@@ -63,7 +63,7 @@ const DashboardLecturer: React.FC<{ usulan: Usulan[] }> = ({ usulan }) => {
           <Text size="xl" fw={700} ta="center">
             1
           </Text>
-          <Text ta="center">Usulan Pengabdia Saya</Text>
+          <Text ta="center">Usulan Pengabdian Saya</Text>
         </Card>
       </SimpleGrid>
       <Card shadow="sm" padding="lg">
