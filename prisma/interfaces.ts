@@ -26,12 +26,13 @@ export interface user {
   password: string | null;
   username: string | null;
   email: string | null;
+  lecturer_id: number | null;
   createdAt: Date;
   updatedAt: Date;
   deleted: boolean;
   log?: log[];
   user_profile?: user_profile | null;
-  lecturer?: lecturer[];
+  lecturer?: lecturer | null;
   refresh_token?: refresh_token | null;
 }
 
@@ -69,14 +70,13 @@ export interface lecturer {
   is_ketua_rg: boolean | null;
   position_id: number | null;
   signature_url: string | null;
-  user_id: number | null;
   createdAt: Date;
   updatedAt: Date;
   deleted: boolean;
   research_group?: research_group | null;
   department?: department | null;
   position?: position | null;
-  user?: user | null;
+  user?: user[];
   proposal_suggestion?: proposal_suggestion[];
   lecturer_member?: lecturer_member[];
   review?: review[];
