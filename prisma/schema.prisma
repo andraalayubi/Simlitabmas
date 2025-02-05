@@ -202,7 +202,7 @@ model position {
   lecturer        lecturer[]
   position_schema position_schema[]
 
-  @@map("postions")
+  @@map("positions")
 }
 
 model position_schema {
@@ -245,6 +245,7 @@ model schema {
 
 model proposal_suggestion {
   id                Int                         @id @default(autoincrement())
+  name              String                      @default("usulan baru")
   year_research_id  Int?
   schema_id         Int?
   lecturer_id       Int?
@@ -277,7 +278,6 @@ model proposal {
   id                     Int    @id @default(autoincrement())
   proposal_suggestion_id Int    @unique
   name                   String
-  title                  String
   abstract               Json?
   keyword                Json?
   background             Json?

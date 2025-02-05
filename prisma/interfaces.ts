@@ -158,6 +158,7 @@ export interface schema {
 
 export interface proposal_suggestion {
   id: number;
+  name: string;
   year_research_id: number | null;
   schema_id: number | null;
   lecturer_id: number | null;
@@ -185,7 +186,6 @@ export interface proposal {
   id: number;
   proposal_suggestion_id: number;
   name: string;
-  title: string;
   abstract: JsonValue | null;
   keyword: JsonValue | null;
   background: JsonValue | null;
