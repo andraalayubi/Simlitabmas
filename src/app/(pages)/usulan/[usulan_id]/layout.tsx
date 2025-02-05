@@ -73,8 +73,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* Tab Content */}
-      <div className="bg-white shadow rounded-lg mt-4 p-4">
+      <div className="bg-white shadow rounded-lg mt-4">
         {children}
       </div>
     </div>
-  );}
+  );
+};

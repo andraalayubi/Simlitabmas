@@ -145,9 +145,32 @@ const departements = [
     { name: "Departemen Program Pendidikan Jarak Jauh", description: "Menyediakan program studi melalui metode pembelajaran jarak jauh." }
 ];
 
-const proposal_suggestions = [
-
-]
+const proposalSuggestions = [
+    {
+        year_research_id: 1, // 2023
+        schema_id: 1, // Skema Dasar
+        lecturer_id: 1, // Mirza Ramadhani
+        research_group_id: 1, // Human Centric Multimedia
+        status: "menunggu",
+        is_active: true,
+    },
+    {
+        year_research_id: 2, // 2024
+        schema_id: 2, // Skema Terapan
+        lecturer_id: 2, // Andra Al Ayubi
+        research_group_id: 2, // ACE-ATech
+        status: "aktif",
+        is_active: true,
+    },
+    {
+        year_research_id: 3, // 2025
+        schema_id: 1, // Skema Dasar
+        lecturer_id: 3, // Hammam Mujahid
+        research_group_id: 3, // Agile Product Development
+        status: "diterima",
+        is_active: false,
+    },
+];
 
 const main = async () => {
     try {
@@ -155,7 +178,7 @@ const main = async () => {
 
             const existingLecturer = await prisma.lecturer.findUnique({
                 where: { nidn: lecturer.nidn },
-              });
+            });
           
               if (existingLecturer) {
                 console.log(`Lecturer with NIDN ${lecturer.nidn} already exists. Skipping.`);
