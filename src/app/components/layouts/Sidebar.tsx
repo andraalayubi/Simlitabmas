@@ -30,6 +30,8 @@ const Sidebar: React.FC<SidebarProps> = ({ session, opened, toggle }) => {
     { name: "Skema", icon: "", path: "/audit/skema" },
     { name: "Akun", icon: "", path: "/audit/akun" },
     { name: "Tahun", icon: "", path: "/audit/tahun" },
+    { name: "Penelitian", icon: "", path: "/usulan/penelitian" },
+    { name: "Pengmas", icon: "", path: "/usulan/pengmas" },
   ];
 
   const kaprodiMenu: MenuItem[] = [
@@ -76,7 +78,7 @@ const Sidebar: React.FC<SidebarProps> = ({ session, opened, toggle }) => {
       case "ketua_rg":
         return "RESEARCH GROUP";
       default:
-        return "TES";
+        return "";
     }
   };
 
