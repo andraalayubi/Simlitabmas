@@ -1,4 +1,4 @@
-import { degree, PrismaClient } from '@prisma/client'
+import { degree, PrismaClient, proposal_suggestion_status } from '@prisma/client'
 
 import { user_type } from "@prisma/client";
 import { JsonArray } from '@prisma/client/runtime/library';
@@ -147,44 +147,174 @@ const departements = [
 
 const proposalSuggestions = [
     {
+        name: "Pengembangan UI/UX pada CRM Pengabdian Masyarakat",
         year_research_id: 1, // 2023
         schema_id: 1, // Skema Dasar
         lecturer_id: 1, // Mirza Ramadhani
         research_group_id: 1, // Human Centric Multimedia
-        status: "menunggu",
+        status: "menunggu" as proposal_suggestion_status,
         is_active: true,
+        proposal: {
+            create: {
+                name: "Pengembangan UI/UX pada CRM Pengabdian Masyarakat",
+                title: "Pengembangan UI/UX pada CRM Pengabdian Masyarakat"
+
+            }
+        }
     },
     {
+        name: "Integrasi Machine Learning untuk Analisis Data Akuakultur",
         year_research_id: 2, // 2024
         schema_id: 2, // Skema Terapan
-        lecturer_id: 2, // Andra Al Ayubi
+        lecturer_id: 1,
         research_group_id: 2, // ACE-ATech
-        status: "aktif",
+        status: "aktif" as proposal_suggestion_status,
         is_active: true,
+        proposal: {
+            create: {
+                name: "Integrasi Machine Learning untuk Analisis Data Akuakultur",
+                title: "Integrasi Machine Learning untuk Analisis Data Akuakultur"
+            }
+        }
     },
     {
+        name: "Metodologi Agile dalam Pengembangan Perangkat Lunak Akademik",
         year_research_id: 3, // 2025
-        schema_id: 1, // Skema Dasar
-        lecturer_id: 3, // Hammam Mujahid
+        schema_id: 1,
+        lecturer_id: 1,
         research_group_id: 3, // Agile Product Development
-        status: "diterima",
+        status: "diterima" as proposal_suggestion_status,
         is_active: false,
+        proposal: {
+            create: {
+                name: "Metodologi Agile dalam Pengembangan Perangkat Lunak Akademik",
+                title: "Metodologi Agile dalam Pengembangan Perangkat Lunak Akademik"
+            }
+        }
     },
+
+    {
+        year_research_id: 1,
+        schema_id: 2,
+        name: "Pemanfaatan Biofuel sebagai Alternatif Energi Ramah Lingkungan",
+        lecturer_id: 2,
+        research_group_id: 4, // Bio Electrochemistry System
+        status: "menunggu" as proposal_suggestion_status,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Pemanfaatan Biofuel sebagai Alternatif Energi Ramah Lingkungan",
+                title: "Pemanfaatan Biofuel sebagai Alternatif Energi Ramah Lingkungan"
+            }
+        }
+    },
+    {
+        name: "Analisis Sinyal Biomedik untuk Diagnosa Dini Penyakit",
+        year_research_id: 2,
+        schema_id: 1,
+        lecturer_id: 2,
+        research_group_id: 5, // Biosignal and Instrumentation Biomedic
+        status: "aktif" as proposal_suggestion_status,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Analisis Sinyal Biomedik untuk Diagnosa Dini Penyakit",
+                title: "Analisis Sinyal Biomedik untuk Diagnosa Dini Penyakit",
+            }
+        }
+    },
+    {
+        name: "Keamanan Siber pada Infrastruktur Kritis Nasional",
+        year_research_id: 3,
+        schema_id: 2,
+        lecturer_id: 2,
+        research_group_id: 6, // Cyber Security
+        status: "diterima" as proposal_suggestion_status,
+        is_active: false,
+        proposal: {
+            create: {
+                name: "Keamanan Siber pada Infrastruktur Kritis Nasional",
+                title: "Keamanan Siber pada Infrastruktur Kritis Nasional",
+            }
+        }
+    },
+
+    {
+        name: "Optimalisasi AI dalam Sistem e-Bisnis",
+        year_research_id: 1,
+        schema_id: 1,
+        lecturer_id: 3,
+        research_group_id: 7, // Data Centric AI and e-Business System
+        status: "menunggu" as proposal_suggestion_status,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Optimalisasi AI dalam Sistem e-Bisnis",
+                title: "Optimalisasi AI dalam Sistem e-Bisnis",
+            }
+        }
+    },
+    {
+        name: "Pemanfaatan Data Science untuk Pencapaian SDGs",
+        year_research_id: 2,
+        schema_id: 2,
+        lecturer_id: 3,
+        research_group_id: 8, // Data Science for SDGs Applied Solution
+        status: "aktif" as proposal_suggestion_status,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Pemanfaatan Data Science untuk Pencapaian SDGs",
+                title: "Pemanfaatan Data Science untuk Pencapaian SDGs",
+            }
+        }
+    },
+    {
+        name: "Inovasi Digital Media untuk Pembelajaran Interaktif",
+        year_research_id: 3,
+        schema_id: 1,
+        lecturer_id: 3,
+        research_group_id: 9, // Digital Media
+        status: "diterima" as proposal_suggestion_status,
+        is_active: false,
+        proposal: {
+            create: {
+                name: "Inovasi Digital Media untuk Pembelajaran Interaktif",
+                title: "Inovasi Digital Media untuk Pembelajaran Interaktif"
+            }
+        }
+    }
 ];
 
 const main = async () => {
     try {
+        console.log("deleting all data and reset iteration...")
+        // delete all data and restart id iteration
+        await prisma.$executeRawUnsafe(`
+            TRUNCATE TABLE 
+                "lecturers", 
+                "users", 
+                "research_groups", 
+                "departments", 
+                "year_researches", 
+                "schemas", 
+                "positions", 
+                "position_schemas", 
+                "proposal_suggestions"
+            RESTART IDENTITY CASCADE;
+        `);
+
         for (const lecturer of lecturers) {
 
             const existingLecturer = await prisma.lecturer.findUnique({
                 where: { nidn: lecturer.nidn },
             });
-          
-              if (existingLecturer) {
+
+            if (existingLecturer) {
                 console.log(`Lecturer with NIDN ${lecturer.nidn} already exists. Skipping.`);
                 continue;
-              }
-          
+            }
+
 
             // Hash passwords for all users of the lecturer
             const hashedUsers = await Promise.all(
@@ -247,6 +377,16 @@ const main = async () => {
             skipDuplicates: true,
         });
         console.log("Inserting position schemas...");
+
+        // insert proposal suggestions and proposals
+        await prisma.$transaction(
+            proposalSuggestions.map((suggestion) =>
+              prisma.proposal_suggestion.create({
+                data: suggestion,
+              })
+            )
+          );
+        console.log("Inserting proposal suggestion and proposals...");
 
         console.log("Seeding selesai.");
     } catch (error) {
