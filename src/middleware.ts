@@ -1,7 +1,8 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { decrypt, updateSession } from '@/app/lib/session';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
+
 
 const protectedRoutes = [
     { path: /^\/dashboard/, roles: ['admin', 'dosen', 'user'] },
@@ -10,26 +11,58 @@ const protectedRoutes = [
     { path: /^\/penelitian/, roles: ['admin', 'dosen', 'kaprodi', 'ketua_rg']},
     { path: /^\/pengmas/, roles: ['admin', 'dosen', 'kaprodi', 'ketua_rg']},
     { path: /^\/dashboard\/lecturer/, roles: ['admin', 'dosen'] },
+
+    // api
+    { path: /^\/api\/admin\/proposal-suggestion\/\d+$/, roles: ['admin'] },
+    { path: /^\/api\/lecturer\/proposal_suggestion\/\d+$/, roles: ['admin', 'dosen'] },
+    { path: /^\/api\/ketua_rg\/proposal_suggestion\/\d+$/, roles: ['admin', 'ketua_rg'] },
+    { path: /^\/api\/kaprodi\/proposal_suggestion\/\d+$/, roles: ['admin', 'kaprodi'] },
+    
 ];
 const publicRoutes = [/^\/api\/login$/, /^\/login$/, /^\/file-page$/];
 
 export default async function middleware(req: NextRequest, ev: NextResponse) {
+
+    let token = null;
+
+    // get from cookie
     const cookieStore = cookies()
     const cookie = cookieStore.get('session')?.value;
     const path = req.nextUrl.pathname
+    token = cookie
 
+    // if get from authorization bearer
+    const headersList = await headers();
+    if (!token && headersList.get('authorization')?.split(" ")[0] === "Bearer") {
+        const bearer = headersList.get('authorization')?.split(" ")[1]
+        token = bearer
+    }
+    
     const isProtectedRoute = protectedRoutes.find((route) => route.path.test(path));
     const isPublicRoute = publicRoutes.some((route) => route.test(path));
 
     console.log('detected middleware ', path)
     
     if (isProtectedRoute) {
-        const session = await decrypt(cookie);
+        console.log('detected protected route')
+        const session = await decrypt(token);
 
         if (!session || !session.user_type) {
+            // if send api request
+            if (path.startsWith('/api/')) {
+                return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+            }
+
+            // if page routing
             return NextResponse.redirect(new URL('/login', req.nextUrl));
 
         } else if (!isProtectedRoute.roles.includes(session.user_type.toString())) {
+            // if send api request
+            if (path.startsWith('/api/')) {
+                return NextResponse.json({ message: 'Forbidden: You do not have permission' }, { status: 403 });
+            }
+
+            // if page routing
             return NextResponse.redirect(new URL('/', req.nextUrl));
 
         } else {
@@ -48,8 +81,8 @@ export const config = {
     matcher: [
         '/dashboard/:path*',
         '/api/admin/:path*',
-        '/api/admin/:path*',
-        '/api/admin/:path*',
+        '/api/ketua_rg/:path*',
+        '/api/lecturer/:path*',
         '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)'
     ]
 }
