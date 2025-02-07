@@ -2,7 +2,7 @@
 
 import { useSession } from "@/app/components/session/session";
 import LoadingPage from "@/app/components/usulan/LoadingPage";
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { useEffect } from "react";
 import ProposalAdmin from "./_admin";
 import ProposalKaprodi from "./_kaprodi";
@@ -11,7 +11,8 @@ import ProposalLecturer from "./_lecturer";
 
 export default function LuaranPage() {
     const { session, loading: sessionLoading } = useSession();
-    const dummy = 'dummy';
+    const params = useParams();
+    const usulan_id = params.usulan_id;
   
     useEffect(() => {
       if (!sessionLoading) {
