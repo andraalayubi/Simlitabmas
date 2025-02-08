@@ -11,14 +11,23 @@ const protectedRoutes = [
     { path: /^\/penelitian/, roles: ['admin', 'dosen', 'kaprodi', 'ketua_rg']},
     { path: /^\/pengmas/, roles: ['admin', 'dosen', 'kaprodi', 'ketua_rg']},
     { path: /^\/dashboard\/lecturer/, roles: ['admin', 'dosen'] },
-
-    // api
-    { path: /^\/api\/admin\/proposal-suggestion\/\d+$/, roles: ['admin'] },
-    { path: /^\/api\/lecturer\/proposal_suggestion\/\d+$/, roles: ['admin', 'dosen'] },
-    { path: /^\/api\/ketua_rg\/proposal_suggestion\/\d+$/, roles: ['admin', 'ketua_rg'] },
-    { path: /^\/api\/kaprodi\/proposal_suggestion\/\d+$/, roles: ['admin', 'kaprodi'] },
-    
 ];
+
+// make api endpoint dinamically for protected routing
+const roleBasedApiRoutes = [
+    'admin',
+    'dosen',
+    'kaprodi',
+    'ketua_rg',
+];
+
+roleBasedApiRoutes.forEach(role => {
+    protectedRoutes.push({
+        path: new RegExp(`^/api/${role}/`),
+        roles: [role]
+    });
+});
+
 const publicRoutes = [/^\/api\/login$/, /^\/login$/, /^\/file-page$/];
 
 export default async function middleware(req: NextRequest, ev: NextResponse) {
