@@ -1,5 +1,5 @@
 import { getSession } from "@/app/lib/session";
-import proposalService from "@/app/services/proposalService";
+import proposalSuggestionService from "@/app/services/proposalSuggestionService";
 import { NextRequest, NextResponse } from "next/server";
 
 
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest, { params }: { params: Params }) {
             }, { status: 400 });
         }
 
-        const proposal_suggestion = await proposalService.getById(proposal_suggestion_id);
+        const proposal_suggestion = await proposalSuggestionService.getById(proposal_suggestion_id);
         
         return NextResponse.json({
             success: true,
