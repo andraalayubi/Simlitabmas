@@ -7,17 +7,9 @@ export const proposalSuggestionAction = async (
   setLoading(true);
 
   try {
-    const response = await fetch("/api/proposal-suggestion", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
+    const response = await axios.post("/api/proposal-suggestion", values);
     
-    const data = await response.json();
-    
-    if (response.status === 200 && data.success) {
+    if (response.status === 200 && response.data.success) {
       return {
         success: true,
         message: "Successfully created a proposal suggestion!",
@@ -25,7 +17,7 @@ export const proposalSuggestionAction = async (
     } else {
       return {
         success: false,
-        message: data?.message || "Failed to create a proposal suggestion. Please try again.",
+        message: response.data?.message || "Failed to create a proposal suggestion. Please try again.",
       };
     }
   } catch (error: any) {
@@ -37,3 +29,23 @@ export const proposalSuggestionAction = async (
     setLoading(false);
   }
 };
+
+export const fetchSchemas = async () => {
+  try {
+    const response = await fetch('/api/lecturer/schema');
+    const result = await response.json();
+    console.log(result);
+
+    if (result.success) {
+      return result.data.map((schema: { id: number; name: string }) => ({
+        value: schema.id.toString(),
+        label: schema.name
+      }));
+    }
+
+    return [];
+  } catch (error) {
+    console.error('Failed to fetch schemas:', error);
+    return [];
+  }
+}

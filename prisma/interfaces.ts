@@ -141,7 +141,7 @@ export interface schema {
   id: number;
   name: string;
   description: string | null;
-  max_cost: bigint | null;
+  max_cost: Decimal | null;
   min_degree: degree | null;
   is_student: boolean | null;
   is_partner: boolean | null;
@@ -358,3 +358,5 @@ export interface external_document_category {
 }
 
 type JsonValue = string | number | boolean | { [key in string]?: JsonValue } | Array<JsonValue> | null;
+
+type Decimal = { valueOf(): string };
