@@ -156,8 +156,7 @@ const proposalSuggestions = [
         is_active: true,
         proposal: {
             create: {
-                name: "Pengembangan UI/UX pada CRM Pengabdian Masyarakat",
-                title: "Pengembangan UI/UX pada CRM Pengabdian Masyarakat"
+                name: "Pengembangan UI/UX pada CRM Pengabdian Masyarakat"
 
             }
         }
@@ -172,8 +171,7 @@ const proposalSuggestions = [
         is_active: true,
         proposal: {
             create: {
-                name: "Integrasi Machine Learning untuk Analisis Data Akuakultur",
-                title: "Integrasi Machine Learning untuk Analisis Data Akuakultur"
+                name: "Integrasi Machine Learning untuk Analisis Data Akuakultur"
             }
         }
     },
@@ -187,8 +185,7 @@ const proposalSuggestions = [
         is_active: false,
         proposal: {
             create: {
-                name: "Metodologi Agile dalam Pengembangan Perangkat Lunak Akademik",
-                title: "Metodologi Agile dalam Pengembangan Perangkat Lunak Akademik"
+                name: "Metodologi Agile dalam Pengembangan Perangkat Lunak Akademik"
             }
         }
     },
@@ -203,8 +200,7 @@ const proposalSuggestions = [
         is_active: true,
         proposal: {
             create: {
-                name: "Pemanfaatan Biofuel sebagai Alternatif Energi Ramah Lingkungan",
-                title: "Pemanfaatan Biofuel sebagai Alternatif Energi Ramah Lingkungan"
+                name: "Pemanfaatan Biofuel sebagai Alternatif Energi Ramah Lingkungan"
             }
         }
     },
@@ -218,8 +214,7 @@ const proposalSuggestions = [
         is_active: true,
         proposal: {
             create: {
-                name: "Analisis Sinyal Biomedik untuk Diagnosa Dini Penyakit",
-                title: "Analisis Sinyal Biomedik untuk Diagnosa Dini Penyakit",
+                name: "Analisis Sinyal Biomedik untuk Diagnosa Dini Penyakit"
             }
         }
     },
@@ -233,8 +228,7 @@ const proposalSuggestions = [
         is_active: false,
         proposal: {
             create: {
-                name: "Keamanan Siber pada Infrastruktur Kritis Nasional",
-                title: "Keamanan Siber pada Infrastruktur Kritis Nasional",
+                name: "Keamanan Siber pada Infrastruktur Kritis Nasional"
             }
         }
     },
@@ -249,8 +243,7 @@ const proposalSuggestions = [
         is_active: true,
         proposal: {
             create: {
-                name: "Optimalisasi AI dalam Sistem e-Bisnis",
-                title: "Optimalisasi AI dalam Sistem e-Bisnis",
+                name: "Optimalisasi AI dalam Sistem e-Bisnis"
             }
         }
     },
@@ -264,8 +257,7 @@ const proposalSuggestions = [
         is_active: true,
         proposal: {
             create: {
-                name: "Pemanfaatan Data Science untuk Pencapaian SDGs",
-                title: "Pemanfaatan Data Science untuk Pencapaian SDGs",
+                name: "Pemanfaatan Data Science untuk Pencapaian SDGs"
             }
         }
     },
@@ -279,8 +271,7 @@ const proposalSuggestions = [
         is_active: false,
         proposal: {
             create: {
-                name: "Inovasi Digital Media untuk Pembelajaran Interaktif",
-                title: "Inovasi Digital Media untuk Pembelajaran Interaktif"
+                name: "Inovasi Digital Media untuk Pembelajaran Interaktif"
             }
         }
     }
