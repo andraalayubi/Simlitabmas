@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Anchor, Breadcrumbs, Tabs, Button } from "@mantine/core";
+import { Anchor, Breadcrumbs, Tabs } from "@mantine/core";
 import { useRouter, usePathname, useParams } from "next/navigation";
 import { useSession } from "@/app/components/session/session";
 import LoadingPage from "@/app/components/usulan/LoadingPage";
+import ModalComponent from "@/app/components/modal/modal";
+import { ProposalSuggestionForm } from "@/app/components/modal/proposal_suggestion/_form";
 
 const TabMenus = [
   { value: "usulan_saya", path: "usulan_saya", tabName: "Usulan Saya" },
@@ -54,9 +56,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             ))}
           </Tabs.List>
         </Tabs>
-        <Button className="px-4 py-2 bg-blue-800 text-white rounded-lg">
-          Buat Usulan
-        </Button>
+        <ModalComponent title="Buat Usulan">
+          <ProposalSuggestionForm />
+        </ModalComponent>
       </div>
 
       {/* Child component */}
