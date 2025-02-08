@@ -179,6 +179,7 @@ export interface proposal_suggestion {
   additonal_document?: additional_document[];
   external_document?: external_document[];
   review?: review[];
+  logbook?: logbook[];
   proposal?: proposal | null;
 }
 
@@ -271,6 +272,19 @@ export interface additional_document {
   name: string;
   content: string | null;
   file_url: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  deleted: boolean;
+  proposal_suggestion?: proposal_suggestion;
+}
+
+export interface logbook {
+  id: number;
+  proposal_suggestion_id: number;
+  name: string | null;
+  description: string | null;
+  file_url: string | null;
+  progress: number | null;
   createdAt: Date;
   updatedAt: Date;
   deleted: boolean;

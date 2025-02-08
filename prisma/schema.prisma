@@ -269,6 +269,7 @@ model proposal_suggestion {
   additonal_document additional_document[]
   external_document  external_document[]
   review             review[]
+  logbook            logbook[]
   proposal           proposal?
 
   @@map("proposal_suggestions")
@@ -395,6 +396,23 @@ model additional_document {
   proposal_suggestion proposal_suggestion @relation(fields: [proposal_suggestion_id], references: [id])
 
   @@map("additional_documents")
+}
+
+model logbook {
+  id                     Int     @id @default(autoincrement())
+  proposal_suggestion_id Int
+  name                   String?
+  description            String?
+  file_url               String?
+  progress               Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  proposal_suggestion proposal_suggestion @relation(fields: [proposal_suggestion_id], references: [id])
+
+  @@map("logbooks")
 }
 
 model external_document {
