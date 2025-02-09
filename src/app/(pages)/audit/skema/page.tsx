@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import MainLayout from '@/app/components/layouts/MainLayout';
-import DaftarSkema from '@/app/components/audit/Skema';
+import MainLayout from 'src/components/layouts/MainLayout';
+import DaftarSkema from 'src/components/audit/Skema';
 import { Skema } from '@/app/types/Interfaces';
-import LoadingPage from '@/app/components/usulan/LoadingPage';
+import LoadingPage from 'src/components/usulan/LoadingPage';
 
 const SkemaPage: React.FC = () => {
   const [skemaList, setSkemaList] = useState<Skema[]>([]);

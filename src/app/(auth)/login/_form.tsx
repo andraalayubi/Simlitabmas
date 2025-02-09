@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "mantine-form-zod-resolver";
 import { loginSchema } from "./_schema";
 import { loginAction } from "./_action";
-import useNotification from "@/app/components/notification/notification";
+import useNotification from "src/components/notification/notification";
 
 export const LoginForm = () => {
   const [loading, setLoading] = useState<boolean>(false);

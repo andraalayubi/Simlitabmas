@@ -1,7 +1,7 @@
 'use client'
 
-import { useSession } from "@/app/components/session/session";
-import LoadingPage from "@/app/components/usulan/LoadingPage";
+import { useSession } from "src/components/session/session";
+import LoadingPage from "src/components/usulan/LoadingPage";
 import { notFound } from "next/navigation";
 import { useEffect } from "react";
 import LogBookAdmin from "./_admin";

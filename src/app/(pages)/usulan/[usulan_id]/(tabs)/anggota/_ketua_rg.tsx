@@ -1,6 +1,6 @@
 "use client";
 
-import DaftarAnggota from "@/app/components/usulan/anggota/ListAnggota";
+import DaftarAnggota from "src/components/usulan/anggota/ListAnggota";
 import React, { useEffect, useState } from "react";
 
 interface Member {

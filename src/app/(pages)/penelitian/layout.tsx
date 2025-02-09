@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from "react";
 import { Anchor, Breadcrumbs, Tabs } from "@mantine/core";
 import { useRouter, usePathname, useParams } from "next/navigation";
-import { useSession } from "@/app/components/session/session";
-import LoadingPage from "@/app/components/usulan/LoadingPage";
-import ModalComponent from "@/app/components/modal/modal";
-import ProposalSuggestionModal from "@/app/components/modal/proposal_suggestion/proposal_suggesion";
+import { useSession } from "src/components/session/session";
+import LoadingPage from "src/components/usulan/LoadingPage";
+import ModalComponent from "src/components/modal/modal";
+import ProposalSuggestionModal from "src/components/modal/proposal_suggestion/proposal_suggesion";
 
 const TabMenus = [
   { value: "usulan_saya", path: "usulan_saya", tabName: "Usulan Saya" },

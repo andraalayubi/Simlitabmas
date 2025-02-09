@@ -2,7 +2,7 @@
 
 
 
-import DokumenTambahan from "@/app/components/usulan/DokumenTambahan";
+import DokumenTambahan from "src/components/usulan/DokumenTambahan";
 import React from "react"
 
 

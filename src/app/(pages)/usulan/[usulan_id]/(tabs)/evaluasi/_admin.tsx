@@ -1,6 +1,6 @@
 'use client'
 
-import Evaluations from '@/app/components/usulan/Evaluations';
+import Evaluations from 'src/components/usulan/Evaluations';
 
 const EvaluationAdmin = () => {
     

@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { Anchor, Breadcrumbs, Tabs } from "@mantine/core";
 import { useRouter, usePathname, useParams } from "next/navigation";
-import { useSession } from "@/app/components/session/session";
-import LoadingPage from "@/app/components/usulan/LoadingPage";
+import { useSession } from "src/components/session/session";
+import LoadingPage from "src/components/usulan/LoadingPage";
 
 // Data tab menu
 const TabMenus = [

@@ -1,16 +1,16 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import DaftarProposal from '../../../../components/usulan/proposal/ProposalPage';
-import DaftarAnggota from '../../../../components/usulan/anggota/ListAnggota';
-import LogbookForm from '@/app/components/usulan/Logbook';
-import Evaluations from '@/app/components/usulan/Evaluations';
-import MainLayout from '@/app/components/layouts/MainLayout';
-import Overview from '@/app/components/usulan/overview/Overview';
+import DaftarProposal from '../../../../../components/usulan/proposal/ProposalPage';
+import DaftarAnggota from '../../../../../components/usulan/anggota/ListAnggota';
+import LogbookForm from 'src/components/usulan/Logbook';
+import Evaluations from 'src/components/usulan/Evaluations';
+import MainLayout from 'src/components/layouts/MainLayout';
+import Overview from 'src/components/usulan/overview/Overview';
 import axios from 'axios';
-import LoadingPage from '@/app/components/usulan/LoadingPage';
+import LoadingPage from 'src/components/usulan/LoadingPage';
 import { Tabs } from '@mantine/core';
-import DokumenTambahan from '@/app/components/usulan/DokumenTambahan';
+import DokumenTambahan from 'src/components/usulan/DokumenTambahan';
 
 interface Member {
   id: number;

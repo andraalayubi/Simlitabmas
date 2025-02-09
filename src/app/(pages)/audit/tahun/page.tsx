@@ -3,10 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Tabs } from '@mantine/core';
-import MainLayout from '@/app/components/layouts/MainLayout';
-import DaftarTahun from '@/app/components/audit/ListTahun';
-import RekapProgress from '@/app/components/audit/RekapProgress';
-import LoadingPage from '@/app/components/usulan/LoadingPage';
+import MainLayout from 'src/components/layouts/MainLayout';
+import DaftarTahun from 'src/components/audit/ListTahun';
+import RekapProgress from 'src/components/audit/RekapProgress';
+import LoadingPage from 'src/components/usulan/LoadingPage';
 
 const TahunPage: React.FC = () => {
   const [tahunList, setTahunList] = useState([]);

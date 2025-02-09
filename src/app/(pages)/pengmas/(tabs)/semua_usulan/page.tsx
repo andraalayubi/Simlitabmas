@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState, useMemo } from "react";
-import { useSession } from "@/app/components/session/session";
-import LoadingPage from "@/app/components/usulan/LoadingPage";
+import { useSession } from "src/components/session/session";
+import LoadingPage from "src/components/usulan/LoadingPage";
 import { Breadcrumbs, Anchor } from "@mantine/core";
 
 const BreadcrumbItems = [

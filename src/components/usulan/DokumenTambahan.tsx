@@ -6,8 +6,8 @@ import { Button, Modal, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { MantineReactTable, MRT_ColumnDef } from 'mantine-react-table';
-import MainLayout from '@/app/components/layouts/MainLayout';
-import LoadingPage from '@/app/components/usulan/LoadingPage';
+import MainLayout from 'src/components/layouts/MainLayout';
+import LoadingPage from 'src/components/usulan/LoadingPage';
 
 interface Dokumen {
     id: number;

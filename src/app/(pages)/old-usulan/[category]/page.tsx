@@ -7,9 +7,9 @@ import {
   MantineReactTable,
   MRT_ColumnDef,
 } from "mantine-react-table";
-import MainLayout from "@/app/components/layouts/MainLayout";
+import MainLayout from "src/components/layouts/MainLayout";
 import { useRouter, useParams } from "next/navigation";
-import LoadingPage from "@/app/components/usulan/LoadingPage";
+import LoadingPage from "src/components/usulan/LoadingPage";
 
 interface Usulan {
   id: number;

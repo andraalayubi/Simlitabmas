@@ -3,11 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Tabs } from '@mantine/core';
-import MainLayout from '@/app/components/layouts/MainLayout';
-import DaftarResearchGroup from '@/app/components/audit/ListRG';
-import DaftarProgramStudi from '@/app/components/audit/ListProdi';
-import LoadingPage from '@/app/components/usulan/LoadingPage';
-import DaftarDosen from '@/app/components/audit/ListDosen';
+import MainLayout from 'src/components/layouts/MainLayout';
+import DaftarResearchGroup from 'src/components/audit/ListRG';
+import DaftarProgramStudi from 'src/components/audit/ListProdi';
+import LoadingPage from 'src/components/usulan/LoadingPage';
+import DaftarDosen from 'src/components/audit/ListDosen';
 
 const AkunPage: React.FC = () => {
   const [researchGroups, setResearchGroups] = useState([]);

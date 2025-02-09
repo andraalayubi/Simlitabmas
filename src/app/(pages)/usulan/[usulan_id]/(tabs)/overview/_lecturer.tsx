@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Badge, Button, Card, Text } from "@mantine/core";
-import TableOverview from "@/app/components/usulan/overview/TableOverview";
+import TableOverview from "src/components/usulan/overview/TableOverview";
 
 
 interface OverviewLecturerProps {

@@ -14,7 +14,7 @@ import { zodResolver } from "mantine-form-zod-resolver";
 import { proposalSuggestionPenelitianSchema, 
   proposalSuggestionPengmasSchema  } from "./_schema";
 import { proposalSuggestionAction } from "./_action";
-import useNotification from "@/app/components/notification/notification";
+import useNotification from "src/components/notification/notification";
 import { fetchSchemas } from "./_action";
 import { fetchYearResearches } from "./_action";
 import { fetchResearchGroups } from "./_action";

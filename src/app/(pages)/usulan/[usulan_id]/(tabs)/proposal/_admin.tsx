@@ -1,12 +1,12 @@
 "use client";
 
-import AbstractTextEditor from "@/app/components/usulan/proposal/Abstract";
-import BackgroundTextEditor from "@/app/components/usulan/proposal/Background";
-import BibliographyTextEditor from "@/app/components/usulan/proposal/Bibliography";
-import LiteratureReviewTextEditor from "@/app/components/usulan/proposal/LiteratureReview";
-import MethodTextEditor from "@/app/components/usulan/proposal/Method";
-import NameTextEditor from "@/app/components/usulan/proposal/Name";
-import PurposeTextEditor from "@/app/components/usulan/proposal/Purpose";
+import AbstractTextEditor from "src/components/usulan/proposal/Abstract";
+import BackgroundTextEditor from "src/components/usulan/proposal/Background";
+import BibliographyTextEditor from "src/components/usulan/proposal/Bibliography";
+import LiteratureReviewTextEditor from "src/components/usulan/proposal/LiteratureReview";
+import MethodTextEditor from "src/components/usulan/proposal/Method";
+import NameTextEditor from "src/components/usulan/proposal/Name";
+import PurposeTextEditor from "src/components/usulan/proposal/Purpose";
 import { Group, Button, Skeleton } from "@mantine/core";
 import { useParams } from "next/navigation";
 import { proposal, proposal_suggestion } from "prisma/interfaces";
