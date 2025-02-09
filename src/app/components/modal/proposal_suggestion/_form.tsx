@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "@mantine/form";
 import {
   TextInput,
@@ -15,15 +15,17 @@ import { zodResolver } from "mantine-form-zod-resolver";
 import { proposalSuggestionSchema } from "./_schema";
 import { proposalSuggestionAction } from "./_action";
 import useNotification from "@/app/components/notification/notification";
+import { fetchSchemas } from "./_action";
 
-export function ProposalSuggestionForm({
-  schemas = []
-}: {
-  schemas?: { value: string; label: string }[]
-}) {
+export function ProposalSuggestionForm() {
   const [loading, setLoading] = useState<boolean>(false);
+  const [schemas, setSchemas] = useState<{ value: string; label: string }[]>([]);
   const { showNotification } = useNotification();
   const router = useRouter();
+
+  useEffect(() => {
+    fetchSchemas().then((data) => setSchemas(data));
+  }, []);
 
   const form = useForm({
     initialValues: {
@@ -32,9 +34,6 @@ export function ProposalSuggestionForm({
     },
     validate: zodResolver(proposalSuggestionSchema),
   });
-
-  console.log('schemas: ', schemas);
-  
 
   const handleSubmit = async (values: { email: string; password: string }) => {
     const result = await proposalSuggestionAction(values, setLoading);
