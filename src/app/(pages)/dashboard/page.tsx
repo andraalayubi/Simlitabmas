@@ -28,7 +28,7 @@ export default function Dashboard() {
 
   const user_type = session?.user_type === 'ketua_rg' 
     ? 'research_group' 
-    : session?.user_type === 'dosen' 
+    : session?.user_type === 'lecturer' 
     ? 'lecturer' 
     : session?.user_type;
 
@@ -55,7 +55,7 @@ export default function Dashboard() {
 
   if (session?.user_type === "admin") {
     return <DashboardAdmin usulan={usulan} />;
-  } else if (session?.user_type === "dosen") {
+  } else if (session?.user_type === "lecturer") {
     return <DashboardLecturer usulan={usulan} />;
   } else if (session?.user_type === "ketua_rg") {
     return <DashboardKetuaRG usulan={usulan} />;

@@ -28,7 +28,7 @@ export default function LaporanAkhirPage() {
   
     if(session?.user_type == "admin") {
       return <FinalReportAdmin />
-    } else if (session?.user_type == "dosen") {
+    } else if (session?.user_type == "lecturer") {
       return <FinalReportLecturer  />
     } else if (session?.user_type == "ketua_rg") {
       return <FinalReportKetuaRG />

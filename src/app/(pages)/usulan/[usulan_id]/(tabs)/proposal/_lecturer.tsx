@@ -13,7 +13,7 @@ import { proposal, proposal_suggestion } from "prisma/interfaces";
 import React, { useEffect, useState } from "react";
 
 const ProposalLecturer = () => {
-  const user_type = "dosen";
+  const user_type = "lecturer";
   const [loading, setLoading] = useState(true);
   const params = useParams();
   const usulan_id = params.usulan_id;

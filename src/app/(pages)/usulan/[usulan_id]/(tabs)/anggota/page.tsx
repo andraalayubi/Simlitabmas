@@ -26,7 +26,7 @@ export default function AnggotaPage() {
   
     if(session?.user_type == "admin") {
       return <AnggotaAdmin />
-    } else if (session?.user_type == "dosen") {
+    } else if (session?.user_type == "lecturer") {
       return <AnggotaLecturer  />
     } else if (session?.user_type == "ketua_rg") {
       return <AnggotaKetuaRG />

@@ -15,7 +15,7 @@ const protectedRoutes = [
 
 // make api endpoint dinamically for protected routing
 const roleBasedApiRoutes = [
-    'admin',
+    'lecturer',
     'dosen',
     'kaprodi',
     'ketua_rg',

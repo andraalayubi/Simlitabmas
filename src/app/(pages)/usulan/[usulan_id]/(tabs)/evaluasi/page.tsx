@@ -26,7 +26,7 @@ export default function EvalauasiPage() {
   
     if(session?.user_type == "admin") {
       return <EvaluationAdmin />
-    } else if (session?.user_type == "dosen") {
+    } else if (session?.user_type == "lecturer") {
       return <EvaluationLecturer  />
     } else if (session?.user_type == "ketua_rg") {
       return <EvaluationKetuaRG />

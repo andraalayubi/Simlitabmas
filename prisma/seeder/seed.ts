@@ -30,7 +30,7 @@ const lecturers = [
         user: {
             create: [
                 { name: "Admin Mirza", email: "adminMirza@gmail.com", user_type: 'admin' as user_type, password: "Mirza123!" },
-                { name: "Dosen Mirza", email: "dosenMirza@gmail.com", user_type: 'dosen' as user_type, password: "Mirza123!" },
+                { name: "Dosen Mirza", email: "dosenMirza@gmail.com", user_type: 'lecturer' as user_type, password: "Mirza123!" },
                 { name: "Ketua RG Mirza", email: "ketuargMirza@gmail.com", user_type: 'ketua_rg' as user_type, password: "Mirza123!" },
             ]
         }
@@ -59,7 +59,7 @@ const lecturers = [
         user: {
             create: [
                 { name: "Admin Andra", email: "adminAndra@gmail.com", user_type: 'admin' as user_type, password: "Andra123!" },
-                { name: "Dosen Andra", email: "dosenAndra@gmail.com", user_type: 'dosen' as user_type, password: "Andra123!" },
+                { name: "Dosen Andra", email: "dosenAndra@gmail.com", user_type: 'lecturer' as user_type, password: "Andra123!" },
                 { name: "Ketua RG Andra", email: "ketuargAndra@gmail.com", user_type: 'ketua_rg' as user_type, password: "Andra123!" },
             ]
         }
@@ -88,7 +88,7 @@ const lecturers = [
         user: {
             create: [
                 { name: "Admin Hammam", email: "adminHammam@gmail.com", user_type: 'admin' as user_type, password: "Hammam123!" },
-                { name: "Dosen Hammam", email: "dosenHammam@gmail.com", user_type: 'dosen' as user_type, password: "Hammam123!" },
+                { name: "Dosen Hammam", email: "dosenHammam@gmail.com", user_type: 'lecturer' as user_type, password: "Hammam123!" },
                 { name: "Ketua RG Hammam", email: "ketuargHammam@gmail.com", user_type: 'ketua_rg' as user_type, password: "Hammam123!" },
             ]
         }

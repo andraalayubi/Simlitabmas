@@ -26,7 +26,7 @@ export default function OverviewPage() {
 
   if(session?.user_type == "admin") {
     return <OverviewAdmin overview={dummy}/>
-  } else if (session?.user_type == "dosen") {
+  } else if (session?.user_type == "lecturer") {
     return <OverviewLecturer  overview={dummy}/>
   } else if (session?.user_type == "ketua_rg") {
     return <OverviewKetuaRG overview={dummy}/>

@@ -21,7 +21,7 @@ datasource db {
 enum user_type {
   ketua_rg
   kaprodi
-  dosen
+  lecturer
   admin
 }
 

@@ -28,7 +28,7 @@ export default function DokumenTambahanPage() {
   
     if(session?.user_type == "admin") {
       return <AddtionalDocumentAdmin />
-    } else if (session?.user_type == "dosen") {
+    } else if (session?.user_type == "lecturer") {
       return <AddtionalDocumentLecturer  />
     } else if (session?.user_type == "ketua_rg") {
       return <AddtionalDocumentKetuaRG />
