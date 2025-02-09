@@ -276,16 +276,16 @@ model proposal_suggestion {
 }
 
 model proposal {
-  id                     Int    @id @default(autoincrement())
-  proposal_suggestion_id Int    @unique
-  name                   String
-  abstract               Json?
-  keyword                Json?
-  background             Json?
-  purpose                Json?
-  method                 Json?
-  literature_review      Json?
-  bibliography           Json?
+  id                     Int     @id @default(autoincrement())
+  proposal_suggestion_id Int     @unique
+  name                   String? @db.Text
+  abstract               String? @db.Text
+  keyword                String? @db.Text
+  background             String? @db.Text
+  purpose                String? @db.Text
+  method                 String? @db.Text
+  literature_review      String? @db.Text
+  bibliography           String? @db.Text
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
