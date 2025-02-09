@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { SessionPayload } from "@/app/lib/encrypt";
-import { getClientSession } from "@/app/lib/clientSession";
+import { SessionPayload } from "src/lib/encrypt";
+import { getClientSession } from "src/lib/clientSession";
 
 export function useSession() {
   const [session, setSession] = useState<SessionPayload | null>(null);

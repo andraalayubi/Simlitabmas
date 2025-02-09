@@ -1,4 +1,4 @@
-import { getSession } from "@/app/lib/session";
+import { getSession } from "src/lib/session";
 import proposalSuggestionService from "@/app/services/proposalSuggestionService";
 import { NextRequest, NextResponse } from "next/server";
 import { proposal_suggestion_status } from "prisma/interfaces";

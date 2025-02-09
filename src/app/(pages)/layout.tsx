@@ -2,7 +2,7 @@
 import { cookies } from "next/headers";
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 import MainLayout from "@/app/components/layouts/MainLayout";
-import { decrypt, SessionPayload } from "../lib/encrypt";
+import { decrypt, SessionPayload } from "../../lib/encrypt";
 import Breadcrumb from "../components/breadcrumb/breadcrumb";
 
 export default async function PageLayout({

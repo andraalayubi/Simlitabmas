@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { useSession } from "@/app/components/session/session";
 import LoadingPage from "@/app/components/usulan/LoadingPage";
-import { SessionPayload } from "@/app/lib/encrypt";
+import { SessionPayload } from "src/lib/encrypt";
 import OverviewAdmin from "./_admin";
 import OverviewLecturer from "./_lecturer";
 import OverviewKetuaRG from "./_ketua_rg";

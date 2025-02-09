@@ -1,6 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { decrypt, updateSession } from '@/app/lib/session';
+import { decrypt, updateSession } from 'src/lib/session';
 import { cookies, headers } from 'next/headers';
 
 

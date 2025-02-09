@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from "bcrypt";
-import { createSession, getSession } from "@/app/lib/session";
-import userService from '@/app/services/userService';
+import { createSession, getSession } from "src/lib/session";
+import userService from 'src/services/userService';
 
 export async function POST(req: NextRequest) {
   const { email, username, password, user_type } = await req.json();

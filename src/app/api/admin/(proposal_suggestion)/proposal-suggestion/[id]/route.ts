@@ -1,5 +1,5 @@
-import { getSession } from "@/app/lib/session";
-import proposalSuggestionService from "@/app/services/proposalSuggestionService";
+import { getSession } from "src/lib/session";
+import proposalSuggestionService from "src/services/proposalSuggestionService";
 import { NextRequest, NextResponse } from "next/server";
 
 

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Burger } from "@mantine/core";
 import Link from "next/link";
-import { SessionPayload } from "@/app/lib/encrypt";
+import { SessionPayload } from "src/lib/encrypt";
 
 interface MenuItem {
   name: string;

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import yearResearchService from '@/app/services/yearResearchService';
+import yearResearchService from 'src/services/yearResearchService';
 
 export async function GET(request: NextRequest) {
   try {

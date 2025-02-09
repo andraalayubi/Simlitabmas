@@ -1,6 +1,6 @@
-import { getSession } from "@/app/lib/session";
-import filterService from "@/app/services/filterService";
-import proposalSuggestionService from "@/app/services/proposalSuggestionService";
+import { getSession } from "src/lib/session";
+import filterService from "src/services/filterService";
+import proposalSuggestionService from "src/services/proposalSuggestionService";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {

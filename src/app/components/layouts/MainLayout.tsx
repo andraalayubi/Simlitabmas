@@ -9,7 +9,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
-import { SessionPayload } from "@/app/lib/encrypt";
+import { SessionPayload } from "src/lib/encrypt";
 
 const theme: MantineThemeOverride = {};
 

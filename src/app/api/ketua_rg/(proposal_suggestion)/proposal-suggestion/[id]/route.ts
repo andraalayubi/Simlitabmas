@@ -1,4 +1,4 @@
-import { getSession } from "@/app/lib/session";
+import { getSession } from "src/lib/session";
 import proposalService from "@/app/services/proposalService";
 import { NextRequest, NextResponse } from "next/server";
 

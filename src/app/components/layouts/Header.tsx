@@ -1,4 +1,4 @@
-import { SessionPayload } from "@/app/lib/encrypt";
+import { SessionPayload } from "src/lib/encrypt";
 import { useState } from "react";
 import {
   IconActivity,

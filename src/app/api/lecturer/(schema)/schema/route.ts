@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import schemaService from '@/app/services/schemaService';
+import schemaService from 'src/services/schemaService';
 
 export async function GET(request: NextRequest) {
   try {
