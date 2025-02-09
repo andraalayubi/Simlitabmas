@@ -186,14 +186,14 @@ export interface proposal_suggestion {
 export interface proposal {
   id: number;
   proposal_suggestion_id: number;
-  name: string;
-  abstract: JsonValue | null;
-  keyword: JsonValue | null;
-  background: JsonValue | null;
-  purpose: JsonValue | null;
-  method: JsonValue | null;
-  literature_review: JsonValue | null;
-  bibliography: JsonValue | null;
+  name: string | null;
+  abstract: string | null;
+  keyword: string | null;
+  background: string | null;
+  purpose: string | null;
+  method: string | null;
+  literature_review: string | null;
+  bibliography: string | null;
   createdAt: Date;
   updatedAt: Date;
   deleted: boolean;
