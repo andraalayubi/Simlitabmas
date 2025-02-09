@@ -1,6 +1,6 @@
 import prisma from '../client/prisma';
 import bcrypt from 'bcrypt';
-import { user, user_type } from '../../../prisma/interfaces';
+import { user_type, user } from 'prisma/interfaces';
 
 const addNewUser = async (user: user) => {
     try {

@@ -1,5 +1,5 @@
 //File:psService.ts
-import prisma from '../../../prisma';
+import prisma from "src/client/prisma";
 
 export const getAuditDepartment = async () => {
   const auditDepartment: any = await prisma.$queryRaw`
