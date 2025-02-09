@@ -1,14 +1,32 @@
 import prisma from "../../../../../prisma";
 import { NextRequest, NextResponse } from "next/server";
+import researchGroupService from '@/app/services/researchGroupService';
+
+export async function GET(request: NextRequest) {
+  try {
+    const research_groups = await researchGroupService.getAllActive();
+
+    return NextResponse.json({
+      success: true,
+      message: "Success getting data",
+      data: research_groups
+    }, { status: 200 });
+  } catch (error: any) {
+    return NextResponse.json({
+      success: false,
+      message: `Internal Server error: ${error.message}`
+    }, { status: 500 });
+  }
+}
 
 export async function POST(req: NextRequest) {
-    const { nama, deskripsi } = await req.json();
+    const { nama: name, deskripsi: description } = await req.json();
 
     try {
         const researchGroup = await prisma.research_group.create({
             data: {
-                nama: nama,
-                deskripsi: deskripsi,
+                name,
+                description,
             }
         })
 

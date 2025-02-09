@@ -1,15 +1,21 @@
 import axios from "axios";
 
 export const proposalSuggestionAction = async (
-  values: { email: string; password: string },
-  setLoading: (loading: boolean) => void
+  values: { name: string; year_research_id: string; schema_id: string; research_group_id?: string },
+  setLoading: (loading: boolean) => void,
+  type: "penelitian" | "pengmas" = "penelitian"
 ) => {
   setLoading(true);
 
   try {
-    const response = await axios.post("/api/proposal-suggestion", values);
-    
-    if (response.status === 200 && response.data.success) {
+    const response = await axios.post(
+      type === "penelitian"
+        ? "/api/lecturer/proposal-suggestion"
+        : "/api/lecturer/proposal-suggestion-pengmas",
+      values
+    );
+
+    if (response.status === 201 && response.data.success) {
       return {
         success: true,
         message: "Successfully created a proposal suggestion!",
@@ -34,7 +40,6 @@ export const fetchSchemas = async () => {
   try {
     const response = await fetch('/api/lecturer/schema');
     const result = await response.json();
-    console.log(result);
 
     if (result.success) {
       return result.data.map((schema: { id: number; name: string }) => ({
@@ -46,6 +51,44 @@ export const fetchSchemas = async () => {
     return [];
   } catch (error) {
     console.error('Failed to fetch schemas:', error);
+    return [];
+  }
+}
+
+export const fetchYearResearches = async () => {
+  try {
+    const response = await fetch('/api/lecturer/year_research');
+    const result = await response.json();
+
+    if (result.success) {
+      return result.data.map((yearResearch: { id: number; year: number }) => ({
+        value: yearResearch.id.toString(),
+        label: yearResearch.year.toString()
+      }));
+    }
+
+    return [];
+  } catch (error) {
+    console.error('Failed to fetch year researches:', error);
+    return [];
+  }
+}
+
+export const fetchResearchGroups = async () => {
+  try {
+    const response = await fetch('/api/lecturer/research_group');
+    const result = await response.json();
+
+    if (result.success) {
+      return result.data.map((researchGroup: { id: number; name: string }) => ({
+        value: researchGroup.id.toString(),
+        label: researchGroup.name
+      }));
+    }
+
+    return [];
+  } catch (error) {
+    console.error('Failed to fetch research groups:', error);
     return [];
   }
 }

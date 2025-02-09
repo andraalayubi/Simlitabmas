@@ -58,11 +58,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </Tabs>
         <ModalComponent title="Buat Usulan">
           {(close) => (
-            <ProposalSuggestionModal
-              onClose={close}
-              showResearchGroup={true}
-              type="penelitian"
-            />
+            <ProposalSuggestionModal onClose={close} showResearchGroup={false} type="pengmas" />
           )}
         </ModalComponent>
       </div>

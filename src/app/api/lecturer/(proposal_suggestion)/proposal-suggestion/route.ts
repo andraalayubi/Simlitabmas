@@ -1,3 +1,4 @@
+import prisma from "@/app/client/prisma";
 import { getSession } from "@/app/lib/session";
 import proposalSuggestionService from "@/app/services/proposalSuggestionService";
 import { NextRequest, NextResponse } from "next/server";
@@ -36,6 +37,61 @@ export async function GET(req: NextRequest) {
         });
 
     } catch (error: any) {
+        return NextResponse.json({
+            success: false,
+            message: `Internal Server Error: ${error.message}`,
+        }, { status: 500 });
+    }
+}
+
+export async function POST(req: NextRequest) {
+    try {
+        const session = await getSession();
+
+        // Type guard to ensure user_id is a number
+        if (!session || typeof session.user_id !== 'number') {
+          return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
+        const user = await prisma.user.findUnique({
+            where: {
+              id: session.user_id, 
+            },
+            select: {
+              lecturer_id: true,
+            },
+          });
+      
+          if (!user || !user.lecturer_id) {
+            throw new Error('Lecturer ID not found for the current user.');
+          }
+
+        // Parse request body
+        const body = await req.json();
+
+        // Convert string IDs to numbers
+        const proposalData = {
+            ...body,
+            research_group_id: Number(body.research_group_id),
+            schema_id: Number(body.schema_id),
+            year_research_id: Number(body.year_research_id),
+            lecturer_id: user.lecturer_id,
+            status: 'tersimpan' as proposal_suggestion_status,
+            is_active: true
+        };
+        console.log(proposalData);
+
+        // Create proposal suggestion
+        const newProposalSuggestion = await proposalSuggestionService.create(proposalData);
+
+        return NextResponse.json({
+            success: true,
+            data: newProposalSuggestion,
+            message: "Proposal suggestion created successfully"
+        }, { status: 201 });
+
+    } catch (error: any) {
+        console.error("Error creating proposal suggestion:", error);
         return NextResponse.json({
             success: false,
             message: `Internal Server Error: ${error.message}`,

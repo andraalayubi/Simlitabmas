@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 
 interface ModalProps {
   title?: string;
-  children: ReactNode;
+  children: (close: () => void) => ReactNode;
 }
 
 const ModalComponent: React.FC<ModalProps> = ({ title, children }) => {
@@ -13,7 +13,7 @@ const ModalComponent: React.FC<ModalProps> = ({ title, children }) => {
   return (
     <>
       <Modal opened={opened} onClose={close} title={title} centered>
-        {children}
+        {children(close)}
       </Modal>
 
       <Button

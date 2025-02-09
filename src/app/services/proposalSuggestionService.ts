@@ -41,12 +41,27 @@ const getByFilter = async (filter: {
     });
 };
 
+// create proposal_suggestion
+const create = async (data: proposal_suggestion) => {
+    return await prisma.proposal_suggestion.create({
+        data: {
+            name: data.name,
+            year_research_id: data.year_research_id,
+            schema_id: data.schema_id,
+            lecturer_id: data.lecturer_id,
+            research_group_id: data.research_group_id,
+            status: data.status,
+            is_active: data.is_active,
+        },
+    })
 
+}
 
 const proposalSuggestionService = {
     getById,
     getByLecturerId,
-    getByFilter
+    getByFilter,
+    create
 }
 
 export default proposalSuggestionService

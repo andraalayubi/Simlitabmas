@@ -1,9 +1,14 @@
 import { z } from "zod";
 
-export const proposalSuggestionSchema = z.object({
-  title: z.string().min(10, { message: "Research title must be at least 10 characters long" }),
-  description: z.string().min(20, { message: "Research description must be at least 20 characters long" }),
-  research_group_id: z.number().positive({ message: "Please select a research group" }),
-  schema_id: z.number().positive({ message: "Please select a research schema" }),
-  year_research_id: z.number().positive({ message: "Please select a research year" }),
+export const proposalSuggestionPenelitianSchema = z.object({
+  name: z.string().min(1, { message: "Judul penelitian harus diisi" }),
+  year_research_id: z.string().min(1, { message: "Tahun penelitian harus dipilih" }),
+  schema_id: z.string().min(1, { message: "Skema penelitian harus dipilih" }),
+  research_group_id: z.string().min(1, { message: "Kelompok penelitian harus dipilih" }),
+});
+
+export const proposalSuggestionPengmasSchema = z.object({
+  name: z.string().min(1, { message: "Judul pengabdian harus diisi" }),
+  year_research_id: z.string().min(1, { message: "Tahun pengabdian harus dipilih" }),
+  schema_id: z.string().min(1, { message: "Skema pengabdian harus dipilih" }),
 });
