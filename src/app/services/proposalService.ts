@@ -11,11 +11,14 @@ const getById = async (id: number) => {
 
 // get by proposal_suggestion_id
 const getByProposalSuggestionId = async (proposalSuggestionId: number) => {
-    return await prisma.proposal.findUnique({
-        where: { proposal_suggestion_id: proposalSuggestionId },
+    return await prisma.proposal_suggestion.findUnique({
+        relationLoadStrategy: 'join',
+        where: { id: proposalSuggestionId },
+        include: {
+            proposal: true
+        }
     });
 };
-
 
 const proposalService = {
     getById,

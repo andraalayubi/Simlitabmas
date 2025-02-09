@@ -1,0 +1,45 @@
+.ProseMirror:focus {
+  outline: none;
+}
+
+.proposal-name {
+  min-height: 75px;
+  max-height: 50px;
+  overflow-y: auto;
+}
+
+.proposal-abstract {
+  min-height: 120px;
+  max-height: 50px;
+  overflow-y: auto;
+}
+
+.proposal-method {
+  min-height: 150px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.proposal-background {
+  min-height: 150px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.proposal-purpose {
+  min-height: 150px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.proposal-literature-review {
+  min-height: 150px;
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.proposal-bibliography {
+  min-height: 150px;
+  max-height: 200px;
+  overflow-y: auto;
+}

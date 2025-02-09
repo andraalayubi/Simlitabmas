@@ -9,7 +9,7 @@ import ProposalKaprodi from "./_kaprodi";
 import ProposalKetuaRG from "./_ketua_rg";
 import ProposalLecturer from "./_lecturer";
 
-export default function LuaranPage() {
+export default function ProposalPage() {
     const { session, loading: sessionLoading } = useSession();
     const params = useParams();
     const usulan_id = params.usulan_id;
@@ -20,9 +20,9 @@ export default function LuaranPage() {
       }
     }, [sessionLoading]);
   
-    if (sessionLoading) {
-      return <LoadingPage />;
-    }
+    // if (sessionLoading) {
+    //   return <LoadingPage />;
+    // }
   
     if(session?.user_type == "admin") {
       return <ProposalAdmin />
@@ -32,7 +32,5 @@ export default function LuaranPage() {
       return <ProposalKetuaRG />
     } else if (session?.user_type == "kaprodi") {
       return <ProposalKaprodi />
-    } else {
-      return notFound()
-    }
+    } 
   }

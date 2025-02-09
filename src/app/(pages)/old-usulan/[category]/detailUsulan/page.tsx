@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import DaftarProposal from '../../../../components/usulan/proposal/CreateProposal';
+import DaftarProposal from '../../../../components/usulan/proposal/ProposalPage';
 import DaftarAnggota from '../../../../components/usulan/anggota/ListAnggota';
 import LogbookForm from '@/app/components/usulan/Logbook';
 import Evaluations from '@/app/components/usulan/Evaluations';
