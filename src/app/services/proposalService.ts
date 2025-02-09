@@ -20,9 +20,25 @@ const getByProposalSuggestionId = async (proposalSuggestionId: number) => {
     });
 };
 
+// save by proposal section/part
+const updateByProposalSection = async (proposal_suggestion_id: number, section: string, data: string) => {
+
+    // update by key
+    const updateData: { [key: string]: string } = {};
+    updateData[section] = data;
+
+    console.log(updateData);
+
+    return await prisma.proposal.update({
+        where: { proposal_suggestion_id: proposal_suggestion_id },
+        data: updateData
+    });
+}
+
 const proposalService = {
     getById,
     getByProposalSuggestionId,
+    updateByProposalSection,
 }
 
 
