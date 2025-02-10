@@ -5,18 +5,18 @@ import { cookies, headers } from 'next/headers';
 
 
 const protectedRoutes = [
-    { path: /^\/dashboard/, roles: ['admin', 'dosen', 'user'] },
+    { path: /^\/dashboard/, roles: ['admin', 'lecturer', 'user'] },
     { path: /^\/admin/, roles: ['admin'] },
-    { path: /^\/usulan/, roles: ['admin', 'dosen', 'kaprodi', 'ketua_rg']},
-    { path: /^\/penelitian/, roles: ['admin', 'dosen', 'kaprodi', 'ketua_rg']},
-    { path: /^\/pengmas/, roles: ['admin', 'dosen', 'kaprodi', 'ketua_rg']},
-    { path: /^\/dashboard\/lecturer/, roles: ['admin', 'dosen'] },
+    { path: /^\/usulan/, roles: ['admin', 'lecturer', 'kaprodi', 'ketua_rg']},
+    { path: /^\/penelitian/, roles: ['admin', 'lecturer', 'kaprodi', 'ketua_rg']},
+    { path: /^\/pengmas/, roles: ['admin', 'lecturer', 'kaprodi', 'ketua_rg']},
+    { path: /^\/dashboard\/lecturer/, roles: ['admin', 'lecturer'] },
 ];
 
 // make api endpoint dinamically for protected routing
 const roleBasedApiRoutes = [
+    'admin',
     'lecturer',
-    'dosen',
     'kaprodi',
     'ketua_rg',
 ];
