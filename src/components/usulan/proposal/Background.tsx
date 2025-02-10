@@ -12,29 +12,6 @@ import Heading from "@tiptap/extension-heading";
 import ListItem from "@tiptap/extension-list-item";
 import Underline from "@tiptap/extension-underline";
 import { user_type } from "prisma/interfaces";
-import {
-  IconBold,
-  IconItalic,
-  IconUnderline,
-  IconStrikethrough,
-  IconCode,
-  IconAlignLeft,
-  IconAlignCenter,
-  IconAlignRight,
-  IconAlignJustified,
-  IconPhoto,
-  IconLink,
-  IconUnlink,
-  IconList,
-  IconListNumbers,
-  IconQuote,
-  IconSeparator,
-  IconArrowBack,
-  IconArrowForward,
-  IconH1,
-  IconH2,
-  IconH3,
-} from "@tabler/icons-react"; // Import ikon dari Tabler Icons
 import EditorToolbar from "./Toolbar";
 
 interface BackgroundTextEditorProps {

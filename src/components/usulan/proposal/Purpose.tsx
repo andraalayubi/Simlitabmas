@@ -4,12 +4,19 @@ import { useEffect, useState } from "react";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
-import Heading from "@tiptap/extension-heading";
 import Underline from "@tiptap/extension-underline";
 import { user_type } from "prisma/interfaces";
 import EditorToolbar from "./Toolbar";
 import OrderedList from "@tiptap/extension-ordered-list";
 import ListItem from "@tiptap/extension-list-item";
+import { FontSize } from "src/components/text_editor/tiptapExtension";
+import TextStyle from '@tiptap/extension-text-style'
+import Table from "@tiptap/extension-table";
+import TableCell from "@tiptap/extension-table-cell";
+import TableHeader from "@tiptap/extension-table-header";
+import TableRow from "@tiptap/extension-table-row";
+import './_tiptap.css'
+
 
 interface PurposeTextEditorProps {
   content: any;
@@ -31,6 +38,14 @@ const PurposeTextEditor: React.FC<PurposeTextEditorProps> = ({
       Underline,
       OrderedList,
       ListItem,
+      FontSize,
+      TextStyle,
+      Table.configure({
+        resizable: true
+      }),
+      TableRow,
+      TableHeader,
+      TableCell
     ],
     content: editorContent,
     editable: !disabled,
@@ -49,6 +64,7 @@ const PurposeTextEditor: React.FC<PurposeTextEditorProps> = ({
   }, [content, editor]);
 
   const toolbarTools = [
+    "fontSize",
     "bold",
     "italic",
     "underline",
@@ -58,6 +74,7 @@ const PurposeTextEditor: React.FC<PurposeTextEditorProps> = ({
     "alignJustify",
     "bulletList",
     "orderedList",
+    "table",
     "undo",
     "redo",
   ];

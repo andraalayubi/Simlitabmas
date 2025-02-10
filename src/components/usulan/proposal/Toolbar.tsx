@@ -39,6 +39,15 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({ editor, tools }) => {
   return (
     <div className="mb-2 flex gap-2 flex-wrap">
       {tools.map((tool) => {
+        // font size dropdown
+        if (tool === "fontSize") {
+          return <FontSizeDropdown key={tool} editor={editor} />;
+        }
+
+        if (tool === "table") {
+          return <TableDropdown key={tool} editor={editor} />;
+        }
+
         const buttonConfig = toolbarButtons[tool];
         return buttonConfig ? (
           <ToolbarButton
@@ -190,5 +199,100 @@ const getToolbarButtons = (editor: Editor) => ({
     icon: <IconArrowForward size={16} />,
   },
 });
+
+// fontsize component (custom in tiptapExtension.tsx)
+const FontSizeDropdown: React.FC<{ editor: Editor | null }> = ({ editor }) => {
+  if (!editor) return null;
+
+  const currentSize =
+    editor.getAttributes("textStyle").fontSize?.replace("px", "") || "";
+
+  return (
+    <select
+      value={currentSize}
+      onChange={(e) => {
+        const value = e.target.value;
+        if (value) {
+          editor.commands.setFontSize(value);
+        } else if (value === "default") {
+          editor.commands.unsetFontSize();
+        } else {
+          editor.commands.setFontSize("12");
+        }
+      }}
+      className="p-1 rounded-md border border-gray-300 text-sm h-8"
+    >
+      <option value="default">Default</option>
+      <option value="12">12px</option>
+      <option value="14">14px</option>
+      <option value="16">16px</option>
+      <option value="18">18px</option>
+      <option value="24">24px</option>
+      <option value="32">32px</option>
+    </select>
+  );
+};
+
+// table dropdown
+const TableDropdown: React.FC<{ editor: Editor | null }> = ({ editor }) => {
+  if (!editor) return null;
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const command = e.target.value;
+    switch (command) {
+      case "insertTable":
+        editor
+          .chain()
+          .focus()
+          .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+          .run();
+        break;
+      case "addColumnBefore":
+        editor.chain().focus().addColumnBefore().run();
+        break;
+      case "addColumnAfter":
+        editor.chain().focus().addColumnAfter().run();
+        break;
+      case "deleteColumn":
+        editor.chain().focus().deleteColumn().run();
+        break;
+      case "addRowBefore":
+        editor.chain().focus().addRowBefore().run();
+        break;
+      case "addRowAfter":
+        editor.chain().focus().addRowAfter().run();
+        break;
+      case "deleteRow":
+        editor.chain().focus().deleteRow().run();
+        break;
+      case "deleteTable":
+        editor.chain().focus().deleteTable().run();
+        break;
+      default:
+        break;
+    }
+    e.target.value = "";
+  };
+
+  return (
+    <select
+      onChange={handleChange}
+      defaultValue=""
+      className="p-1 rounded-md border border-gray-300 text-sm h-8"
+    >
+      <option value="" disabled>
+        Table
+      </option>
+      <option value="insertTable">Insert Table</option>
+      <option value="addColumnBefore">Add Column Before</option>
+      <option value="addColumnAfter">Add Column After</option>
+      <option value="deleteColumn">Delete Column</option>
+      <option value="addRowBefore">Add Row Before</option>
+      <option value="addRowAfter">Add Row After</option>
+      <option value="deleteRow">Delete Row</option>
+      <option value="deleteTable">Delete Table</option>
+    </select>
+  );
+};
 
 export default EditorToolbar;
