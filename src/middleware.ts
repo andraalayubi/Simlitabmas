@@ -92,6 +92,7 @@ export const config = {
         '/api/admin/:path*',
         '/api/ketua_rg/:path*',
         '/api/lecturer/:path*',
+        '/api/kaprodi/:path*',
         '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)'
     ]
 }
