@@ -17,7 +17,7 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
         const session = await getSession();
 
         const body = await req.json();
-        const data = body.data;
+        const data = body.content;
 
         const updatedProposal = await proposalService.updateByProposalSection(proposal_suggestion_id, section, data);
 
