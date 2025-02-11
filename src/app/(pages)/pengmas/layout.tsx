@@ -35,7 +35,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     TabMenus.find((tab) => pathname.includes(tab.value))?.value || "overview";
 
   const handleTabChange = (value: string | null) => {
-    router.push(`/penelitian/${value}`);
+    router.push(`/pengmas/${value}`);
   };
 
   return (
@@ -56,11 +56,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             ))}
           </Tabs.List>
         </Tabs>
-        <ModalComponent title="Buat Usulan">
-          {(close) => (
-            <ProposalSuggestionModal onClose={close} showResearchGroup={false} type="pengmas" />
-          )}
-        </ModalComponent>
+        {(session?.user_type === "lecturer") && (
+          <ModalComponent title="Buat Usulan">
+            {(close) => (
+              <ProposalSuggestionModal
+                onClose={close}
+                showResearchGroup={false}
+                type="pengmas"
+              />
+            )}
+          </ModalComponent>
+        )}
       </div>
 
       {/* Child component */}

@@ -35,7 +35,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchUsulan = async () => {
       try {
-        const response = await axios.get("/api/{$user_type}/dashboard");
+        const response = await axios.get(`/api/${user_type}/dashboard`);
         setUsulan(response.data);
       } catch (error) {
         console.error("Error fetching proposals:", error);
@@ -60,7 +60,8 @@ export default function Dashboard() {
   } else if (session?.user_type === "ketua_rg") {
     return <DashboardKetuaRG usulan={usulan} />;
   } else if (session?.user_type === "kaprodi") {
-    return <DashboardKaprodi usulan={usulan} />;
+    return <DashboardKetuaRG usulan={usulan} />;
+    // return <DashboardKaprodi usulan={usulan} />;
   } else {
     return notFound()
   }

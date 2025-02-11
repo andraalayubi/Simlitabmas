@@ -36,7 +36,7 @@ const menuProfiles = {
     { label: "Profile", icon: <IconUserCog />, color: "blue", route: "/profile" },
     { label: "Admin Settings", icon: <IconSettingsExclamation />, color: "blue", route: "/admin" },
   ],
-  dosen: [{ label: "Profile", icon: <IconUserCog />, color: "blue", route: "/profile" }],
+  lecturer: [{ label: "Profile", icon: <IconUserCog />, color: "blue", route: "/profile" }],
   ketua_rg: [{ label: "Profile", icon: <IconUserCog />, color: "blue", route: "/profile" }],
   kaprodi: [{ label: "Profile", icon: <IconUserCog />, color: "blue", route: "/profile" }],
   default: [{ label: "General Info", icon: <IconHeart />, color: "red", route: "/not-found" }],
@@ -49,7 +49,7 @@ const menuSettings = {
     { label: "Manage Users", icon: <IconUsersGroup />, color: "yellow" },
     { label: "Logs", icon: <IconActivity />, color: "yellow" },
   ],
-  dosen: [],
+  lecturer: [],
   ketua_rg: [{ label: "Manage Research Groups", icon: <IconUsersGroup />, color: "yellow" }],
   kaprodi: [{ label: "Manage Departments", icon: <IconUsersGroup />, color: "yellow" }],
   default: [{ label: "General Info", icon: <IconHeart />, color: "red" }],
@@ -78,10 +78,12 @@ const Header: React.FC<HeaderProps> = ({ session }) => {
     : "Selamat Datang, Tamu";
 
   const title = (() => {
+    console.log(session?.user_type);
+    
     switch (session?.user_type) {
       case "admin":
         return "Administrator";
-      case "dosen":
+      case "lecturer":
         return "Gelar Dosen";
       case "ketua_rg":
         return "Ketua RG";

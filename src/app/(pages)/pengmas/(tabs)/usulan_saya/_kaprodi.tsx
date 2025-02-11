@@ -4,11 +4,11 @@ import TableLayout from "src/components/table/tableLayout";
 import { getSession } from "src/lib/session";
 import { proposal_suggestion } from "prisma/interfaces";
 
-interface SemuaUsulanLecturerProps {
+interface SemuaUsulanKaprodiProps {
   columns: MRT_ColumnDef<proposal_suggestion>[];
 }
 
-const SemuaUsulanLecturer: React.FC<SemuaUsulanLecturerProps> = ({ columns }) => {
+const SemuaUsulanKaprodi: React.FC<SemuaUsulanKaprodiProps> = ({ columns }) => {
   const [data, setData] = useState<proposal_suggestion[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -21,8 +21,8 @@ const SemuaUsulanLecturer: React.FC<SemuaUsulanLecturerProps> = ({ columns }) =>
           setIsLoading(false);
           return;
         }
-        
-        const response = await fetch(`/api/lecturer/proposal-suggestion?lecturer_id=${session.lecturer_id}`);
+
+        const response = await fetch(`/api/kaprodi/proposal-suggestion?lecturer_id=${session.lecturer_id}`);
         const result = await response.json();
 
         if (result.success) {
@@ -59,4 +59,4 @@ const SemuaUsulanLecturer: React.FC<SemuaUsulanLecturerProps> = ({ columns }) =>
   </div>;
 }
 
-export default SemuaUsulanLecturer;
+export default SemuaUsulanKaprodi;

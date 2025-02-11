@@ -24,6 +24,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     if (!sessionLoading) {
       setLoading(false);
     }
+    console.log(session);
+    
   }, [sessionLoading]);
 
   if (sessionLoading || loading) {
@@ -56,15 +58,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             ))}
           </Tabs.List>
         </Tabs>
-        <ModalComponent title="Buat Usulan">
-          {(close) => (
-            <ProposalSuggestionModal
-              onClose={close}
-              showResearchGroup={true}
-              type="penelitian"
-            />
-          )}
-        </ModalComponent>
+        {(session?.user_type === "ketua_rg" || session?.user_type === "lecturer") && (
+          <ModalComponent title="Buat Usulan">
+            {(close) => (
+              <ProposalSuggestionModal
+                onClose={close}
+                showResearchGroup={true}
+                type="penelitian"
+              />
+            )}
+          </ModalComponent>
+        )}
       </div>
 
       {/* Child component */}

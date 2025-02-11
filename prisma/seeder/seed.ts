@@ -61,6 +61,7 @@ const lecturers = [
                 { name: "Admin Andra", email: "adminAndra@gmail.com", user_type: 'admin' as user_type, password: "Andra123!" },
                 { name: "Dosen Andra", email: "dosenAndra@gmail.com", user_type: 'lecturer' as user_type, password: "Andra123!" },
                 { name: "Ketua RG Andra", email: "ketuargAndra@gmail.com", user_type: 'ketua_rg' as user_type, password: "Andra123!" },
+                { name: "Kaprodi Andra", email: "kaprodiAndra@gmail.com", user_type: 'kaprodi' as user_type, password: "Andra123!" },
             ]
         }
     },

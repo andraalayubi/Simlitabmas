@@ -5,7 +5,7 @@ import { cookies, headers } from 'next/headers';
 
 
 const protectedRoutes = [
-    { path: /^\/dashboard/, roles: ['admin', 'lecturer', 'user'] },
+    { path: /^\/dashboard/, roles: ['admin', 'lecturer', 'kaprodi', 'ketua_rg'] },
     { path: /^\/admin/, roles: ['admin'] },
     { path: /^\/usulan/, roles: ['admin', 'lecturer', 'kaprodi', 'ketua_rg']},
     { path: /^\/penelitian/, roles: ['admin', 'lecturer', 'kaprodi', 'ketua_rg']},
