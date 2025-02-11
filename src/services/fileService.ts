@@ -4,10 +4,9 @@ import { v4 as uuid4 } from 'uuid';
 import minioClient from '../client/minio';
 import { IncomingMessage } from 'http';
 import sharp from 'sharp';
-
+import { randomBytes } from 'crypto';
 
 export interface Object {
-    objectType: 'doc' | 'img' | 'else';
     name: string;
     buffer: Buffer;
     type: string;
@@ -21,20 +20,20 @@ export async function saveObject(object: Object) {
 
     const objectType = await getContentTypeFromFileName(object.name);
 
-    if (object.objectType === 'img') {
+    if (objectType === 'image/png' || objectType === 'image/jpg' || objectType === 'image/gif') {
         object.buffer = await sharp(object.buffer)
             .png()
             .toBuffer();
         bucketName = process.env.MINIO_BUCKET_IMG_NAME || '';
         objectName = `IMG-${uuid}.png`;
 
-    } else if (object.objectType === 'doc') {
+    } else if (objectType === 'application/pdf') {
         bucketName = process.env.MINIO_BUCKET_DOC_NAME || '';
         objectName = `DOC-${uuid}.pdf`;
 
     } else {
         const fileExtension = object.name.split('.').pop();
-        bucketName = process.env.MINIO_BUCKET_DOC_NAME || '';
+        bucketName = process.env.MINIO_BUCKET_OBJ_NAME || '';
         objectName = `OBJ-${uuid}.${fileExtension}`;
     }
 
@@ -55,20 +54,35 @@ export async function saveObject(object: Object) {
             return objInfo;
         }
     );
-    return result;
+
+    return {
+        result: result,
+        filename: objectName,
+    };
 }
 
 
 // get object
 export const getFileFromMinio = async (
-    bucketName: string,
-    objectName: string
+    objectName: string,
+    objectType: string,
 ): Promise<IncomingMessage> => {
+
+
+    // determine bucket by file type
+    let bucketName = '';
+    if (objectType === 'image/png' || objectType === 'image/jpg' || objectType === 'image/gif') {
+        bucketName = process.env.MINIO_BUCKET_IMG_NAME || '';
+    } else if (objectType === 'application/pdf') {
+        bucketName = process.env.MINIO_BUCKET_DOC_NAME || '';
+    } else {
+        bucketName = process.env.MINIO_BUCKET_OBJ_NAME || '';
+    }
 
     return new Promise((resolve, reject) => {
         minioClient.getObject(bucketName, objectName, (err: Error, stream: any) => {
             if (err) {
-                console.log('gagal')
+                console.log('Failed to get object', err)
                 return reject(err);
             }
             resolve(stream);
