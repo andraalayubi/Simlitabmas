@@ -17,7 +17,7 @@ export async function getSession() {
 
 // membuat sesi
 export async function createSession(user: user) {
-    const expiresAt = new Date(Date.now() + 1 * 60 * 60 * 1000);
+    const expiresAt = new Date(Date.now() + 1 * 60 * 60 * 1000 * 24);
 
     // 1 jam
     const session = await encrypt({ 
