@@ -33,6 +33,30 @@ export async function GET(req: NextRequest, { params }: { params: Params }) {
             message: `Internal Server error: ${error.message}`
         }, { status: 500 });
     }
+}
 
 
+export async function PUT(req: NextRequest, { params }: { params: Params }) {
+    const proposal_suggestion_id = parseInt(params.proposal_suggestion_id)
+    const payload = await req.json();
+
+    try {
+        const session = await getSession();
+
+        const proposal = await proposalService.update(
+            proposal_suggestion_id, payload
+        )
+
+        return NextResponse.json({
+            success: true,
+            message: "Success update proposal",
+            data: proposal
+        }, { status: 200 })
+
+    } catch (error: any) {
+        return NextResponse.json({
+            success: false,
+            message: `Internal Server error: ${error.message}`
+        }, { status: 500 });
+    }
 }

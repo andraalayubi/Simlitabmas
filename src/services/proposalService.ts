@@ -1,5 +1,12 @@
-import { proposal_suggestion_status } from "prisma/interfaces";
+import { proposal, proposal_suggestion_status } from "prisma/interfaces";
 import prisma from "../client/prisma";
+
+// declare column can be update
+interface UpdateProposal {
+    name?: string;
+    file_url?: string;
+}
+
 
 
 // get by id
@@ -20,6 +27,14 @@ const getByProposalSuggestionId = async (proposalSuggestionId: number) => {
     });
 };
 
+const update = async (proposal_suggestion_id: number, data: UpdateProposal) => {
+    const updatedProposal = await prisma.proposal.update({
+        where: { proposal_suggestion_id },
+        data: data,
+    });
+    return updatedProposal;
+}
+
 // save by proposal section/part
 const updateByProposalSection = async (proposal_suggestion_id: number, section: string, data: string) => {
 
@@ -38,6 +53,7 @@ const updateByProposalSection = async (proposal_suggestion_id: number, section: 
 const proposalService = {
     getById,
     getByProposalSuggestionId,
+    update,
     updateByProposalSection,
 }
 

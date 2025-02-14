@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
         // save by type 
         const result = await saveObject({name: file.name, buffer: buffer, type: file.type })
 
-        return NextResponse.json({ data: result, status: 200 });
+        return NextResponse.json({message: "Success uploading File", data: result, status: 200 });
 
     } catch (error: any) {
         console.error('Error uploading file:', error);

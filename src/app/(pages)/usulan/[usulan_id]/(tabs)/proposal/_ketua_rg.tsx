@@ -1,173 +1,164 @@
 "use client";
 
-import AbstractTextEditor from "src/components/usulan/proposal/Abstract";
-import BackgroundTextEditor from "src/components/usulan/proposal/Background";
-import BibliographyTextEditor from "src/components/usulan/proposal/Bibliography";
-import LiteratureReviewTextEditor from "src/components/usulan/proposal/LiteratureReview";
-import MethodTextEditor from "src/components/usulan/proposal/Method";
-import NameTextEditor from "src/components/usulan/proposal/Name";
-import PurposeTextEditor from "src/components/usulan/proposal/Purpose";
-import { Group, Button, Skeleton } from "@mantine/core";
+import { Button, Skeleton, Card, FileButton, Text } from "@mantine/core";
 import { useParams } from "next/navigation";
 import { proposal, proposal_suggestion } from "prisma/interfaces";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import useNotification from "src/components/notification/notification";
+import proposalAction from "src/action/proposalAction";
+import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
+import PdfViewer from "src/components/pdf/pdfViewer";
 
 const ProposalKetuaRG = () => {
   const user_type = "ketua_rg";
   const [loading, setLoading] = useState(true);
   const params = useParams();
   const usulan_id = params.usulan_id;
+  const { showNotification } = useNotification();
   const [proposal, setProposal] = useState<proposal | null>(null);
   const [proposalSuggestion, setProposalSuggestion] =
     useState<proposal_suggestion | null>(null);
+  const [proposalFile, setProposalFile] = useState<File | null>();
 
-  const getProposal = async () => {
-    try {
-      const response = await fetch(`/api/${user_type}/proposal/${usulan_id}`, {
-        method: "GET",
-      });
+  const getProposal = useCallback(async () => {
+    const response = await proposalAction.getProposal(
+      user_type,
+      usulan_id[0],
+      setLoading
+    );
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const result = await response.json();
-      const data: proposal_suggestion = result.data;
-
-      setProposalSuggestion(data);
-      setProposal(data.proposal || null);
-      console.log("proposal", data);
-    } catch (error) {
-      console.error("Error fetching proposal data:", error);
-    } finally {
-      setLoading(false);
+    if (response.success) {
+      showNotification({ status: "success", message: response.message });
+      setProposalSuggestion(response.data);
+      setProposal(response.data.proposal);
+    } else {
+      showNotification({ status: "error", message: response.message });
     }
+  }, [user_type, usulan_id]); // use cache if user_type and usulan_id are same
+
+  // update proposal
+  const updateProposal = async () => {
+    const response = await proposalAction.updateProposal(
+      proposal,
+      proposalSuggestion!.id,
+      user_type,
+      setLoading
+    );
+
+    if (response.success) {
+      showNotification({ status: "success", message: response.message });
+      getProposal();
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  };
+
+  const handleFileUpload = async (file: File | null) => {
+    if (!file) {
+      showNotification({
+        status: "error",
+        message: "Pilih file terlebih dahulu!",
+      });
+      return;
+    }
+
+    const response = await proposalAction.uploadProposalFile(file!, setLoading);
+    if (response.success) {
+      setProposal((prev) =>
+        prev ? { ...prev, file_url: response.data.filename } : null
+      );
+      showNotification({
+        status: "success",
+        message: response.message,
+      });
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  };
+
+  const clearProposalFile = () => {
+    setProposalFile(null);
   };
 
   useEffect(() => {
     getProposal();
-  }, []);
+  }, [getProposal]);
 
   return (
     <>
       <div className="bg-white shadow sm:rounded-lg p-6">
-        <h2 className="text-xl font-semibold mb-4">Buat Proposal</h2>
-        <form onSubmit={() => {}}>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="abstrak"
-            >
-              Judul Proposal
-            </label>
+        {/* Baris Judul, Status, dan Tahap Usulan */}
+        <Skeleton visible={loading}>
+          <ProposalSuggestionSummaryCard
+            proposal_suggestion_name={proposalSuggestion?.name!}
+            status={proposalSuggestion?.status!}
+            phase={proposalSuggestion?.phase!}
+          />
+        </Skeleton>
+        {/* Grid utama dengan perbandingan 5:3 pada layar besar, 1 kolom pada layar kecil */}
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-[5fr_3fr] gap-6">
+          {/* Kolom PDF Viewer (Lebih besar) */}
+          <div>
             <Skeleton visible={loading}>
-              <NameTextEditor
-                content={proposal?.name}
-                proposal_id={proposal?.id ?? 0}
-                disabled={false}
-                user_type={user_type}
+              <PdfViewer
+                pdfUrl={
+                  proposal?.file_url
+                    ? `/api/file?name=${proposal.file_url}`
+                    : null
+                }
               />
             </Skeleton>
           </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="abstrak"
-            >
-              Abstrak
-            </label>
-            <Skeleton visible={loading}>
-              <AbstractTextEditor
-                content={proposal?.abstract}
-                proposal_id={proposal?.id ?? 0}
-                disabled={false}
-                user_type={user_type}
-              />
-            </Skeleton>
+
+          {/* Kolom Tombol + Hasil Reviewer */}
+          <div className="flex flex-col gap-4">
+            {/* Tombol Upload dan Simpan */}
+            <div className="flex gap-x-2">
+              <FileButton
+                onChange={(file) => {
+                  // Langsung gunakan file dari parameter onChange
+                  setProposalFile(file);
+                  handleFileUpload(file);
+                }}
+                accept="application/pdf"
+              >
+                {(props) => <Button {...props}>Upload Proposal</Button>}
+              </FileButton>
+              {/* <Button disabled={!proposalFile} color="red" onClick={clearProposalFile}>
+                Hapus File
+              </Button> */}
+              <Button
+                variant="outline"
+                onClick={updateProposal}
+                // disabled={!proposalFile}
+              >
+                Simpan
+              </Button>
+            </div>
+
+            {/* Hasil Reviewer */}
+            <div className="grid grid-cols-1 gap-4">
+              <Card shadow="sm" padding="lg">
+                <Text size="lg" fw={600}>
+                  Hasil Reviewer 1
+                </Text>
+                <Text>
+                  Amet minim mollit non deserunt ullamco est sit aliqua dolor do
+                  amet sint.
+                </Text>
+              </Card>
+              <Card shadow="sm" padding="lg">
+                <Text size="lg" fw={600}>
+                  Hasil Reviewer 2
+                </Text>
+                <Text>
+                  Amet minim mollit non deserunt ullamco est sit aliqua dolor do
+                  amet sint.
+                </Text>
+              </Card>
+            </div>
           </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="latar-belakang"
-            >
-              Latar Belakang
-            </label>
-            <Skeleton visible={loading}>
-              <BackgroundTextEditor
-                content={proposal?.abstract}
-                proposal_id={proposal?.id ?? 0}
-                disabled={false}
-                user_type={user_type}
-              />
-            </Skeleton>
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="tujuan"
-            >
-              Tujuan
-            </label>
-            <Skeleton visible={loading}>
-              <PurposeTextEditor
-                content={proposal?.purpose}
-                proposal_id={proposal?.id ?? 0}
-                disabled={false}
-                user_type={user_type}
-              />
-            </Skeleton>
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="tujuan"
-            >
-              Metode
-            </label>
-            <Skeleton visible={loading}>
-              <MethodTextEditor
-                content={proposal?.method}
-                proposal_id={proposal?.id ?? 0}
-                disabled={false}
-                user_type={user_type}
-              />
-            </Skeleton>
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="tujuan"
-            >
-              Tinjauan Literatur
-            </label>
-            <Skeleton visible={loading}>
-              <LiteratureReviewTextEditor
-                content={proposal?.literature_review}
-                proposal_id={proposal?.id ?? 0}
-                disabled={false}
-                user_type={user_type}
-              />
-            </Skeleton>
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="tujuan"
-            >
-              Daftar Pustaka
-            </label>
-            <Skeleton visible={loading}>
-              <BibliographyTextEditor
-                content={proposal?.bibliography}
-                proposal_id={proposal?.id ?? 0}
-                disabled={false}
-                user_type={user_type}
-              />
-            </Skeleton>
-          </div>
-          <Group justify="flex-end" mt="md">
-            <Button type="submit">Submit</Button>
-          </Group>
-        </form>
+        </div>
       </div>
     </>
   );

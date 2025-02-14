@@ -8,7 +8,7 @@ import Italic from "@tiptap/extension-italic";
 import Underline from "@tiptap/extension-underline";
 import EditorToolbar from "./Toolbar";
 import "./_tiptap.css"
-import { updateProposalSection } from "src/action/proposal";
+import proposalAction from "src/action/proposalAction";
 
 interface NameTextEditorProps {
   content: any;
@@ -41,7 +41,7 @@ const NameTextEditor: React.FC<NameTextEditorProps> = ({
 
     const timeout = setTimeout(() => {
       setIsSaving(true);
-      updateProposalSection(
+      proposalAction.updateProposalSection(
         proposal_id,
         "name",
         editorContent,
