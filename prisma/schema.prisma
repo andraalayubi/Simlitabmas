@@ -54,6 +54,13 @@ enum evaluation_phase {
   final
 }
 
+enum proposal_suggestion_phase {
+  pengajuan
+  penetapan
+  pelaksanaan
+  publikasi
+}
+
 model config {
   id          Int          @id @default(autoincrement())
   name        String?
@@ -250,6 +257,7 @@ model proposal_suggestion {
   schema_id         Int?
   lecturer_id       Int?
   research_group_id Int?
+  phase   proposal_suggestion_phase?
   status            proposal_suggestion_status?
   is_active         Boolean?
 
@@ -286,6 +294,7 @@ model proposal {
   method                 String? @db.Text
   literature_review      String? @db.Text
   bibliography           String? @db.Text
+  file_url               String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

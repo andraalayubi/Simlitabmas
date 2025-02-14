@@ -10,6 +10,8 @@ export type degree = "S1" | "S2" | "S3";
 
 export type evaluation_phase = "proposal" | "progress_1" | "progress_2" | "progress_3" | "final";
 
+export type proposal_suggestion_phase = "pengajuan" | "penetapan" | "pelaksanaan" | "publikasi";
+
 export interface config {
   id: number;
   name: string | null;
@@ -163,6 +165,7 @@ export interface proposal_suggestion {
   schema_id: number | null;
   lecturer_id: number | null;
   research_group_id: number | null;
+  phase: proposal_suggestion_phase | null;
   status: proposal_suggestion_status | null;
   is_active: boolean | null;
   createdAt: Date;
@@ -194,6 +197,7 @@ export interface proposal {
   method: string | null;
   literature_review: string | null;
   bibliography: string | null;
+  file_url: string | null;
   createdAt: Date;
   updatedAt: Date;
   deleted: boolean;
