@@ -1,6 +1,6 @@
 import prisma from "../../../../../prisma";
 import { NextRequest, NextResponse } from "next/server";
-import researchGroupService from '@/app/services/researchGroupService';
+import researchGroupService from 'src/services/researchGroupService';
 
 export async function GET(request: NextRequest) {
   try {

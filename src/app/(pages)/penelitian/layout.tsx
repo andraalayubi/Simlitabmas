@@ -24,7 +24,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     if (!sessionLoading) {
       setLoading(false);
     }
-    console.log(session);
     
   }, [sessionLoading]);
 
@@ -35,24 +34,30 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   // Menentukan tab aktif berdasarkan URL
   const activeTab =
     TabMenus.find((tab) => pathname.includes(tab.value))?.value || "overview";
+    console.log(activeTab);
+    console.log(TabMenus);
+    console.log(Tabs);
+    
 
   const handleTabChange = (value: string | null) => {
     router.push(`/penelitian/${value}`);
   };
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="container mx-auto px-4 py-6"> 
       {/* Tabs navigation */}
-      <div className="flex justify-between bg-white shadow-md rounded-lg">
+      <div className="flex justify-between shadow-md rounded-lg">
         <Tabs
+          color="black"
+
           defaultValue="overview"
           value={activeTab}
           onChange={(value) => handleTabChange(value)}
-          className="mt-2"
+          className="mt-0"
         >
-          <Tabs.List className="flex border-b border-gray-200">
+          <Tabs.List className="flex border-b border-gray-200" >
             {TabMenus.map((tab) => (
-              <Tabs.Tab key={tab.value} value={tab.value}>
+              <Tabs.Tab key={tab.value} value={tab.value} className={`${tab.value === activeTab ? "bg-gray-100" : ""}`}>
                 {tab.tabName}
               </Tabs.Tab>
             ))}
@@ -72,7 +77,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* Child component */}
-      <div className="mt-4">{children}</div>
+      <div className="">{children}</div>
     </div>
   );
 }

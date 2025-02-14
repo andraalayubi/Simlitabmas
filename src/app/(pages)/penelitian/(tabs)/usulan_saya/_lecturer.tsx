@@ -8,7 +8,9 @@ interface SemuaUsulanLecturerProps {
   columns: MRT_ColumnDef<proposal_suggestion>[];
 }
 
-const SemuaUsulanLecturer: React.FC<SemuaUsulanLecturerProps> = ({ columns }) => {
+const SemuaUsulanLecturer: React.FC<SemuaUsulanLecturerProps> = ({
+  columns,
+}) => {
   const [data, setData] = useState<proposal_suggestion[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -21,24 +23,30 @@ const SemuaUsulanLecturer: React.FC<SemuaUsulanLecturerProps> = ({ columns }) =>
           setIsLoading(false);
           return;
         }
-        
-        const response = await fetch(`/api/lecturer/proposal-suggestion?lecturer_id=${session.lecturer_id}`);
+
+        const response = await fetch(
+          `/api/lecturer/proposal-suggestion?get_schema=true&get_research_group=true&lecturer_id=${session.lecturer_id}`
+        );
         const result = await response.json();
 
         if (result.success) {
           // Transform the API data to match UsulanData interface
-          const transformedData: proposal_suggestion[] = result.data.map((item: any) => ({
-            id: item.id,
-            judulPenelitian: item.name,
-            skema: item.schema_id,
-            dosenPengusul: item.lecturer_id,
-            researchGroup: item.research_group_id,
-            statusProposal: item.status
-          }));
+          const transformedData: proposal_suggestion[] = result.data.map(
+            (item: any) => ({
+              id: item.id,
+              judulPenelitian: item.name,
+              skema: item.schema.name,
+              researchGroup: item.research_group.name,
+              statusProposal: item.status,
+            })
+          );
 
           setData(transformedData);
         } else {
-          console.error("Failed to fetch proposal suggestions:", result.message);
+          console.error(
+            "Failed to fetch proposal suggestions:",
+            result.message
+          );
         }
       } catch (error) {
         console.error("Error fetching proposal suggestions:", error);
@@ -54,9 +62,16 @@ const SemuaUsulanLecturer: React.FC<SemuaUsulanLecturerProps> = ({ columns }) =>
     return <div>Loading...</div>;
   }
 
-  return <div>
-    <TableLayout columns={columns} data={data} />
-  </div>;
-}
+  return (
+    <div>
+      <TableLayout
+        columns={columns}
+        data={data}
+        enableRowClick={true}
+        getRowClickUrl={(row) => `/usulan/${row.id}`}
+      />
+    </div>
+  );
+};
 
 export default SemuaUsulanLecturer;

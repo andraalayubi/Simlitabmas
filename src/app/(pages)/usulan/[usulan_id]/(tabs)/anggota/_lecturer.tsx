@@ -2,6 +2,10 @@
 
 import DaftarAnggota from "src/components/usulan/anggota/ListAnggota";
 import React, { useEffect, useState } from "react";
+import { Tabs } from "@mantine/core";
+import { useParams } from "next/navigation";
+import { AnggotaForm } from "src/components/modal/anggota/_form";
+import ModalComponent from "src/components/modal/modal";
 
 interface Member {
   id: number;
@@ -13,6 +17,8 @@ interface Member {
 const MemberLecturer: React.FC = () => {
   const [members, setMembers] = useState<Member[]>([]);
   const [loading, setLoading] = useState(true);
+  const params = useParams();
+  const usulan_id = params.usulan_id;
 
   const handleAddMember = async (
     newMember: Omit<Member, "id" | "activityCount">
@@ -61,8 +67,36 @@ const MemberLecturer: React.FC = () => {
     fetchMembers();
   }, []);
 
-  return <DaftarAnggota members={members} onAddMember={handleAddMember} />;
-};
+  return (
+    <>
+      <div className="flex flex-col">
+        <Tabs variant="pills" defaultValue="dosen">
+          <div className="flex justify-between items-center">
+            <Tabs.List>
+              <Tabs.Tab value="dosen">Dosen</Tabs.Tab>
+              <Tabs.Tab value="mahasiswa">Mahasiswa</Tabs.Tab>
+              <Tabs.Tab value="vendor">Vendor</Tabs.Tab>
+            </Tabs.List>
+            <div className="mb-2">
+              <ModalComponent title="Tambah Anggota">
+                {(close) => <AnggotaForm onClose={close} usulanId={"1"} />}
+              </ModalComponent>
+            </div>
+          </div>
 
+          <Tabs.Panel value="dosen">
+            <DaftarAnggota members={members} onAddMember={handleAddMember} />
+          </Tabs.Panel>
+          <Tabs.Panel value="mahasiswa">
+            <DaftarAnggota members={members} onAddMember={handleAddMember} />
+          </Tabs.Panel>
+          <Tabs.Panel value="vendor">
+            <DaftarAnggota members={members} onAddMember={handleAddMember} />
+          </Tabs.Panel>
+        </Tabs>
+      </div>
+    </>
+  );
+};
 
 export default MemberLecturer;

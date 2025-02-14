@@ -42,8 +42,6 @@ export default function AllSuggestionPage() {
     };
 
     if (!sessionLoading) {
-      console.log("session", session);
-      
       fetchUsulan();
     }
   }, [sessionLoading]);

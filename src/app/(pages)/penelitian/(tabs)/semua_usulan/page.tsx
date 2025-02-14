@@ -49,9 +49,7 @@ export default function AllSuggestionPage() {
       }
     };
 
-    if (!sessionLoading) {
-      console.log("session", session);
-      
+    if (!sessionLoading) {      
       fetchUsulan();
     }
   }, [sessionLoading]);
