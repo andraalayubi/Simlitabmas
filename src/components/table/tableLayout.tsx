@@ -1,5 +1,6 @@
 import React from 'react';
 import { MantineReactTable, MRT_ColumnDef } from 'mantine-react-table';
+import Color from '@tiptap/extension-color';
 
 interface TableLayoutProps<TData extends Record<string, any>> {
   columns: MRT_ColumnDef<TData>[];
@@ -15,7 +16,12 @@ const TableLayout = <TData extends Record<string, any>>({
   enablePagination = true,
   enableSorting = true,
   enableColumnActions = true,
-}: TableLayoutProps<TData>) => {
+  enableRowClick = false,
+  getRowClickUrl,
+}: TableLayoutProps<TData> & {
+  enableRowClick?: boolean;
+  getRowClickUrl?: (row: TData) => string;
+}) => {
   return (
     <MantineReactTable
       columns={columns}
@@ -23,8 +29,24 @@ const TableLayout = <TData extends Record<string, any>>({
       enablePagination={enablePagination}
       enableSorting={enableSorting}
       enableColumnActions={enableColumnActions}
+      mantineTableHeadCellProps={{ style: { backgroundColor: "#f5f5f5" } }}
+      initialState={{ showGlobalFilter: true }}
+      mantineTableBodyRowProps={({ row }) =>
+        enableRowClick && getRowClickUrl
+          ? {
+              onClick: () => {
+                const url = getRowClickUrl(row.original);
+                if (url) {
+                  window.location.href = url;
+                }
+              },
+              style: { cursor: "pointer" },
+            }
+          : {}
+      }
     />
   );
 };
+
 
 export default TableLayout;

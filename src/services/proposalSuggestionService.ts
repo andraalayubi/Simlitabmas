@@ -28,6 +28,10 @@ const getByFilter = async (filter: {
     lecturer_id?: number;
     research_group_id?: number;
     is_active?: boolean;
+}, include?: {
+    schema?: boolean;
+    lecturer?: boolean;
+    research_group?: boolean;
 }) => {
     return await prisma.proposal_suggestion.findMany({
         where: {
@@ -38,6 +42,11 @@ const getByFilter = async (filter: {
             research_group_id: filter.research_group_id,
             is_active: filter.is_active,
         },
+        include: {
+            schema: include?.schema,
+            lecturer: include?.lecturer,
+            research_group: include?.research_group,
+        }
     });
 };
 

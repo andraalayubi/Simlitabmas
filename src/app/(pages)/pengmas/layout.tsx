@@ -48,7 +48,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           onChange={(value) => handleTabChange(value)}
           className="mt-2"
         >
-          <Tabs.List className="flex border-b border-gray-200">
+          <Tabs.List className="flex">
             {TabMenus.map((tab) => (
               <Tabs.Tab key={tab.value} value={tab.value}>
                 {tab.tabName}
@@ -70,7 +70,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* Child component */}
-      <div className="mt-4">{children}</div>
+      <div className="">{children}</div>
     </div>
   );
 }

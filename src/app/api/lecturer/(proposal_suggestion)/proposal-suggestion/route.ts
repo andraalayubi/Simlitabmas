@@ -14,23 +14,34 @@ export async function GET(req: NextRequest) {
         const { searchParams } = new URL(req.url);
 
         const filter = {
-            status: searchParams.get("status") as proposal_suggestion_status | undefined,
-            year_research_id: searchParams.get("year_research_id") ? Number(searchParams.get("year_research_id")) : undefined,
-            schema_id: searchParams.get("schema_id") ? Number(searchParams.get("schema_id")) : undefined,
-            lecturer_id: searchParams.get("lecturer_id") ? Number(searchParams.get("lecturer_id")) : undefined,
-            research_group_id: searchParams.get("research_group_id") ? Number(searchParams.get("research_group_id")) : undefined,
-            is_active: searchParams.get("is_active") ? searchParams.get("is_active") === "true" : undefined,
+            status: searchParams.get("status") || undefined,
+            year_research_id: searchParams.get("year_research_id") ? 
+                parseInt(searchParams.get("year_research_id")!) : undefined,
+            schema_id: searchParams.get("schema_id") ? 
+                parseInt(searchParams.get("schema_id")!) : undefined,
+            lecturer_id: searchParams.get("lecturer_id") ? 
+                parseInt(searchParams.get("lecturer_id")!) : undefined,
+            research_group_id: searchParams.get("research_group_id") ? 
+                parseInt(searchParams.get("research_group_id")!) : undefined,
+            is_active: searchParams.get("is_active") !== null ? 
+                searchParams.get("is_active")?.toLowerCase() === "true" : undefined,
+        } as const;
+
+        const include = {
+            schema: searchParams.get("get_schema") === "true" || false,
+            lecturer: searchParams.get("get_lecturer") === "true" || false,
+            research_group: searchParams.get("get_research_group") === "true" || false,
         };
 
-
-        // filter params
+        // Filter out undefined values
         const filteredParams = Object.fromEntries(
-            Object.entries(filter).filter(([_, value]) => value !== undefined)
+            Object.entries(filter).filter(([_, value]) => 
+                value !== undefined && value !== null && value !== ''
+            )
         );
-
-        // get by filter
-        const proposal_suggestions = await proposalSuggestionService.getByFilter(filteredParams);
-
+        
+        const proposal_suggestions = await proposalSuggestionService.getByFilter(filteredParams, include);
+        
         return NextResponse.json({
             success: true,
             data: proposal_suggestions,

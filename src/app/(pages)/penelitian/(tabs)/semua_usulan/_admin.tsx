@@ -4,13 +4,13 @@ import TableLayout from "src/components/table/tableLayout";
 import { getSession } from "src/lib/session";
 
 interface UsulanData {
-    id: number;
-    judulPenelitian: string;
-    dosenPengusul: string;
-    researchGroup: string;
-    progressUsulan: string;
-    statusProposal: string;
-  }
+  id: number;
+  judulPenelitian: string;
+  dosenPengusul: string;
+  researchGroup: string;
+  progressUsulan: string;
+  statusProposal: string;
+}
 
 interface SemuaUsulanAdminProps {
   columns: MRT_ColumnDef<UsulanData>[];
@@ -29,24 +29,31 @@ const SemuaUsulanAdmin: React.FC<SemuaUsulanAdminProps> = ({ columns }) => {
           setIsLoading(false);
           return;
         }
-        
-        const response = await fetch("/api/admin/proposal-suggestion");
+
+        const response = await fetch(
+          "/api/admin/proposal-suggestion?get_schema=true&get_lecturer=true&get_research_group=true"
+        );
         const result = await response.json();
 
         if (result.success) {
           // Transform the API data to match UsulanData interface
-          const transformedData: UsulanData[] = result.data.map((item: any) => ({
-            id: item.id,
-            judulPenelitian: item.name,
-            skema: item.schema_id,
-            dosenPengusul: item.lecturer_id,
-            researchGroup: item.research_group_id,
-            statusProposal: item.status
-          }));
+          const transformedData: UsulanData[] = result.data.map(
+            (item: any) => ({
+              id: item.id,
+              judulPenelitian: item.name,
+              skema: item.schema.name,
+              dosenPengusul: item.lecturer.name,
+              researchGroup: item.research_group.name,
+              statusProposal: item.status,
+            })
+          );
 
           setData(transformedData);
         } else {
-          console.error("Failed to fetch proposal suggestions:", result.message);
+          console.error(
+            "Failed to fetch proposal suggestions:",
+            result.message
+          );
         }
       } catch (error) {
         console.error("Error fetching proposal suggestions:", error);
@@ -62,9 +69,16 @@ const SemuaUsulanAdmin: React.FC<SemuaUsulanAdminProps> = ({ columns }) => {
     return <div>Loading...</div>;
   }
 
-  return <div>
-    <TableLayout columns={columns} data={data} />
-  </div>;
-}
+  return (
+    <div>
+      <TableLayout
+        columns={columns}
+        data={data}
+        enableRowClick={true}
+        getRowClickUrl={(row) => `/usulan/${row.id}`}
+      />
+    </div>
+  );
+};
 
 export default SemuaUsulanAdmin;
