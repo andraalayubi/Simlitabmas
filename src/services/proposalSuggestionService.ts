@@ -26,26 +26,53 @@ const getByFilter = async (filter: {
     year_research_id?: number;
     schema_id?: number;
     lecturer_id?: number;
-    research_group_id?: number;
+    research_group_id?: number | null;
     is_active?: boolean;
+    lecturer_member?: number;
 }, include?: {
     schema?: boolean;
     lecturer?: boolean;
     research_group?: boolean;
 }) => {
+    let whereClause: any = {
+        status: filter.status,
+        year_research_id: filter.year_research_id,
+        schema_id: filter.schema_id,
+        research_group_id: filter.research_group_id,
+        is_active: filter.is_active,
+    };
+
+    if (filter.research_group_id === null) {
+        whereClause.research_group_id = null;
+    } else if (filter.research_group_id === -1) { 
+        whereClause.research_group_id = { not: null };
+    } else if (filter.research_group_id !== undefined) {
+        whereClause.research_group_id = filter.research_group_id;
+    }
+
+    // Jika filter lecturer_id atau lecturer_member digunakan, gunakan OR condition
+    if (filter.lecturer_id !== undefined || filter.lecturer_member !== undefined) {
+        whereClause.OR = [];
+
+        if (filter.lecturer_id !== undefined) {
+            whereClause.OR.push({ lecturer_id: filter.lecturer_id });
+        }
+
+        if (filter.lecturer_member !== undefined) {
+            whereClause.OR.push({
+                lecturer_member: {
+                    some: { lecturer_id: filter.lecturer_member }
+                }
+            });
+        }
+    }
+    
     return await prisma.proposal_suggestion.findMany({
-        where: {
-            status: filter.status,
-            year_research_id: filter.year_research_id,
-            schema_id: filter.schema_id,
-            lecturer_id: filter.lecturer_id,
-            research_group_id: filter.research_group_id,
-            is_active: filter.is_active,
-        },
+        where: whereClause,
         include: {
             schema: include?.schema,
             lecturer: include?.lecturer,
-            research_group: include?.research_group,
+            research_group: include?.research_group
         }
     });
 };

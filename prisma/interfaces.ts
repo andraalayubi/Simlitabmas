@@ -208,7 +208,7 @@ export interface lecturer_member {
   id: number;
   proposal_suggestion_id: number;
   lecturer_id: number;
-  name: string;
+  name: string | null;
   research_group_id: number | null;
   department_id: number | null;
   nip: string | null;

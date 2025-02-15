@@ -12,19 +12,23 @@ export async function GET(req: NextRequest) {
         }
 
         const { searchParams } = new URL(req.url);
+        console.log('searchParams', searchParams);
 
         const filter = {
             status: searchParams.get("status") || undefined,
-            year_research_id: searchParams.get("year_research_id") ? 
+            year_research_id: searchParams.get("year_research_id") ?
                 parseInt(searchParams.get("year_research_id")!) : undefined,
-            schema_id: searchParams.get("schema_id") ? 
+            schema_id: searchParams.get("schema_id") ?
                 parseInt(searchParams.get("schema_id")!) : undefined,
-            lecturer_id: searchParams.get("lecturer_id") ? 
+            lecturer_id: searchParams.get("lecturer_id") ?
                 parseInt(searchParams.get("lecturer_id")!) : undefined,
-            research_group_id: searchParams.get("research_group_id") ? 
-                parseInt(searchParams.get("research_group_id")!) : undefined,
-            is_active: searchParams.get("is_active") !== null ? 
+            research_group_id: searchParams.has("research_group_id") ?
+                searchParams.get("research_group_id") === "null" ? null :
+                    parseInt(searchParams.get("research_group_id")!) : undefined,
+            is_active: searchParams.get("is_active") !== null ?
                 searchParams.get("is_active")?.toLowerCase() === "true" : undefined,
+            lecturer_member: searchParams.get("lecturer_member") ? 
+                parseInt(searchParams.get("lecturer_member")!) : undefined,
         } as const;
 
         const include = {
@@ -35,13 +39,13 @@ export async function GET(req: NextRequest) {
 
         // Filter out undefined values
         const filteredParams = Object.fromEntries(
-            Object.entries(filter).filter(([_, value]) => 
-                value !== undefined && value !== null && value !== ''
+            Object.entries(filter).filter(([_, value]) =>
+                value !== undefined && value !== ''
             )
         );
-        
+
         const proposal_suggestions = await proposalSuggestionService.getByFilter(filteredParams, include);
-        
+
         return NextResponse.json({
             success: true,
             data: proposal_suggestions,
@@ -61,21 +65,8 @@ export async function POST(req: NextRequest) {
 
         // Type guard to ensure user_id is a number
         if (!session || typeof session.user_id !== 'number') {
-          return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
-
-        const user = await prisma.user.findUnique({
-            where: {
-              id: session.user_id, 
-            },
-            select: {
-              lecturer_id: true,
-            },
-          });
-      
-          if (!user || !user.lecturer_id) {
-            throw new Error('Lecturer ID not found for the current user.');
-          }
 
         // Parse request body
         const body = await req.json();
@@ -86,7 +77,7 @@ export async function POST(req: NextRequest) {
             research_group_id: Number(body.research_group_id),
             schema_id: Number(body.schema_id),
             year_research_id: Number(body.year_research_id),
-            lecturer_id: user.lecturer_id,
+            lecturer_id: session.lecturer_id,
             status: 'tersimpan' as proposal_suggestion_status,
             is_active: true
         };

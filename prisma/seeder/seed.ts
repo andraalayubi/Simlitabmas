@@ -146,7 +146,7 @@ const departements = [
     { name: "Departemen Program Pendidikan Jarak Jauh", description: "Menyediakan program studi melalui metode pembelajaran jarak jauh." }
 ];
 
-const proposalSuggestions = [
+const proposalSuggestionsPenelitian = [
     {
         name: "Pengembangan UI/UX pada CRM Pengabdian Masyarakat",
         year_research_id: 1, // 2023
@@ -158,7 +158,6 @@ const proposalSuggestions = [
         proposal: {
             create: {
                 name: "Pengembangan UI/UX pada CRM Pengabdian Masyarakat"
-
             }
         }
     },
@@ -233,7 +232,6 @@ const proposalSuggestions = [
             }
         }
     },
-
     {
         name: "Optimalisasi AI dalam Sistem e-Bisnis",
         year_research_id: 1,
@@ -273,6 +271,126 @@ const proposalSuggestions = [
         proposal: {
             create: {
                 name: "Inovasi Digital Media untuk Pembelajaran Interaktif"
+            }
+        }
+    }
+];
+
+const proposalSuggestionsPengmas = [
+    {
+        name: "Pelatihan Digital Marketing bagi UMKM Lokal di Era Industri 4.0",
+        year_research_id: 1, // 2023
+        schema_id: 1, // Skema Dasar
+        lecturer_id: 1, // Mirza Ramadhani
+        status: "menunggu" as proposal_suggestion_status,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Pelatihan Digital Marketing bagi UMKM Lokal di Era Industri 4.0"
+            }
+        }
+    },
+    {
+        name: "Edukasi dan Implementasi Teknologi Hidroponik bagi Petani Perkotaan",
+        year_research_id: 2, // 2024
+        schema_id: 2, // Skema Terapan
+        lecturer_id: 1,
+        status: "aktif" as proposal_suggestion_status,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Edukasi dan Implementasi Teknologi Hidroponik bagi Petani Perkotaan"
+            }
+        }
+    },
+    {
+        name: "Pemberdayaan Ibu Rumah Tangga melalui Program Wirausaha Kuliner Sehat",
+        year_research_id: 3, // 2025
+        schema_id: 1,
+        lecturer_id: 1,
+        status: "diterima" as proposal_suggestion_status,
+        is_active: false,
+        proposal: {
+            create: {
+                name: "Pemberdayaan Ibu Rumah Tangga melalui Program Wirausaha Kuliner Sehat"
+            }
+        }
+    },
+    {
+        year_research_id: 1,
+        schema_id: 2,
+        name: "Penggunaan Internet Aman dan Bijak untuk Pelajar di Sekolah Dasar",
+        lecturer_id: 2,
+        status: "menunggu" as proposal_suggestion_status,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Penggunaan Internet Aman dan Bijak untuk Pelajar di Sekolah Dasar"
+            }
+        }
+    },
+    {
+        name: "Pembuatan Aplikasi Mobile untuk Monitoring Kesehatan Lansia di Puskesmas",
+        year_research_id: 2,
+        schema_id: 1,
+        lecturer_id: 2,
+        status: "aktif" as proposal_suggestion_status,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Pembuatan Aplikasi Mobile untuk Monitoring Kesehatan Lansia di Puskesmas"
+            }
+        }
+    },
+    {
+        name: "Pelatihan Desain Grafis bagi Anak Muda sebagai Bekal Karier Kreatif",
+        year_research_id: 3,
+        schema_id: 2,
+        lecturer_id: 2,
+        status: "diterima" as proposal_suggestion_status,
+        is_active: false,
+        proposal: {
+            create: {
+                name: "Pelatihan Desain Grafis bagi Anak Muda sebagai Bekal Karier Kreatif"
+            }
+        }
+    },
+    {
+        name: "Pengenalan dan Pemanfaatan AI untuk Peningkatan Efisiensi Administrasi Desa",
+        year_research_id: 1,
+        schema_id: 1,
+        lecturer_id: 3,
+        status: "menunggu" as proposal_suggestion_status,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Pengenalan dan Pemanfaatan AI untuk Peningkatan Efisiensi Administrasi Desa"
+            }
+        }
+    },
+    {
+        name: "Workshop Pengelolaan Sampah Organik menjadi Pupuk Kompos bagi Masyarakat Desa",
+        year_research_id: 2,
+        schema_id: 2,
+        lecturer_id: 3,
+        status: "aktif" as proposal_suggestion_status,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Workshop Pengelolaan Sampah Organik menjadi Pupuk Kompos bagi Masyarakat Desa"
+            }
+        }
+    },
+    {
+        name: "Pemberdayaan Remaja Melalui Pelatihan Public Speaking dan Leadership",
+        year_research_id: 3,
+        schema_id: 1,
+        lecturer_id: 3,
+        status: "diterima" as proposal_suggestion_status,
+        is_active: false,
+        proposal: {
+            create: {
+                name: "Pemberdayaan Remaja Melalui Pelatihan Public Speaking dan Leadership"
             }
         }
     }
@@ -370,15 +488,25 @@ const main = async () => {
         });
         console.log("Inserting position schemas...");
 
-        // insert proposal suggestions and proposals
+        // insert proposal suggestions and proposals for penelitian
         await prisma.$transaction(
-            proposalSuggestions.map((suggestion) =>
+            proposalSuggestionsPenelitian.map((suggestion) =>
               prisma.proposal_suggestion.create({
                 data: suggestion,
               })
             )
           );
-        console.log("Inserting proposal suggestion and proposals...");
+        console.log("Inserting proposal suggestion and proposals for penelitian...");
+
+        // insert proposal suggestions and proposals for pengmas
+        await prisma.$transaction(
+            proposalSuggestionsPengmas.map((suggestion) =>
+              prisma.proposal_suggestion.create({
+                data: suggestion,
+              })
+            )
+          );
+        console.log("Inserting proposal suggestion and proposals for pengmas...");
 
         console.log("Seeding selesai.");
     } catch (error) {

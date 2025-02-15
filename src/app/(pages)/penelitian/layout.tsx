@@ -34,10 +34,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   // Menentukan tab aktif berdasarkan URL
   const activeTab =
     TabMenus.find((tab) => pathname.includes(tab.value))?.value || "overview";
-    console.log(activeTab);
-    console.log(TabMenus);
-    console.log(Tabs);
-    
 
   const handleTabChange = (value: string | null) => {
     router.push(`/penelitian/${value}`);

@@ -309,7 +309,7 @@ model lecturer_member {
   id                     Int      @id @default(autoincrement())
   proposal_suggestion_id Int
   lecturer_id            Int
-  name                   String
+  name                   String?
   research_group_id      Int?
   department_id          Int?
   nip                    String?

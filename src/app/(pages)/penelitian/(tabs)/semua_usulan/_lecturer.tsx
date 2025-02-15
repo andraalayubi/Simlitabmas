@@ -35,7 +35,7 @@ const SemuaUsulanLecturer: React.FC<SemuaUsulanLecturerProps> = ({
         const response = await fetch(
           "/api/lecturer/proposal-suggestion?get_schema=true&get_lecturer=true&get_research_group=true"
         );
-        const result = await response.json();
+        const result = await response.json();        
 
         if (result.success) {
           // Transform the API data to match UsulanData interface
