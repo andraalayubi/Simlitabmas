@@ -32,6 +32,7 @@ const lecturers = [
                 { name: "Admin Mirza", email: "adminMirza@gmail.com", user_type: 'admin' as user_type, password: "Mirza123!" },
                 { name: "Dosen Mirza", email: "dosenMirza@gmail.com", user_type: 'lecturer' as user_type, password: "Mirza123!" },
                 { name: "Ketua RG Mirza", email: "ketuargMirza@gmail.com", user_type: 'ketua_rg' as user_type, password: "Mirza123!" },
+                { name: "Kaprodi Mirza", email: "kaprodiMirza@gmail.com", user_type: 'kaprodi' as user_type,  password: "Mirza123!" }
             ]
         }
     },
