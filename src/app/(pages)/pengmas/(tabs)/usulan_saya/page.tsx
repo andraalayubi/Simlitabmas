@@ -3,25 +3,28 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useSession } from "src/components/session/session";
 import LoadingPage from "src/components/usulan/LoadingPage";
-import { Anchor, Badge } from "@mantine/core";
 import { notFound } from "next/navigation";
 import { MRT_ColumnDef } from "mantine-react-table";
-import { proposal_suggestion } from "prisma/interfaces";
+import {
+  proposal_suggestion,
+  proposal_suggestion_status,
+} from "prisma/interfaces";
 import UsulanSayaAdmin from "./_admin";
 import UsulanSayaLecturer from "./_lecturer";
 import UsulanSayaKetuaRG from "./_ketua_rg";
 import UsulanSayaKaprodi from "./_kaprodi";
-
+import ProposalSuggestionStatusBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionStatusBadge";
 
 export default function AllSuggestionPage() {
   const { session, loading: sessionLoading } = useSession();
   const [loading, setLoading] = useState(true);
 
-  const user_type = session?.user_type === 'ketua_rg' 
-    ? 'research_group' 
-    : session?.user_type === 'lecturer' 
-    ? 'lecturer' 
-    : session?.user_type;
+  const user_type =
+    session?.user_type === "ketua_rg"
+      ? "research_group"
+      : session?.user_type === "lecturer"
+      ? "lecturer"
+      : session?.user_type;
 
   useEffect(() => {
     const fetchUsulan = async () => {
@@ -37,7 +40,7 @@ export default function AllSuggestionPage() {
 
     if (!sessionLoading) {
       console.log("session", session);
-      
+
       fetchUsulan();
     }
   }, [sessionLoading]);
@@ -63,9 +66,9 @@ export default function AllSuggestionPage() {
         accessorKey: "statusProposal",
         header: "Status Proposal",
         Cell: ({ cell }) => (
-          <Badge color={cell.getValue<string>() === "Diisi" ? "green" : "red"}>
-            {cell.getValue<string>()}
-          </Badge>
+          <ProposalSuggestionStatusBadge
+            status={cell.getValue<proposal_suggestion_status>()}
+          />
         ),
       },
     ],
