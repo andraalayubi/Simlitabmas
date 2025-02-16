@@ -70,6 +70,7 @@ export interface lecturer {
   nip: string | null;
   degree: JsonValue | null;
   is_ketua_rg: boolean | null;
+  is_kaprodi: boolean | null;
   position_id: number | null;
   signature_url: string | null;
   createdAt: Date;
@@ -104,6 +105,7 @@ export interface department {
   updatedAt: Date;
   deleted: boolean;
   lecturer?: lecturer[];
+  proposal_suggestion?: proposal_suggestion[];
 }
 
 export interface year_research {
@@ -165,6 +167,7 @@ export interface proposal_suggestion {
   schema_id: number | null;
   lecturer_id: number | null;
   research_group_id: number | null;
+  department_id: number | null;
   phase: proposal_suggestion_phase | null;
   status: proposal_suggestion_status | null;
   is_active: boolean | null;
@@ -175,6 +178,7 @@ export interface proposal_suggestion {
   schema?: schema | null;
   lecturer?: lecturer | null;
   research_group?: research_group | null;
+  department?: department | null;
   lecturer_member?: lecturer_member[];
   student_member?: student_member[];
   vendor_member?: vendor_member[];
