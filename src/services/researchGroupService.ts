@@ -14,7 +14,14 @@ const getAllActive = async () => {
     });
 };
 
+
+// insert a new rf
+const create = async (data: any) => {
+    return await prisma.research_group.create({ data });
+  }
+
 const researchGroupService = {
+    create,
     getById,
     getAllActive,
 }
