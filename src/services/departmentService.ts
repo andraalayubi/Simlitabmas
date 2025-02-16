@@ -21,82 +21,88 @@ const create = async (data: any) => {
   return await prisma.department.create({ data });
 }
 
+// get summary
+const getSummaryList = async () => {
+  const [departments, lecturerCount, proposalSuggestionCount] = await prisma.$transaction([
+    prisma.$queryRaw<{ id: bigint; name: string; description: string; createdAt: Date; updatedAt: Date; deleted: boolean; kaprodi_id: bigint | null; kaprodi_name: string | null }[]>`
+    SELECT 
+      d.id AS "id",
+      d.name AS "name",
+      d.description AS "description",
+      d."createdAt" AS "createdAt",
+      d."updatedAt" AS "updatedAt",
+      d.deleted AS "department_deleted",
+      l.id AS "kaprodi_id",
+      l.name AS "kaprodi_name"
+    FROM departments d
+    LEFT JOIN lecturers l 
+      ON l.department_id = d.id AND l.is_kaprodi = TRUE
+    WHERE d.deleted = FALSE
+    GROUP BY 
+      d.id, 
+      d.name, 
+      d.description, 
+      l.id, 
+      l.name,  
+      d."createdAt", 
+      d."updatedAt"
+    ORDER BY d.id ASC;
+    `,
+    prisma.$queryRaw<{ id: bigint; lecturer_count: bigint }[]>`
+      SELECT 
+        d.id AS "id", 
+        count(l.id) AS "lecturer_count"
+      FROM departments d
+      LEFT JOIN lecturers l ON d.id = l.department_id
+      GROUP BY d.id
+      ORDER BY d.id ASC;
+    `,
+    prisma.$queryRaw<{ id: bigint; proposal_suggestion_count: bigint }[]>`
+      SELECT 
+        d.id AS "id", 
+        count(ps.id) AS "proposal_suggestion_count"
+      FROM departments d
+      LEFT JOIN proposal_suggestions ps ON d.id = ps.department_id
+      GROUP BY d.id
+      ORDER BY d.id ASC;
+    `
+  ]);
 
-export const getAuditDepartment = async () => {
-  const auditDepartment: any = await prisma.$queryRaw`
-  SELECT 
-    lecturer.name AS lecturer_name,
-    department.name AS department_name,
-    COUNT(proposal.id) AS total_proposals
-  FROM 
-    user
-  JOIN 
-    lecturer ON user.id = lecturer.user_id
-  JOIN 
-    department ON lecturer.department_id = department.id
-  LEFT JOIN 
-    proposal_suggestion ON lecturer.id = proposal_suggestion.lecturer_id
-  LEFT JOIN 
-    proposal ON proposal_suggestion.id = proposal.proposal_suggestion_id
-  WHERE 
-    user.user_type = 'kaprodi'
-  GROUP BY 
-    lecturer.name, department.name;
-  `;
+  // map count lecturer and proposal_suggestion
+  const lecturerMap = Object.fromEntries(lecturerCount.map(item => [Number(item.id), Number(item.lecturer_count)]));
+  const proposalSuggestionMap = Object.fromEntries(proposalSuggestionCount.map(item => [Number(item.id), Number(item.proposal_suggestion_count)]));
 
-  const auditDepartments = await prisma.user.findMany({
-    where: {
-      user_type: "kaprodi", // Filter untuk user dengan user_type 'kaprodi'
+  const formattedResult = departments.map(group => ({
+    id: Number(group.id),
+    name: group.name,
+    description: group.description,
+    createdAt: group.createdAt,
+    updatedAt: group.updatedAt,
+    deleted: group.deleted,
+    kaprodi_name: group.kaprodi_name,
+    proposal_suggestion_count: proposalSuggestionMap[Number(group.id)] || 0,
+    lecturer_count: lecturerMap[Number(group.id)] || 0,
+    kaprodi: {
+        id: group.kaprodi_id ? Number(group.kaprodi_id) : null,
+        name: group.kaprodi_name,
     },
-    select: {
-      lecturer: {
-        select: {
-          name: true, // Mengambil nama dari lecturer
-          department: {
-            select: {
-              name: true, // Mengambil nama dari department
-            },
-          },
-          proposal_suggestion: {
-            select: {
-              proposal: {
-                select: {
-                  id: true, // Mengambil ID proposal untuk menghitung jumlah
-                },
-              },
-            },
-          },
-        },
-      },
+    lecturer: {
+        count: lecturerMap[Number(group.id)] || 0
     },
-  });
+    proposal_suggestion: {
+        count: proposalSuggestionMap[Number(group.id)] || 0
+    }
+}));
 
-  // Menghitung jumlah proposal untuk setiap department
-  const result = auditDepartments.map((user: any) => {
-    const lecturerName = user.lecturer.name ?? "N/A";
-    const departmentName = user.lecturer.department.name ?? "N/A";
-    const totalProposals =
-      user.lecturer.proposal_suggestion.reduce(
-        (acc: any, suggestion: { proposal: string | any[] }) =>
-          acc + suggestion.proposal.length,
-        0
-      ) ?? 0;
+return formattedResult;
 
-    return {
-      create,
-      lecturerName,
-      departmentName,
-      totalProposals,
-    };
-  });
-
-  return result;
-};
+}
 
 const departmentService = {
   create,
   getById,
-  getAllActive
+  getAllActive,
+  getSummaryList,
 }
 
 

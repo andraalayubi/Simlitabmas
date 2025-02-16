@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
     try {
         const session = await getSession();
 
-        const departments = await departmentService.getAllActive();
+        const departments = await departmentService.getSummaryList();
 
         return NextResponse.json({
             success: true,
