@@ -1,6 +1,27 @@
 //File:psService.ts
 import prisma from "src/client/prisma";
 
+// get by id
+const getById = async (id: number) => {
+  return await prisma.department.findUnique({
+    where: { id: id },
+  })
+}
+
+
+// get all active
+const getAllActive = async () => {
+  return await prisma.department.findMany({
+    where: { deleted: false },
+  });
+};
+
+// insert a new department
+const create = async (data: any) => {
+  return await prisma.department.create({ data });
+}
+
+
 export const getAuditDepartment = async () => {
   const auditDepartment: any = await prisma.$queryRaw`
   SELECT 
@@ -62,6 +83,7 @@ export const getAuditDepartment = async () => {
       ) ?? 0;
 
     return {
+      create,
       lecturerName,
       departmentName,
       totalProposals,
@@ -70,3 +92,12 @@ export const getAuditDepartment = async () => {
 
   return result;
 };
+
+const departmentService = {
+  create,
+  getById,
+  getAllActive
+}
+
+
+export default departmentService
