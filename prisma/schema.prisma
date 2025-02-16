@@ -155,7 +155,7 @@ model lecturer {
 
 model research_group {
   id          Int     @id @default(autoincrement())
-  name        String
+  name        String  @unique
   description String?
 
   createdAt DateTime @default(now())
@@ -170,7 +170,7 @@ model research_group {
 
 model department {
   id          Int     @id @default(autoincrement())
-  name        String
+  name        String  @unique
   description String?
 
   createdAt DateTime @default(now())
@@ -184,7 +184,7 @@ model department {
 
 model year_research {
   id          Int      @id @default(autoincrement())
-  year        Int
+  year        Int      @unique
   open_date   DateTime
   closed_date DateTime
 
