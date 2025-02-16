@@ -10,15 +10,7 @@ import { MRT_ColumnDef } from "mantine-react-table";
 import SemuaUsulanKetuaRG from "./_ketua_rg";
 import SemuaUsulanKaprodi from "./_kaprodi";
 import { proposal_suggestion } from "prisma/interfaces";
-
-const BreadcrumbItems = [
-  { title: "Usulan", href: "/usulan2/penelitian" },
-  { title: "Penelitian", href: "/usulan2/penelitian" },
-].map((item, index) => (
-  <Anchor href={item.href} key={index}>
-    {item.title}
-  </Anchor>
-));
+import SemuaUsulanAdmin from "./_admin";
 
 export default function AllSuggestionPage() {
   const { session, loading: sessionLoading } = useSession();
@@ -72,11 +64,6 @@ export default function AllSuggestionPage() {
         size: 200,
       },
       {
-        accessorKey: "researchGroup",
-        header: "Research Group",
-        size: 200,
-      },
-      {
         accessorKey: "statusProposal",
         header: "Status Proposal",
         Cell: ({ cell }) => (
@@ -94,7 +81,7 @@ export default function AllSuggestionPage() {
   }
 
   if (session?.user_type === "admin") {
-    return <SemuaUsulanLecturer columns={columns} />;
+    return <SemuaUsulanAdmin columns={columns} />;
   } else if (session?.user_type === "lecturer") {
     return <SemuaUsulanLecturer columns={columns} />;
   } else if (session?.user_type === "ketua_rg") {

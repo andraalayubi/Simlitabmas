@@ -3,23 +3,15 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useSession } from "src/components/session/session";
 import LoadingPage from "src/components/usulan/LoadingPage";
-import { Breadcrumbs, Anchor, Badge } from "@mantine/core";
+import { Anchor, Badge } from "@mantine/core";
 import { notFound } from "next/navigation";
-import SemuaUsulanLecturer from "./_lecturer";
 import { MRT_ColumnDef } from "mantine-react-table";
-import SemuaUsulanKetuaRG from "../semua_usulan/_ketua_rg";
-import SemuaUsulanKaprodi from "../semua_usulan/_kaprodi";
 import { proposal_suggestion } from "prisma/interfaces";
+import UsulanSayaAdmin from "./_admin";
+import UsulanSayaLecturer from "./_lecturer";
+import UsulanSayaKetuaRG from "./_ketua_rg";
+import UsulanSayaKaprodi from "./_kaprodi";
 
-
-const BreadcrumbItems = [
-  { title: "Usulan", href: "/usulan2/penelitian" },
-  { title: "Penelitian", href: "/usulan2/penelitian" },
-].map((item, index) => (
-  <Anchor href={item.href} key={index}>
-    {item.title}
-  </Anchor>
-));
 
 export default function AllSuggestionPage() {
   const { session, loading: sessionLoading } = useSession();
@@ -68,16 +60,6 @@ export default function AllSuggestionPage() {
         size: 100,
       },
       {
-        accessorKey: "dosenPengusul",
-        header: "Dosen Pengusul",
-        size: 200,
-      },
-      {
-        accessorKey: "researchGroup",
-        header: "Research Group",
-        size: 200,
-      },
-      {
         accessorKey: "statusProposal",
         header: "Status Proposal",
         Cell: ({ cell }) => (
@@ -95,13 +77,13 @@ export default function AllSuggestionPage() {
   }
 
   if (session?.user_type === "admin") {
-    return <SemuaUsulanLecturer columns={columns} />;
+    return <UsulanSayaAdmin columns={columns} />;
   } else if (session?.user_type === "lecturer") {
-    return <SemuaUsulanLecturer columns={columns} />;
+    return <UsulanSayaLecturer columns={columns} />;
   } else if (session?.user_type === "ketua_rg") {
-    return <SemuaUsulanKetuaRG columns={columns} />;
+    return <UsulanSayaKetuaRG columns={columns} />;
   } else if (session?.user_type === "kaprodi") {
-    return <SemuaUsulanKaprodi columns={columns} />;
+    return <UsulanSayaKaprodi columns={columns} />;
   } else {
     return notFound();
   }

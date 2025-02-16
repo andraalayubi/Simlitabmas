@@ -1,8 +1,62 @@
-'use client'
+import { showNotification } from "@mantine/notifications";
+import { MRT_ColumnDef } from "mantine-react-table";
+import { proposal_suggestion } from "prisma/interfaces";
+import React, { useState, useEffect, useCallback } from "react";
+import proposalSuggestionAction from "src/action/proposalSuggestionAction";
+import TableLayout from "src/components/table/tableLayout";
 
+interface SemuaUsulanKetuaRGProps {
+  columns: MRT_ColumnDef<proposal_suggestion>[];
+}
 
-const PenelitianPageAdmin: React.FC = () => {
+const SemuaUsulanKetuaRG: React.FC<SemuaUsulanKetuaRGProps> = ({ columns }) => {
+  const user_type = "ketua_rg";
+  const [data, setData] = useState<proposal_suggestion[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const getProposalSuggestion = useCallback(async () => {
+    const response = await proposalSuggestionAction.getProposalSuggestion(
+      user_type,
+      setLoading,
+      {
+        research_group_id: -1,
+      }
+    );
     
+    if (response.success) {
+      showNotification({ status: "success", message: response.message });
+      const transformedData: proposal_suggestion[] = response.data.map(
+        (item: any) => ({
+          id: item.id,
+          judulPenelitian: item.name,
+          skema: item.schema.name,
+          dosenPengusul: item.lecturer.name,
+          researchGroup: item.research_group.name,
+          statusProposal: item.status,
+        })
+      );
 
-    return <></>
+      setData(transformedData);
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  }, [user_type]);
+
+  useEffect(() => {
+    getProposalSuggestion();
+  }, [getProposalSuggestion]);
+
+  return (
+    <div>
+      <TableLayout
+        columns={columns}
+        data={data}
+        isLoading={loading}
+        enableRowClick={true}
+        getRowClickUrl={(row) => `/usulan/${row.id}`}
+      />
+    </div>
+  );
 };
+
+export default SemuaUsulanKetuaRG;

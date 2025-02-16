@@ -1,6 +1,7 @@
 import { proposal_suggestion } from "@prisma/client";
 import axios from "axios";
 import { proposal, user_type } from "prisma/interfaces";
+import { getSession } from "src/lib/session";
 
 // update proposal content by section
 const updateProposalSection = async (
@@ -70,14 +71,18 @@ const updateProposal = async (
 };
 
 const getProposal = async (
-  user_type: user_type,
+  // user_type: user_type,
   usulan_id: string,
   setLoading: (loading: boolean) => void
 ) => {
   setLoading(true);
 
   try {
-    const response = await fetch(`/api/${user_type}/proposal/${usulan_id}`, {
+    const session = await getSession();
+    if (!session || !session.user_type) {
+      throw new Error("No session or user_type found");
+    }
+    const response = await fetch(`/api/${session.user_type}/proposal/${usulan_id}`, {
       method: "GET",
     });
 

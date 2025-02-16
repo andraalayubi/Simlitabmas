@@ -1,71 +1,56 @@
 import { MRT_ColumnDef } from "mantine-react-table";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import TableLayout from "src/components/table/tableLayout";
 import { getSession } from "src/lib/session";
 import { proposal_suggestion } from "prisma/interfaces";
+import { showNotification } from "@mantine/notifications";
+import proposalSuggestionAction from "src/action/proposalSuggestionAction";
 
-interface SemuaUsulanKetuaRGProps {
+interface UsulanSayaKetuaRGProps {
   columns: MRT_ColumnDef<proposal_suggestion>[];
 }
 
-const SemuaUsulanKetuaRG: React.FC<SemuaUsulanKetuaRGProps> = ({ columns }) => {
+const UsulanSayaKetuaRG: React.FC<UsulanSayaKetuaRGProps> = ({ columns }) => {
+  const user_type = "ketua_rg";
   const [data, setData] = useState<proposal_suggestion[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+
+  const getProposalSuggestion = useCallback(async () => {
+    const response = await proposalSuggestionAction.getProposalSuggestion(
+      user_type,
+      setLoading,
+      {
+        research_group_id: "null",
+      }
+    );
+    
+    if (response.success) {
+      showNotification({ status: "success", message: response.message });
+      const transformedData: proposal_suggestion[] = response.data.map(
+        (item: any) => ({
+          id: item.id,
+          judulPenelitian: item.name,
+          skema: item.schema.name,
+          statusProposal: item.status,
+        })
+      );
+
+      setData(transformedData);
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  }, [user_type]);
 
   useEffect(() => {
-    const fetchProposalSuggestions = async () => {
-      try {
-        const session = await getSession();
-        if (!session || !session.user_id) {
-          console.error("No session or user_id found");
-          setIsLoading(false);
-          return;
-        }
-
-        const response = await fetch(
-          `/api/ketua_rg/proposal-suggestion?lecturer_id=${session.lecturer_id}`
-        );
-        const result = await response.json();
-
-        if (result.success) {
-          // Transform the API data to match UsulanData interface
-          const transformedData: proposal_suggestion[] = result.data.map(
-            (item: any) => ({
-              id: item.id,
-              judulPenelitian: item.name,
-              skema: item.schema_id,
-              dosenPengusul: item.lecturer_id,
-              researchGroup: item.research_group_id,
-              statusProposal: item.status,
-            })
-          );
-
-          setData(transformedData);
-        } else {
-          console.error(
-            "Failed to fetch proposal suggestions:",
-            result.message
-          );
-        }
-      } catch (error) {
-        console.error("Error fetching proposal suggestions:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchProposalSuggestions();
-  }, []);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+    getProposalSuggestion();
+  }, [getProposalSuggestion]);
 
   return (
     <div>
       <TableLayout
         columns={columns}
         data={data}
+        isLoading={loading}
         enableRowClick={true}
         getRowClickUrl={(row) => `/usulan/${row.id}`}
       />
@@ -73,4 +58,4 @@ const SemuaUsulanKetuaRG: React.FC<SemuaUsulanKetuaRGProps> = ({ columns }) => {
   );
 };
 
-export default SemuaUsulanKetuaRG;
+export default UsulanSayaKetuaRG;

@@ -5,6 +5,7 @@ import Color from '@tiptap/extension-color';
 interface TableLayoutProps<TData extends Record<string, any>> {
   columns: MRT_ColumnDef<TData>[];
   data: TData[];
+  isLoading?: boolean;
   enablePagination?: boolean;
   enableSorting?: boolean;
   enableColumnActions?: boolean;
@@ -13,6 +14,7 @@ interface TableLayoutProps<TData extends Record<string, any>> {
 const TableLayout = <TData extends Record<string, any>>({
   columns,
   data,
+  isLoading = true,
   enablePagination = true,
   enableSorting = true,
   enableColumnActions = true,
@@ -31,6 +33,7 @@ const TableLayout = <TData extends Record<string, any>>({
       enableColumnActions={enableColumnActions}
       mantineTableHeadCellProps={{ style: { backgroundColor: "#f5f5f5" } }}
       initialState={{ showGlobalFilter: true }}
+      state={{ showSkeletons: isLoading }}
       mantineTableBodyRowProps={({ row }) =>
         enableRowClick && getRowClickUrl
           ? {

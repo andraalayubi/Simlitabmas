@@ -5,19 +5,12 @@ import { useSession } from "src/components/session/session";
 import LoadingPage from "src/components/usulan/LoadingPage";
 import { Breadcrumbs, Anchor, Badge } from "@mantine/core";
 import { notFound } from "next/navigation";
-import SemuaUsulanLecturer from "./_lecturer";
 import { MRT_ColumnDef } from "mantine-react-table";
-import SemuaUsulanAdmin from "./_admin";
 import { proposal_suggestion } from "prisma/interfaces";
-
-const BreadcrumbItems = [
-  { title: "Usulan", href: "/usulan2/penelitian" },
-  { title: "Penelitian", href: "/usulan2/penelitian" },
-].map((item, index) => (
-  <Anchor href={item.href} key={index}>
-    {item.title}
-  </Anchor>
-));
+import UsulanSayaLecturer from "./_lecturer";
+import UsulanSayaAdmin from "./_admin";
+import UsulanSayaKaprodi from "./_kaprodi";
+import UsulanSayaKetuaRG from "./_ketua_rg";
 
 export default function AllSuggestionPage() {
   const { session, loading: sessionLoading } = useSession();
@@ -30,19 +23,8 @@ export default function AllSuggestionPage() {
     : session?.user_type;
 
   useEffect(() => {
-    const fetchUsulan = async () => {
-      try {
-        // const response = await fetch(`/api/${user_type}/dashboard`);
-        // setUsulan(response.data);
-      } catch (error) {
-        console.error("Error fetching proposals:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (!sessionLoading) {
-      fetchUsulan();
+      setLoading(false);
     }
   }, [sessionLoading]);
 
@@ -86,13 +68,13 @@ export default function AllSuggestionPage() {
   }
 
   if (session?.user_type === "admin") {
-    return <SemuaUsulanAdmin columns={columns} />;
+    return <UsulanSayaAdmin columns={columns} />;
   } else if (session?.user_type === "lecturer") {
-    return <SemuaUsulanLecturer columns={columns} />;
+    return <UsulanSayaLecturer columns={columns} />;
   } else if (session?.user_type === "ketua_rg") {
-    // return <DashboardKetuaRG usulan={usulan} />;
+    return <UsulanSayaKetuaRG columns={columns} />;
   } else if (session?.user_type === "kaprodi") {
-    // return <DashboardKaprodi usulan={usulan} />;
+    return <UsulanSayaKaprodi columns={columns} />;
   } else {
     return notFound();
   }

@@ -4,14 +4,13 @@ import { proposal_suggestion } from "prisma/interfaces";
 import React, { useState, useEffect, useCallback } from "react";
 import proposalSuggestionAction from "src/action/proposalSuggestionAction";
 import TableLayout from "src/components/table/tableLayout";
-import { getSession } from "src/lib/session";
 
-interface SemuaUsulanAdminProps {
+interface SemuaUsulanKaprodiProps {
   columns: MRT_ColumnDef<proposal_suggestion>[];
 }
 
-const SemuaUsulanAdmin: React.FC<SemuaUsulanAdminProps> = ({ columns }) => {
-  const user_type = "admin";
+const SemuaUsulanKaprodi: React.FC<SemuaUsulanKaprodiProps> = ({ columns }) => {
+  const user_type = "kaprodi";
   const [data, setData] = useState<proposal_suggestion[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -60,4 +59,4 @@ const SemuaUsulanAdmin: React.FC<SemuaUsulanAdminProps> = ({ columns }) => {
   );
 };
 
-export default SemuaUsulanAdmin;
+export default SemuaUsulanKaprodi;

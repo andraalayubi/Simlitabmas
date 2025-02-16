@@ -1,7 +1,8 @@
 import { getSession } from "src/lib/session";
-import proposalSuggestionService from "@/app/services/proposalSuggestionService";
+import proposalSuggestionService from "src/services/proposalSuggestionService";
 import { NextRequest, NextResponse } from "next/server";
 import { proposal_suggestion_status } from "prisma/interfaces";
+import filterService from "src/services/filterService";
 
 export async function GET(req: NextRequest) {
     try {
@@ -10,28 +11,31 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
         }
 
-        const { searchParams } = new URL(req.url);
+        let filter = filterService.getFilter(req.nextUrl.searchParams, [
+            { key: "status", type: "string" },
+            { key: "year_research_id", type: "number" },
+            { key: "schema_id", type: "number" },
+            { key: "lecturer_id", type: "number" },
+            { key: "research_group_id", type: "number" },
+            { key: "is_active", type: "boolean" },
+        ]);
 
-        const filter = {
-            status: searchParams.get("status") as proposal_suggestion_status | undefined,
-            year_research_id: searchParams.get("year_research_id") ? Number(searchParams.get("year_research_id")) : undefined,
-            schema_id: searchParams.get("schema_id") ? Number(searchParams.get("schema_id")) : undefined,
-            lecturer_id: searchParams.get("lecturer_id") ? Number(searchParams.get("lecturer_id")) : undefined,
-            research_group_id: searchParams.get("research_group_id") ? Number(searchParams.get("research_group_id")) : undefined,
-            is_active: searchParams.get("is_active") ? searchParams.get("is_active") === "true" : undefined,
+        // Cek apakah lecturer_id adalah "null" dan ubah menjadi null
+        if (req.nextUrl.searchParams.get("lecturer_id") === "null") {
+            filter = { ...filter, lecturer_id: null };
+        }
+
+        const include = {
+            schema: req.nextUrl.searchParams.get("get_schema") === "true",
+            lecturer: req.nextUrl.searchParams.get("get_lecturer") === "true",
+            research_group: req.nextUrl.searchParams.get("get_research_group") === "true",
         };
 
-
-        // filter params
-        const filteredParams = Object.fromEntries(
-            Object.entries(filter).filter(([_, value]) => value !== undefined)
-        );
-
-        // get by filter
-        const proposal_suggestions = await proposalSuggestionService.getByFilter(filteredParams);
+        const proposal_suggestions = await proposalSuggestionService.getByFilter(filter, include);
 
         return NextResponse.json({
             success: true,
+            message: "Success getting data",
             data: proposal_suggestions,
         });
 
