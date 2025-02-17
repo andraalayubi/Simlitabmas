@@ -15,9 +15,39 @@ const getAllActive = async () => {
     });
 };
 
+//get summary for audit page
+const getSummaryList =  async () => {
+    const [schemas, proposalSuggestionCount] = await prisma.$transaction([
+        prisma.schema.findMany({
+            
+        }),
+        prisma.$queryRaw<{ id: bigint; proposal_suggestion_count: bigint }[]>`
+            SELECT
+                s.id AS "id",
+                count(ps.id) AS "proposal_suggestion_count"
+            FROM proposal_suggestions ps
+            RIGHT JOIN schemas s ON s.id = ps.schema_id
+            GROUP BY s.id
+            ORDER BY s.id ASC;
+        `
+    ])
+
+    // map by schema_id
+    const proposalSuggestionMap = Object.fromEntries(proposalSuggestionCount.map(item => [Number(item.id), Number(item.proposal_suggestion_count)]));
+
+    const formattedResult = schemas.map(schema => ({
+        ...schema,
+        proposal_suggestion_count: proposalSuggestionMap[Number(schema.id)] || 0
+    }))
+
+    return formattedResult
+}
+
+
 const schemaService = {
     getById,
     getAllActive,
+    getSummaryList,
 }
 
 
