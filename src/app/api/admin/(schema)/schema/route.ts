@@ -3,7 +3,7 @@ import schemaService from 'src/services/schemaService';
 
 export async function GET(request: NextRequest) {
     try {
-        const schemas = await schemaService.getAllActive();
+        const schemas = await schemaService.getSummaryList();
 
         return NextResponse.json({
             success: true,
