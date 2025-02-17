@@ -4,7 +4,7 @@ import DaftarAnggota from "src/components/usulan/anggota/ListAnggota";
 import React, { useEffect, useState } from "react";
 import { Tabs } from "@mantine/core";
 import { useParams } from "next/navigation";
-import { AnggotaForm } from "src/components/modal/anggota/_form";
+import AnggotaModal from "src/components/modal/anggota/anggota";
 import ModalComponent from "src/components/modal/modal";
 
 interface Member {
@@ -15,57 +15,62 @@ interface Member {
 }
 
 const MemberLecturer: React.FC = () => {
+  const user_type = "lecturer";
   const [members, setMembers] = useState<Member[]>([]);
   const [loading, setLoading] = useState(true);
   const params = useParams();
-  const usulan_id = params.usulan_id;
 
-  const handleAddMember = async (
-    newMember: Omit<Member, "id" | "activityCount">
-  ) => {
-    const memberWithId = {
-      ...newMember,
-      id: members.length + 1,
-      activityCount: "0",
-    };
+  // Convert usulan_id to a number safely
+  const usulan_id = Array.isArray(params.usulan_id) 
+    ? parseInt(params.usulan_id[0], 10) 
+    : parseInt(params.usulan_id || '0', 10);
 
-    try {
-      const response = await fetch("/api/members", {
-        method: "POST",
-        body: JSON.stringify(memberWithId),
-      });
-      if (response.status === 201) {
-        setMembers((prevMembers) => [...prevMembers, memberWithId]);
-      }
-    } catch (error) {
-      console.error("Error adding member:", error);
-    }
-  };
+  // const handleAddMember = async (
+  //   newMember: Omit<Member, "id" | "activityCount">
+  // ) => {
+  //   const memberWithId = {
+  //     ...newMember,
+  //     id: members.length + 1,
+  //     activityCount: "0",
+  //   };
 
-  // Anggota Handler
-  useEffect(() => {
-    const fetchMembers = async () => {
-      try {
-        const response = await fetch("/api/members");
+  //   try {
+  //     const response = await fetch("/api/members", {
+  //       method: "POST",
+  //       body: JSON.stringify(memberWithId),
+  //     });
+  //     if (response.status === 201) {
+  //       setMembers((prevMembers) => [...prevMembers, memberWithId]);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding member:", error);
+  //   }
+  // };
 
-        const data = await response.json();
+  // // Anggota Handler
+  // useEffect(() => {
+  //   const fetchMembers = async () => {
+  //     try {
+  //       const response = await fetch("/api/members");
 
-        if (!response.ok) {
-          throw new Error(
-            `Error fetching session: ${response.status} - ${response.statusText}`
-          );
-        }
+  //       const data = await response.json();
 
-        setMembers(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("There was an error fetching the members!", error);
-        setLoading(false);
-      }
-    };
+  //       if (!response.ok) {
+  //         throw new Error(
+  //           `Error fetching session: ${response.status} - ${response.statusText}`
+  //         );
+  //       }
 
-    fetchMembers();
-  }, []);
+  //       setMembers(data);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error("There was an error fetching the members!", error);
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchMembers();
+  // }, []);
 
   return (
     <>
@@ -79,19 +84,22 @@ const MemberLecturer: React.FC = () => {
             </Tabs.List>
             <div className="mb-2">
               <ModalComponent title="Tambah Anggota">
-                {(close) => <AnggotaForm onClose={close} usulanId={"1"} />}
+                {(close) => <AnggotaModal onClose={close} usulanId={usulan_id} user_type={user_type} />}
               </ModalComponent>
             </div>
           </div>
 
           <Tabs.Panel value="dosen">
-            <DaftarAnggota members={members} onAddMember={handleAddMember} />
+            {/* <DaftarAnggota members={members} onAddMember={handleAddMember} /> */}
+            <></>
           </Tabs.Panel>
           <Tabs.Panel value="mahasiswa">
-            <DaftarAnggota members={members} onAddMember={handleAddMember} />
+            {/* <DaftarAnggota members={members} onAddMember={handleAddMember} /> */}
+            <></>
           </Tabs.Panel>
           <Tabs.Panel value="vendor">
-            <DaftarAnggota members={members} onAddMember={handleAddMember} />
+            {/* <DaftarAnggota members={members} onAddMember={handleAddMember} /> */}
+            <></>
           </Tabs.Panel>
         </Tabs>
       </div>

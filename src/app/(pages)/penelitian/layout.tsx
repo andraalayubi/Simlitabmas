@@ -62,6 +62,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <ModalComponent title="Buat Usulan">
             {(close) => (
               <ProposalSuggestionModal
+                user_type={session?.user_type!}
                 onClose={close}
                 showResearchGroup={true}
                 type="penelitian"

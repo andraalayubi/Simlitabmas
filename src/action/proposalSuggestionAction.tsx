@@ -1,3 +1,4 @@
+import axios from "axios";
 import { user_type } from "prisma/interfaces";
 
 const getProposalSuggestion = async (
@@ -8,14 +9,10 @@ const getProposalSuggestion = async (
   setLoading(true);
 
   try {
-    console.log(params);
-    
-    // Construct URL with default and additional params
     const baseParams = new URLSearchParams({
       get_schema: 'true',
       get_lecturer: 'true',
       get_research_group: 'true',
-    //   research_group_id: '-1',
       ...Object.fromEntries(
         Object.entries(params).map(([key, value]) => [key, String(value)])
       )
@@ -31,7 +28,6 @@ const getProposalSuggestion = async (
     );
 
     const result = await response.json();
-    console.log(result);
     
     if (result.status === 200 || result.success == true) {
       return {
@@ -55,8 +51,46 @@ const getProposalSuggestion = async (
   }
 };
 
+const createProposalSuggestion = async (
+    user_type: user_type,
+    values: { name: string; year_research_id: string; schema_id: string; research_group_id?: string },
+    setLoading: (loading: boolean) => void,
+    type: "penelitian" | "pengmas" = "penelitian"
+  ) => {
+    setLoading(true);
+  
+    try {
+      const response = await axios.post(
+        type === "penelitian"
+          ? `/api/${user_type}/proposal-suggestion`
+          : `/api/${user_type}/proposal-suggestion-pengmas`,
+        values
+      );
+  
+      if (response.status === 201 && response.data.success) {
+        return {
+          success: true,
+          message: "Successfully created a proposal suggestion!",
+        };
+      } else {
+        return {
+          success: false,
+          message: response.data?.message || "Failed to create a proposal suggestion. Please try again.",
+        };
+      }
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.response?.data?.message || "An unexpected error occurred",
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
 const proposalSuggestionAction = {
-  getProposalSuggestion
+  getProposalSuggestion,
+  createProposalSuggestion
 }
 
 export default proposalSuggestionAction;

@@ -1,26 +1,5 @@
 import axios from 'axios';
-
-export const fetchLecturers = async () => {
-    try {
-      const response = await fetch('/api/lecturer/member/1');
-      const result = await response.json();
-      console.log(result);
-      
   
-      if (result.success) {
-        return result.data.map((member: { id: number; name: string; nidn: number }) => ({
-          id: member.id.toString(),
-          name: member.name,
-          nidn: member.nidn.toString()
-        }));
-      }
-  
-      return [];
-    } catch (error) {
-      console.error('Failed to fetch year researches:', error);
-      return [];
-    }
-  }
 
 export const anggotaAction = async (
   values: {
