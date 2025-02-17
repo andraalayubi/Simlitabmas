@@ -1,8 +1,8 @@
-import * as z from 'zod';
+import { z } from 'zod';
 
 export const lecturerMemberSchema = z.object({
-  name: z.string(),
-  nidn: z.string(),
-  usulan_id: z.string()
-    .min(1, { message: "ID usulan diperlukan" })
+  usulan_id: z.number(),
+  anggota: z.array(z.string()).min(1, 'Pilih minimal satu anggota')
 });
+
+export type LecturerMemberFormValues = z.infer<typeof lecturerMemberSchema>;

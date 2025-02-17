@@ -1,3 +1,4 @@
+import axios from "axios";
 import { user_type } from "prisma/interfaces";
 
 const getLecturerMember = async (
@@ -33,8 +34,46 @@ const getLecturerMember = async (
   }
 };
 
+const addLecturerMember = async (
+  values: {
+    usulan_id: number;
+    anggota: string[]
+  },
+  setLoading: (loading: boolean) => void
+) => {
+  try {
+    setLoading(true);
+
+    // Then, add the lecturer to the proposal suggestion
+    const response = await axios.post(`/api/lecturer/member/${values.usulan_id}`, {
+      lecturerId: values.anggota
+    });
+
+    if (response.status === 201 && response.data.success) {
+      return {
+        success: true,
+        message: "Successfully added the lecturer to the proposal suggestion!",
+      };
+    } else {
+      return {
+        success: false,
+        message: response.data?.message || "Failed to add the lecturer to the proposal suggestion. Please try again.",
+      };
+    }
+  } catch (error: any) {
+    console.error('Error adding anggota:', error);
+    return {
+      success: false,
+      message: error.response?.data?.message || error.message || 'Gagal menambahkan anggota'
+    };
+  } finally {
+    setLoading(false);
+  }
+};
+
 const memberAction = {
-  getLecturerMember
+  getLecturerMember,
+  addLecturerMember
 }
 
 export default memberAction;
