@@ -19,12 +19,11 @@ export async function POST(req: NextRequest) {
             data: research_group
         },
             { status: 201 })
-    } catch (error) {
+    } catch (error: any) {
         return NextResponse.json({
             success: false,
-            message: `Failed to create research group: ${error}`,
-        },
-            { status: 500 })
+            message: `Internal Server Error: ${error.message}`,
+        }, { status: 500 });
     }
 }
 
@@ -33,7 +32,7 @@ export async function GET(req: NextRequest) {
     try {
         const session = await getSession();
 
-        const research_groups = await researchGroupService.getAllActive();
+        const research_groups = await researchGroupService.getSummaryList();
 
         return NextResponse.json({
             success: true,
@@ -43,11 +42,10 @@ export async function GET(req: NextRequest) {
             status: 200,
         },)
 
-    } catch (error) {
+    } catch (error: any) {
         return NextResponse.json({
             success: false,
-            message: `Failed to create research group: ${error}`,
-        },
-            { status: 500 })
+            message: `Internal Server Error: ${error.message}`,
+        }, { status: 500 });
     }
 }

@@ -1,16 +1,184 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import { Burger } from "@mantine/core";
 import Link from "next/link";
 import { SessionPayload } from "src/lib/encrypt";
+import {
+  IconLayoutDashboard,
+  IconMicroscope,
+  IconUsers,
+  IconBook,
+  IconSchool,
+  IconCalendar,
+  IconUser,
+  IconBuildingCommunity,
+} from "@tabler/icons-react";
 
-interface MenuItem {
+// Tipe data untuk konfigurasi menu
+type MenuSection = {
+  title?: string;
+  items: MenuItem[];
+};
+
+type MenuItem = {
   name: string;
-  icon: string;
+  icon: JSX.Element;
   path: string;
-}
+  exact?: boolean;
+};
+
+// Konfigurasi menu untuk semua role
+const MENU_CONFIG: Record<string, MenuSection[]> = {
+  admin: [
+    {
+      items: [
+        {
+          name: "Dashboard",
+          icon: <IconLayoutDashboard />,
+          path: "/dashboard",
+          exact: true,
+        },
+      ],
+    },
+    {
+      title: "USULAN",
+      items: [
+        {
+          name: "Penelitian",
+          icon: <IconMicroscope />,
+          path: "/penelitian",
+        },
+        {
+          name: "Pengmas",
+          icon: <IconUsers />,
+          path: "/pengmas",
+        },
+      ],
+    },
+    {
+      title: "AUDIT",
+      items: [
+        {
+          name: "Skema",
+          icon: <IconBook />,
+          path: "/audit/skema",
+        },
+        {
+          name: "Research Group",
+          icon: <IconBuildingCommunity />,
+          path: "/audit/research_group",
+        },
+        {
+          name: "Program Studi",
+          icon: <IconSchool />,
+          path: "/audit/program_studi",
+        },
+        {
+          name: "Tahun",
+          icon: <IconCalendar />,
+          path: "/audit/tahun",
+        },
+      ],
+    },
+    {
+      title: "KONFIGURASI",
+      items: [
+        {
+          name: "User",
+          icon: <IconUser />,
+          path: "/konfigurasi/user",
+        },
+      ],
+    },
+  ],
+  kaprodi: [
+    {
+      items: [
+        {
+          name: "Dashboard",
+          icon: <IconLayoutDashboard />,
+          path: "/dashboard",
+          exact: true,
+        },
+      ],
+    },
+
+    {
+      title: "PRODI",
+      items: [
+        {
+          name: "Prodi",
+          icon: <IconSchool />,
+          path: "/prodi",
+        },
+      ],
+    },
+  ],
+  ketua_rg: [
+    {
+      items: [
+        {
+          name: "Dashboard",
+          icon: <IconLayoutDashboard />,
+          path: "/dashboard",
+          exact: true,
+        },
+      ],
+    },
+    {
+      title: "USULAN",
+      items: [
+        {
+          name: "Penelitian",
+          icon: <IconMicroscope />,
+          path: "/penelitian",
+        },
+        {
+          name: "Pengmas",
+          icon: <IconUsers />,
+          path: "/pengmas",
+        },
+      ],
+    },
+    {
+      title: "RESEARCH GROUP",
+      items: [
+        {
+          name: "Research Group",
+          icon: <IconBuildingCommunity />,
+          path: "/rg",
+        },
+      ],
+    },
+  ],
+  lecturer: [
+    {
+      items: [
+        {
+          name: "Dashboard",
+          icon: <IconLayoutDashboard />,
+          path: "/dashboard",
+          exact: true,
+        },
+      ],
+    },
+    {
+      title: "USULAN",
+      items: [
+        {
+          name: "Penelitian",
+          icon: <IconMicroscope />,
+          path: "/penelitian",
+        },
+        {
+          name: "Pengmas",
+          icon: <IconUsers />,
+          path: "/pengmas",
+        },
+      ],
+    },
+  ],
+};
 
 interface SidebarProps {
   session?: SessionPayload;
@@ -20,67 +188,12 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ session, opened, toggle }) => {
   const pathname = usePathname();
-  const [role, setRole] = useState<string | null>(session?.user_type || "");
+  const role = session?.user_type!
+  const menuSections = MENU_CONFIG[role] || MENU_CONFIG.dosen;
 
-
-  const adminMenu: MenuItem[] = [
-    { name: "Dashboard", icon: "", path: "/dashboard" },
-    { name: "Penelitian", icon: "", path: "/penelitian" },
-    { name: "Pengmas", icon: "", path: "/pengmas" },
-    { name: "Skema", icon: "", path: "/audit/skema" },
-    { name: "Akun", icon: "", path: "/audit/akun" },
-    { name: "Tahun", icon: "", path: "/audit/tahun" },
-  ];
-
-  const kaprodiMenu: MenuItem[] = [
-    { name: "Dashboard", icon: "", path: "/dashboard" },
-    { name: "Penelitian", icon: "", path: "/penelitian" },
-    { name: "Pengmas", icon: "", path: "/pengmas" },
-    { name: "Prodi", icon: "", path: "/prodi" },
-  ];
-
-  const rgMenu: MenuItem[] = [
-    { name: "Dashboard", icon: "", path: "/dashboard" },
-    { name: "Penelitian", icon: "", path: "/penelitian" },
-    { name: "Pengmas", icon: "", path: "/pengmas" },
-    { name: "Research Group", icon: "", path: "/rg" },
-  ];
-
-  const dosenMenu: MenuItem[] = [
-    { name: "Dashboard", icon: "", path: "/dashboard" },
-    { name: "Penelitian", icon: "", path: "/penelitian" },
-    { name: "Pengmas", icon: "", path: "/pengmas" },
-  ];
-
-  const getMenuItems = (role: string): MenuItem[] => {
-    switch (role) {
-      case "admin":
-        return adminMenu;
-      case "kaprodi":
-        return kaprodiMenu;
-      case "ketua_rg":
-        return rgMenu;
-      default:
-        return dosenMenu;
-    }
+  const isActive = (item: MenuItem) => {
+    return item.exact ? pathname === item.path : pathname.startsWith(item.path);
   };
-
-  const menuItems = getMenuItems(role ?? "");
-
-  const getSectionTitle = (): string => {
-    switch (role) {
-      case "admin":
-        return "AUDIT";
-      case "kaprodi":
-        return "PRODI";
-      case "ketua_rg":
-        return "RESEARCH GROUP";
-      default:
-        return "";
-    }
-  };
-
-  const sectionTitle = getSectionTitle();
 
   return (
     <div
@@ -92,73 +205,41 @@ const Sidebar: React.FC<SidebarProps> = ({ session, opened, toggle }) => {
         <Burger opened={opened} onClick={toggle} size="md" />
         {opened && <h1 className="text-xl font-bold">PERGURUAN TINGGI</h1>}
       </div>
+
       {opened && (
-        <>
-          <div className="mb-4">
-            <Link key={menuItems[0].name} href={menuItems[0].path}>
-              <div
-                className={`flex items-center p-2 mb-2 cursor-pointer rounded ${
-                  pathname === menuItems[0].path
-                    ? "bg-blue-800 text-white"
-                    : "text-gray-400 hover:bg-gray-200"
-                }`}
-              >
-                <span className="material-icons mr-2">{menuItems[0].icon}</span>
-                {opened && menuItems[0].name}
+        <div className="overflow-y-auto h-[calc(100vh-100px)]">
+          {menuSections.map((section, index) => (
+            <div key={index} className="mb-4">
+              {/* Section Title */}
+              {section.title && (
+                <>
+                  <h2 className="text-md font-semibold mb-1">
+                    {section.title}
+                  </h2>
+                  <hr className="border-t-2 border-black mb-2" />
+                </>
+              )}
+
+              {/* Menu Items */}
+              <div className="space-y-1">
+                {section.items.map((item) => (
+                  <Link key={item.name} href={item.path}>
+                    <div
+                      className={`flex items-center p-2 cursor-pointer rounded ${
+                        isActive(item)
+                          ? "bg-blue-800 text-white"
+                          : "text-gray-400 hover:bg-gray-200"
+                      }`}
+                    >
+                      <span className="mr-2">{item.icon}</span>
+                      {opened && item.name}
+                    </div>
+                  </Link>
+                ))}
               </div>
-            </Link>
-          </div>
-          <h3 className={`text-md font-semibold mb-1 ${!opened && "hidden"}`}>
-            KATEGORI
-          </h3>
-          <hr
-            className={`border-t-2 border-black mb-1 ${!opened && "hidden"}`}
-          />
-          <div className="mb-4">
-            {menuItems.slice(1, 3).map((item) => (
-              <Link key={item.name} href={item.path}>
-                <div
-                  className={`flex items-center p-1 mb-1 cursor-pointer rounded ${
-                    pathname.startsWith(item.path)
-                      ? "bg-blue-800 text-white"
-                      : "text-gray-400 hover:bg-gray-200"
-                  }`}
-                >
-                  <span className="material-icons mr-2">{item.icon}</span>
-                  {opened && item.name}
-                </div>
-              </Link>
-            ))}
-          </div>
-          {role !== "dosen" && (
-            <>
-              <h2
-                className={`text-md font-semibold mb-1 ${!opened && "hidden"}`}
-              >
-                {sectionTitle}
-              </h2>
-              <hr
-                className={`border-t-2 border-black mb-1 ${
-                  !opened && "hidden"
-                }`}
-              />
-              {menuItems.slice(3).map((item) => (
-                <Link key={item.name} href={item.path}>
-                  <div
-                    className={`flex items-center p-1 mb-1 cursor-pointer rounded ${
-                      pathname === item.path
-                        ? "bg-blue-800 text-white"
-                        : "text-gray-400 hover:bg-gray-200"
-                    }`}
-                  >
-                    <span className="material-icons mr-2">{item.icon}</span>
-                    {opened && item.name}
-                  </div>
-                </Link>
-              ))}
-            </>
-          )}
-        </>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

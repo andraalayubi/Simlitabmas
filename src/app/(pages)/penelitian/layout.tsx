@@ -44,7 +44,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Tabs navigation */}
       <div className="flex justify-between shadow-md rounded-lg">
         <Tabs
-          color="black"
           defaultValue="overview"
           value={activeTab}
           onChange={(value) => handleTabChange(value)}

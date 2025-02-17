@@ -1,15 +1,15 @@
-import { user_type } from "prisma/interfaces";
+import { department, user_type } from "prisma/interfaces";
 import { getSession } from "src/lib/session";
 
-// get research group list
-const getResearchGroup = async (
+// get department list
+const getDepartment = async (
   user_type: user_type,
   setLoading: (loading: boolean) => void
 ) => {
   setLoading(true);
 
   try {
-    const response = await fetch(`/api/${user_type}/research_group`, {
+    const response = await fetch(`/api/${user_type}/department`, {
       method: "GET",
     });
 
@@ -36,16 +36,13 @@ const getResearchGroup = async (
   }
 };
 
+// create new department
+const createDepartment = async () => {};
 
-// create research group
-const createResearchGroup = async () => {
 
+const departmentAction = {
+    getDepartment,
+    createDepartment
 }
 
-const researchGroupAction = {
-    getResearchGroup,
-    createResearchGroup
-}
-
-
-export default researchGroupAction;
+export default departmentAction;

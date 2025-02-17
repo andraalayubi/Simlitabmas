@@ -133,6 +133,7 @@ model lecturer {
   nip               String?  @unique
   degree            Json?
   is_ketua_rg       Boolean?
+  is_kaprodi        Boolean? @default(false)
   position_id       Int?
   signature_url     String?
 
@@ -177,7 +178,8 @@ model department {
   updatedAt DateTime @updatedAt
   deleted   Boolean  @default(false)
 
-  lecturer lecturer[]
+  lecturer            lecturer[]
+  proposal_suggestion proposal_suggestion[]
 
   @@map("departments")
 }
@@ -231,7 +233,7 @@ model schema {
   id          Int      @id @default(autoincrement())
   name        String
   description String?
-  max_cost    Decimal? @db.Decimal(20,2)
+  max_cost    Decimal? @db.Decimal(20, 2)
   min_degree  degree?
   is_student  Boolean?
   is_partner  Boolean?
@@ -257,7 +259,8 @@ model proposal_suggestion {
   schema_id         Int?
   lecturer_id       Int?
   research_group_id Int?
-  phase   proposal_suggestion_phase?
+  department_id     Int?
+  phase             proposal_suggestion_phase?
   status            proposal_suggestion_status?
   is_active         Boolean?
 
@@ -269,6 +272,7 @@ model proposal_suggestion {
   schema         schema?         @relation(fields: [schema_id], references: [id])
   lecturer       lecturer?       @relation(fields: [lecturer_id], references: [id])
   research_group research_group? @relation(fields: [research_group_id], references: [id])
+  department     department?     @relation(fields: [department_id], references: [id])
 
   lecturer_member    lecturer_member[]
   student_member     student_member[]
