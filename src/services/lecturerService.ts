@@ -22,23 +22,26 @@ const getAllActive = async () => {
 };
 
 // add lecturer to proposal suggestion
-const addToProposalSuggestion = async (proposalSuggestionId: number, lecturerId: number) => {
-    return await prisma.proposal_suggestion.update({
-        where: { id: proposalSuggestionId },
-        data: { 
-            lecturer_id: lecturerId 
-        },
-        select: {
-            id: true,
-            lecturer_id: true
-        }
+const addLecturerMember = async (proposalSuggestionId: number, lecturerIds: number[] | number) => {
+    const ids = Array.isArray(lecturerIds) ? lecturerIds : [lecturerIds];
+
+    const result = await prisma.lecturer_member.createMany({
+        data: ids.map((lecturerId) => ({
+            proposal_suggestion_id: proposalSuggestionId,
+            lecturer_id: Number(lecturerId),
+        })),
+        skipDuplicates: true,
     });
+
+    return result;
 };
+
+
 
 const lecturerService = {
     getById,
     getAllActive,
-    addToProposalSuggestion,
+    addLecturerMember,
 }
 
 export default lecturerService;

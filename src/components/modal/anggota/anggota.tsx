@@ -2,7 +2,14 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "@mantine/form";
-import { TextInput, Group, Button, Box, MultiSelect, MultiSelectProps, Text } from "@mantine/core";
+import {
+  Group,
+  Button,
+  Box,
+  MultiSelect,
+  MultiSelectProps,
+  Text,
+} from "@mantine/core";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "mantine-form-zod-resolver";
 import useNotification from "src/components/notification/notification";
@@ -10,7 +17,7 @@ import { anggotaAction } from "./_action";
 import { lecturer } from "prisma/interfaces";
 import memberAction from "src/action/memberAction";
 import { user_type } from "prisma/interfaces";
-import { lecturerMemberSchema } from "src/schemas/memberSchema";
+import { LecturerMemberFormValues, lecturerMemberSchema } from "src/schemas/memberSchema";
 
 interface AnggotaModalProps {
   user_type: user_type;
@@ -28,48 +35,50 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
   const [value, setValue] = useState<string[]>([]);
   const { showNotification } = useNotification();
   const router = useRouter();
+  console.log(value);
 
   const getLecturers = useCallback(async () => {
-    const response = await memberAction.getLecturerMember(user_type, usulanId, setLoading);
+    const response = await memberAction.getLecturerMember(
+      user_type,
+      usulanId,
+      setLoading
+    );
 
     if (response.success) {
       showNotification({ status: "success", message: response.message });
-      const transformedData: lecturer[] = response.data.map(
-        (item: any) => ({
-          id: item.id.toString(),
-      name: item.name,
-      nidn: item.nidn.toString()
-        })
-      );
+      const transformedData: lecturer[] = response.data.map((item: any) => ({
+        id: item.id.toString(),
+        name: item.name,
+      }));
 
       setLecturers(transformedData);
     } else {
       showNotification({ status: "error", message: response.message });
     }
-  }, [user_type]);
+  }, [user_type, usulanId]);
 
   useEffect(() => {
     getLecturers();
   }, [getLecturers]);
 
-  const form = useForm({
+  const form = useForm<LecturerMemberFormValues>({
     initialValues: {
-      name: "",
-      nidn: "",
       usulan_id: usulanId,
+      anggota: []
     },
     validate: zodResolver(lecturerMemberSchema),
+    validateInputOnChange: true
   });
 
-  const handleSubmit = async (values: {
-    name: string;
-    nidn: string;
-    usulan_id: number;
-  }) => {
-    const result = await anggotaAction({
-      ...values,
-      usulan_id: values.usulan_id.toString()
-    }, setLoading);
+  const handleSubmit = async (values: LecturerMemberFormValues) => {
+    console.log(values);
+    
+    const result = await memberAction.addLecturerMember(
+      {
+        ...values
+      },
+      setLoading
+    );
 
     if (result.success) {
       showNotification({ status: "success", message: result.message });
@@ -77,11 +86,13 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
       router.refresh();
     } else {
       showNotification({ status: "error", message: result.message });
-    onClose();
+      onClose();
     }
   };
 
-  const renderMultiSelectOption: MultiSelectProps['renderOption'] = ({ option }) => (
+  const renderMultiSelectOption: MultiSelectProps["renderOption"] = ({
+    option,
+  }) => (
     <Group gap="sm">
       <div>
         <Text size="sm">{option.label}</Text>
@@ -91,7 +102,7 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
 
   const memberData = lecturers.map((lecturer) => ({
     value: lecturer.id.toString(),
-    label: lecturer.name
+    label: lecturer.name,
   }));
 
   return (
@@ -104,14 +115,10 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
         data={memberData}
         renderOption={renderMultiSelectOption}
         value={value}
-        onChange={setValue}
-      />
-      <TextInput
-        required
-        label="NIDN"
-        placeholder="Masukkan NIDN"
-        {...form.getInputProps("nidn")}
-        className="mt-2"
+        onChange={(selected) => {
+          setValue(selected);
+          form.setFieldValue("anggota", selected);
+      }}
       />
       <Group justify="flex-end" mt="md">
         <Button type="submit" loading={loading}>
@@ -120,6 +127,6 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
       </Group>
     </Box>
   );
-}
+};
 
 export default AnggotaModal;

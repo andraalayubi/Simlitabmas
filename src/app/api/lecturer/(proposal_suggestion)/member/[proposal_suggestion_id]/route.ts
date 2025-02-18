@@ -26,16 +26,13 @@ export async function GET(req: NextRequest) {
 
 }
 
-export async function POST(req: NextRequest) {
-    try {
-        const session = await getSession();
+export async function POST(req: NextRequest, { params }: { params: Params }) {
+    try {      
+        const proposalSuggestionId = parseInt(params.proposal_suggestion_id, 10);
 
-        // Parse request body
         const body = await req.json();
 
-        // Associate a lecturer with a proposal suggestion
-        const result = await lecturerService.addToProposalSuggestion(1, 2);
-        // result would contain the proposal suggestion ID and the lecturer ID
+        const result = await lecturerService.addLecturerMember(proposalSuggestionId, body.lecturerId);
 
         return NextResponse.json({
             success: true,
