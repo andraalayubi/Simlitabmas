@@ -6,7 +6,7 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import { useMantineTheme } from "@mantine/core";
-import '@mantine/core/styles.css';
+// import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 
 type NotificationStatus = "error" | "success" | "warning" | "info";
