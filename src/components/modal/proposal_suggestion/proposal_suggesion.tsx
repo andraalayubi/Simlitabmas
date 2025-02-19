@@ -54,7 +54,7 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
       user_type,
       setLoading
     );
-    const getResearchGroups = await researchGroupAction.getResearchGroups(
+    const getResearchGroups = await researchGroupAction.getResearchGroup(
       user_type,
       setLoading
     );

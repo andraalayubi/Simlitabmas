@@ -1,7 +1,7 @@
 import axios from "axios";
 import { user_type } from "prisma/interfaces";
 
-const getLecturerMember = async (
+const getVendorMember = async (
   user_type: user_type,
   usulan_id: number,
   setLoading: (loading: boolean) => void
@@ -36,7 +36,7 @@ const getLecturerMember = async (
   }
 };
 
-const addLecturerMember = async (
+const addVendorMember = async (
   values: {
     usulan_id: number;
     anggota: string[]
@@ -74,8 +74,8 @@ const addLecturerMember = async (
 };
 
 const memberAction = {
-  getLecturerMember,
-  addLecturerMember
+  getVendorMember,
+  addVendorMember
 }
 
 export default memberAction;

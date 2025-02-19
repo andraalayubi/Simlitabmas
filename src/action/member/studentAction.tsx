@@ -1,7 +1,7 @@
 import axios from "axios";
 import { user_type } from "prisma/interfaces";
 
-const getLecturerMember = async (
+const getStudentMember = async (
   user_type: user_type,
   usulan_id: number,
   setLoading: (loading: boolean) => void
@@ -9,11 +9,10 @@ const getLecturerMember = async (
   setLoading(true);
 
   try {
-    const response = await fetch(`/api/${user_type}/member/${usulan_id}/lecturer`);
+    const response = await fetch(`/api/${user_type}/member/${usulan_id}/student`);
     const result = await response.json();
     console.log(result);
     
-
     if (result.status === 200 || result.success == true) {
       return {
         success: true,
@@ -36,7 +35,7 @@ const getLecturerMember = async (
   }
 };
 
-const addLecturerMember = async (
+const addStudentMember = async (
   values: {
     usulan_id: number;
     anggota: string[]
@@ -74,8 +73,8 @@ const addLecturerMember = async (
 };
 
 const memberAction = {
-  getLecturerMember,
-  addLecturerMember
+  getStudentMember,
+  addStudentMember
 }
 
 export default memberAction;

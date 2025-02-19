@@ -44,7 +44,7 @@ const getAvailableLecturerMember = async (
   setLoading(true);
 
   try {
-    const response = await fetch(`/api/${user_type}/member/${usulan_id}/available/lecturer`);
+    const response = await fetch(`/api/${user_type}/member/${usulan_id}/available`);
     const result = await response.json();
     console.log(result);
     

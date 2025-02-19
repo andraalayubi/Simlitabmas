@@ -9,13 +9,13 @@ import AnggotaKetuaRG from "./_ketua_rg";
 import AnggotaLecturer from "./_lecturer";
 import { MRT_ColumnDef } from "mantine-react-table";
 import { Skeleton } from "@mantine/core";
-import { lecturer } from "prisma/interfaces";
+import { lecturer, student_member, vendor_member } from "prisma/interfaces";
 
 
 export default function AnggotaPage() {
     const { session, loading: sessionLoading } = useSession();
   
-    const columns = useMemo<MRT_ColumnDef<lecturer>[]>(
+    const columnsLecturer = useMemo<MRT_ColumnDef<lecturer>[]>(
       () => [
         {
           accessorKey: "name",
@@ -41,6 +41,43 @@ export default function AnggotaPage() {
       []
     );
 
+    const columnsStudent = useMemo<MRT_ColumnDef<student_member>[]>(
+      () => [
+        {
+          accessorKey: "name",
+          header: "Nama Anggota",
+          size: 300,
+        },
+        {
+          accessorKey: "nrp",
+          header: "NRP / NIP",
+          size: 225,
+        },
+        {
+          accessorKey: "department.name",
+          header: "Program Studi",
+          size: 300,
+        }
+      ],
+      []
+    );
+
+    const columnsVendor = useMemo<MRT_ColumnDef<vendor_member>[]>(
+      () => [
+        {
+          accessorKey: "name",
+          header: "Nama Anggota",
+          size: 300,
+        },
+        {
+          accessorKey: "description",
+          header: "Deskripsi",
+          size: 300,
+        }
+      ],
+      []
+    );
+
     useEffect(() => {
       if (!sessionLoading) {
         //   fetchDetailUsulanByUsulanId();
@@ -48,7 +85,7 @@ export default function AnggotaPage() {
     }, [sessionLoading]);
   
     if(session?.user_type == "admin") {
-      return <Skeleton visible={sessionLoading}><AnggotaAdmin columns={columns}/></Skeleton>
+      return <Skeleton visible={sessionLoading}><AnggotaAdmin columnsLecturer={columnsLecturer} columnsStudent={columnsStudent} columnsVendor={columnsVendor}/></Skeleton>
     } else if (session?.user_type == "lecturer") {
       return <Skeleton visible={sessionLoading}><AnggotaLecturer /></Skeleton>
     } else if (session?.user_type == "ketua_rg") {

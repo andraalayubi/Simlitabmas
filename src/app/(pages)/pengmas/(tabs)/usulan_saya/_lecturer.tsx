@@ -25,16 +25,7 @@ const UsulanSayaLecturer: React.FC<UsulanSayaLecturerProps> = ({ columns }) => {
     
     if (response.success) {
       showNotification({ status: "success", message: response.message });
-      const transformedData: proposal_suggestion[] = response.data.map(
-        (item: any) => ({
-          id: item.id,
-          judulPenelitian: item.name,
-          skema: item.schema.name,
-          statusProposal: item.status,
-        })
-      );
-
-      setData(transformedData);
+      setData(response.data);
     } else {
       showNotification({ status: "error", message: response.message });
     }

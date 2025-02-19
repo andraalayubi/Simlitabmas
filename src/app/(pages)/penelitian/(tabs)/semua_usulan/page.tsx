@@ -14,24 +14,11 @@ import SemuaUsulanAdmin from "./_admin";
 import SemuaUsulanKaprodi from "./_kaprodi";
 import SemuaUsulanKetuaRG from "./_ketua_rg";
 import ProposalSuggestionStatusBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionStatusBadge";
+import { Skeleton } from "@mantine/core";
 
 export default function AllSuggestionPage() {
   const { session, loading: sessionLoading } = useSession();
-  const [loading, setLoading] = useState(true);
-
-  const user_type =
-    session?.user_type === "ketua_rg"
-      ? "research_group"
-      : session?.user_type === "lecturer"
-      ? "lecturer"
-      : session?.user_type;
-
-  useEffect(() => {
-    if (!sessionLoading) {
-      setLoading(false);
-    }
-  }, [sessionLoading]);
-
+  
   const columns = useMemo<MRT_ColumnDef<proposal_suggestion>[]>(
     () => [
       {
@@ -40,27 +27,27 @@ export default function AllSuggestionPage() {
         size: 50,
       },
       {
-        accessorKey: "judulPenelitian",
+        accessorKey: "name",
         header: "Judul Penelitian",
         size: 300,
       },
       {
-        accessorKey: "skema",
+        accessorKey: "schema.name",
         header: "Skema",
         size: 100,
       },
       {
-        accessorKey: "dosenPengusul",
+        accessorKey: "lecturer.name",
         header: "Dosen Pengusul",
         size: 200,
       },
       {
-        accessorKey: "researchGroup",
+        accessorKey: "research_group.name",
         header: "Research Group",
         size: 200,
       },
       {
-        accessorKey: "statusProposal",
+        accessorKey: "status",
         header: "Status Proposal",
         Cell: ({ cell }) => (
           <ProposalSuggestionStatusBadge
@@ -72,19 +59,13 @@ export default function AllSuggestionPage() {
     []
   );
 
-  if (loading || sessionLoading) {
-    return <LoadingPage />;
-  }
-
   if (session?.user_type === "admin") {
-    return <SemuaUsulanAdmin columns={columns} />;
+    return <Skeleton visible={sessionLoading}><SemuaUsulanAdmin columns={columns} /></Skeleton>;
   } else if (session?.user_type === "lecturer") {
-    return <SemuaUsulanLecturer columns={columns} />;
+    return <Skeleton visible={sessionLoading}><SemuaUsulanLecturer columns={columns} /></Skeleton>;
   } else if (session?.user_type === "ketua_rg") {
-    return <SemuaUsulanKetuaRG columns={columns} />;
+    return <Skeleton visible={sessionLoading}><SemuaUsulanKetuaRG columns={columns} /></Skeleton>;
   } else if (session?.user_type === "kaprodi") {
-    return <SemuaUsulanKaprodi columns={columns} />;
-  } else {
-    return notFound();
+    return <Skeleton visible={sessionLoading}><SemuaUsulanKaprodi columns={columns} /></Skeleton>;
   }
 }

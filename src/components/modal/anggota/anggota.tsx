@@ -13,78 +13,154 @@ import {
 import { useRouter } from "next/navigation";
 import { zodResolver } from "mantine-form-zod-resolver";
 import useNotification from "src/components/notification/notification";
-import { lecturer } from "prisma/interfaces";
-import memberAction from "src/action/lecturerAction";
+import { lecturer, proposal_suggestion } from "prisma/interfaces";
+import lecturerAction from "src/action/lecturerAction";
+import studentAction from "src/action/member/studentAction";
+import vendorAction from "src/action/member/vendorAction";
 import { user_type } from "prisma/interfaces";
-import { LecturerMemberFormValues, lecturerMemberSchema } from "src/schemas/memberSchema";
+import { 
+  LecturerMemberFormValues, 
+  lecturerMemberSchema,
+  StudentMemberFormValues,
+  studentMemberSchema,
+  VendorMemberFormValues,
+  vendorMemberSchema 
+} from "src/schemas/memberSchema";
 
 interface AnggotaModalProps {
   user_type: user_type;
+  usulan_id: number;
+  tabActive: string | null;
   onClose: () => void;
-  usulanId: number;
 }
 
 const AnggotaModal: React.FC<AnggotaModalProps> = ({
   user_type,
+  usulan_id,
+  tabActive,
   onClose,
-  usulanId,
 }: AnggotaModalProps) => {
+  const [opened, setOpened] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [lecturers, setLecturers] = useState<lecturer[]>([]);
-  const [value, setValue] = useState<string[]>([]);
+  const [members, setMembers] = useState<any[]>([]);
   const { showNotification } = useNotification();
   const router = useRouter();
 
   const getLecturers = useCallback(async () => {
-    const response = await memberAction.getAvailableLecturerMember(
+    const response = await lecturerAction.getAvailableLecturerMember(
       user_type,
-      usulanId,
+      usulan_id,
       setLoading
     );    
 
     if (response.success) {
-      showNotification({ status: "success", message: response.message });
-      const transformedData: lecturer[] = response.data.map((item: any) => ({
+      const transformedData = response.data.map((item: any) => ({
         id: item.id.toString(),
         name: item.name,
       }));
 
-      setLecturers(transformedData);
+      setMembers(transformedData);
     } else {
       showNotification({ status: "error", message: response.message });
     }
-  }, [user_type, usulanId]);
+  }, [user_type, usulan_id]);
+
+  const getStudents = useCallback(async () => {
+    // Implement student fetching logic
+  }, [user_type, usulan_id]);
+
+  const getVendors = useCallback(async () => {
+    // Implement vendor fetching logic
+  }, [user_type, usulan_id]);
 
   useEffect(() => {
-    getLecturers();
-  }, [getLecturers]);
+    switch(tabActive) {
+      case 'dosen':
+        getLecturers();
+        break;
+      case 'mahasiswa':
+        getStudents();
+        break;
+      case 'vendor':
+        getVendors();
+        break;
+      default:
+        getLecturers();
+        break;
+    }
+  }, [tabActive, getLecturers, getStudents, getVendors]);
 
-  const form = useForm<LecturerMemberFormValues>({
+  const lecturerForm = useForm<LecturerMemberFormValues>({
     initialValues: {
-      usulan_id: usulanId,
+      usulan_id,
       anggota: []
     },
     validate: zodResolver(lecturerMemberSchema),
     validateInputOnChange: true
   });
 
-  const handleSubmit = async (values: LecturerMemberFormValues) => {
-    console.log(values);
-    
-    const result = await memberAction.addLecturerMember(
-      {
-        ...values
-      },
-      setLoading
-    );
+  const studentForm = useForm<StudentMemberFormValues>({
+    initialValues: {
+      usulan_id,
+      anggota: []
+    },
+    validate: zodResolver(studentMemberSchema),
+    validateInputOnChange: true
+  });
 
-    if (result.success) {
-      showNotification({ status: "success", message: result.message });
-      onClose();
-      router.refresh();
-    } else {
-      showNotification({ status: "error", message: result.message });
-      onClose();
+  const vendorForm = useForm<VendorMemberFormValues>({
+    initialValues: {
+      usulan_id,
+      anggota: []
+    },
+    validate: zodResolver(vendorMemberSchema),
+    validateInputOnChange: true
+  });
+
+  const handleSubmit = async () => {
+    switch(tabActive) {
+      case 'dosen':
+        const lecturerResult = await lecturerAction.addLecturerMember(
+          lecturerForm.values,
+          setLoading
+        );
+        if (lecturerResult.success) {
+          showNotification({ status: "success", message: lecturerResult.message });
+          setOpened(false);
+          onClose();
+          router.refresh();
+        } else {
+          showNotification({ status: "error", message: lecturerResult.message });
+        }
+        break;
+      case 'mahasiswa':
+        const studentResult = await studentAction.addStudentMember(
+          studentForm.values,
+          setLoading
+        );
+        if (studentResult.success) {
+          showNotification({ status: "success", message: studentResult.message });
+          setOpened(false);
+          onClose();
+          router.refresh();
+        } else {
+          showNotification({ status: "error", message: studentResult.message });
+        }
+        break;
+      case 'vendor':
+        const vendorResult = await vendorAction.addVendorMember(
+          vendorForm.values,
+          setLoading
+        );
+        if (vendorResult.success) {
+          showNotification({ status: "success", message: vendorResult.message });
+          setOpened(false);
+          onClose();
+          router.refresh();
+        } else {
+          showNotification({ status: "error", message: vendorResult.message });
+        }
+        break;
     }
   };
 
@@ -98,32 +174,49 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
     </Group>
   );
 
-  const memberData = lecturers.map((lecturer) => ({
-    value: lecturer.id.toString(),
-    label: lecturer.name,
+  const memberData = members.map((member) => ({
+    value: member.id,
+    label: member.name,
   }));
 
   return (
-    <Box component="form" onSubmit={form.onSubmit(handleSubmit)}>
-      <MultiSelect
-        searchable
-        required
-        label="Nama Anggota"
-        placeholder="Masukkan nama anggota"
-        data={memberData}
-        renderOption={renderMultiSelectOption}
-        value={value}
-        onChange={(selected) => {
-          setValue(selected);
-          form.setFieldValue("anggota", selected);
-      }}
-      />
-      <Group justify="flex-end" mt="md">
-        <Button type="submit" loading={loading}>
-          Tambah Anggota
-        </Button>
-      </Group>
-    </Box>
+        <Box>
+          {tabActive === 'dosen' && (
+            <MultiSelect
+              label="Pilih Dosen"
+              placeholder="Pilih Dosen"
+              data={memberData}
+              {...lecturerForm.getInputProps('anggota')}
+              renderOption={renderMultiSelectOption}
+            />
+          )}
+          {tabActive === 'mahasiswa' && (
+            <MultiSelect
+              label="Pilih Mahasiswa"
+              placeholder="Pilih Mahasiswa"
+              data={memberData}
+              {...studentForm.getInputProps('anggota')}
+              renderOption={renderMultiSelectOption}
+            />
+          )}
+          {tabActive === 'vendor' && (
+            <MultiSelect
+              label="Pilih Vendor"
+              placeholder="Pilih Vendor"
+              data={memberData}
+              {...vendorForm.getInputProps('anggota')}
+              renderOption={renderMultiSelectOption}
+            />
+          )}
+          <Group justify="flex-end" mt="md">
+            <Button 
+              onClick={handleSubmit} 
+              loading={loading}
+            >
+              Tambah
+            </Button>
+          </Group>
+        </Box>
   );
 };
 

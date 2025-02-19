@@ -8,6 +8,7 @@ export async function GET(req: NextRequest, { params }: { params: Params }) {
     try {
         const proposalSuggestionId = parseInt(params.proposal_suggestion_id, 10);
         const proposal_suggestion = await memberService.getStudentMembers(proposalSuggestionId);
+        console.log(proposal_suggestion);
         
         return NextResponse.json({
             success: true,
