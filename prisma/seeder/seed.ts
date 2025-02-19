@@ -8,6 +8,8 @@ const prisma = new PrismaClient()
 const lecturers = [
     {
         name: "Mirza Ramadhani",
+        research_group_id: 1,
+        department_id: 1,
         nidn: "3122500044",
         nip: "12345678",
         degree: [
@@ -38,6 +40,8 @@ const lecturers = [
     },
     {
         name: "Andra Al Ayubi",
+        research_group_id: 2,
+        department_id: 2,
         nidn: "3122500045",
         nip: "23456789",
         degree: [
@@ -68,6 +72,8 @@ const lecturers = [
     },
     {
         name: "Hammam Mujahid",
+        research_group_id: 3,
+        department_id: 3,
         nidn: "3122500046",
         nip: "34567890",
         degree: [
@@ -414,6 +420,20 @@ const main = async () => {
                 "proposal_suggestions"
             RESTART IDENTITY CASCADE;
         `);
+        
+        // insert research groups
+        await prisma.research_group.createMany({
+            data: research_groups,
+            skipDuplicates: true,
+        })
+        console.log("Inserting research groups...");
+
+        // insert departement
+        await prisma.department.createMany({
+            data: departements,
+            skipDuplicates: true,
+        })
+        console.log("Inserting departement...");
 
         for (const lecturer of lecturers) {
 
@@ -447,20 +467,6 @@ const main = async () => {
             })
         }
         console.log("Inserting lecturer and users...");
-
-        // insert research groups
-        await prisma.research_group.createMany({
-            data: research_groups,
-            skipDuplicates: true,
-        })
-        console.log("Inserting research groups...");
-
-        // insert departement
-        await prisma.department.createMany({
-            data: departements,
-            skipDuplicates: true,
-        })
-        console.log("Inserting departement...");
 
         // insert year research
         await prisma.year_research.createMany({

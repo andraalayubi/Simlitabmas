@@ -71,18 +71,14 @@ const updateProposal = async (
 };
 
 const getProposal = async (
-  // user_type: user_type,
+  user_type: user_type,
   usulan_id: string,
   setLoading: (loading: boolean) => void
 ) => {
   setLoading(true);
 
   try {
-    const session = await getSession();
-    if (!session || !session.user_type) {
-      throw new Error("No session or user_type found");
-    }
-    const response = await fetch(`/api/${session.user_type}/proposal/${usulan_id}`, {
+    const response = await fetch(`/api/${user_type}/proposal/${usulan_id}`, {
       method: "GET",
     });
 

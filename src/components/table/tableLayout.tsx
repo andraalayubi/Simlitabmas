@@ -9,6 +9,8 @@ interface TableLayoutProps<TData extends Record<string, any>> {
   enablePagination?: boolean;
   enableSorting?: boolean;
   enableColumnActions?: boolean;
+  enableRowClick?: boolean;
+  getRowClickUrl?: (row: TData) => string;
 }
 
 const TableLayout = <TData extends Record<string, any>>({
@@ -34,6 +36,7 @@ const TableLayout = <TData extends Record<string, any>>({
       mantineTableHeadCellProps={{ style: { backgroundColor: "#f5f5f5" } }}
       initialState={{ showGlobalFilter: true }}
       state={{ showSkeletons: isLoading }}
+      defaultColumn = {{ grow: true, minSize: 100, maxSize: 1000 }}
       mantineTableBodyRowProps={({ row }) =>
         enableRowClick && getRowClickUrl
           ? {

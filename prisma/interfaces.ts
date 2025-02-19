@@ -106,6 +106,7 @@ export interface department {
   deleted: boolean;
   lecturer?: lecturer[];
   proposal_suggestion?: proposal_suggestion[];
+  student_member?: student_member[];
 }
 
 export interface year_research {
@@ -232,10 +233,12 @@ export interface student_member {
   proposal_suggestion_id: number;
   name: string;
   nrp: string;
+  department_id: number;
   createdAt: Date;
   updatedAt: Date;
   deleted: boolean;
   proposal_suggestion?: proposal_suggestion;
+  department?: department;
 }
 
 export interface vendor_member {

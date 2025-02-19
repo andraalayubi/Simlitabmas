@@ -6,17 +6,11 @@ import { Tabs } from "@mantine/core";
 import { useParams } from "next/navigation";
 import AnggotaModal from "src/components/modal/anggota/anggota";
 import ModalComponent from "src/components/modal/modal";
-
-interface Member {
-  id: number;
-  name: string;
-  role: string;
-  activityCount: string;
-}
+import { lecturer_member } from "prisma/interfaces";
 
 const MemberLecturer: React.FC = () => {
   const user_type = "lecturer";
-  const [members, setMembers] = useState<Member[]>([]);
+  const [members, setMembers] = useState<lecturer_member[]>([]);
   const [loading, setLoading] = useState(true);
   const params = useParams();
 

@@ -22,7 +22,7 @@ const ProposalAdmin = () => {
 
   const getProposal = useCallback(async () => {
     const response = await proposalAction.getProposal(
-      // user_type,
+      user_type,
       usulan_id[0],
       setLoading
     );

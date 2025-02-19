@@ -13,9 +13,8 @@ import {
 import { useRouter } from "next/navigation";
 import { zodResolver } from "mantine-form-zod-resolver";
 import useNotification from "src/components/notification/notification";
-import { anggotaAction } from "./_action";
 import { lecturer } from "prisma/interfaces";
-import memberAction from "src/action/memberAction";
+import memberAction from "src/action/lecturerAction";
 import { user_type } from "prisma/interfaces";
 import { LecturerMemberFormValues, lecturerMemberSchema } from "src/schemas/memberSchema";
 
@@ -35,14 +34,13 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
   const [value, setValue] = useState<string[]>([]);
   const { showNotification } = useNotification();
   const router = useRouter();
-  console.log(value);
 
   const getLecturers = useCallback(async () => {
-    const response = await memberAction.getLecturerMember(
+    const response = await memberAction.getAvailableLecturerMember(
       user_type,
       usulanId,
       setLoading
-    );
+    );    
 
     if (response.success) {
       showNotification({ status: "success", message: response.message });

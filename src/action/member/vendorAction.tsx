@@ -9,8 +9,10 @@ const getLecturerMember = async (
   setLoading(true);
 
   try {
-    const response = await fetch(`/api/${user_type}/member/${usulan_id}`);
+    const response = await fetch(`/api/${user_type}/member/${usulan_id}/vendor`);
     const result = await response.json();
+    console.log(result);
+    
 
     if (result.status === 200 || result.success == true) {
       return {
