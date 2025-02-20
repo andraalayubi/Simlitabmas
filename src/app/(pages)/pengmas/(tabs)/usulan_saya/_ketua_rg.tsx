@@ -16,11 +16,16 @@ const UsulanSayaKetuaRG: React.FC<UsulanSayaKetuaRGProps> = ({ columns }) => {
   const [loading, setLoading] = useState(true);
 
   const getProposalSuggestion = useCallback(async () => {
+    const session = await getSession();
+    const lecturerId =
+      typeof session?.lecturer_id === "number" ? session.lecturer_id : "";
+
     const response = await proposalSuggestionAction.getProposalSuggestion(
       user_type,
       setLoading,
       {
         research_group_id: "null",
+        lecturer_id: lecturerId,
       }
     );
     

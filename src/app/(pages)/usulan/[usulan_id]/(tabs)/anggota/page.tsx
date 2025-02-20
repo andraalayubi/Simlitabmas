@@ -81,10 +81,10 @@ export default function AnggotaPage() {
     if(session?.user_type == "admin") {
       return <Skeleton visible={sessionLoading}><AnggotaAdmin columnsLecturer={columnsLecturer} columnsStudent={columnsStudent} columnsVendor={columnsVendor}/></Skeleton>
     } else if (session?.user_type == "lecturer") {
-      return <Skeleton visible={sessionLoading}><AnggotaLecturer /></Skeleton>
+      return <Skeleton visible={sessionLoading}><AnggotaLecturer columnsLecturer={columnsLecturer} columnsStudent={columnsStudent} columnsVendor={columnsVendor}/></Skeleton>
     } else if (session?.user_type == "ketua_rg") {
-      return <Skeleton visible={sessionLoading}><AnggotaKetuaRG /></Skeleton>
+      return <Skeleton visible={sessionLoading}><AnggotaKetuaRG columnsLecturer={columnsLecturer} columnsStudent={columnsStudent} columnsVendor={columnsVendor}/></Skeleton>
     } else if (session?.user_type == "kaprodi") {
-      return <Skeleton visible={sessionLoading}><AnggotaKaprodi /></Skeleton>
+      return <Skeleton visible={sessionLoading}><AnggotaKaprodi columnsLecturer={columnsLecturer} columnsStudent={columnsStudent} columnsVendor={columnsVendor}/></Skeleton>
     }
   }

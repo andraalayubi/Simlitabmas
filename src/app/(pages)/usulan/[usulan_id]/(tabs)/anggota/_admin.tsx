@@ -39,13 +39,13 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
   const [schema, setSchema] = useState<schema | null>(null);
   const [proposalSuggestion, setProposalSuggestion] =
     useState<proposal_suggestion | null>(null);
-  //nambah loading buat summary card
+  
   const [tabActive, setTabActive] = useState<string | null>("lecturer");
   const [loading, setLoading] = useState(true);
   const [loadProposal, setLoadProposal] = useState(true);
   const params = useParams();
   const usulan_id = Number(params.usulan_id[0]);
-
+  
   const getProposalSchema = useCallback(async () => {
     const response = await memberAction.getProposalSchema(
       user_type,
@@ -54,13 +54,16 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
     );
 
     if (response.success) {
-      console.log(response.data);
-
       showNotification({ status: "success", message: response.message });
       setProposalSuggestion(response.data);
-      setLecturers(response.data.lecturer);
       setSchema(response.data.schema);
       setLoadProposal(false);
+      
+      if (!response.data.schema.is_lecturer) {
+        setLecturers([response.data.lecturer]);
+      } else {
+        getLecturers();
+      }
     } else {
       showNotification({ status: "error", message: response.message });
     }
@@ -72,7 +75,7 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
       usulan_id,
       setLoading
     );
-
+    
     if (response.success) {
       showNotification({ status: "success", message: response.message });
       setLecturers(response.data);
@@ -114,12 +117,8 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
   useEffect(() => {
     getProposalSchema();
   }, [getProposalSchema]);
-  
+
   useEffect(() => {
-    if (schema?.is_lecturer) {
-      getLecturers();
-    }
-  
     switch (tabActive) {
       case "student":
         getStudents();
@@ -128,7 +127,7 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
         getVendors();
         break;
     }
-  }, [schema, tabActive, getLecturers, getStudents, getVendors]);
+  }, [schema, tabActive, getStudents, getVendors]);
 
   return (
     <>
@@ -162,7 +161,7 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
                 </Tabs.List>
               </div>
               <div>
-                <ModalComponent title="Buat Usulan">
+                <ModalComponent title="Tambah Anggota">
                   {(close) => (
                     <AnggotaModal
                       user_type={user_type}

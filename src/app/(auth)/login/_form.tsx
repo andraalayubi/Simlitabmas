@@ -35,7 +35,7 @@ export const LoginForm = () => {
 
     if (result.success) {
       showNotification({ status: "success", message: result.message });
-      setTimeout(() => router.push("/dashboard"), 2000);
+      setTimeout(() => window.location.href = '/dashboard', 2000);
       console.log('to dashboard')
     } else {
       showNotification({ status: "error", message: result.message });

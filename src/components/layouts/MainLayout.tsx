@@ -35,7 +35,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ session, children }) => {
   }, [close, toggle, mantineTheme.breakpoints.sm]);
 
   return (
-    <div className="w-full min-h-screen">
+    <div className="w-full min-h-screen bg-white">
       <Sidebar session={session} opened={opened} toggle={toggle} />
       <div
         className={`transition-all duration-500 ${

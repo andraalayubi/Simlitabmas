@@ -1,104 +1,204 @@
 "use client";
 
-import DaftarAnggota from "src/components/usulan/anggota/ListAnggota";
-import React, { useEffect, useState } from "react";
-import { Tabs } from "@mantine/core";
+import React, { useCallback, useEffect, useState } from "react";
+import { showNotification } from "@mantine/notifications";
 import { useParams } from "next/navigation";
+import { Card, Skeleton, Tabs, Text } from "@mantine/core";
+import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
+import { MRT_ColumnDef } from "mantine-react-table";
+import TableLayout from "src/components/table/tableLayout";
+import {
+  lecturer,
+  proposal_suggestion,
+  student_member,
+  vendor_member,
+  schema,
+} from "prisma/interfaces";
 import AnggotaModal from "src/components/modal/anggota/anggota";
 import ModalComponent from "src/components/modal/modal";
-import { lecturer_member } from "prisma/interfaces";
+import lecturerAction from "src/action/lecturerAction";
+import studentAction from "src/action/member/studentAction";
+import vendorAction from "src/action/member/vendorAction";
+import memberAction from "src/action/member/memberAction";
 
-const MemberLecturer: React.FC = () => {
-  const user_type = "lecturer";
-  const [members, setMembers] = useState<lecturer_member[]>([]);
+interface AnggotaAdminProps {
+  columnsLecturer: MRT_ColumnDef<lecturer>[];
+  columnsStudent: MRT_ColumnDef<student_member>[];
+  columnsVendor: MRT_ColumnDef<vendor_member>[];
+}
+
+const MemberAdmin: React.FC<AnggotaAdminProps> = ({
+  columnsLecturer,
+  columnsStudent,
+  columnsVendor,
+}) => {
+  const user_type = "admin";
+  const [lecturers, setLecturers] = useState<lecturer[]>([]);
+  const [students, setStudents] = useState<student_member[]>([]);
+  const [vendors, setVendors] = useState<vendor_member[]>([]);
+  const [schema, setSchema] = useState<schema | null>(null);
+  const [proposalSuggestion, setProposalSuggestion] =
+    useState<proposal_suggestion | null>(null);
+  
+  const [tabActive, setTabActive] = useState<string | null>("lecturer");
   const [loading, setLoading] = useState(true);
+  const [loadProposal, setLoadProposal] = useState(true);
   const params = useParams();
+  const usulan_id = Number(params.usulan_id[0]);
+  
+  const getProposalSchema = useCallback(async () => {
+    const response = await memberAction.getProposalSchema(
+      user_type,
+      usulan_id,
+      setLoading
+    );
 
-  // Convert usulan_id to a number safely
-  const usulan_id = Array.isArray(params.usulan_id) 
-    ? parseInt(params.usulan_id[0], 10) 
-    : parseInt(params.usulan_id || '0', 10);
+    if (response.success) {
+      showNotification({ status: "success", message: response.message });
+      setProposalSuggestion(response.data);
+      setSchema(response.data.schema);
+      setLoadProposal(false);
+      
+      if (!response.data.schema.is_lecturer) {
+        setLecturers([response.data.lecturer]);
+      } else {
+        getLecturers();
+      }
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  }, [user_type, usulan_id]);
 
-  // const handleAddMember = async (
-  //   newMember: Omit<Member, "id" | "activityCount">
-  // ) => {
-  //   const memberWithId = {
-  //     ...newMember,
-  //     id: members.length + 1,
-  //     activityCount: "0",
-  //   };
+  const getLecturers = useCallback(async () => {
+    const response = await lecturerAction.getLecturerMember(
+      user_type,
+      usulan_id,
+      setLoading
+    );
+    
+    if (response.success) {
+      showNotification({ status: "success", message: response.message });
+      setLecturers(response.data);
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  }, [user_type, usulan_id]);
 
-  //   try {
-  //     const response = await fetch("/api/members", {
-  //       method: "POST",
-  //       body: JSON.stringify(memberWithId),
-  //     });
-  //     if (response.status === 201) {
-  //       setMembers((prevMembers) => [...prevMembers, memberWithId]);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error adding member:", error);
-  //   }
-  // };
+  const getStudents = useCallback(async () => {
+    const response = await studentAction.getStudentMember(
+      user_type,
+      usulan_id,
+      setLoading
+    );
 
-  // // Anggota Handler
-  // useEffect(() => {
-  //   const fetchMembers = async () => {
-  //     try {
-  //       const response = await fetch("/api/members");
+    if (response.success) {
+      showNotification({ status: "success", message: response.message });
+      setStudents(response.data);
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  }, [user_type, usulan_id]);
 
-  //       const data = await response.json();
+  const getVendors = useCallback(async () => {
+    const response = await vendorAction.getVendorMember(
+      user_type,
+      usulan_id,
+      setLoading
+    );
 
-  //       if (!response.ok) {
-  //         throw new Error(
-  //           `Error fetching session: ${response.status} - ${response.statusText}`
-  //         );
-  //       }
+    if (response.success) {
+      showNotification({ status: "success", message: response.message });
+      setVendors(response.data);
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  }, [user_type, usulan_id]);
 
-  //       setMembers(data);
-  //       setLoading(false);
-  //     } catch (error) {
-  //       console.error("There was an error fetching the members!", error);
-  //       setLoading(false);
-  //     }
-  //   };
+  useEffect(() => {
+    getProposalSchema();
+  }, [getProposalSchema]);
 
-  //   fetchMembers();
-  // }, []);
+  useEffect(() => {
+    switch (tabActive) {
+      case "student":
+        getStudents();
+        break;
+      case "vendor":
+        getVendors();
+        break;
+    }
+  }, [schema, tabActive, getStudents, getVendors]);
 
   return (
     <>
-      <div className="flex flex-col">
-        <Tabs variant="pills" defaultValue="dosen">
-          <div className="flex justify-between items-center">
-            <Tabs.List>
-              <Tabs.Tab value="dosen">Dosen</Tabs.Tab>
-              <Tabs.Tab value="mahasiswa">Mahasiswa</Tabs.Tab>
-              <Tabs.Tab value="vendor">Vendor</Tabs.Tab>
-            </Tabs.List>
-            <div className="mb-2">
-              <ModalComponent title="Tambah Anggota">
-                {(close) => <AnggotaModal onClose={close} usulanId={usulan_id} user_type={user_type} />}
-              </ModalComponent>
+      <div className="container mx-auto px-4 py-6">
+        {/* Baris Judul, Status, dan Tahap Usulan */}
+        <Skeleton visible={loadProposal}>
+          <ProposalSuggestionSummaryCard
+            proposal_suggestion_name={proposalSuggestion?.name!}
+            status={proposalSuggestion?.status!}
+            phase={proposalSuggestion?.phase!}
+          />
+        </Skeleton>
+        {/* Grid utama dengan perbandingan 5:3 pada layar besar, 1 kolom pada layar kecil */}
+        <div className="">
+          <Tabs
+            variant="pills"
+            defaultValue={tabActive}
+            value={tabActive}
+            onChange={(value) => setTabActive(value)}
+          >
+            <div className="flex justify-between items-center">
+              <div>
+                <Tabs.List>
+                  <Tabs.Tab value="lecturer">Dosen</Tabs.Tab>
+                  {schema?.is_student && (
+                    <Tabs.Tab value="student">Mahasiswa</Tabs.Tab>
+                  )}
+                  {schema?.is_partner && (
+                    <Tabs.Tab value="vendor">Vendor</Tabs.Tab>
+                  )}
+                </Tabs.List>
+              </div>
+              <div>
+                <ModalComponent title="Tambah Anggota">
+                  {(close) => (
+                    <AnggotaModal
+                      user_type={user_type}
+                      onClose={close}
+                      usulan_id={usulan_id}
+                      tabActive={tabActive}
+                    />
+                  )}
+                </ModalComponent>
+              </div>
             </div>
-          </div>
-
-          <Tabs.Panel value="dosen">
-            {/* <DaftarAnggota members={members} onAddMember={handleAddMember} /> */}
-            <></>
-          </Tabs.Panel>
-          <Tabs.Panel value="mahasiswa">
-            {/* <DaftarAnggota members={members} onAddMember={handleAddMember} /> */}
-            <></>
-          </Tabs.Panel>
-          <Tabs.Panel value="vendor">
-            {/* <DaftarAnggota members={members} onAddMember={handleAddMember} /> */}
-            <></>
-          </Tabs.Panel>
-        </Tabs>
+            <Tabs.Panel value="lecturer">
+              <TableLayout
+                columns={columnsLecturer}
+                data={lecturers}
+                isLoading={loading}
+              />
+            </Tabs.Panel>
+            <Tabs.Panel value="student">
+              <TableLayout
+                columns={columnsStudent}
+                data={students}
+                isLoading={loading}
+              />
+            </Tabs.Panel>
+            <Tabs.Panel value="vendor">
+              <TableLayout
+                columns={columnsVendor}
+                data={vendors}
+                isLoading={loading}
+              />
+            </Tabs.Panel>
+          </Tabs>
+        </div>
       </div>
     </>
   );
 };
 
-export default MemberLecturer;
+export default MemberAdmin;

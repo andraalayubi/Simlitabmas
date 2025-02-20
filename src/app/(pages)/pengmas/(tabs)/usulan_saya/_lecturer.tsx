@@ -4,6 +4,7 @@ import TableLayout from "src/components/table/tableLayout";
 import { proposal_suggestion } from "prisma/interfaces";
 import { showNotification } from "@mantine/notifications";
 import proposalSuggestionAction from "src/action/proposalSuggestionAction";
+import { getSession } from "src/lib/session";
 
 interface UsulanSayaLecturerProps {
   columns: MRT_ColumnDef<proposal_suggestion>[];
@@ -15,11 +16,16 @@ const UsulanSayaLecturer: React.FC<UsulanSayaLecturerProps> = ({ columns }) => {
   const [loading, setLoading] = useState(true);
 
   const getProposalSuggestion = useCallback(async () => {
+    const session = await getSession();
+    const lecturerId =
+      typeof session?.lecturer_id === "number" ? session.lecturer_id : "";
+
     const response = await proposalSuggestionAction.getProposalSuggestion(
       user_type,
       setLoading,
       {
         research_group_id: "null",
+        lecturer_id: lecturerId,
       }
     );
     

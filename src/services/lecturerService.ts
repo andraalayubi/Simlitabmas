@@ -1,5 +1,4 @@
 import prisma from "../client/prisma";
-import { lecturer } from "prisma/interfaces";
 
 // get by id
 const getById = async (id: number) => {
@@ -14,71 +13,6 @@ const getAllActive = async () => {
         where: { deleted: false },
     });
 };
-
-// get lecturer member for each proposal suggestion
-const getLecturerMember = async (proposalSuggestionId: number) => {
-    // Query pertama: Mengambil lecturer dari proposal_suggestion
-    const proposal = await prisma.proposal_suggestion.findUnique({
-        where: { id: proposalSuggestionId },
-        include: {
-            lecturer: {
-                include: {
-                    department: true
-                }
-            }
-        }
-    });
-
-    // Query kedua: Mengambil lecturer dari lecturer_member
-    const members = await prisma.lecturer_member.findMany({
-        where: { proposal_suggestion_id: proposalSuggestionId },
-        select: {
-            lecturer: {
-                select: {
-                    id: true,
-                    name: true,
-                    nip: true,
-                    department: {
-                        select: { name: true }
-                    }
-                }
-            }
-        }
-    });
-
-    // Gabungkan hasil
-    const lecturers = [];
-
-    // Tambahkan Ketua jika ada
-    if (proposal?.lecturer) {
-        lecturers.push({
-            lecturer_id: proposal.lecturer.id,
-            name: proposal.lecturer.name,
-            nip: proposal.lecturer.nip,
-            jabatan: "Ketua",
-            department_name: proposal.lecturer.department?.name ?? null
-        });
-    }
-
-    // Tambahkan Anggota
-    members.forEach(member => {
-        if (member.lecturer) {
-            lecturers.push({
-                lecturer_id: member.lecturer.id,
-                name: member.lecturer.name,
-                nip: member.lecturer.nip,
-                jabatan: "Anggota",
-                department_name: member.lecturer.department?.name ?? null
-            });
-        }
-    });
-
-    const data = {
-        proposal, lecturers
-    }
-    
-    return data;
-}
 
 // get available lecturer for multiselect
 const getAvailableLecturers = async (proposalSuggestionId: number) => {
@@ -115,7 +49,6 @@ const addLecturerMember = async (proposalSuggestionId: number, lecturerIds: numb
 const lecturerService = {
     getById,
     getAllActive,
-    getLecturerMember,
     getAvailableLecturers,
     addLecturerMember,
 }

@@ -1,13 +1,13 @@
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { NextRequest, NextResponse } from "next/server";
-import { getSession } from "src/lib/session";
 import lecturerService from "src/services/lecturerService";
+import memberService from "src/services/memberService";
 
 export async function GET(req: NextRequest, { params }: { params: Params }) {
 
     try {
         const proposalSuggestionId = parseInt(params.proposal_suggestion_id, 10);
-        const proposal_suggestion = await lecturerService.getLecturerMember(proposalSuggestionId);
+        const proposal_suggestion = await memberService.getLecturerMembers(proposalSuggestionId);
         
         return NextResponse.json({
             success: true,

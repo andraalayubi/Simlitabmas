@@ -21,7 +21,11 @@ const getByProposalSuggestionId = async (proposal_suggestion_id: number) => {
         where: { id: proposal_suggestion_id },
         include: {
             schema: true,
-            lecturer: true
+            lecturer: {
+                include: {
+                    department: true
+                }
+            }
         }
     })
 }

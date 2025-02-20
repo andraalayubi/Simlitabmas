@@ -32,12 +32,12 @@ export default function AllSuggestionPage() {
         size: 300,
       },
       {
-        accessorKey: "schema.name",
+        accessorFn: (row) => row.schema?.name,
         header: "Skema",
         size: 100,
       },
       {
-        accessorKey: "research_group.name",
+        accessorFn: (row) => row.research_group?.name,
         header: "Research Group",
         size: 200,
       },
