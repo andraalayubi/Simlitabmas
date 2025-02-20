@@ -90,7 +90,6 @@ const create = async (data: proposal_suggestion) => {
             is_active: data.is_active,
         },
     })
-
 }
 
 const proposalSuggestionService = {

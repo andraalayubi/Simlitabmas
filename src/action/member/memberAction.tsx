@@ -1,7 +1,7 @@
 import axios from "axios";
 import { user_type } from "prisma/interfaces";
 
-const getLecturerMember = async (
+const getProposalSchema = async (
   user_type: user_type,
   usulan_id: number,
   setLoading: (loading: boolean) => void
@@ -9,12 +9,10 @@ const getLecturerMember = async (
   setLoading(true);
 
   try {
-    const response = await fetch(`/api/${user_type}/member/${usulan_id}/lecturer`);
+    const response = await fetch(`/api/${user_type}/member/${usulan_id}`);
     const result = await response.json();
-    console.log('get lecturer member');
     console.log(result);
     
-
     if (result.status === 200 || result.success == true) {
       return {
         success: true,
@@ -37,42 +35,7 @@ const getLecturerMember = async (
   }
 };
 
-const getAvailableLecturerMember = async (
-  user_type: user_type,
-  usulan_id: number,
-  setLoading: (loading: boolean) => void
-) => {
-  setLoading(true);
-
-  try {
-    const response = await fetch(`/api/${user_type}/member/${usulan_id}/available`);
-    const result = await response.json();
-    console.log(result);
-    
-
-    if (result.status === 200 || result.success == true) {
-      return {
-        success: true,
-        message: result.message,
-        data: result.data,
-      };
-    } else {
-      return {
-        success: false,
-        message: result.message,
-      };
-    }
-  } catch (error: any) {
-    return {
-      success: false,
-      message: error.response?.data?.message || "An unexpected error occurred",
-    };
-  } finally {
-    setLoading(false);
-  }
-};
-
-const addLecturerMember = async (
+const addStudentMember = async (
   values: {
     usulan_id: number;
     anggota: string[]
@@ -110,9 +73,8 @@ const addLecturerMember = async (
 };
 
 const memberAction = {
-  getLecturerMember,
-  getAvailableLecturerMember,
-  addLecturerMember
+  getProposalSchema,
+  addStudentMember
 }
 
 export default memberAction;

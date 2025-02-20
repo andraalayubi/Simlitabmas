@@ -75,10 +75,10 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
 
   useEffect(() => {
     switch(tabActive) {
-      case 'dosen':
+      case 'lecturer':
         getLecturers();
         break;
-      case 'mahasiswa':
+      case 'student':
         getStudents();
         break;
       case 'vendor':
@@ -119,7 +119,7 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
 
   const handleSubmit = async () => {
     switch(tabActive) {
-      case 'dosen':
+      case 'lecturer':
         const lecturerResult = await lecturerAction.addLecturerMember(
           lecturerForm.values,
           setLoading
@@ -133,7 +133,7 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
           showNotification({ status: "error", message: lecturerResult.message });
         }
         break;
-      case 'mahasiswa':
+      case 'student':
         const studentResult = await studentAction.addStudentMember(
           studentForm.values,
           setLoading
@@ -181,7 +181,7 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
 
   return (
         <Box>
-          {tabActive === 'dosen' && (
+          {tabActive === 'lecturer' && (
             <MultiSelect
               label="Pilih Dosen"
               placeholder="Pilih Dosen"
@@ -190,7 +190,7 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
               renderOption={renderMultiSelectOption}
             />
           )}
-          {tabActive === 'mahasiswa' && (
+          {tabActive === 'student' && (
             <MultiSelect
               label="Pilih Mahasiswa"
               placeholder="Pilih Mahasiswa"

@@ -20,23 +20,23 @@ export default function AnggotaPage() {
         {
           accessorKey: "name",
           header: "Nama Anggota",
-          size: 300,
+          size: 200,
         },
         {
           accessorKey: "nip",
           header: "NRP / NIP",
-          size: 225,
+          size: 150,
         },
         {
-          accessorKey: "jabatan",
           header: "Jabatan",
-          size: 225,
+          Cell: ({ row }) => (row.index === 0 ? "Ketua" : "Anggota"),
+          size: 150,
         },
         {
-          accessorKey: "department_name",
+          accessorFn: (row) => row.department?.name,
           header: "Program Studi",
           size: 300,
-        }
+        },
       ],
       []
     );
@@ -46,17 +46,17 @@ export default function AnggotaPage() {
         {
           accessorKey: "name",
           header: "Nama Anggota",
-          size: 300,
+          size: 350,
         },
         {
           accessorKey: "nrp",
           header: "NRP / NIP",
-          size: 225,
+          size: 300,
         },
         {
-          accessorKey: "department.name",
+          accessorFn: (row) => row.department?.name,
           header: "Program Studi",
-          size: 300,
+          size: 400,
         }
       ],
       []
@@ -67,22 +67,16 @@ export default function AnggotaPage() {
         {
           accessorKey: "name",
           header: "Nama Anggota",
-          size: 300,
+          size: 525,
         },
         {
           accessorKey: "description",
           header: "Deskripsi",
-          size: 300,
+          size: 525,
         }
       ],
       []
     );
-
-    useEffect(() => {
-      if (!sessionLoading) {
-        //   fetchDetailUsulanByUsulanId();
-      }
-    }, [sessionLoading]);
   
     if(session?.user_type == "admin") {
       return <Skeleton visible={sessionLoading}><AnggotaAdmin columnsLecturer={columnsLecturer} columnsStudent={columnsStudent} columnsVendor={columnsVendor}/></Skeleton>

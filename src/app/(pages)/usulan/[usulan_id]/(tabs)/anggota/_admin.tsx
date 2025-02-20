@@ -1,32 +1,25 @@
 "use client";
 
-import DaftarAnggota from "src/components/usulan/anggota/ListAnggota";
 import React, { useCallback, useEffect, useState } from "react";
 import { showNotification } from "@mantine/notifications";
-import { user_type, lecturer } from "@prisma/client";
-import memberAction from "src/action/lecturerAction";
 import { useParams } from "next/navigation";
 import { Card, Skeleton, Tabs, Text } from "@mantine/core";
 import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
 import { MRT_ColumnDef } from "mantine-react-table";
 import TableLayout from "src/components/table/tableLayout";
 import {
+  lecturer,
   proposal_suggestion,
   student_member,
   vendor_member,
+  schema,
 } from "prisma/interfaces";
 import AnggotaModal from "src/components/modal/anggota/anggota";
 import ModalComponent from "src/components/modal/modal";
 import lecturerAction from "src/action/lecturerAction";
 import studentAction from "src/action/member/studentAction";
 import vendorAction from "src/action/member/vendorAction";
-
-interface Member {
-  id: number;
-  name: string;
-  role: string;
-  activityCount: string;
-}
+import memberAction from "src/action/member/memberAction";
 
 interface AnggotaAdminProps {
   columnsLecturer: MRT_ColumnDef<lecturer>[];
@@ -43,13 +36,35 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
   const [lecturers, setLecturers] = useState<lecturer[]>([]);
   const [students, setStudents] = useState<student_member[]>([]);
   const [vendors, setVendors] = useState<vendor_member[]>([]);
+  const [schema, setSchema] = useState<schema | null>(null);
   const [proposalSuggestion, setProposalSuggestion] =
     useState<proposal_suggestion | null>(null);
-
-  const [tabActive, setTabActive] = useState<string | null>("dosen");
+  //nambah loading buat summary card
+  const [tabActive, setTabActive] = useState<string | null>("lecturer");
   const [loading, setLoading] = useState(true);
+  const [loadProposal, setLoadProposal] = useState(true);
   const params = useParams();
   const usulan_id = Number(params.usulan_id[0]);
+
+  const getProposalSchema = useCallback(async () => {
+    const response = await memberAction.getProposalSchema(
+      user_type,
+      usulan_id,
+      setLoading
+    );
+
+    if (response.success) {
+      console.log(response.data);
+
+      showNotification({ status: "success", message: response.message });
+      setProposalSuggestion(response.data);
+      setLecturers(response.data.lecturer);
+      setSchema(response.data.schema);
+      setLoadProposal(false);
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  }, [user_type, usulan_id]);
 
   const getLecturers = useCallback(async () => {
     const response = await lecturerAction.getLecturerMember(
@@ -60,8 +75,7 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
 
     if (response.success) {
       showNotification({ status: "success", message: response.message });
-      setProposalSuggestion(response.data.proposal);
-      setLecturers(response.data.lecturers);
+      setLecturers(response.data);
     } else {
       showNotification({ status: "error", message: response.message });
     }
@@ -73,7 +87,6 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
       usulan_id,
       setLoading
     );
-    console.log(response);
 
     if (response.success) {
       showNotification({ status: "success", message: response.message });
@@ -89,7 +102,6 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
       usulan_id,
       setLoading
     );
-    console.log(response);
 
     if (response.success) {
       showNotification({ status: "success", message: response.message });
@@ -100,27 +112,29 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
   }, [user_type, usulan_id]);
 
   useEffect(() => {
-    switch(tabActive) {
-      case 'dosen':
-        getLecturers();
-        break;
-      case 'mahasiswa':
+    getProposalSchema();
+  }, [getProposalSchema]);
+  
+  useEffect(() => {
+    if (schema?.is_lecturer) {
+      getLecturers();
+    }
+  
+    switch (tabActive) {
+      case "student":
         getStudents();
         break;
-      case 'vendor':
+      case "vendor":
         getVendors();
         break;
-      default:
-        getLecturers();
-        break;
     }
-  }, [tabActive, getLecturers, getStudents, getVendors]);
+  }, [schema, tabActive, getLecturers, getStudents, getVendors]);
 
   return (
     <>
-      <div className="bg-white shadow sm:rounded-lg p-6">
+      <div className="container mx-auto px-4 py-6">
         {/* Baris Judul, Status, dan Tahap Usulan */}
-        <Skeleton visible={loading}>
+        <Skeleton visible={loadProposal}>
           <ProposalSuggestionSummaryCard
             proposal_suggestion_name={proposalSuggestion?.name!}
             status={proposalSuggestion?.status!}
@@ -128,43 +142,51 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
           />
         </Skeleton>
         {/* Grid utama dengan perbandingan 5:3 pada layar besar, 1 kolom pada layar kecil */}
-        <div className="flex mt-6">
-          <Tabs variant="pills" defaultValue={tabActive} value={tabActive} onChange={(value) => setTabActive(value)}>
+        <div className="">
+          <Tabs
+            variant="pills"
+            defaultValue={tabActive}
+            value={tabActive}
+            onChange={(value) => setTabActive(value)}
+          >
             <div className="flex justify-between items-center">
               <div>
                 <Tabs.List>
-                  <Tabs.Tab value="dosen">Dosen</Tabs.Tab>
-                  <Tabs.Tab value="mahasiswa">Mahasiswa</Tabs.Tab>
-                  <Tabs.Tab value="vendor">Vendor</Tabs.Tab>
+                  <Tabs.Tab value="lecturer">Dosen</Tabs.Tab>
+                  {schema?.is_student && (
+                    <Tabs.Tab value="student">Mahasiswa</Tabs.Tab>
+                  )}
+                  {schema?.is_partner && (
+                    <Tabs.Tab value="vendor">Vendor</Tabs.Tab>
+                  )}
                 </Tabs.List>
               </div>
               <div>
-              <ModalComponent title="Buat Usulan">
-              {(close) => (
-                <AnggotaModal
-                  user_type={user_type}
-                  onClose={close}
-                  usulan_id={usulan_id}
-                  tabActive={tabActive}
-                />
-                )}
-              </ModalComponent>
+                <ModalComponent title="Buat Usulan">
+                  {(close) => (
+                    <AnggotaModal
+                      user_type={user_type}
+                      onClose={close}
+                      usulan_id={usulan_id}
+                      tabActive={tabActive}
+                    />
+                  )}
+                </ModalComponent>
               </div>
             </div>
-            <Tabs.Panel value="dosen">
+            <Tabs.Panel value="lecturer">
               <TableLayout
                 columns={columnsLecturer}
                 data={lecturers}
                 isLoading={loading}
               />
             </Tabs.Panel>
-            <Tabs.Panel value="mahasiswa">
+            <Tabs.Panel value="student">
               <TableLayout
                 columns={columnsStudent}
                 data={students}
                 isLoading={loading}
               />
-              <></>
             </Tabs.Panel>
             <Tabs.Panel value="vendor">
               <TableLayout
@@ -172,7 +194,6 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
                 data={vendors}
                 isLoading={loading}
               />
-              <></>
             </Tabs.Panel>
           </Tabs>
         </div>

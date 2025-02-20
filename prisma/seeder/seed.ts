@@ -29,12 +29,13 @@ const lecturers = [
             },
         ] as JsonArray,
         is_ketua_rg: true,
+        position_id: 1,
         user: {
             create: [
                 { name: "Admin Mirza", email: "adminMirza@gmail.com", user_type: 'admin' as user_type, password: "Mirza123!" },
                 { name: "Dosen Mirza", email: "dosenMirza@gmail.com", user_type: 'lecturer' as user_type, password: "Mirza123!" },
                 { name: "Ketua RG Mirza", email: "ketuargMirza@gmail.com", user_type: 'ketua_rg' as user_type, password: "Mirza123!" },
-                { name: "Kaprodi Mirza", email: "kaprodiMirza@gmail.com", user_type: 'kaprodi' as user_type,  password: "Mirza123!" }
+                { name: "Kaprodi Mirza", email: "kaprodiMirza@gmail.com", user_type: 'kaprodi' as user_type, password: "Mirza123!" }
             ]
         }
     },
@@ -61,6 +62,7 @@ const lecturers = [
             }
         ] as JsonArray,
         is_ketua_rg: true,
+        position_id: 2,
         user: {
             create: [
                 { name: "Admin Andra", email: "adminAndra@gmail.com", user_type: 'admin' as user_type, password: "Andra123!" },
@@ -93,6 +95,7 @@ const lecturers = [
             }
         ] as JsonArray,
         is_ketua_rg: true,
+        position_id: 3,
         user: {
             create: [
                 { name: "Admin Hammam", email: "adminHammam@gmail.com", user_type: 'admin' as user_type, password: "Hammam123!" },
@@ -166,7 +169,34 @@ const proposalSuggestionsPenelitian = [
             create: {
                 name: "Pengembangan UI/UX pada CRM Pengabdian Masyarakat"
             }
-        }
+        },
+        lecturer_member: {
+            create: {
+                lecturer_id: 1, // Sama dengan lecturer_id pada proposal_suggestion
+                name: "Mirza Ramadhani",
+                research_group_id: 1,
+                department_id: 1,
+                nip: "12345678",
+                degree: [
+                    {
+                        degree: "S1" as degree,
+                        code: "S.",
+                        field: "Computer Science",
+                        university: "MIT",
+                        year: "2027"
+                    },
+                    {
+                        degree: "S2" as degree,
+                        code: "Dr.",
+                        field: "Computer Science",
+                        university: "MIT",
+                        year: "2030"
+                    },
+                ] as JsonArray,
+                is_ketua_rg: true,
+                position_id: 1,
+            },
+        },
     },
     {
         name: "Integrasi Machine Learning untuk Analisis Data Akuakultur",
@@ -180,7 +210,34 @@ const proposalSuggestionsPenelitian = [
             create: {
                 name: "Integrasi Machine Learning untuk Analisis Data Akuakultur"
             }
-        }
+        },
+        lecturer_member: {
+            create: {
+                lecturer_id: 1, // Sama dengan lecturer_id pada proposal_suggestion
+                name: "Mirza Ramadhani",
+                research_group_id: 1,
+                department_id: 1,
+                nip: "12345678",
+                degree: [
+                    {
+                        degree: "S1" as degree,
+                        code: "S.",
+                        field: "Computer Science",
+                        university: "MIT",
+                        year: "2027"
+                    },
+                    {
+                        degree: "S2" as degree,
+                        code: "Dr.",
+                        field: "Computer Science",
+                        university: "MIT",
+                        year: "2030"
+                    },
+                ] as JsonArray,
+                is_ketua_rg: true,
+                position_id: 1,
+            },
+        },
     },
     {
         name: "Metodologi Agile dalam Pengembangan Perangkat Lunak Akademik",
@@ -194,9 +251,35 @@ const proposalSuggestionsPenelitian = [
             create: {
                 name: "Metodologi Agile dalam Pengembangan Perangkat Lunak Akademik"
             }
-        }
+        },
+        lecturer_member: {
+            create: {
+                lecturer_id: 1, // Sama dengan lecturer_id pada proposal_suggestion
+                name: "Mirza Ramadhani",
+                research_group_id: 1,
+                department_id: 1,
+                nip: "12345678",
+                degree: [
+                    {
+                        degree: "S1" as degree,
+                        code: "S.",
+                        field: "Computer Science",
+                        university: "MIT",
+                        year: "2027"
+                    },
+                    {
+                        degree: "S2" as degree,
+                        code: "Dr.",
+                        field: "Computer Science",
+                        university: "MIT",
+                        year: "2030"
+                    },
+                ] as JsonArray,
+                is_ketua_rg: true,
+                position_id: 1,
+            },
+        },
     },
-
     {
         year_research_id: 1,
         schema_id: 2,
@@ -209,7 +292,34 @@ const proposalSuggestionsPenelitian = [
             create: {
                 name: "Pemanfaatan Biofuel sebagai Alternatif Energi Ramah Lingkungan"
             }
-        }
+        },
+        lecturer_member: {
+            create: {
+                lecturer_id: 2, // Sama dengan lecturer_id pada proposal_suggestion
+                name: "Andra Al Ayubi",
+                research_group_id: 2,
+                department_id: 2,
+                nip: "23456789",
+                degree: [
+                    {
+                        degree: "S1" as degree,
+                        code: "S.",
+                        field: "Mathematics",
+                        university: "Harvard",
+                        year: "2025"
+                    },
+                    {
+                        degree: "S2" as degree,
+                        code: "M.Sc.",
+                        field: "Applied Mathematics",
+                        university: "Harvard",
+                        year: "2028"
+                    }
+                ] as JsonArray,
+                is_ketua_rg: true,
+                position_id: 2,
+            },
+        },
     },
     {
         name: "Analisis Sinyal Biomedik untuk Diagnosa Dini Penyakit",
@@ -223,7 +333,34 @@ const proposalSuggestionsPenelitian = [
             create: {
                 name: "Analisis Sinyal Biomedik untuk Diagnosa Dini Penyakit"
             }
-        }
+        },
+        lecturer_member: {
+            create: {
+                lecturer_id: 2, // Sama dengan lecturer_id pada proposal_suggestion
+                name: "Andra Al Ayubi",
+                research_group_id: 2,
+                department_id: 2,
+                nip: "23456789",
+                degree: [
+                    {
+                        degree: "S1" as degree,
+                        code: "S.",
+                        field: "Mathematics",
+                        university: "Harvard",
+                        year: "2025"
+                    },
+                    {
+                        degree: "S2" as degree,
+                        code: "M.Sc.",
+                        field: "Applied Mathematics",
+                        university: "Harvard",
+                        year: "2028"
+                    }
+                ] as JsonArray,
+                is_ketua_rg: true,
+                position_id: 2,
+            },
+        },
     },
     {
         name: "Keamanan Siber pada Infrastruktur Kritis Nasional",
@@ -237,7 +374,34 @@ const proposalSuggestionsPenelitian = [
             create: {
                 name: "Keamanan Siber pada Infrastruktur Kritis Nasional"
             }
-        }
+        },
+        lecturer_member: {
+            create: {
+                lecturer_id: 2, // Sama dengan lecturer_id pada proposal_suggestion
+                name: "Andra Al Ayubi",
+                research_group_id: 2,
+                department_id: 2,
+                nip: "23456789",
+                degree: [
+                    {
+                        degree: "S1" as degree,
+                        code: "S.",
+                        field: "Mathematics",
+                        university: "Harvard",
+                        year: "2025"
+                    },
+                    {
+                        degree: "S2" as degree,
+                        code: "M.Sc.",
+                        field: "Applied Mathematics",
+                        university: "Harvard",
+                        year: "2028"
+                    }
+                ] as JsonArray,
+                is_ketua_rg: true,
+                position_id: 2,
+            },
+        },
     },
     {
         name: "Optimalisasi AI dalam Sistem e-Bisnis",
@@ -251,7 +415,34 @@ const proposalSuggestionsPenelitian = [
             create: {
                 name: "Optimalisasi AI dalam Sistem e-Bisnis"
             }
-        }
+        },
+        lecturer_member: {
+            create: {
+                lecturer_id: 3,
+                name: "Hammam Mujahid",
+                research_group_id: 3,
+                department_id: 3,
+                nip: "34567890",
+                degree: [
+                    {
+                        degree: "S1" as degree,
+                        code: "S.",
+                        field: "Physics",
+                        university: "Stanford",
+                        year: "2023"
+                    },
+                    {
+                        degree: "S2" as degree,
+                        code: "Ph.D.",
+                        field: "Theoretical Physics",
+                        university: "Stanford",
+                        year: "2026"
+                    }
+                ] as JsonArray,
+                is_ketua_rg: true,
+                position_id: 3,
+            }
+        },
     },
     {
         name: "Pemanfaatan Data Science untuk Pencapaian SDGs",
@@ -265,7 +456,34 @@ const proposalSuggestionsPenelitian = [
             create: {
                 name: "Pemanfaatan Data Science untuk Pencapaian SDGs"
             }
-        }
+        },
+        lecturer_member: {
+            create: {
+                lecturer_id: 3,
+                name: "Hammam Mujahid",
+                research_group_id: 3,
+                department_id: 3,
+                nip: "34567890",
+                degree: [
+                    {
+                        degree: "S1" as degree,
+                        code: "S.",
+                        field: "Physics",
+                        university: "Stanford",
+                        year: "2023"
+                    },
+                    {
+                        degree: "S2" as degree,
+                        code: "Ph.D.",
+                        field: "Theoretical Physics",
+                        university: "Stanford",
+                        year: "2026"
+                    }
+                ] as JsonArray,
+                is_ketua_rg: true,
+                position_id: 3,
+            }
+        },
     },
     {
         name: "Inovasi Digital Media untuk Pembelajaran Interaktif",
@@ -279,7 +497,34 @@ const proposalSuggestionsPenelitian = [
             create: {
                 name: "Inovasi Digital Media untuk Pembelajaran Interaktif"
             }
-        }
+        },
+        lecturer_member: {
+            create: {
+                lecturer_id: 3,
+                name: "Hammam Mujahid",
+                research_group_id: 3,
+                department_id: 3,
+                nip: "34567890",
+                degree: [
+                    {
+                        degree: "S1" as degree,
+                        code: "S.",
+                        field: "Physics",
+                        university: "Stanford",
+                        year: "2023"
+                    },
+                    {
+                        degree: "S2" as degree,
+                        code: "Ph.D.",
+                        field: "Theoretical Physics",
+                        university: "Stanford",
+                        year: "2026"
+                    }
+                ] as JsonArray,
+                is_ketua_rg: true,
+                position_id: 3,
+            }
+        },
     }
 ];
 
@@ -295,7 +540,34 @@ const proposalSuggestionsPengmas = [
             create: {
                 name: "Pelatihan Digital Marketing bagi UMKM Lokal di Era Industri 4.0"
             }
-        }
+        },
+        lecturer_member: {
+            create: {
+                lecturer_id: 1, // Sama dengan lecturer_id pada proposal_suggestion
+                name: "Mirza Ramadhani",
+                research_group_id: 1,
+                department_id: 1,
+                nip: "12345678",
+                degree: [
+                    {
+                        degree: "S1" as degree,
+                        code: "S.",
+                        field: "Computer Science",
+                        university: "MIT",
+                        year: "2027"
+                    },
+                    {
+                        degree: "S2" as degree,
+                        code: "Dr.",
+                        field: "Computer Science",
+                        university: "MIT",
+                        year: "2030"
+                    },
+                ] as JsonArray,
+                is_ketua_rg: true,
+                position_id: 1,
+            },
+        },
     },
     {
         name: "Edukasi dan Implementasi Teknologi Hidroponik bagi Petani Perkotaan",
@@ -308,7 +580,34 @@ const proposalSuggestionsPengmas = [
             create: {
                 name: "Edukasi dan Implementasi Teknologi Hidroponik bagi Petani Perkotaan"
             }
-        }
+        },
+        lecturer_member: {
+            create: {
+                lecturer_id: 1, // Sama dengan lecturer_id pada proposal_suggestion
+                name: "Mirza Ramadhani",
+                research_group_id: 1,
+                department_id: 1,
+                nip: "12345678",
+                degree: [
+                    {
+                        degree: "S1" as degree,
+                        code: "S.",
+                        field: "Computer Science",
+                        university: "MIT",
+                        year: "2027"
+                    },
+                    {
+                        degree: "S2" as degree,
+                        code: "Dr.",
+                        field: "Computer Science",
+                        university: "MIT",
+                        year: "2030"
+                    },
+                ] as JsonArray,
+                is_ketua_rg: true,
+                position_id: 1,
+            },
+        },
     },
     {
         name: "Pemberdayaan Ibu Rumah Tangga melalui Program Wirausaha Kuliner Sehat",
@@ -321,7 +620,34 @@ const proposalSuggestionsPengmas = [
             create: {
                 name: "Pemberdayaan Ibu Rumah Tangga melalui Program Wirausaha Kuliner Sehat"
             }
-        }
+        },
+        lecturer_member: {
+            create: {
+                lecturer_id: 1, // Sama dengan lecturer_id pada proposal_suggestion
+                name: "Mirza Ramadhani",
+                research_group_id: 1,
+                department_id: 1,
+                nip: "12345678",
+                degree: [
+                    {
+                        degree: "S1" as degree,
+                        code: "S.",
+                        field: "Computer Science",
+                        university: "MIT",
+                        year: "2027"
+                    },
+                    {
+                        degree: "S2" as degree,
+                        code: "Dr.",
+                        field: "Computer Science",
+                        university: "MIT",
+                        year: "2030"
+                    },
+                ] as JsonArray,
+                is_ketua_rg: true,
+                position_id: 1,
+            },
+        },
     },
     {
         year_research_id: 1,
@@ -334,7 +660,34 @@ const proposalSuggestionsPengmas = [
             create: {
                 name: "Penggunaan Internet Aman dan Bijak untuk Pelajar di Sekolah Dasar"
             }
-        }
+        },
+        lecturer_member: {
+            create: {
+                lecturer_id: 2, // Sama dengan lecturer_id pada proposal_suggestion
+                name: "Andra Al Ayubi",
+                research_group_id: 2,
+                department_id: 2,
+                nip: "23456789",
+                degree: [
+                    {
+                        degree: "S1" as degree,
+                        code: "S.",
+                        field: "Mathematics",
+                        university: "Harvard",
+                        year: "2025"
+                    },
+                    {
+                        degree: "S2" as degree,
+                        code: "M.Sc.",
+                        field: "Applied Mathematics",
+                        university: "Harvard",
+                        year: "2028"
+                    }
+                ] as JsonArray,
+                is_ketua_rg: true,
+                position_id: 2,
+            },
+        },
     },
     {
         name: "Pembuatan Aplikasi Mobile untuk Monitoring Kesehatan Lansia di Puskesmas",
@@ -347,7 +700,34 @@ const proposalSuggestionsPengmas = [
             create: {
                 name: "Pembuatan Aplikasi Mobile untuk Monitoring Kesehatan Lansia di Puskesmas"
             }
-        }
+        },
+        lecturer_member: {
+            create: {
+                lecturer_id: 2, // Sama dengan lecturer_id pada proposal_suggestion
+                name: "Andra Al Ayubi",
+                research_group_id: 2,
+                department_id: 2,
+                nip: "23456789",
+                degree: [
+                    {
+                        degree: "S1" as degree,
+                        code: "S.",
+                        field: "Mathematics",
+                        university: "Harvard",
+                        year: "2025"
+                    },
+                    {
+                        degree: "S2" as degree,
+                        code: "M.Sc.",
+                        field: "Applied Mathematics",
+                        university: "Harvard",
+                        year: "2028"
+                    }
+                ] as JsonArray,
+                is_ketua_rg: true,
+                position_id: 2,
+            },
+        },
     },
     {
         name: "Pelatihan Desain Grafis bagi Anak Muda sebagai Bekal Karier Kreatif",
@@ -360,7 +740,34 @@ const proposalSuggestionsPengmas = [
             create: {
                 name: "Pelatihan Desain Grafis bagi Anak Muda sebagai Bekal Karier Kreatif"
             }
-        }
+        },
+        lecturer_member: {
+            create: {
+                lecturer_id: 2, // Sama dengan lecturer_id pada proposal_suggestion
+                name: "Andra Al Ayubi",
+                research_group_id: 2,
+                department_id: 2,
+                nip: "23456789",
+                degree: [
+                    {
+                        degree: "S1" as degree,
+                        code: "S.",
+                        field: "Mathematics",
+                        university: "Harvard",
+                        year: "2025"
+                    },
+                    {
+                        degree: "S2" as degree,
+                        code: "M.Sc.",
+                        field: "Applied Mathematics",
+                        university: "Harvard",
+                        year: "2028"
+                    }
+                ] as JsonArray,
+                is_ketua_rg: true,
+                position_id: 2,
+            },
+        },
     },
     {
         name: "Pengenalan dan Pemanfaatan AI untuk Peningkatan Efisiensi Administrasi Desa",
@@ -373,7 +780,34 @@ const proposalSuggestionsPengmas = [
             create: {
                 name: "Pengenalan dan Pemanfaatan AI untuk Peningkatan Efisiensi Administrasi Desa"
             }
-        }
+        },
+        lecturer_member: {
+            create: {
+                lecturer_id: 3,
+                name: "Hammam Mujahid",
+                research_group_id: 3,
+                department_id: 3,
+                nip: "34567890",
+                degree: [
+                    {
+                        degree: "S1" as degree,
+                        code: "S.",
+                        field: "Physics",
+                        university: "Stanford",
+                        year: "2023"
+                    },
+                    {
+                        degree: "S2" as degree,
+                        code: "Ph.D.",
+                        field: "Theoretical Physics",
+                        university: "Stanford",
+                        year: "2026"
+                    }
+                ] as JsonArray,
+                is_ketua_rg: true,
+                position_id: 3,
+            }
+        },
     },
     {
         name: "Workshop Pengelolaan Sampah Organik menjadi Pupuk Kompos bagi Masyarakat Desa",
@@ -386,7 +820,34 @@ const proposalSuggestionsPengmas = [
             create: {
                 name: "Workshop Pengelolaan Sampah Organik menjadi Pupuk Kompos bagi Masyarakat Desa"
             }
-        }
+        },
+        lecturer_member: {
+            create: {
+                lecturer_id: 3,
+                name: "Hammam Mujahid",
+                research_group_id: 3,
+                department_id: 3,
+                nip: "34567890",
+                degree: [
+                    {
+                        degree: "S1" as degree,
+                        code: "S.",
+                        field: "Physics",
+                        university: "Stanford",
+                        year: "2023"
+                    },
+                    {
+                        degree: "S2" as degree,
+                        code: "Ph.D.",
+                        field: "Theoretical Physics",
+                        university: "Stanford",
+                        year: "2026"
+                    }
+                ] as JsonArray,
+                is_ketua_rg: true,
+                position_id: 3,
+            }
+        },
     },
     {
         name: "Pemberdayaan Remaja Melalui Pelatihan Public Speaking dan Leadership",
@@ -399,7 +860,34 @@ const proposalSuggestionsPengmas = [
             create: {
                 name: "Pemberdayaan Remaja Melalui Pelatihan Public Speaking dan Leadership"
             }
-        }
+        },
+        lecturer_member: {
+            create: {
+                lecturer_id: 3,
+                name: "Hammam Mujahid",
+                research_group_id: 3,
+                department_id: 3,
+                nip: "34567890",
+                degree: [
+                    {
+                        degree: "S1" as degree,
+                        code: "S.",
+                        field: "Physics",
+                        university: "Stanford",
+                        year: "2023"
+                    },
+                    {
+                        degree: "S2" as degree,
+                        code: "Ph.D.",
+                        field: "Theoretical Physics",
+                        university: "Stanford",
+                        year: "2026"
+                    }
+                ] as JsonArray,
+                is_ketua_rg: true,
+                position_id: 3,
+            }
+        },
     }
 ];
 
@@ -420,7 +908,7 @@ const main = async () => {
                 "proposal_suggestions"
             RESTART IDENTITY CASCADE;
         `);
-        
+
         // insert research groups
         await prisma.research_group.createMany({
             data: research_groups,
@@ -434,6 +922,13 @@ const main = async () => {
             skipDuplicates: true,
         })
         console.log("Inserting departement...");
+
+        // insert positions
+        await prisma.position.createMany({
+            data: positions,
+            skipDuplicates: true,
+        });
+        console.log("Inserting positions...");
 
         for (const lecturer of lecturers) {
 
@@ -481,13 +976,6 @@ const main = async () => {
             skipDuplicates: true,
         })
 
-        // insert positions
-        await prisma.position.createMany({
-            data: positions,
-            skipDuplicates: true,
-        });
-        console.log("Inserting positions...");
-
         // insert position schemas
         await prisma.position_schema.createMany({
             data: position_schemas,
@@ -498,21 +986,21 @@ const main = async () => {
         // insert proposal suggestions and proposals for penelitian
         await prisma.$transaction(
             proposalSuggestionsPenelitian.map((suggestion) =>
-              prisma.proposal_suggestion.create({
-                data: suggestion,
-              })
+                prisma.proposal_suggestion.create({
+                    data: suggestion,
+                })
             )
-          );
+        );
         console.log("Inserting proposal suggestion and proposals for penelitian...");
 
         // insert proposal suggestions and proposals for pengmas
         await prisma.$transaction(
             proposalSuggestionsPengmas.map((suggestion) =>
-              prisma.proposal_suggestion.create({
-                data: suggestion,
-              })
+                prisma.proposal_suggestion.create({
+                    data: suggestion,
+                })
             )
-          );
+        );
         console.log("Inserting proposal suggestion and proposals for pengmas...");
 
         console.log("Seeding selesai.");

@@ -1,17 +1,12 @@
-import prisma from "src/client/prisma";
 import { getSession } from "src/lib/session";
 import proposalSuggestionService from "src/services/proposalSuggestionService";
 import { NextRequest, NextResponse } from "next/server";
 import { proposal_suggestion_status } from "prisma/interfaces";
 import filterService from "src/services/filterService";
+import lecturerService from "src/services/lecturerService";
 
 export async function GET(req: NextRequest) {
     try {
-        const session = await getSession();
-        if (!session) {
-            return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
-        }
-
         let filter = filterService.getFilter(req.nextUrl.searchParams, [
             { key: "status", type: "string" },
             { key: "year_research_id", type: "number" },
@@ -52,11 +47,6 @@ export async function POST(req: NextRequest) {
     try {
         const session = await getSession();
 
-        // Type guard to ensure user_id is a number
-        if (!session || typeof session.user_id !== 'number') {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
-
         // Parse request body
         const body = await req.json();
 
@@ -66,14 +56,19 @@ export async function POST(req: NextRequest) {
             research_group_id: Number(body.research_group_id),
             schema_id: Number(body.schema_id),
             year_research_id: Number(body.year_research_id),
-            lecturer_id: session.lecturer_id,
+            lecturer_id: session?.lecturer_id,
             status: 'tersimpan' as proposal_suggestion_status,
             is_active: true
         };
-        console.log(proposalData);
 
         // Create proposal suggestion
         const newProposalSuggestion = await proposalSuggestionService.create(proposalData);
+
+        if (!newProposalSuggestion?.id) {
+            throw new Error("Failed to create proposal suggestion: ID is missing");
+        }
+
+        const result = await lecturerService.addLecturerMember(newProposalSuggestion.id, Number(session?.lecturer_id));
 
         return NextResponse.json({
             success: true,

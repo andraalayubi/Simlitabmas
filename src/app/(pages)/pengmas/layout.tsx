@@ -61,6 +61,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             {(close) => (
               <ProposalSuggestionModal
                 onClose={close}
+                user_type={session?.user_type!}
                 showResearchGroup={false}
                 type="pengmas"
               />

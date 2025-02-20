@@ -95,6 +95,7 @@ export interface research_group {
   deleted: boolean;
   lecturer?: lecturer[];
   proposal_suggestion?: proposal_suggestion[];
+  lecturer_member?: lecturer_member[];
 }
 
 export interface department {
@@ -107,6 +108,7 @@ export interface department {
   lecturer?: lecturer[];
   proposal_suggestion?: proposal_suggestion[];
   student_member?: student_member[];
+  lecturer_member?: lecturer_member[];
 }
 
 export interface year_research {
@@ -129,6 +131,7 @@ export interface position {
   deleted: boolean;
   lecturer?: lecturer[];
   position_schema?: position_schema[];
+  lecturer_member?: lecturer_member[];
 }
 
 export interface position_schema {
@@ -226,6 +229,9 @@ export interface lecturer_member {
   deleted: boolean;
   proposal_suggestion?: proposal_suggestion;
   lecturer?: lecturer;
+  department?: department | null;
+  research_group?: research_group | null;
+  position?: position | null;
 }
 
 export interface student_member {

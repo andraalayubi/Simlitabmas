@@ -1,6 +1,5 @@
 import React from 'react';
 import { MantineReactTable, MRT_ColumnDef } from 'mantine-react-table';
-import Color from '@tiptap/extension-color';
 
 interface TableLayoutProps<TData extends Record<string, any>> {
   columns: MRT_ColumnDef<TData>[];
@@ -36,7 +35,7 @@ const TableLayout = <TData extends Record<string, any>>({
       mantineTableHeadCellProps={{ style: { backgroundColor: "#f5f5f5" } }}
       initialState={{ showGlobalFilter: true }}
       state={{ showSkeletons: isLoading }}
-      defaultColumn = {{ grow: true, minSize: 100, maxSize: 1000 }}
+      defaultColumn={{ grow: true, minSize: 100, maxSize: 1000 }}
       mantineTableBodyRowProps={({ row }) =>
         enableRowClick && getRowClickUrl
           ? {
@@ -53,6 +52,5 @@ const TableLayout = <TData extends Record<string, any>>({
     />
   );
 };
-
 
 export default TableLayout;

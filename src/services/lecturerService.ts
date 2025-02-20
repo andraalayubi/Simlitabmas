@@ -12,12 +12,6 @@ const getById = async (id: number) => {
 const getAllActive = async () => {
     return await prisma.lecturer.findMany({
         where: { deleted: false },
-        select: {
-            id: true,
-            name: true,
-            nidn: true,
-            nip: true,
-        }
     });
 };
 
@@ -26,19 +20,10 @@ const getLecturerMember = async (proposalSuggestionId: number) => {
     // Query pertama: Mengambil lecturer dari proposal_suggestion
     const proposal = await prisma.proposal_suggestion.findUnique({
         where: { id: proposalSuggestionId },
-        select: {
-            name: true,
-            lecturer_id: true,
-            phase: true,
-            status: true,
+        include: {
             lecturer: {
-                select: {
-                    id: true,
-                    name: true,
-                    nip: true,
-                    department: {
-                        select: { name: true }
-                    }
+                include: {
+                    department: true
                 }
             }
         }
@@ -106,10 +91,6 @@ const getAvailableLecturers = async (proposalSuggestionId: number) => {
             proposal_suggestion: {
                 none: { id: proposalSuggestionId }
             }
-        },
-        select: {
-            id: true,
-            name: true
         }
     });
 };

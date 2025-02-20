@@ -15,6 +15,17 @@ const getAllActive = async () => {
     });
 };
 
+// get by proposal suggestion id
+const getByProposalSuggestionId = async (proposal_suggestion_id: number) => {
+    return await prisma.proposal_suggestion.findUnique({
+        where: { id: proposal_suggestion_id },
+        include: {
+            schema: true,
+            lecturer: true
+        }
+    })
+}
+
 //get summary for audit page
 const getSummaryList =  async () => {
     const [schemas, proposalSuggestionCount] = await prisma.$transaction([
@@ -47,6 +58,7 @@ const getSummaryList =  async () => {
 const schemaService = {
     getById,
     getAllActive,
+    getByProposalSuggestionId,
     getSummaryList,
 }
 
