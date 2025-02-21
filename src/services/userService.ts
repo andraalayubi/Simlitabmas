@@ -47,9 +47,16 @@ const getFilteredUsers = async (filters: Partial<user>): Promise<user[]> => {
     });
 };
 
-const remove = async (lecturer_id: number) => {
+const removeByLecturerId = async (lecturer_id: number) => {
     return await prisma.user.updateMany({
         where: { lecturer_id: lecturer_id },
+        data: { deleted: true }
+    })
+}
+
+const remove = async (user_id: number) => {
+    return await prisma.user.update({
+        where: { id: user_id },
         data: { deleted: true }
     })
 }
@@ -59,6 +66,7 @@ const userService = {
     addNewUser,
     getUserByUsername,
     getFilteredUsers,
+    removeByLecturerId,
     remove,
 };
 

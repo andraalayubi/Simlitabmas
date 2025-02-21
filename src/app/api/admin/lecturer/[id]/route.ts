@@ -40,7 +40,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Params }) {
     try {
         await lecturerService.remove(lecturer_id)
 
-        await userService.remove(lecturer_id)
+        await userService.removeByLecturerId(lecturer_id)
 
         return NextResponse.json({
             success: true,

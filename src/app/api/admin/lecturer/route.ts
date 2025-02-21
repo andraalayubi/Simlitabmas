@@ -18,14 +18,22 @@ export async function GET(req: NextRequest) {
             ])
 
         const include = {
-            user: req.nextUrl.searchParams.get("get_user") === "true",
-            research_group: req.nextUrl.searchParams.get("get_research_group") === "true",
-            department: req.nextUrl.searchParams.get("get_department") === "true",
-        };
+            user: req.nextUrl.searchParams.get("get_user") === "true"
+                ? { where: { deleted: false } }
+                : false,
+
+            research_group: req.nextUrl.searchParams.get("get_research_group") === "true"
+                ? { where: { deleted: false } }
+                : false,
+
+            department: req.nextUrl.searchParams.get("get_department") === "true"
+                ? { where: { deleted: false } }
+                : false,
+        }
 
 
         const lecturers = await lecturerService.getByFilter(filter, include);
-
+        
         return NextResponse.json({
             success: true,
             message: "Success getting data",
