@@ -77,9 +77,39 @@ const createUserLecturer = async (
   }
 };
 
+const deleteUserLecturer = async (
+  user_type: user_type,
+  user_id: number,
+) => {
+  try {
+    const response = await axios.delete(`/api/${user_type}/user/${user_id}`);
+
+    if (response.status === 200 || response.data.success) {
+      return {
+        success: true,
+        message: response.data?.message,
+      };
+    } else {
+      return {
+        success: false,
+        message: response.data?.message,
+      };
+    }
+  } catch (error: any) {
+    return {
+      success: false,
+      message:
+        error.response?.data?.message ||
+        error.message ||
+        "Failed to delete user lecturer. Please try again.",
+    };
+  }
+};
+
 const userAction = {
   getUserLecturers,
   createUserLecturer,
+  deleteUserLecturer
 };
 
 export default userAction;

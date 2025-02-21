@@ -100,6 +100,19 @@ export default function ConfigurationUserPage() {
     }
   };
 
+  const deleteUserLecturer = async (user_id: number) => {
+    if (confirm("Apakah Anda yakin ingin menghapus user dosen ini?")) {
+      const response = await userAction.deleteUserLecturer(user_type, user_id);
+
+      if (response.success) {
+        showNotification({ status: "success", message: response.message });
+        getUserLecturers();
+      } else {
+        showNotification({ status: "error", message: response.message });
+      }
+    }
+  };
+
   useEffect(() => {
     getUserLecturers();
   }, [getUserLecturers]);
@@ -156,7 +169,9 @@ export default function ConfigurationUserPage() {
                               <ActionButton
                                 type="delete"
                                 label="Hapus User Dosen"
-                                onClick={() => {}}
+                                onClick={() => {
+                                    deleteUserLecturer(user.id);
+                                }}
                               ></ActionButton>
                             </Group>
                           </Table.Td>
