@@ -11,8 +11,6 @@ const getVendorMember = async (
   try {
     const response = await fetch(`/api/${user_type}/member/${usulan_id}/vendor`);
     const result = await response.json();
-    console.log(result);
-    
 
     if (result.status === 200 || result.success == true) {
       return {
@@ -50,7 +48,6 @@ const addVendorMember = async (
   try {
     setLoading(true);
 
-    console.log(values);
     // Then, add the lecturer to the proposal suggestion
     const response = await axios.post(`/api/${user_type}/member/${values.usulan_id}/vendor`, {
       name: values.anggota.name,

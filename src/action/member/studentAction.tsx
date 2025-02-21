@@ -44,7 +44,6 @@ const getDepartments = async (
 
     const response = await fetch(`/api/${user_type}/department`);
     const result = await response.json();
-    console.log(result);
 
     if (result.status === 200 || result.success == true) {
       return {
@@ -82,8 +81,6 @@ const addStudentMember = async (
 ) => {
   try {
     setLoading(true);
-    console.log(values);
-    
 
     const response = await axios.post(`/api/${user_type}/member/${values.usulan_id}/student`, {
       name: values.anggota.name,

@@ -43,6 +43,7 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
   const [tabActive, setTabActive] = useState<string | null>("lecturer");
   const [loading, setLoading] = useState(true);
   const [loadProposal, setLoadProposal] = useState(true);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
   const params = useParams();
   const usulan_id = Number(params.usulan_id[0]);
   
@@ -127,7 +128,7 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
         getVendors();
         break;
     }
-  }, [usulan_id, tabActive, getStudents, getVendors]);
+  }, [usulan_id, tabActive, getStudents, getVendors, refreshTrigger]);
 
   return (
     <>
@@ -168,6 +169,7 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
                       onClose={close}
                       usulan_id={usulan_id}
                       tabActive={tabActive}
+                      refreshData={() => setRefreshTrigger(prev => prev + 1)}
                     />
                   )}
                 </ModalComponent>

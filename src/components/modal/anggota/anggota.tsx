@@ -35,6 +35,7 @@ interface AnggotaModalProps {
   usulan_id: number;
   tabActive: string | null;
   onClose: () => void;
+  refreshData: () => void;
 }
 
 const AnggotaModal: React.FC<AnggotaModalProps> = ({
@@ -42,6 +43,7 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
   usulan_id,
   tabActive,
   onClose,
+  refreshData,
 }: AnggotaModalProps) => {
   const [opened, setOpened] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -141,8 +143,8 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
             message: lecturerResult.message,
           });
           setOpened(false);
+          refreshData();
           onClose();
-          router.refresh();
         } else {
           showNotification({
             status: "error",
@@ -150,6 +152,7 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
           });
         }
         break;
+
       case "student":
         const studentResult = await studentAction.addStudentMember(
           user_type,
@@ -162,12 +165,13 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
             message: studentResult.message,
           });
           setOpened(false);
+          refreshData();
           onClose();
-          router.refresh();
         } else {
           showNotification({ status: "error", message: studentResult.message });
         }
         break;
+
       case "vendor":
         const vendorResult = await vendorAction.addVendorMember(
           user_type,
@@ -180,8 +184,8 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
             message: vendorResult.message,
           });
           setOpened(false);
+          refreshData();
           onClose();
-          router.refresh();
         } else {
           showNotification({ status: "error", message: vendorResult.message });
         }
