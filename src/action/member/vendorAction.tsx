@@ -11,8 +11,6 @@ const getVendorMember = async (
   try {
     const response = await fetch(`/api/${user_type}/member/${usulan_id}/vendor`);
     const result = await response.json();
-    console.log(result);
-    
 
     if (result.status === 200 || result.success == true) {
       return {
@@ -37,9 +35,13 @@ const getVendorMember = async (
 };
 
 const addVendorMember = async (
+  user_type: user_type,
   values: {
     usulan_id: number;
-    anggota: string[]
+    anggota: {
+      name: string;
+      description: string;
+    }
   },
   setLoading: (loading: boolean) => void
 ) => {
@@ -47,8 +49,9 @@ const addVendorMember = async (
     setLoading(true);
 
     // Then, add the lecturer to the proposal suggestion
-    const response = await axios.post(`/api/lecturer/member/${values.usulan_id}`, {
-      lecturerId: values.anggota
+    const response = await axios.post(`/api/${user_type}/member/${values.usulan_id}/vendor`, {
+      name: values.anggota.name,
+      description: values.anggota.description,
     });
 
     if (response.status === 201 && response.data.success) {

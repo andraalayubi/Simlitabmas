@@ -12,7 +12,7 @@ const ModalComponent: React.FC<ModalProps> = ({ title, children }) => {
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title={title} centered>
+      <Modal opened={opened} onClose={close} title={title} size="50%" centered>
         {children(close)}
       </Modal>
 

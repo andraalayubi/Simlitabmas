@@ -9,29 +9,33 @@ import {
   MultiSelect,
   MultiSelectProps,
   Text,
+  NumberInput,
+  Select,
+  TextInput,
 } from "@mantine/core";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "mantine-form-zod-resolver";
 import useNotification from "src/components/notification/notification";
-import { lecturer, proposal_suggestion } from "prisma/interfaces";
-import lecturerAction from "src/action/lecturerAction";
+import { lecturer } from "prisma/interfaces";
 import studentAction from "src/action/member/studentAction";
 import vendorAction from "src/action/member/vendorAction";
 import { user_type } from "prisma/interfaces";
-import { 
-  LecturerMemberFormValues, 
+import {
+  LecturerMemberFormValues,
   lecturerMemberSchema,
   StudentMemberFormValues,
   studentMemberSchema,
   VendorMemberFormValues,
-  vendorMemberSchema 
+  vendorMemberSchema,
 } from "src/schemas/memberSchema";
+import memberAction from "src/action/member/memberAction";
 
 interface AnggotaModalProps {
   user_type: user_type;
   usulan_id: number;
   tabActive: string | null;
   onClose: () => void;
+  refreshData: () => void;
 }
 
 const AnggotaModal: React.FC<AnggotaModalProps> = ({
@@ -39,124 +43,149 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
   usulan_id,
   tabActive,
   onClose,
+  refreshData,
 }: AnggotaModalProps) => {
   const [opened, setOpened] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [members, setMembers] = useState<any[]>([]);
+  const [members, setMembers] = useState<{ value: string; label: string }[]>([]);
+  const [department, setDepartment] = useState<string[]>([]);
   const { showNotification } = useNotification();
   const router = useRouter();
 
   const getLecturers = useCallback(async () => {
-    const response = await lecturerAction.getAvailableLecturerMember(
+    const response = await memberAction.getAvailableLecturerMember(
       user_type,
       usulan_id,
       setLoading
-    );    
+    );
 
     if (response.success) {
-      const transformedData = response.data.map((item: any) => ({
-        id: item.id.toString(),
-        name: item.name,
+      const data = response.data.map((item: { id: any; name: any; }) => ({
+        value: String(item.id),
+        label: item.name,
       }));
-
-      setMembers(transformedData);
+      setMembers(data);
     } else {
       showNotification({ status: "error", message: response.message });
     }
   }, [user_type, usulan_id]);
 
-  const getStudents = useCallback(async () => {
-    // Implement student fetching logic
+  const getDepartments = useCallback(async () => {
+    const response = await studentAction.getDepartments(
+      user_type,
+      setLoading
+    );
+
+    if (response.success) {
+      const data = response.data.map((item: { id: any; name: any; }) => ({
+        value: String(item.id),
+        label: item.name,
+      }));
+      setDepartment(data);
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
   }, [user_type, usulan_id]);
 
-  const getVendors = useCallback(async () => {
-    // Implement vendor fetching logic
-  }, [user_type, usulan_id]);
-
-  useEffect(() => {
-    switch(tabActive) {
-      case 'lecturer':
+  useEffect(() => {    
+    switch (tabActive) {
+      case "lecturer":
         getLecturers();
         break;
-      case 'student':
-        getStudents();
-        break;
-      case 'vendor':
-        getVendors();
-        break;
-      default:
-        getLecturers();
+      case "student":
+        getDepartments();
         break;
     }
-  }, [tabActive, getLecturers, getStudents, getVendors]);
+  }, [tabActive, getLecturers, getDepartments]);
 
   const lecturerForm = useForm<LecturerMemberFormValues>({
     initialValues: {
       usulan_id,
-      anggota: []
+      anggota: [],
     },
     validate: zodResolver(lecturerMemberSchema),
-    validateInputOnChange: true
+    validateInputOnChange: true,
   });
 
   const studentForm = useForm<StudentMemberFormValues>({
     initialValues: {
       usulan_id,
-      anggota: []
+      anggota: {
+        name: "",
+        nrp: Number(undefined),
+        department: "",
+      },
     },
     validate: zodResolver(studentMemberSchema),
-    validateInputOnChange: true
+    validateInputOnChange: true,
   });
 
   const vendorForm = useForm<VendorMemberFormValues>({
     initialValues: {
       usulan_id,
-      anggota: []
+      anggota: { name: "", description: "" },
     },
     validate: zodResolver(vendorMemberSchema),
-    validateInputOnChange: true
+    validateInputOnChange: true,
   });
 
   const handleSubmit = async () => {
-    switch(tabActive) {
-      case 'lecturer':
-        const lecturerResult = await lecturerAction.addLecturerMember(
+    switch (tabActive) {
+      case "lecturer":
+        const lecturerResult = await memberAction.addLecturerMember(
+          user_type,
           lecturerForm.values,
           setLoading
         );
         if (lecturerResult.success) {
-          showNotification({ status: "success", message: lecturerResult.message });
+          showNotification({
+            status: "success",
+            message: lecturerResult.message,
+          });
           setOpened(false);
+          refreshData();
           onClose();
-          router.refresh();
         } else {
-          showNotification({ status: "error", message: lecturerResult.message });
+          showNotification({
+            status: "error",
+            message: lecturerResult.message,
+          });
         }
         break;
-      case 'student':
+
+      case "student":
         const studentResult = await studentAction.addStudentMember(
+          user_type,
           studentForm.values,
           setLoading
         );
         if (studentResult.success) {
-          showNotification({ status: "success", message: studentResult.message });
+          showNotification({
+            status: "success",
+            message: studentResult.message,
+          });
           setOpened(false);
+          refreshData();
           onClose();
-          router.refresh();
         } else {
           showNotification({ status: "error", message: studentResult.message });
         }
         break;
-      case 'vendor':
+
+      case "vendor":
         const vendorResult = await vendorAction.addVendorMember(
+          user_type,
           vendorForm.values,
           setLoading
         );
         if (vendorResult.success) {
-          showNotification({ status: "success", message: vendorResult.message });
+          showNotification({
+            status: "success",
+            message: vendorResult.message,
+          });
           setOpened(false);
+          refreshData();
           onClose();
-          router.refresh();
         } else {
           showNotification({ status: "error", message: vendorResult.message });
         }
@@ -164,59 +193,63 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
     }
   };
 
-  const renderMultiSelectOption: MultiSelectProps["renderOption"] = ({
-    option,
-  }) => (
-    <Group gap="sm">
-      <div>
-        <Text size="sm">{option.label}</Text>
-      </div>
-    </Group>
-  );
-
-  const memberData = members.map((member) => ({
-    value: member.id,
-    label: member.name,
-  }));
-
   return (
-        <Box>
-          {tabActive === 'lecturer' && (
-            <MultiSelect
-              label="Pilih Dosen"
-              placeholder="Pilih Dosen"
-              data={memberData}
-              {...lecturerForm.getInputProps('anggota')}
-              renderOption={renderMultiSelectOption}
-            />
-          )}
-          {tabActive === 'student' && (
-            <MultiSelect
-              label="Pilih Mahasiswa"
-              placeholder="Pilih Mahasiswa"
-              data={memberData}
-              {...studentForm.getInputProps('anggota')}
-              renderOption={renderMultiSelectOption}
-            />
-          )}
-          {tabActive === 'vendor' && (
-            <MultiSelect
-              label="Pilih Vendor"
-              placeholder="Pilih Vendor"
-              data={memberData}
-              {...vendorForm.getInputProps('anggota')}
-              renderOption={renderMultiSelectOption}
-            />
-          )}
-          <Group justify="flex-end" mt="md">
-            <Button 
-              onClick={handleSubmit} 
-              loading={loading}
-            >
-              Tambah
-            </Button>
-          </Group>
-        </Box>
+    <Box>
+      {tabActive === "lecturer" && (
+          <MultiSelect
+            label="Pilih Dosen"
+            placeholder="Pilih Dosen"
+            data={members}
+            {...lecturerForm.getInputProps("anggota")}
+          />
+      )}
+      {tabActive === "student" && (
+        <div className="space-y-4">
+          {/* Input Nama */}
+          <TextInput
+            label="Nama"
+            placeholder="Masukkan nama mahasiswa"
+            {...studentForm.getInputProps("anggota.name")}
+          />
+
+          {/* Input NRP */}
+          <NumberInput
+            label="NRP"
+            placeholder="Masukkan NRP"
+            {...studentForm.getInputProps("anggota.nrp")}
+          />
+
+          {/* Dropdown Program Studi */}
+          <Select
+            label="Program Studi"
+            placeholder="Pilih Program Studi"
+            data={department}
+            {...studentForm.getInputProps("anggota.department")}
+          />
+        </div>
+      )}
+      {tabActive === "vendor" && (
+        <div className="space-y-4">
+          {/* Input Nama */}
+          <TextInput
+            label="Nama"
+            placeholder="Masukkan nama mahasiswa"
+            {...vendorForm.getInputProps("anggota.name")}
+          />
+          {/* Input Deskripsi */}
+          <TextInput
+            label="Deskripsi"
+            placeholder="Masukkan deskripsi mahasiswa"
+            {...vendorForm.getInputProps("anggota.description")}
+          />
+        </div>
+      )}
+      <Group justify="flex-end" mt="lg">
+        <Button onClick={handleSubmit} loading={loading}>
+          Tambah
+        </Button>
+      </Group>
+    </Box>
   );
 };
 
