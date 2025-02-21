@@ -68,7 +68,7 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
     } else {
       showNotification({ status: "error", message: response.message });
     }
-  }, [user_type, usulan_id]);
+  }, [user_type, usulan_id, refreshTrigger]);
 
   const getLecturers = useCallback(async () => {
     const response = await lecturerAction.getLecturerMember(
@@ -83,7 +83,7 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
     } else {
       showNotification({ status: "error", message: response.message });
     }
-  }, [user_type, usulan_id]);
+  }, [user_type, usulan_id, refreshTrigger]);
 
   const getStudents = useCallback(async () => {
     const response = await studentAction.getStudentMember(
