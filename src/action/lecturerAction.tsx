@@ -34,7 +34,6 @@ const getLecturerMember = async (
   }
 };
 
-// get lecturer by id
 const createLecturer = async (user_type: user_type, lecturer: any) => {
   try {
     const response = await axios.post(`/api/${user_type}/lecturer`, lecturer);
