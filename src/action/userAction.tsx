@@ -50,10 +50,10 @@ const createUserLecturer = async (
   user: any
 ) => {
   try {
-    const response = await axios.post(
-      `/api/${user_type}/user/${lecturer_id}`,
-      user
-    );
+    const response = await axios.post(`/api/${user_type}/user`, {
+      ...user,
+      lecturer_id: lecturer_id,
+    });
 
     if (response.status === 201 || response.data.success) {
       return {
@@ -77,10 +77,7 @@ const createUserLecturer = async (
   }
 };
 
-const deleteUserLecturer = async (
-  user_type: user_type,
-  user_id: number,
-) => {
+const deleteUserLecturer = async (user_type: user_type, user_id: number) => {
   try {
     const response = await axios.delete(`/api/${user_type}/user/${user_id}`);
 
@@ -109,7 +106,7 @@ const deleteUserLecturer = async (
 const userAction = {
   getUserLecturers,
   createUserLecturer,
-  deleteUserLecturer
+  deleteUserLecturer,
 };
 
 export default userAction;
