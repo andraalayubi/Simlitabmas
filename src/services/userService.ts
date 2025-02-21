@@ -3,21 +3,18 @@ import bcrypt from 'bcrypt';
 import { user_type, user } from 'prisma/interfaces';
 
 const addNewUser = async (user: user) => {
-    try {
-        const hashedPassword = await bcrypt.hash(user.password!, 10);
-        const newUser = await prisma.user.create({
-            data: {
-                name: user.name,
-                user_type: user.user_type,
-                username: user.username,
-                email: user.email,
-                password: hashedPassword,
-            },
-        });
-        return newUser;
-    } catch (error) {
-        throw new Error('Error creating user');
-    }
+    const hashedPassword = await bcrypt.hash(user.password!, 10);
+    const newUser = await prisma.user.create({
+        data: {
+            name: user.name,
+            user_type: user.user_type,
+            username: user.username,
+            email: user.email,
+            password: hashedPassword,
+            lecturer_id: user.lecturer_id,
+        },
+    });
+    return newUser;
 };
 
 // Dapatkan pengguna berdasarkan email
@@ -42,6 +39,8 @@ const getFilteredUsers = async (filters: Partial<user>): Promise<user[]> => {
         where: {
             ...(filters.id && { id: filters.id }),
             ...(filters.email && { email: filters.email }),
+            ...(filters.username && { username: filters.username }),
+            ...(filters.lecturer_id && { lecturer_id: filters.lecturer_id }),
             ...(filters.user_type && { user_type: filters.user_type }),
             deleted: false,
         },

@@ -1,6 +1,6 @@
 "use client";
 
-import { Group, Table, Text } from "@mantine/core";
+import { Group, Modal, Table, Text } from "@mantine/core";
 import { MRT_ColumnDef } from "mantine-react-table";
 import { lecturer, research_group, user } from "prisma/interfaces";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -9,15 +9,20 @@ import userAction from "src/action/userAction";
 import ActionButton from "src/components/button/actionButton";
 import ModalComponent from "src/components/modal/modal";
 import CreateLecturerModal from "src/components/modal/user/createLecturerModal";
-import createLecturerModal from "src/components/modal/user/createLecturerModal";
+import CreateUserModal from "src/components/modal/user/createUserModal";
 import useNotification from "src/components/notification/notification";
 import TableLayout from "src/components/table/tableLayout";
 
 export default function ConfigurationUserPage() {
   const user_type = "admin";
-  const [lecturer, setLecturer] = useState<lecturer[]>([]);
+  const [lecturers, setLecturers] = useState<lecturer[]>([]);
   const [loading, setLoading] = useState(true);
   const { showNotification } = useNotification();
+
+  // handle modal create lectrer user
+  const [selectedLecturerId, setSelectedLecturerId] = useState<number | null>(
+    null
+  );
 
   const columns = useMemo<MRT_ColumnDef<lecturer>[]>(
     () => [
@@ -48,7 +53,7 @@ export default function ConfigurationUserPage() {
             <ActionButton
               type="add"
               label="Tambah User Dosen"
-              onClick={() => {}}
+              onClick={() => setSelectedLecturerId(row.original.id)} // trigger modal
             ></ActionButton>
             <ActionButton
               type="delete"
@@ -72,7 +77,7 @@ export default function ConfigurationUserPage() {
     );
 
     if (response.success) {
-      setLecturer(response.data);
+      setLecturers(response.data);
       showNotification({ status: "success", message: response.message });
     } else {
       showNotification({ status: "error", message: response.message });
@@ -122,7 +127,7 @@ export default function ConfigurationUserPage() {
 
             <TableLayout
               columns={columns}
-              data={lecturer}
+              data={lecturers}
               isLoading={loading}
               enableRowClick={false}
               enableExpanding={true}
@@ -165,6 +170,27 @@ export default function ConfigurationUserPage() {
           </div>
         </div>
       </div>
+
+      {/* Modal create lecturer user */}
+      <Modal
+        opened={selectedLecturerId !== null}
+        onClose={() => setSelectedLecturerId(null)}
+        title="Buat Akun Dosen"
+        size="50%"
+        centered
+      >
+        {selectedLecturerId && (
+          <CreateUserModal
+            user_type={user_type}
+            lecturerData={lecturers.find((l) => l.id === selectedLecturerId)!}
+            onClose={() => setSelectedLecturerId(null)}
+            onSuccess={() => {
+              getUserLecturers();
+              setSelectedLecturerId(null);
+            }}
+          />
+        )}
+      </Modal>
     </>
   );
 }
