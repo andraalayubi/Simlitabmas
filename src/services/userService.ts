@@ -23,7 +23,7 @@ const addNewUser = async (user: user) => {
 // Dapatkan pengguna berdasarkan email
 const getUserByEmail = async (email: string, user_type: user_type) => {
     return await prisma.user.findUnique({
-        where: { email: email, user_type: user_type },
+        where: { email: email, user_type: user_type, deleted: false },
         include: { lecturer: true },
     });
 };
@@ -31,7 +31,7 @@ const getUserByEmail = async (email: string, user_type: user_type) => {
 // Dapatkan pengguna berdasarkan username
 const getUserByUsername = async (username: string, user_type: user_type) => {
     return await prisma.user.findUnique({
-        where: { username: username, user_type: user_type },
+        where: { username: username, user_type: user_type, deleted: false },
         include: { lecturer: true },
     });
 };
@@ -43,16 +43,24 @@ const getFilteredUsers = async (filters: Partial<user>): Promise<user[]> => {
             ...(filters.id && { id: filters.id }),
             ...(filters.email && { email: filters.email }),
             ...(filters.user_type && { user_type: filters.user_type }),
+            deleted: false,
         },
     });
 };
 
+const remove = async (lecturer_id: number) => {
+    return await prisma.user.updateMany({
+        where: { lecturer_id: lecturer_id },
+        data: { deleted: true }
+    })
+}
 
 const userService = {
     getUserByEmail,
     addNewUser,
     getUserByUsername,
-    getFilteredUsers
+    getFilteredUsers,
+    remove,
 };
 
 export default userService;

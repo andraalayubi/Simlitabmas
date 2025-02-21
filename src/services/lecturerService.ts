@@ -14,6 +14,37 @@ const getAllActive = async () => {
     });
 };
 
+const getByFilter = async (
+    filter: {
+        department_id?: number,
+        research_group_id?: number
+        position_id?: number
+    }, include: any
+) => {
+
+    return await prisma.lecturer.findMany({
+        where: {
+            ...filter,
+            deleted: false
+        },
+        include: include
+    })
+}
+
+const create = async (lecturer: any) => {
+    return await prisma.lecturer.create({
+        data: lecturer
+    })
+}
+
+// soft delete
+const remove = async (lecturer_id: number) => {
+    return await prisma.lecturer.update({
+        where: { id: lecturer_id },
+        data: { deleted: true }
+    })
+}
+
 // get available lecturer for multiselect
 const getAvailableLecturers = async (proposalSuggestionId: number) => {
     return await prisma.lecturer.findMany({
@@ -44,11 +75,12 @@ const addLecturerMember = async (proposalSuggestionId: number, lecturerIds: numb
     return result;
 };
 
-
-
 const lecturerService = {
     getById,
     getAllActive,
+    getByFilter,
+    create,
+    remove,
     getAvailableLecturers,
     addLecturerMember,
 }
