@@ -11,8 +11,7 @@ const getProposalSchema = async (
   try {
     const response = await fetch(`/api/${user_type}/member/${usulan_id}`);
     const result = await response.json();
-    console.log(result);
-    
+
     if (result.status === 200 || result.success == true) {
       return {
         success: true,
@@ -35,7 +34,41 @@ const getProposalSchema = async (
   }
 };
 
-const addStudentMember = async (
+const getAvailableLecturerMember = async (
+  user_type: user_type,
+  usulan_id: number,
+  setLoading: (loading: boolean) => void
+) => {
+  setLoading(true);
+
+  try {
+    const response = await fetch(`/api/${user_type}/member/${usulan_id}/available`);
+    const result = await response.json();
+
+    if (result.status === 200 || result.success == true) {
+      return {
+        success: true,
+        message: result.message,
+        data: result.data,
+      };
+    } else {
+      return {
+        success: false,
+        message: result.message,
+      };
+    }
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.response?.data?.message || "An unexpected error occurred",
+    };
+  } finally {
+    setLoading(false);
+  }
+};
+
+const addLecturerMember = async (
+  user_type: user_type,
   values: {
     usulan_id: number;
     anggota: string[]
@@ -45,10 +78,15 @@ const addStudentMember = async (
   try {
     setLoading(true);
 
-    // Then, add the lecturer to the proposal suggestion
-    const response = await axios.post(`/api/lecturer/member/${values.usulan_id}`, {
-      lecturerId: values.anggota
+    const lecturers = await axios.post(`/api/${user_type}/member/${values.usulan_id}/available`, {
+      anggota: values.anggota
     });
+
+    // Then, add the lecturer to the proposal suggestion
+    const response = await axios.post(`/api/${user_type}/member/${values.usulan_id}/lecturer`, {
+      anggota: lecturers.data.data
+    });
+    console.log('response', response);
 
     if (response.status === 201 && response.data.success) {
       return {
@@ -74,7 +112,8 @@ const addStudentMember = async (
 
 const memberAction = {
   getProposalSchema,
-  addStudentMember
+  getAvailableLecturerMember,
+  addLecturerMember
 }
 
 export default memberAction;

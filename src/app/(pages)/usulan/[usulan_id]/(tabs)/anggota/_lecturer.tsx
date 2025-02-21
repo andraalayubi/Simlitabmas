@@ -32,7 +32,7 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
   columnsStudent,
   columnsVendor,
 }) => {
-  const user_type = "admin";
+  const user_type = "lecturer";
   const [lecturers, setLecturers] = useState<lecturer[]>([]);
   const [students, setStudents] = useState<student_member[]>([]);
   const [vendors, setVendors] = useState<vendor_member[]>([]);
@@ -127,7 +127,7 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
         getVendors();
         break;
     }
-  }, [schema, tabActive, getStudents, getVendors]);
+  }, [usulan_id, tabActive, getStudents, getVendors]);
 
   return (
     <>

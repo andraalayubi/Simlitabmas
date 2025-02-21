@@ -1,13 +1,12 @@
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { NextRequest, NextResponse } from "next/server";
-import { getSession } from "src/lib/session";
-import lecturerService from "src/services/lecturerService";
+import memberService from "src/services/memberService";
 
 export async function GET(req: NextRequest, { params }: { params: Params }) {
 
     try {
         const proposalSuggestionId = parseInt(params.proposal_suggestion_id, 10);
-        const proposal_suggestion = await lecturerService.getAvailableLecturers(proposalSuggestionId);
+        const proposal_suggestion = await memberService.getVendorMembers(proposalSuggestionId);
         
         return NextResponse.json({
             success: true,
@@ -30,12 +29,16 @@ export async function POST(req: NextRequest, { params }: { params: Params }) {
 
         const body = await req.json();
 
-        const result = await lecturerService.addLecturerMember(proposalSuggestionId, body.lecturerId);
+        const newVendorMember = await memberService.addVendorMember({
+            proposal_suggestion_id: proposalSuggestionId,
+            name: body.name,
+            description: body.description,
+          });
 
         return NextResponse.json({
             success: true,
-            data: result,
-            message: "Lecturer associated with proposal suggestion successfully"
+            data: newVendorMember,
+            message: "Vendor associated with proposal suggestion successfully"
         }, { status: 201 });
 
     } catch (error: any) {

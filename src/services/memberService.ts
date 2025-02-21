@@ -2,6 +2,26 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
+// get lecturer by ids
+const getLecturerByIds = async (lecturerIds: number[] | number) => {
+  const ids = Array.isArray(lecturerIds) ? lecturerIds.map(Number) : [Number(lecturerIds)];
+  console.log(ids);
+
+  const result = await prisma.lecturer.findMany({
+    where: {
+      id: {
+        in: ids
+      },
+      deleted: false
+    },
+    include: {
+      department: true
+    }
+  });
+
+  return result;
+};
+
 const getLecturerMembers = async (proposal_suggestion_id: number) => {
   return await prisma.lecturer_member.findMany({
     where: {
@@ -27,6 +47,17 @@ const getStudentMembers = async (proposal_suggestion_id: number) => {
   })
 }
 
+const addStudentMember = async (data: any) => {
+  return await prisma.student_member.create({
+    data: {
+      proposal_suggestion_id: data.proposal_suggestion_id,
+      name: data.name,
+      nrp: data.nrp,
+      department_id: data.department_id,
+    },
+  });
+}
+
 // get vendor members by proposal suggestion id
 const getVendorMembers = async (proposal_suggestion_id: number) => {
   return await prisma.vendor_member.findMany({
@@ -37,10 +68,23 @@ const getVendorMembers = async (proposal_suggestion_id: number) => {
   })
 }
 
+const addVendorMember = async (data: any) => {
+  return await prisma.vendor_member.create({
+    data: {
+      proposal_suggestion_id: data.proposal_suggestion_id,
+      name: data.name,
+      description: data.description || null,
+    },
+  });
+}
+
 const memberService = {
+  getLecturerByIds,
   getLecturerMembers,
   getStudentMembers,
-  getVendorMembers
+  addStudentMember,
+  getVendorMembers,
+  addVendorMember,
 }
 
 export default memberService;

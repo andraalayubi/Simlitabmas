@@ -35,45 +35,88 @@ const getStudentMember = async (
   }
 };
 
-const addStudentMember = async (
-  values: {
-    usulan_id: number;
-    anggota: string[]
-  },
+const getDepartments = async (
+  user_type: user_type,
   setLoading: (loading: boolean) => void
 ) => {
   try {
     setLoading(true);
 
-    // Then, add the lecturer to the proposal suggestion
-    const response = await axios.post(`/api/lecturer/member/${values.usulan_id}`, {
-      lecturerId: values.anggota
-    });
+    const response = await fetch(`/api/${user_type}/department`);
+    const result = await response.json();
+    console.log(result);
 
-    if (response.status === 201 && response.data.success) {
+    if (result.status === 200 || result.success == true) {
       return {
         success: true,
-        message: "Successfully added the lecturer to the proposal suggestion!",
+        message: result.message,
+        data: result.data,
       };
     } else {
       return {
         success: false,
-        message: response.data?.message || "Failed to add the lecturer to the proposal suggestion. Please try again.",
+        message: result.message,
       };
     }
   } catch (error: any) {
-    console.error('Error adding anggota:', error);
     return {
       success: false,
-      message: error.response?.data?.message || error.message || 'Gagal menambahkan anggota'
+      message: error.response?.data?.message || "An unexpected error occurred",
     };
   } finally {
     setLoading(false);
   }
 };
 
+const addStudentMember = async (
+  user_type: user_type,
+  values: {
+    usulan_id: number;
+    anggota: {
+      name: string;
+      nrp: number;
+      department: string;
+    };
+  },
+  setLoading: (loading: boolean) => void
+) => {
+  try {
+    setLoading(true);
+    console.log(values);
+    
+
+    const response = await axios.post(`/api/${user_type}/member/${values.usulan_id}/student`, {
+      name: values.anggota.name,
+      nrp: values.anggota.nrp.toString(),
+      department: Number(values.anggota.department),
+    });
+    
+    if (response.status === 201 && response.data.success) {
+      return {
+        success: true,
+        message: "Successfully added the student to the proposal suggestion!",
+      };
+    } else {
+      return {
+        success: false,
+        message: response.data?.message || "Failed to add the student to the proposal suggestion. Please try again.",
+      };
+    }
+  } catch (error: any) {
+    console.error("Error adding anggota:", error);
+    return {
+      success: false,
+      message: error.response?.data?.message || "Gagal menambahkan anggota",
+    };
+  } finally {
+    setLoading(false);
+  }
+};
+
+
 const memberAction = {
   getStudentMember,
+  getDepartments,
   addStudentMember
 }
 
