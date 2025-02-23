@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Anchor, Breadcrumbs, Tabs } from "@mantine/core";
+import { Anchor, Breadcrumbs, Skeleton, Tabs } from "@mantine/core";
 import { useRouter, usePathname, useParams } from "next/navigation";
 import { useSession } from "src/components/session/session";
 import LoadingPage from "src/components/usulan/LoadingPage";
@@ -14,25 +14,14 @@ const TabMenus = [
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const [loading, setLoading] = useState(true);
   const { session, loading: sessionLoading } = useSession();
   const router = useRouter();
   const pathname = usePathname();
   const params = useParams();
 
-  useEffect(() => {
-    if (!sessionLoading) {
-      setLoading(false);
-    }
-  }, [sessionLoading]);
-
-  if (sessionLoading || loading) {
-    return <LoadingPage />;
-  }
-
   // Menentukan tab aktif berdasarkan URL
   const activeTab =
-    TabMenus.find((tab) => pathname.includes(tab.value))?.value || "overview";
+    TabMenus.find((tab) => pathname.includes(tab.value))?.value || "usulan_saya";
 
   const handleTabChange = (value: string | null) => {
     router.push(`/pengmas/${value}`);
@@ -41,34 +30,37 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="container mx-auto px-4 py-6">
       {/* Tabs navigation */}
-      <div className="flex justify-between bg-white shadow-md rounded-lg">
-        <Tabs
-          defaultValue="overview"
-          value={activeTab}
-          onChange={(value) => handleTabChange(value)}
-          className="mt-2"
-        >
-          <Tabs.List className="flex">
-            {TabMenus.map((tab) => (
-              <Tabs.Tab key={tab.value} value={tab.value}>
-                {tab.tabName}
-              </Tabs.Tab>
-            ))}
-          </Tabs.List>
-        </Tabs>
-        {(session?.user_type === "lecturer") && (
-          <ModalComponent title="Buat Usulan">
-            {(close) => (
-              <ProposalSuggestionModal
-                onClose={close}
-                user_type={session?.user_type!}
-                showResearchGroup={false}
-                type="pengmas"
-              />
-            )}
-          </ModalComponent>
-        )}
-      </div>
+      <Skeleton visible={sessionLoading}>
+        <div className="flex justify-between bg-white shadow-md rounded-lg">
+          <Tabs
+            defaultValue="overview"
+            value={activeTab}
+            onChange={(value) => handleTabChange(value)}
+            className="mt-2"
+          >
+            <Tabs.List className="flex">
+              {TabMenus.map((tab) => (
+                <Tabs.Tab key={tab.value} value={tab.value}>
+                  {tab.tabName}
+                </Tabs.Tab>
+              ))}
+            </Tabs.List>
+          </Tabs>
+          {session?.user_type === "lecturer" && (
+            <ModalComponent title="Buat Usulan">
+              {(close) => (
+                <ProposalSuggestionModal
+                  onClose={close}
+                  user_type={session?.user_type!}
+                  lecturer_id={session?.lecturer_id!}
+                  showResearchGroup={false}
+                  type="pengmas"
+                />
+              )}
+            </ModalComponent>
+          )}
+        </div>
+      </Skeleton>
 
       {/* Child component */}
       <div className="">{children}</div>

@@ -89,6 +89,12 @@ const create = async (data: proposal_suggestion) => {
             status: data.status,
             is_active: data.is_active,
         },
+        include: {
+            year_research: true,
+            schema: true,
+            lecturer: true,
+            research_group: true,
+        },
     })
 }
 

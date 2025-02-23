@@ -55,22 +55,29 @@ const createProposalSuggestion = async (
     user_type: user_type,
     values: { name: string; year_research_id: string; schema_id: string; research_group_id?: string },
     setLoading: (loading: boolean) => void,
-    type: "penelitian" | "pengmas" = "penelitian"
+    lecturer_id: number
   ) => {
     setLoading(true);
   
     try {
+      const lecturer = await fetch(`/api/${user_type}/lecturer/${lecturer_id}`);
+      const lecturerData = await lecturer.json();
+      
       const response = await axios.post(
-        type === "penelitian"
-          ? `/api/${user_type}/proposal-suggestion`
-          : `/api/${user_type}/proposal-suggestion-pengmas`,
-        values
+        `/api/${user_type}/proposal-suggestion`,{
+          ...values,
+          lecturer: lecturerData.data
+        }
       );
-  
+
+      console.log('action', response);
       if (response.status === 201 && response.data.success) {
+        console.log(response.data);
+        
         return {
           success: true,
           message: "Successfully created a proposal suggestion!",
+          data: response.data.data
         };
       } else {
         return {
@@ -79,6 +86,7 @@ const createProposalSuggestion = async (
         };
       }
     } catch (error: any) {
+      console.error(error);
       return {
         success: false,
         message: error.response?.data?.message || "An unexpected error occurred",
