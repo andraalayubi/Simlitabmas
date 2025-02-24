@@ -1,10 +1,13 @@
 import { MRT_ColumnDef } from "mantine-react-table";
 import React, { useState, useEffect, useCallback } from "react";
 import TableLayout from "src/components/table/tableLayout";
-import { getSession } from "src/lib/session";
 import { proposal_suggestion } from "prisma/interfaces";
 import { showNotification } from "@mantine/notifications";
 import proposalSuggestionAction from "src/action/proposalSuggestionAction";
+import ProposalSuggestionModal from "src/components/modal/proposal_suggestion/proposal_suggesion";
+import ModalComponent from "src/components/modal/modal";
+import { Skeleton, Text } from "@mantine/core";
+import { useSession } from "src/components/session/session";
 
 interface SemuaUsulanLecturerProps {
   columns: MRT_ColumnDef<proposal_suggestion>[];
@@ -14,6 +17,7 @@ const SemuaUsulanLecturer: React.FC<SemuaUsulanLecturerProps> = ({
   columns,
 }) => {
   const user_type = "lecturer";
+  const { session, loading: sessionLoading } = useSession();
   const [data, setData] = useState<proposal_suggestion[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -39,15 +43,34 @@ const SemuaUsulanLecturer: React.FC<SemuaUsulanLecturerProps> = ({
   }, [getProposalSuggestion]);
 
   return (
-    <div>
-      <TableLayout
-        columns={columns}
-        data={data}
-        isLoading={loading}
-        enableRowClick={true}
-        getRowClickUrl={(row) => `/usulan/${row.id}`}
-      />
-    </div>
+    <Skeleton visible={sessionLoading}>
+      <div className="flex justify-between items-center pt-5 pb-2 px-6">
+        <Text size="lg" fw={700}>
+          Daftar Usulan Saya
+        </Text>
+        <ModalComponent title="Buat Usulan">
+          {(close) => (
+            <ProposalSuggestionModal
+              user_type={user_type}
+              onClose={close}
+              showResearchGroup={false}
+              type="pengmas"
+              lecturer_id={Number(session?.lecturer_id)}
+              refreshData={() => getProposalSuggestion()}
+            />
+          )}
+        </ModalComponent>
+      </div>
+      <div>
+        <TableLayout
+          columns={columns}
+          data={data}
+          isLoading={loading}
+          enableRowClick={true}
+          getRowClickUrl={(row) => `/usulan/${row.id}`}
+        />
+      </div>
+    </Skeleton>
   );
 };
 

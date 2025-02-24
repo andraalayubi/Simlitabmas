@@ -45,18 +45,15 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
     try {
-        const session = await getSession();
-
-        // Parse request body
         const body = await req.json();
 
         // Convert string IDs to numbers
         const proposalData = {
             ...body,
-            research_group_id: Number(body.research_group_id),
+            research_group_id: Number(body.research_group_id) || null,
             schema_id: Number(body.schema_id),
             year_research_id: Number(body.year_research_id),
-            lecturer_id: session?.lecturer_id,
+            lecturer_id: Number(body.lecturer.id),
             status: 'tersimpan' as proposal_suggestion_status,
             is_active: true
         };
@@ -68,7 +65,7 @@ export async function POST(req: NextRequest) {
             throw new Error("Failed to create proposal suggestion: ID is missing");
         }
 
-        const result = await lecturerService.addLecturerMember(newProposalSuggestion.id, Number(session?.lecturer_id));
+        const result = await lecturerService.addLecturerMember(newProposalSuggestion.id, body.lecturer);
 
         return NextResponse.json({
             success: true,

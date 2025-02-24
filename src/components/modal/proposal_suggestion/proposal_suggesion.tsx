@@ -21,6 +21,8 @@ interface ProposalSuggestionModalProps {
   onClose: () => void;
   showResearchGroup?: boolean;
   type: string;
+  lecturer_id: number;
+  refreshData: () => void;
 }
 
 const transformData = <T extends {
@@ -40,6 +42,8 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
   onClose,
   showResearchGroup = true,
   type,
+  lecturer_id,
+  refreshData
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [schemas, setSchemas] = useState<{ value: string; label: string }[]>([]);
@@ -59,16 +63,10 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
       setLoading
     );
 
-    // Check if all responses are successful
     const responses = [getSchemas, getYearResearches, getResearchGroups];
     const allSuccessful = responses.every((response) => response.success);
 
     if (allSuccessful) {
-      showNotification({
-        status: "success",
-        message: "All data retrieved successfully",
-      });
-
       const transformedSchemas = transformData(getSchemas.data);
       const transformedYearResearches = transformData(
         getYearResearches.data,
@@ -80,7 +78,6 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
       setYearResearches(transformedYearResearches);
       setResearchGroups(transformedResearchGroups);
     } else {
-      // Find and show the first error message
       const errorResponse = responses.find((response) => !response.success);
       showNotification({
         status: "error",
@@ -120,19 +117,17 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
     schema_id: string;
     research_group_id?: string;
   }) => {
-    const proposalType =
-      type === "penelitian" || type === "pengmas" ? type : "penelitian";
     const result = await proposalSuggestionAction.createProposalSuggestion(
       user_type,
       values,
       setLoading,
-      proposalType
+      lecturer_id
     );
 
     if (result.success) {
       showNotification({ status: "success", message: result.message });
       onClose();
-      router.push(`/${type}/usulan_saya`);
+      refreshData();
     } else {
       showNotification({ status: "error", message: result.message });
       onClose();

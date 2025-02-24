@@ -1,10 +1,11 @@
 import { MRT_ColumnDef } from "mantine-react-table";
 import React, { useState, useEffect, useCallback } from "react";
 import TableLayout from "src/components/table/tableLayout";
-import { getSession } from "src/lib/session";
+import { Skeleton, Text } from "@mantine/core";
 import { proposal_suggestion } from "prisma/interfaces";
 import { showNotification } from "@mantine/notifications";
 import proposalSuggestionAction from "src/action/proposalSuggestionAction";
+import { useSession } from "src/components/session/session";
 
 interface SemuaUsulanKaprodiProps {
   columns: MRT_ColumnDef<proposal_suggestion>[];
@@ -12,6 +13,7 @@ interface SemuaUsulanKaprodiProps {
 
 const SemuaUsulanKaprodi: React.FC<SemuaUsulanKaprodiProps> = ({ columns }) => {
   const user_type = "kaprodi";
+  const { session, loading: sessionLoading } = useSession();
   const [data, setData] = useState<proposal_suggestion[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -37,15 +39,22 @@ const SemuaUsulanKaprodi: React.FC<SemuaUsulanKaprodiProps> = ({ columns }) => {
   }, [getProposalSuggestion]);
 
   return (
-    <div>
-      <TableLayout
-        columns={columns}
-        data={data}
-        isLoading={loading}
-        enableRowClick={true}
-        getRowClickUrl={(row) => `/usulan/${row.id}`}
-      />
-    </div>
+    <Skeleton visible={sessionLoading}>
+      <div className="flex justify-between items-center pt-5 pb-2 px-6">
+        <Text size="lg" fw={700}>
+          Daftar Usulan Saya
+        </Text>
+      </div>
+      <div>
+        <TableLayout
+          columns={columns}
+          data={data}
+          isLoading={loading}
+          enableRowClick={true}
+          getRowClickUrl={(row) => `/usulan/${row.id}`}
+        />
+      </div>
+    </Skeleton>
   );
 };
 

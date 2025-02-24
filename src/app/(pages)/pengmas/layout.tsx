@@ -56,18 +56,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             ))}
           </Tabs.List>
         </Tabs>
-        {(session?.user_type === "lecturer") && (
-          <ModalComponent title="Buat Usulan">
-            {(close) => (
-              <ProposalSuggestionModal
-                onClose={close}
-                user_type={session?.user_type!}
-                showResearchGroup={false}
-                type="pengmas"
-              />
-            )}
-          </ModalComponent>
-        )}
       </div>
 
       {/* Child component */}

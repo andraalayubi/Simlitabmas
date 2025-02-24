@@ -2,6 +2,8 @@ import { getSession } from "src/lib/session";
 import filterService from "src/services/filterService";
 import proposalSuggestionService from "src/services/proposalSuggestionService";
 import { NextRequest, NextResponse } from "next/server";
+import { proposal_suggestion_status } from "prisma/interfaces";
+import lecturerService from "src/services/lecturerService";
 
 export async function GET(req: NextRequest) {
     try {
@@ -37,6 +39,45 @@ export async function GET(req: NextRequest) {
         });
 
     } catch (error: any) {
+        return NextResponse.json({
+            success: false,
+            message: `Internal Server Error: ${error.message}`,
+        }, { status: 500 });
+    }
+}
+
+export async function POST(req: NextRequest) {
+    try {
+        const body = await req.json();
+
+        // Convert string IDs to numbers
+        const proposalData = {
+            ...body,
+            research_group_id: Number(body.research_group_id) || null,
+            schema_id: Number(body.schema_id),
+            year_research_id: Number(body.year_research_id),
+            lecturer_id: Number(body.lecturer.id),
+            status: 'tersimpan' as proposal_suggestion_status,
+            is_active: true
+        };
+
+        // Create proposal suggestion
+        const newProposalSuggestion = await proposalSuggestionService.create(proposalData);
+
+        if (!newProposalSuggestion?.id) {
+            throw new Error("Failed to create proposal suggestion: ID is missing");
+        }
+
+        const result = await lecturerService.addLecturerMember(newProposalSuggestion.id, body.lecturer);
+
+        return NextResponse.json({
+            success: true,
+            data: newProposalSuggestion,
+            message: "Proposal suggestion created successfully"
+        }, { status: 201 });
+
+    } catch (error: any) {
+        console.error("Error creating proposal suggestion:", error);
         return NextResponse.json({
             success: false,
             message: `Internal Server Error: ${error.message}`,

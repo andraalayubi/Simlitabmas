@@ -16,7 +16,8 @@ import SemuaUsulanKetuaRG from "./_ketua_rg";
 import ProposalSuggestionStatusBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionStatusBadge";
 import { Skeleton } from "@mantine/core";
 
-export default function AllSuggestionPage() {
+export default function AllSuggestionPage({ refreshTrigger }: { refreshTrigger: number }) {
+  console.log(refreshTrigger);
   const { session, loading: sessionLoading } = useSession();
   
   const columns = useMemo<MRT_ColumnDef<proposal_suggestion>[]>(
