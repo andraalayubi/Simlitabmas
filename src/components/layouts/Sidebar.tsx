@@ -102,7 +102,16 @@ const MENU_CONFIG: Record<string, MenuSection[]> = {
         },
       ],
     },
-
+    {
+      title: "USULAN",
+      items: [
+        {
+          name: "Pengmas",
+          icon: <IconUsers />,
+          path: "/pengmas",
+        },
+      ],
+    },
     {
       title: "PRODI",
       items: [

@@ -17,7 +17,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   // Menentukan tab aktif berdasarkan URL
   const activeTab =
-    TabMenus.find((tab) => pathname.includes(tab.value))?.value || "overview";
+    TabMenus.find((tab) => pathname.includes(tab.value))?.value || "usulan_saya";
 
   const handleTabChange = (value: string | null) => {
     router.push(`/penelitian/${value}`);
@@ -29,7 +29,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <Skeleton visible={sessionLoading}>
         {/* <div className="flex justify-between shadow-md rounded-lg"> */}
           <Tabs
-            defaultValue="overview"
+            defaultValue="usulan_saya"
             value={activeTab}
             onChange={(value) => handleTabChange(value)}
             className="mt-0"
