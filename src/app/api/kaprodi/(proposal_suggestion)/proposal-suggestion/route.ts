@@ -12,6 +12,7 @@ export async function GET(req: NextRequest) {
         }
 
         let filter = filterService.getFilter(req.nextUrl.searchParams, [
+            { key: "id", type: "number" },
             { key: "status", type: "string" },
             { key: "year_research_id", type: "number" },
             { key: "schema_id", type: "number" },
@@ -29,6 +30,7 @@ export async function GET(req: NextRequest) {
             schema: req.nextUrl.searchParams.get("get_schema") === "true",
             lecturer: req.nextUrl.searchParams.get("get_lecturer") === "true",
             research_group: req.nextUrl.searchParams.get("get_research_group") === "true",
+            year_research: req.nextUrl.searchParams.get("get_year_research") === "true",
         };
 
         const proposal_suggestions = await proposalSuggestionService.getByFilter(filter, include);

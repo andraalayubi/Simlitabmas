@@ -1,38 +1,23 @@
 'use client'
 
-import React, { useEffect } from "react";
+import React from "react";
 import { useSession } from "src/components/session/session";
-import LoadingPage from "src/components/usulan/LoadingPage";
-import { SessionPayload } from "src/lib/encrypt";
 import OverviewAdmin from "./_admin";
 import OverviewLecturer from "./_lecturer";
 import OverviewKetuaRG from "./_ketua_rg";
 import OverviewKaprodi from "./_kaprodi";
-import { notFound } from "next/navigation";
+import { Skeleton } from "@mantine/core";
 
 export default function OverviewPage() {
   const { session, loading: sessionLoading } = useSession();
-  const dummy = 'dummy';
-
-  useEffect(() => {
-    if (!sessionLoading) {
-      //   fetchDetailUsulanByUsulanId();
-    }
-  }, [sessionLoading]);
-
-  if (sessionLoading) {
-    return <LoadingPage />;
-  }
 
   if(session?.user_type == "admin") {
-    return <OverviewAdmin overview={dummy}/>
+    return <Skeleton visible={sessionLoading}><OverviewAdmin /></Skeleton>
   } else if (session?.user_type == "lecturer") {
-    return <OverviewLecturer  overview={dummy}/>
+    return <Skeleton visible={sessionLoading}><OverviewLecturer  session={session}/></Skeleton>
   } else if (session?.user_type == "ketua_rg") {
-    return <OverviewKetuaRG overview={dummy}/>
+    return <Skeleton visible={sessionLoading}><OverviewKetuaRG /></Skeleton>
   } else if (session?.user_type == "kaprodi") {
-    return <OverviewKaprodi overview={dummy}/>
-  } else {
-    return notFound()
+    return <Skeleton visible={sessionLoading}><OverviewKaprodi /></Skeleton>
   }
 }

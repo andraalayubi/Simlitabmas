@@ -22,6 +22,7 @@ const getByLecturerId = async (lecturer_id: number) => {
 
 // get by filter
 const getByFilter = async (filter: {
+    id?: number;
     status?: proposal_suggestion_status;
     year_research_id?: number;
     schema_id?: number;
@@ -33,8 +34,10 @@ const getByFilter = async (filter: {
     schema?: boolean;
     lecturer?: boolean;
     research_group?: boolean;
+    year_research?: boolean;
 }) => {
     let whereClause: any = {
+        id: filter.id,
         status: filter.status,
         year_research_id: filter.year_research_id,
         schema_id: filter.schema_id,
@@ -72,7 +75,8 @@ const getByFilter = async (filter: {
         include: {
             schema: include?.schema,
             lecturer: include?.lecturer,
-            research_group: include?.research_group
+            research_group: include?.research_group,
+            year_research: include?.year_research,
         }
     });
 };
