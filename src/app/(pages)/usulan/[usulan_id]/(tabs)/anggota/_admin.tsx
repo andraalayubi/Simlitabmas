@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { showNotification } from "@mantine/notifications";
 import { useParams } from "next/navigation";
-import { Card, Skeleton, Tabs, Text } from "@mantine/core";
+import { Skeleton, Tabs } from "@mantine/core";
 import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
 import { MRT_ColumnDef } from "mantine-react-table";
 import TableLayout from "src/components/table/tableLayout";
@@ -14,8 +14,6 @@ import {
   vendor_member,
   schema,
 } from "prisma/interfaces";
-import AnggotaModal from "src/components/modal/anggota/anggota";
-import ModalComponent from "src/components/modal/modal";
 import lecturerAction from "src/action/lecturerAction";
 import studentAction from "src/action/member/studentAction";
 import vendorAction from "src/action/member/vendorAction";
@@ -159,18 +157,6 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
                     <Tabs.Tab value="vendor">Vendor</Tabs.Tab>
                   )}
                 </Tabs.List>
-              </div>
-              <div>
-                <ModalComponent title="Tambah Anggota">
-                  {(close) => (
-                    <AnggotaModal
-                      user_type={user_type}
-                      onClose={close}
-                      usulan_id={usulan_id}
-                      tabActive={tabActive}
-                    />
-                  )}
-                </ModalComponent>
               </div>
             </div>
             <Tabs.Panel value="lecturer">

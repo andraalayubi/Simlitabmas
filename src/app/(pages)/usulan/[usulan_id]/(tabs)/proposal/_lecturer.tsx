@@ -8,8 +8,9 @@ import useNotification from "src/components/notification/notification";
 import proposalAction from "src/action/proposalAction";
 import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
 import PdfViewer from "src/components/pdf/pdfViewer";
+import { SessionPayload } from "src/lib/encrypt";
 
-const ProposalLecturer = () => {
+const ProposalLecturer = ({ session }: { session: SessionPayload }) => {
   const user_type = "lecturer";
   const [loading, setLoading] = useState(true);
   const params = useParams();
@@ -19,6 +20,7 @@ const ProposalLecturer = () => {
   const [proposalSuggestion, setProposalSuggestion] =
     useState<proposal_suggestion | null>(null);
   const [proposalFile, setProposalFile] = useState<File | null>();
+  const [isEditable, setIsEditable] = useState(false);
 
   const getProposal = useCallback(async () => {
     const response = await proposalAction.getProposal(
@@ -31,6 +33,8 @@ const ProposalLecturer = () => {
       showNotification({ status: "success", message: response.message });
       setProposalSuggestion(response.data);
       setProposal(response.data.proposal);
+
+      response.data.lecturer_id == session.lecturer_id && setIsEditable(true);
     } else {
       showNotification({ status: "error", message: response.message });
     }
@@ -113,28 +117,30 @@ const ProposalLecturer = () => {
           {/* Kolom Tombol + Hasil Reviewer */}
           <div className="flex flex-col gap-4">
             {/* Tombol Upload dan Simpan */}
-            <div className="flex gap-x-2">
-              <FileButton
-                onChange={(file) => {
-                  // Langsung gunakan file dari parameter onChange
-                  setProposalFile(file);
-                  handleFileUpload(file);
-                }}
-                accept="application/pdf"
-              >
-                {(props) => <Button {...props}>Upload Proposal</Button>}
-              </FileButton>
-              {/* <Button disabled={!proposalFile} color="red" onClick={clearProposalFile}>
+            {isEditable && (
+              <div className="flex gap-x-2">
+                <FileButton
+                  onChange={(file) => {
+                    // Langsung gunakan file dari parameter onChange
+                    setProposalFile(file);
+                    handleFileUpload(file);
+                  }}
+                  accept="application/pdf"
+                >
+                  {(props) => <Button {...props}>Upload Proposal</Button>}
+                </FileButton>
+                {/* <Button disabled={!proposalFile} color="red" onClick={clearProposalFile}>
                 Hapus File
               </Button> */}
-              <Button
-                variant="outline"
-                onClick={updateProposal}
-                // disabled={!proposalFile}
-              >
-                Simpan
-              </Button>
-            </div>
+                <Button
+                  variant="outline"
+                  onClick={updateProposal}
+                  // disabled={!proposalFile}
+                >
+                  Simpan
+                </Button>
+              </div>
+            )}
 
             {/* Hasil Reviewer */}
             <div className="grid grid-cols-1 gap-4">

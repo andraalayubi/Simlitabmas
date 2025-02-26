@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { showNotification } from "@mantine/notifications";
 import { useParams } from "next/navigation";
-import { Card, Skeleton, Tabs, Text } from "@mantine/core";
+import { Skeleton, Tabs } from "@mantine/core";
 import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
 import { MRT_ColumnDef } from "mantine-react-table";
 import TableLayout from "src/components/table/tableLayout";
@@ -20,14 +20,17 @@ import lecturerAction from "src/action/lecturerAction";
 import studentAction from "src/action/member/studentAction";
 import vendorAction from "src/action/member/vendorAction";
 import memberAction from "src/action/member/memberAction";
+import { SessionPayload } from "src/lib/encrypt";
 
 interface AnggotaAdminProps {
+  session: SessionPayload;
   columnsLecturer: MRT_ColumnDef<lecturer>[];
   columnsStudent: MRT_ColumnDef<student_member>[];
   columnsVendor: MRT_ColumnDef<vendor_member>[];
 }
 
 const MemberAdmin: React.FC<AnggotaAdminProps> = ({
+  session,
   columnsLecturer,
   columnsStudent,
   columnsVendor,
@@ -39,14 +42,15 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
   const [schema, setSchema] = useState<schema | null>(null);
   const [proposalSuggestion, setProposalSuggestion] =
     useState<proposal_suggestion | null>(null);
-  
+
   const [tabActive, setTabActive] = useState<string | null>("lecturer");
   const [loading, setLoading] = useState(true);
   const [loadProposal, setLoadProposal] = useState(true);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [isEditable, setIsEditable] = useState(false);
   const params = useParams();
   const usulan_id = Number(params.usulan_id[0]);
-  
+
   const getProposalSchema = useCallback(async () => {
     const response = await memberAction.getProposalSchema(
       user_type,
@@ -59,7 +63,8 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
       setProposalSuggestion(response.data);
       setSchema(response.data.schema);
       setLoadProposal(false);
-      
+
+      response.data.lecturer.id == session.lecturer_id && setIsEditable(true);
       if (!response.data.schema.is_lecturer) {
         setLecturers([response.data.lecturer]);
       } else {
@@ -76,9 +81,8 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
       usulan_id,
       setLoading
     );
-    
+
     if (response.success) {
-      showNotification({ status: "success", message: response.message });
       setLecturers(response.data);
     } else {
       showNotification({ status: "error", message: response.message });
@@ -93,7 +97,6 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
     );
 
     if (response.success) {
-      showNotification({ status: "success", message: response.message });
       setStudents(response.data);
     } else {
       showNotification({ status: "error", message: response.message });
@@ -108,7 +111,6 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
     );
 
     if (response.success) {
-      showNotification({ status: "success", message: response.message });
       setVendors(response.data);
     } else {
       showNotification({ status: "error", message: response.message });
@@ -162,17 +164,21 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
                 </Tabs.List>
               </div>
               <div>
-                <ModalComponent title="Tambah Anggota">
-                  {(close) => (
-                    <AnggotaModal
-                      user_type={user_type}
-                      onClose={close}
-                      usulan_id={usulan_id}
-                      tabActive={tabActive}
-                      refreshData={() => setRefreshTrigger(prev => prev + 1)}
-                    />
-                  )}
-                </ModalComponent>
+                {isEditable && (
+                  <ModalComponent title="Tambah Anggota">
+                    {(close) => (
+                      <AnggotaModal
+                        user_type={user_type}
+                        onClose={close}
+                        usulan_id={usulan_id}
+                        tabActive={tabActive}
+                        refreshData={() =>
+                          setRefreshTrigger((prev) => prev + 1)
+                        }
+                      />
+                    )}
+                  </ModalComponent>
+                )}
               </div>
             </div>
             <Tabs.Panel value="lecturer">

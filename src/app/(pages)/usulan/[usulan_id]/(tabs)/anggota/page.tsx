@@ -1,8 +1,7 @@
 'use client'
 
 import { useSession } from "src/components/session/session";
-import { notFound } from "next/navigation";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import AnggotaAdmin from "./_admin";
 import AnggotaKaprodi from "./_kaprodi";
 import AnggotaKetuaRG from "./_ketua_rg";
@@ -81,7 +80,7 @@ export default function AnggotaPage() {
     if(session?.user_type == "admin") {
       return <Skeleton visible={sessionLoading}><AnggotaAdmin columnsLecturer={columnsLecturer} columnsStudent={columnsStudent} columnsVendor={columnsVendor}/></Skeleton>
     } else if (session?.user_type == "lecturer") {
-      return <Skeleton visible={sessionLoading}><AnggotaLecturer columnsLecturer={columnsLecturer} columnsStudent={columnsStudent} columnsVendor={columnsVendor}/></Skeleton>
+      return <Skeleton visible={sessionLoading}><AnggotaLecturer session={session} columnsLecturer={columnsLecturer} columnsStudent={columnsStudent} columnsVendor={columnsVendor}/></Skeleton>
     } else if (session?.user_type == "ketua_rg") {
       return <Skeleton visible={sessionLoading}><AnggotaKetuaRG columnsLecturer={columnsLecturer} columnsStudent={columnsStudent} columnsVendor={columnsVendor}/></Skeleton>
     } else if (session?.user_type == "kaprodi") {
