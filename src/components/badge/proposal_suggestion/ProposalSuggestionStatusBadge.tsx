@@ -7,12 +7,20 @@ interface ProposalSuggestionStatusProps {
 }
 
 const statusColors: Record<proposal_suggestion_status, string> = {
+  // Status dasar
   tersimpan: "gray",
   menunggu: "yellow",
   ditolak: "red",
   diterima: "green",
-  aktif: "blue",
   selesai: "teal",
+  
+  // Status spesifik
+  menunggu_proposal: "orange",
+  menunggu_admin: "pink",
+  menunggu_review: "yellow",
+  menunggu_revisi: "yellow",
+  menunggu_laporan: "lime",
+  menunggu_rg : "violet",
 };
 
 const statusLabels: Record<proposal_suggestion_status, string> = {
@@ -20,8 +28,13 @@ const statusLabels: Record<proposal_suggestion_status, string> = {
   menunggu: "Menunggu",
   ditolak: "Ditolak",
   diterima: "Diterima",
-  aktif: "Aktif",
   selesai: "Selesai",
+  menunggu_proposal: "Menunggu Proposal",
+  menunggu_admin: "Menunggu Admin",
+  menunggu_review: "Menunggu Review",
+  menunggu_revisi: "Menunggu Revisi",
+  menunggu_laporan: "Menunggu Laporan",
+  menunggu_rg : "Menunggu Research Group"
 };
 
 const ProposalSuggestionStatusBadge: React.FC<ProposalSuggestionStatusProps> = ({ status }) => {

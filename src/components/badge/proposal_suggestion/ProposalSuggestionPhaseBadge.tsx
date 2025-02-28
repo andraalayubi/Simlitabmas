@@ -8,16 +8,20 @@ interface ProposalSuggestionPhaseProps {
 
 const phaseColors: Record<proposal_suggestion_phase, string> = {
   pengajuan: "gray",
-  penetapan: "blue",
-  pelaksanaan: "green",
-  publikasi: "teal",
+  evaluasi_proposal: "blue",
+  penetapan: "indigo",
+  monev: "green",
+  evaluasi_akhir: "teal",
+  penetapan_akhir: "cyan",
 };
 
 const phaseLabels: Record<proposal_suggestion_phase, string> = {
   pengajuan: "Pengajuan",
+  evaluasi_proposal: "Evaluasi Proposal",
   penetapan: "Penetapan",
-  pelaksanaan: "Pelaksanaan",
-  publikasi: "Publikasi",
+  monev: "Monev",
+  evaluasi_akhir: "Evaluasi Akhir",
+  penetapan_akhir: "Penetapan Akhir",
 };
 
 const ProposalSuggestionPhaseBadge: React.FC<ProposalSuggestionPhaseProps> = ({ phase }) => {
