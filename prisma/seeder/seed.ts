@@ -3,8 +3,7 @@ import { degree, PrismaClient } from '@prisma/client'
 import { user_type } from "@prisma/client";
 import { JsonArray } from '@prisma/client/runtime/library';
 import bcrypt from "bcrypt";
-// import { proposal_suggestion_phase, proposal_suggestion_status } from 'prisma/interfaces';
-import { proposal_suggestion_phase, proposal_suggestion_status } from '@prisma/client';
+import { proposal_suggestion_phase, proposal_suggestion_status } from 'prisma/interfaces';
 const prisma = new PrismaClient()
 
 const lecturers = [
@@ -545,7 +544,7 @@ const proposalSuggestionsPengmas = [
         year_research_id: 1, // 2023
         schema_id: 1, // Skema Dasar
         lecturer_id: 1, // Mirza Ramadhani
-        status: "menunggu_admin" as proposal_suggestion_status,
+        status: "diterima" as proposal_suggestion_status,
         phase: "evaluasi_akhir" as proposal_suggestion_phase,
         is_active: true,
         proposal: {
@@ -627,8 +626,8 @@ const proposalSuggestionsPengmas = [
         year_research_id: 3, // 2025
         schema_id: 1,
         lecturer_id: 1,
-        status: "menunggu proposal" as proposal_suggestion_status,
-        phase: "pangajuan" as proposal_suggestion_phase,
+        status: "menunggu_proposal" as proposal_suggestion_status,
+        phase: "pengajuan" as proposal_suggestion_phase,
         is_active: false,
         proposal: {
             create: {
