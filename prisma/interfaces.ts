@@ -4,13 +4,13 @@ export type user_type = "ketua_rg" | "kaprodi" | "lecturer" | "admin";
 
 export type config_type = "system" | "user" | "proposal";
 
-export type proposal_suggestion_status = "tersimpan" | "menunggu" | "ditolak" | "diterima" | "aktif" | "selesai";
+export type proposal_suggestion_status = "menunggu_proposal" | "menunggu_rg" | "menunggu_admin" | "menunggu_review" | "menunggu_revisi" | "menunggu_laporan" | "tersimpan" | "menunggu" | "ditolak" | "diterima" | "selesai";
 
 export type degree = "S1" | "S2" | "S3";
 
 export type evaluation_phase = "proposal" | "progress_1" | "progress_2" | "progress_3" | "final";
 
-export type proposal_suggestion_phase = "pengajuan" | "penetapan" | "pelaksanaan" | "publikasi";
+export type proposal_suggestion_phase = "pengajuan" | "evaluasi_proposal" | "penetapan" | "monev" | "evaluasi_akhir" | "penetapan_akhir";
 
 export interface config {
   id: number;
