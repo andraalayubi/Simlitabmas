@@ -32,11 +32,16 @@ enum config_type {
 }
 
 enum proposal_suggestion_status {
+  menunggu_proposal
+  menunggu_rg
+  menunggu_admin
+  menunggu_review
+  menunggu_revisi
+  menunggu_laporan
   tersimpan
   menunggu
   ditolak
   diterima
-  aktif
   selesai
 }
 
@@ -54,9 +59,11 @@ enum evaluation_phase {
 
 enum proposal_suggestion_phase {
   pengajuan
+  evaluasi_proposal
   penetapan
-  pelaksanaan
-  publikasi
+  monev
+  evaluasi_akhir
+  penetapan_akhir
 }
 
 model config {
