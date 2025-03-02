@@ -3,6 +3,7 @@ import { degree, PrismaClient, proposal_suggestion_status } from '@prisma/client
 import { user_type } from "@prisma/client";
 import { JsonArray } from '@prisma/client/runtime/library';
 import bcrypt from "bcrypt";
+import { evaluation_phase } from 'prisma/interfaces';
 const prisma = new PrismaClient()
 
 const lecturers = [
@@ -155,6 +156,39 @@ const departements = [
     { name: "Departemen Teknologi Multimedia Kreatif", description: "Menaungi program studi yang berfokus pada multimedia dan industri kreatif." },
     { name: "Departemen Program Pendidikan Jarak Jauh", description: "Menyediakan program studi melalui metode pembelajaran jarak jauh." }
 ];
+
+const evaluations = [
+    {
+        schema_id: 1,
+        evaluation_phase: "evaluasi_proposal" as evaluation_phase,
+        name: "Evaluasi Proposal Skema 1"
+    },
+    {
+        schema_id: 1,
+        evaluation_phase: "evaluasi_monev" as evaluation_phase,
+        name: "Evaluasi Monev Skema 1"
+    },
+    {
+        schema_id: 1,
+        evaluation_phase: "evaluasi_akhir" as evaluation_phase,
+        name: "Evaluasi Akhir Skema 1"
+    },
+    {
+        schema_id: 2,
+        evaluation_phase: "evaluasi_proposal" as evaluation_phase,
+        name: "Evaluasi Proposal Skema 2"
+    },
+    {
+        schema_id: 2,
+        evaluation_phase: "evaluasi_monev" as evaluation_phase,
+        name: "Evaluasi Monev Skema 2"
+    },
+    {
+        schema_id: 2,
+        evaluation_phase: "evaluasi_akhir" as evaluation_phase,
+        name: "Evaluasi Akhir Skema 2"
+    },
+]
 
 const proposalSuggestionsPenelitian = [
     {
@@ -905,7 +939,8 @@ const main = async () => {
                 "schemas", 
                 "positions", 
                 "position_schemas", 
-                "proposal_suggestions"
+                "proposal_suggestions",
+                "evaluations"
             RESTART IDENTITY CASCADE;
         `);
 
@@ -1002,6 +1037,12 @@ const main = async () => {
             )
         );
         console.log("Inserting proposal suggestion and proposals for pengmas...");
+
+        // insert evaluations
+        await prisma.evaluation.createMany({
+            data: evaluations
+        })
+        console.log("Inserting evaluations...");
 
         console.log("Seeding selesai.");
     } catch (error) {

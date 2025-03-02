@@ -8,7 +8,7 @@ export type proposal_suggestion_status = "tersimpan" | "menunggu" | "ditolak" | 
 
 export type degree = "S1" | "S2" | "S3";
 
-export type evaluation_phase = "proposal" | "progress_1" | "progress_2" | "progress_3" | "final";
+export type evaluation_phase = "evaluasi_proposal" | "evaluasi_monev" | "evaluasi_akhir";
 
 export type proposal_suggestion_phase = "pengajuan" | "penetapan" | "pelaksanaan" | "publikasi";
 
@@ -335,14 +335,13 @@ export interface log {
 
 export interface evaluation {
   id: number;
-  name: string;
-  schema_id: number;
+  name: string | null;
   evaluation_phase: evaluation_phase | null;
-  score_weight: number | null;
+  schema_id: number | null;
   createdAt: Date;
   updatedAt: Date;
   deleted: boolean;
-  schema?: schema;
+  schema?: schema | null;
   review?: review[];
 }
 
