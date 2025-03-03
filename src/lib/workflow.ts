@@ -18,7 +18,7 @@ interface PlotPhase {
 }
 
 export class Workflow {
-    private plot: PlotPhase[];
+    public plot: PlotPhase[];
 
     constructor() {
         // Mapping plot sebagai panduan workflow
