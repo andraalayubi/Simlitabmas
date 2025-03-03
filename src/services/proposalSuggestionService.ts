@@ -47,7 +47,7 @@ const getByFilter = async (filter: {
 
     if (filter.research_group_id === null) {
         whereClause.research_group_id = null;
-    } else if (filter.research_group_id === -1) { 
+    } else if (filter.research_group_id === -1) {
         whereClause.research_group_id = { not: null };
     } else if (filter.research_group_id !== undefined) {
         whereClause.research_group_id = filter.research_group_id;
@@ -69,7 +69,7 @@ const getByFilter = async (filter: {
             });
         }
     }
-    
+
     return await prisma.proposal_suggestion.findMany({
         where: whereClause,
         include: {
@@ -96,11 +96,20 @@ const create = async (data: proposal_suggestion) => {
     })
 }
 
+// const update
+const update = async (id: number, data: any) => {
+    return await prisma.proposal_suggestion.update({
+        data: data,
+        where: { id: id }
+    })
+}
+
 const proposalSuggestionService = {
     getById,
     getByLecturerId,
     getByFilter,
-    create
+    create,
+    update
 }
 
 export default proposalSuggestionService
