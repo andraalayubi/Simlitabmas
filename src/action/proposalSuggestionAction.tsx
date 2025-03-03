@@ -1,5 +1,6 @@
+import { proposal_suggestion_phase } from "@prisma/client";
 import axios from "axios";
-import { user_type } from "prisma/interfaces";
+import { proposal_suggestion_status, user_type } from "prisma/interfaces";
 
 const getProposalSuggestion = async (
   user_type: user_type,
@@ -26,7 +27,7 @@ const getProposalSuggestion = async (
     );
 
     const result = await response.json();
-    
+
     if (result.status === 200 || result.success == true) {
       return {
         success: true,
@@ -96,49 +97,95 @@ const getById = async (
 };
 
 const createProposalSuggestion = async (
-    user_type: user_type,
-    values: { name: string; year_research_id: string; schema_id: string; research_group_id?: string },
-    setLoading: (loading: boolean) => void,
-    lecturer_id: number
-  ) => {
-    setLoading(true);
-  
-    try {
-      const lecturer = await fetch(`/api/${user_type}/lecturer/${lecturer_id}`);
-      const lecturerData = await lecturer.json();
-      
-      const response = await axios.post(
-        `/api/${user_type}/proposal-suggestion`,{
-          ...values,
-          lecturer: lecturerData.data
-        }
-      );
-  
-      if (response.status === 201 && response.data.success) {
-        return {
-          success: true,
-          message: "Successfully created a proposal suggestion!",
-        };
-      } else {
-        return {
-          success: false,
-          message: response.data?.message || "Failed to create a proposal suggestion. Please try again.",
-        };
-      }
-    } catch (error: any) {
+  user_type: user_type,
+  values: {
+    name: string;
+    year_research_id: string;
+    schema_id: string;
+    research_group_id?: string;
+  },
+  setLoading: (loading: boolean) => void,
+  lecturer_id: number
+) => {
+  setLoading(true);
+
+  try {
+    const lecturer = await fetch(`/api/${user_type}/lecturer/${lecturer_id}`);
+    const lecturerData = await lecturer.json();
+
+    const response = await axios.post(`/api/${user_type}/proposal-suggestion`, {
+      ...values,
+      lecturer: lecturerData.data,
+    });
+
+    if (response.status === 201 && response.data.success) {
+      return {
+        success: true,
+        message: "Successfully created a proposal suggestion!",
+      };
+    } else {
       return {
         success: false,
-        message: error.response?.data?.message || "An unexpected error occurred",
+        message:
+          response.data?.message ||
+          "Failed to create a proposal suggestion. Please try again.",
       };
-    } finally {
-      setLoading(false);
     }
-  };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.response?.data?.message || "An unexpected error occurred",
+    };
+  } finally {
+    setLoading(false);
+  }
+};
+
+const updateStatusPhase = async (
+  user_type: user_type,
+  phase: proposal_suggestion_phase | '',
+  status: proposal_suggestion_status | '',
+  proposal_suggestion_id: number,
+  // setLoading: (loading: boolean) => void
+) => {
+  // setLoading(true);
+  try {
+    const response = await axios.put(
+      `/api/${user_type}/proposal-suggestion/${proposal_suggestion_id}`,
+      {
+        phase: phase,
+        status: status,
+      }
+    );
+
+    if (response.status === 200 || response.data.success) {
+      return {
+        success: true,
+        message: response.data?.message,
+      };
+    } else {
+      return {
+        success: false,
+        message:
+          response.data?.message ||
+          "Failed to create a proposal suggestion. Please try again.",
+      };
+    }
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.response?.data?.message || "An unexpected error occurred",
+    };
+  } finally {
+    // setLoading(false);
+  }
+};
 
 const proposalSuggestionAction = {
   getProposalSuggestion,
   getById,
-  createProposalSuggestion
-}
+  createProposalSuggestion,
+  updateStatusPhase,
+};
 
 export default proposalSuggestionAction;
