@@ -52,11 +52,9 @@ enum degree {
 }
 
 enum evaluation_phase {
-  proposal
-  progress_1
-  progress_2
-  progress_3
-  final
+  evaluasi_proposal
+  evaluasi_monev
+  evaluasi_akhir
 }
 
 enum proposal_suggestion_phase {
@@ -481,16 +479,15 @@ model log {
 
 model evaluation {
   id               Int               @id @default(autoincrement())
-  name             String
-  schema_id        Int
+  name             String?
   evaluation_phase evaluation_phase?
-  score_weight     Int?
+  schema_id        Int?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deleted   Boolean  @default(false)
 
-  schema schema   @relation(fields: [schema_id], references: [id])
+  schema schema?   @relation(fields: [schema_id], references: [id])
   review review[]
 
   @@map("evaluations")
