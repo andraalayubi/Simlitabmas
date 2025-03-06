@@ -63,6 +63,7 @@ const getById = async (
       get_lecturer: 'true',
       get_research_group: 'true',
       get_year_research: 'true',
+      get_department: 'true',
       id: usulan_id
     });
 

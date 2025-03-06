@@ -4,7 +4,7 @@ export type user_type = "ketua_rg" | "kaprodi" | "lecturer" | "admin";
 
 export type config_type = "system" | "user" | "proposal";
 
-export type proposal_suggestion_status = "menunggu_proposal" | "menunggu_rg" | "menunggu_admin" | "menunggu_review" | "menunggu_revisi" | "menunggu_laporan" | "tersimpan" | "menunggu" | "ditolak" | "diterima" | "selesai";
+export type proposal_suggestion_status = "menunggu_proposal" | "menunggu_rg" | "menunggu_kaprodi" | "menunggu_admin" | "menunggu_review" | "menunggu_revisi" | "menunggu_laporan" | "tersimpan" | "menunggu" | "ditolak" | "diterima" | "selesai";
 
 export type degree = "S1" | "S2" | "S3";
 

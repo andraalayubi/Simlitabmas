@@ -14,7 +14,10 @@ interface PlotDetail {
 
 interface PlotPhase {
     phase: proposal_suggestion_phase;
-    details: PlotDetail[];
+    details: {
+        penelitian: PlotDetail[];
+        pengmas?: PlotDetail[];
+    };
 }
 
 export class Workflow {
@@ -25,202 +28,255 @@ export class Workflow {
         this.plot = [
             {
                 phase: "pengajuan",
-                details: [
-                    {
-                        status: "menunggu_proposal",
-                        info: "Menunggu pengusul mengunggah proposal",
-                        role: "lecturer",
-                        action: "input",
-                    },
-                    {
-                        status: "tersimpan",
-                        info: "Proposal terunggah, menunggu pengusul mengajukan usulan",
-                        role: "lecturer",
-                        action: "approval",
-                    },
-                    {
-                        status: "menunggu_rg",
-                        info: "Menunggu persetujuan ketua research group",
-                        role: "ketua_rg",
-                        action: "approval",
-                    },
-                    {
-                        status: "ditolak",
-                        info: "Usulan ditolak ketua research group",
-                        role: null,
-                        action: null,
-                    },
-                    {
-                        status: "diterima",
-                        info: "Usulan diterima ketua research group, menunggu konfirmasi admin ke tahap evaluasi proposal",
-                        role: "admin",
-                        action: "next",
-                    },
-                ],
+                details: {
+                    penelitian: [
+                        {
+                            status: "menunggu_proposal",
+                            info: "Menunggu pengusul mengunggah proposal",
+                            role: "lecturer",
+                            action: "input",
+                        },
+                        {
+                            status: "tersimpan",
+                            info: "Proposal terunggah, menunggu pengusul mengajukan usulan",
+                            role: "lecturer",
+                            action: "approval",
+                        },
+                        {
+                            status: "menunggu_rg",
+                            info: "Menunggu persetujuan ketua research group",
+                            role: "ketua_rg",
+                            action: "approval",
+                        },
+                        {
+                            status: "ditolak",
+                            info: "Usulan ditolak ketua research group",
+                            role: null,
+                            action: null,
+                        },
+                        {
+                            status: "diterima",
+                            info: "Usulan diterima ketua research group, menunggu konfirmasi admin ke tahap evaluasi proposal",
+                            role: "admin",
+                            action: "next",
+                        },
+                    ],
+                    pengmas: [
+                        {
+                            status: "menunggu_proposal",
+                            info: "Menunggu pengusul mengunggah proposal",
+                            role: "lecturer",
+                            action: "input",
+                        },
+                        {
+                            status: "tersimpan",
+                            info: "Proposal terunggah, menunggu pengusul mengajukan usulan",
+                            role: "lecturer",
+                            action: "approval",
+                        },
+                        {
+                            status: "menunggu_kaprodi",
+                            info: "Menunggu persetujuan ketua program studi",
+                            role: "kaprodi",
+                            action: "approval",
+                        },
+                        {
+                            status: "ditolak",
+                            info: "Usulan ditolak ketua program studi",
+                            role: null,
+                            action: null,
+                        },
+                        {
+                            status: "diterima",
+                            info: "Usulan diterima ketua program studi, menunggu konfirmasi admin ke tahap evaluasi proposal",
+                            role: "admin",
+                            action: "next",
+                        },
+                    ],
+                }
             },
             {
                 phase: "evaluasi_proposal",
-                details: [
-                    {
-                        status: "menunggu_admin",
-                        info: "Menunggu admin memilih reviewer",
-                        role: "admin",
-                        action: null,
-                    },
-                    {
-                        status: "menunggu_review",
-                        info: "Reviewer telah dipilih, menunggu reviewer memberikan evaluasi",
-                        role: null,
-                        action: null,
-                    },
-                    {
-                        status: "ditolak",
-                        info: "Usulan ditolak reviewer",
-                        role: null,
-                        action: null,
-                    },
-                    {
-                        status: "diterima",
-                        info: "Usulan diterima reviewer, menunggu konfirmasi admin ke tahap penetapan",
-                        role: "admin",
-                        action: "next",
-                    },
-                ],
+                details: {
+                    penelitian: [
+                        {
+                            status: "menunggu_admin",
+                            info: "Menunggu admin memilih reviewer",
+                            role: "admin",
+                            action: null,
+                        },
+                        {
+                            status: "menunggu_review",
+                            info: "Reviewer telah dipilih, menunggu reviewer memberikan evaluasi",
+                            role: null,
+                            action: null,
+                        },
+                        {
+                            status: "ditolak",
+                            info: "Usulan ditolak reviewer",
+                            role: null,
+                            action: null,
+                        },
+                        {
+                            status: "diterima",
+                            info: "Usulan diterima reviewer, menunggu konfirmasi admin ke tahap penetapan",
+                            role: "admin",
+                            action: "next",
+                        },
+                    ],
+                }
             },
             {
                 phase: "penetapan",
-                details: [
-                    {
-                        status: "menunggu_admin",
-                        info: "Menunggu admin menetapkan usulan penelitian",
-                        role: "admin",
-                        action: "next",
-                    },
-                    {
-                        status: "menunggu_revisi",
-                        info: "Menunggu pengusul melakukan revisi",
-                        role: "lecturer",
-                        action: "input",
-                    },
-                    {
-                        status: "tersimpan",
-                        info: "Pengusul telah mengunggah revisi, menunggu pengusul mengajukan revisi",
-                        role: "lecturer",
-                        action: "next",
-                    },
-                ],
+                details: {
+                    penelitian: [
+                        {
+                            status: "menunggu_admin",
+                            info: "Menunggu admin menetapkan usulan penelitian",
+                            role: "admin",
+                            action: "next",
+                        },
+                        {
+                            status: "menunggu_revisi",
+                            info: "Menunggu pengusul melakukan revisi",
+                            role: "lecturer",
+                            action: "input",
+                        },
+                        {
+                            status: "tersimpan",
+                            info: "Pengusul telah mengunggah revisi, menunggu pengusul mengajukan revisi",
+                            role: "lecturer",
+                            action: "next",
+                        },
+                    ],
+                }
             },
             {
                 phase: "monev",
-                details: [
-                    {
-                        status: "menunggu_laporan",
-                        info: "Menunggu pengusul mengunggah laporan",
-                        role: "lecturer",
-                        action: "input",
-                    },
-                    {
-                        status: "tersimpan",
-                        info: "Laporan terunggah, menunggu pengusul mengajukan laporan",
-                        role: "lecturer",
-                        action: "approval",
-                    },
-                    {
-                        status: "menunggu_admin",
-                        info: "Menunggu admin memilih reviewer",
-                        role: "admin",
-                        action: null,
-                    },
-                    {
-                        status: "menunggu_review",
-                        info: "Reviewer telah dipilih, menunggu reviewer memberikan evaluasi",
-                        role: null,
-                        action: null,
-                    },
-                    {
-                        status: "ditolak",
-                        info: "Usulan ditolak reviewer",
-                        role: null,
-                        action: null,
-                    },
-                    {
-                        status: "diterima",
-                        info: "Usulan diterima reviewer, menunggu konfirmasi admin ke tahap penetapan",
-                        role: "admin",
-                        action: "next",
-                    },
-                ],
+                details: {
+                    penelitian: [
+                        {
+                            status: "menunggu_laporan",
+                            info: "Menunggu pengusul mengunggah laporan",
+                            role: "lecturer",
+                            action: "input",
+                        },
+                        {
+                            status: "tersimpan",
+                            info: "Laporan terunggah, menunggu pengusul mengajukan laporan",
+                            role: "lecturer",
+                            action: "approval",
+                        },
+                        {
+                            status: "menunggu_admin",
+                            info: "Menunggu admin memilih reviewer",
+                            role: "admin",
+                            action: null,
+                        },
+                        {
+                            status: "menunggu_review",
+                            info: "Reviewer telah dipilih, menunggu reviewer memberikan evaluasi",
+                            role: null,
+                            action: null,
+                        },
+                        {
+                            status: "ditolak",
+                            info: "Usulan ditolak reviewer",
+                            role: null,
+                            action: null,
+                        },
+                        {
+                            status: "diterima",
+                            info: "Usulan diterima reviewer, menunggu konfirmasi admin ke tahap penetapan",
+                            role: "admin",
+                            action: "next",
+                        },
+                    ],
+                }
             },
             {
                 phase: "evaluasi_akhir",
-                details: [
-                    {
-                        status: "menunggu_laporan",
-                        info: "Menunggu pengusul mengunggah laporan",
-                        role: "lecturer",
-                        action: "input",
-                    },
-                    {
-                        status: "tersimpan",
-                        info: "Laporan terunggah, menunggu pengusul mengajukan laporan",
-                        role: "lecturer",
-                        action: "approval",
-                    },
-                    {
-                        status: "menunggu_admin",
-                        info: "Menunggu admin memilih reviewer",
-                        role: "admin",
-                        action: null,
-                    },
-                    {
-                        status: "menunggu_review",
-                        info: "Reviewer telah dipilih, menunggu reviewer memberikan evaluasi",
-                        role: null,
-                        action: null,
-                    },
-                    {
-                        status: "ditolak",
-                        info: "Usulan ditolak reviewer",
-                        role: null,
-                        action: null,
-                    },
-                    {
-                        status: "diterima",
-                        info: "Usulan diterima reviewer, menunggu konfirmasi admin ke tahap penetapan",
-                        role: "admin",
-                        action: "next",
-                    },
-                ],
+                details: {
+                    penelitian: [
+                        {
+                            status: "menunggu_laporan",
+                            info: "Menunggu pengusul mengunggah laporan",
+                            role: "lecturer",
+                            action: "input",
+                        },
+                        {
+                            status: "tersimpan",
+                            info: "Laporan terunggah, menunggu pengusul mengajukan laporan",
+                            role: "lecturer",
+                            action: "approval",
+                        },
+                        {
+                            status: "menunggu_admin",
+                            info: "Menunggu admin memilih reviewer",
+                            role: "admin",
+                            action: null,
+                        },
+                        {
+                            status: "menunggu_review",
+                            info: "Reviewer telah dipilih, menunggu reviewer memberikan evaluasi",
+                            role: null,
+                            action: null,
+                        },
+                        {
+                            status: "ditolak",
+                            info: "Usulan ditolak reviewer",
+                            role: null,
+                            action: null,
+                        },
+                        {
+                            status: "diterima",
+                            info: "Usulan diterima reviewer, menunggu konfirmasi admin ke tahap penetapan",
+                            role: "admin",
+                            action: "next",
+                        },
+                    ],
+                }
             },
             {
                 phase: "penetapan_akhir",
-                details: [
-                    {
-                        status: "menunggu_admin",
-                        info: "Menunggu konfirmasi admin untuk pengesahan",
-                        role: "admin",
-                        action: "approval",
-                    },
-                    {
-                        status: "selesai",
-                        info: "Usulan penelitian telah selesai",
-                        role: null,
-                        action: null,
-                    },
-                ],
+                details: {
+                    penelitian: [
+                        {
+                            status: "menunggu_admin",
+                            info: "Menunggu konfirmasi admin untuk pengesahan",
+                            role: "admin",
+                            action: "approval",
+                        },
+                        {
+                            status: "selesai",
+                            info: "Usulan penelitian telah selesai",
+                            role: null,
+                            action: null,
+                        },
+                    ],
+                }
             },
         ];
+    }
+
+    // Helper function untuk mendapatkan details berdasarkan phase dan type
+    private getDetailsForPhaseAndType(phase: string, type: string = 'penelitian'): any[] {
+        const phaseObj = this.plot.find((p) => p.phase === phase);
+        if (!phaseObj) return [];
+
+        return (phaseObj.details as any)[type] || phaseObj.details['penelitian'] || [];
     }
 
     // Method untuk mendapatkan fase dan status selanjutnya berdasarkan fase dan status saat ini
     public getNextPhaseAndStatus(
         currentPhase: string,
-        currentStatus: string
+        currentStatus: string,
+        type: string = 'penelitian'
     ): { nextPhase: string | null; nextStatus: string | null } {
         const phaseIndex = this.plot.findIndex((p) => p.phase === currentPhase);
         if (phaseIndex === -1) return { nextPhase: null, nextStatus: null };
 
-        const currentPhaseDetails = this.plot[phaseIndex].details;
+        const currentPhaseDetails = this.getDetailsForPhaseAndType(currentPhase, type);
         const detailIndex = currentPhaseDetails.findIndex(
             (detail) => detail.status === currentStatus
         );
@@ -240,31 +296,29 @@ export class Workflow {
             phaseIndex < this.plot.length - 1
         ) {
             const nextPhaseObj = this.plot[phaseIndex + 1];
+            const nextPhaseDetails = this.getDetailsForPhaseAndType(nextPhaseObj.phase, type);
             return {
                 nextPhase: nextPhaseObj.phase,
-                nextStatus: nextPhaseObj.details[0]?.status || null,
+                nextStatus: nextPhaseDetails[0]?.status || null,
             };
         }
 
         return { nextPhase: null, nextStatus: null };
     }
 
-    // Method untuk mendapatkan action berdasarkan status, phase, dan role
-    public getAction(status: string, phase: string, role: string): Action {
-        const phaseObj = this.plot.find((p) => p.phase === phase);
-        if (!phaseObj) return null;
-
-        const detail = phaseObj.details.find(
+    // Method untuk mendapatkan action berdasarkan status, phase, role, dan type
+    public getAction(status: string, phase: string, role: string, type: string = 'default'): Action {
+        const details = this.getDetailsForPhaseAndType(phase, type);
+        const detail = details.find(
             (d) => d.status === status && d.role === role
         );
         return detail ? detail.action : null;
     }
 
-    public getInfo(status: string, phase: string, role: string): String {
-        const phaseObj = this.plot.find((p) => p.phase === phase);
-        if (!phaseObj) return '';
-
-        const detail = phaseObj.details.find(
+    // Method untuk mendapatkan info berdasarkan status, phase, role, dan type
+    public getInfo(status: string, phase: string, role: string, type: string = 'default'): String {
+        const details = this.getDetailsForPhaseAndType(phase, type);
+        const detail = details.find(
             (d) => d.status === status && d.role === role
         );
         return detail ? detail.info : '';

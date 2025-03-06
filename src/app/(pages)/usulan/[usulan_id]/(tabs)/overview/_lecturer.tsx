@@ -24,7 +24,7 @@ const OverviewLecturer: React.FC<OverviewLecturerProps> = ({ session }) => {
 
   const { showNotification } = useNotification();
   const params = useParams();
-  const usulan_id = params.usulan_id[0];
+  const usulan_id = params.usulan_id as string;
 
   const getProposalSuggestion = useCallback(async () => {
     const response = await proposalSuggestionAction.getById(

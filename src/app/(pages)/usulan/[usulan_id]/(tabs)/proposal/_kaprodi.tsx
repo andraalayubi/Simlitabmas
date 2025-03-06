@@ -30,7 +30,7 @@ const ProposalKaprodi = () => {
   const getProposal = useCallback(async () => {
     const response = await proposalAction.getProposal(
       user_type,
-      usulan_id[0],
+      usulan_id as string,
       setLoading
     );
 

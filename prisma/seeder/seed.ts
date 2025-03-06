@@ -198,6 +198,7 @@ const proposalSuggestionsPenelitian = [
         schema_id: 1, // Skema Dasar
         lecturer_id: 1, // Mirza Ramadhani
         research_group_id: 1, // Human Centric Multimedia
+        department_id: 1,
         status: "menunggu_proposal" as proposal_suggestion_status,
         phase: "pengajuan" as proposal_suggestion_phase,
         is_active: true,
@@ -240,8 +241,9 @@ const proposalSuggestionsPenelitian = [
         schema_id: 2, // Skema Terapan
         lecturer_id: 1,
         research_group_id: 2, // ACE-ATech
+        department_id: 1,
         status: "menunggu_revisi" as proposal_suggestion_status,
-        phase : "penetapan" as proposal_suggestion_phase,
+        phase: "penetapan" as proposal_suggestion_phase,
         is_active: true,
         proposal: {
             create: {
@@ -282,6 +284,7 @@ const proposalSuggestionsPenelitian = [
         schema_id: 1,
         lecturer_id: 1,
         research_group_id: 3, // Agile Product Development
+        department_id: 1,
         status: "selesai" as proposal_suggestion_status,
         phase: "penetapan_akhir" as proposal_suggestion_phase,
         is_active: false,
@@ -324,6 +327,7 @@ const proposalSuggestionsPenelitian = [
         name: "Pemanfaatan Biofuel sebagai Alternatif Energi Ramah Lingkungan",
         lecturer_id: 2,
         research_group_id: 4, // Bio Electrochemistry System
+        department_id: 2,
         status: "menunggu_rg" as proposal_suggestion_status,
         phase: "pengajuan" as proposal_suggestion_phase,
         is_active: true,
@@ -366,6 +370,7 @@ const proposalSuggestionsPenelitian = [
         schema_id: 1,
         lecturer_id: 2,
         research_group_id: 5, // Biosignal and Instrumentation Biomedic
+        department_id: 2,
         status: "menunggu_review" as proposal_suggestion_status,
         phase: "monev" as proposal_suggestion_phase,
         is_active: true,
@@ -408,6 +413,7 @@ const proposalSuggestionsPenelitian = [
         schema_id: 2,
         lecturer_id: 2,
         research_group_id: 6, // Cyber Security
+        department_id: 2,
         status: "menunggu_admin" as proposal_suggestion_status,
         phase: "monev" as proposal_suggestion_phase,
         is_active: false,
@@ -450,6 +456,7 @@ const proposalSuggestionsPenelitian = [
         schema_id: 1,
         lecturer_id: 3,
         research_group_id: 7, // Data Centric AI and e-Business System
+        department_id: 3,
         status: "diterima" as proposal_suggestion_status,
         phase: "evaluasi_proposal" as proposal_suggestion_phase,
         is_active: true,
@@ -492,6 +499,7 @@ const proposalSuggestionsPenelitian = [
         schema_id: 2,
         lecturer_id: 3,
         research_group_id: 8, // Data Science for SDGs Applied Solution
+        department_id: 3,
         status: "ditolak" as proposal_suggestion_status,
         phase: "evaluasi_proposal" as proposal_suggestion_phase,
         is_active: true,
@@ -534,6 +542,7 @@ const proposalSuggestionsPenelitian = [
         schema_id: 1,
         lecturer_id: 3,
         research_group_id: 9, // Digital Media
+        department_id: 3,
         status: "diterima" as proposal_suggestion_status,
         phase: "evaluasi_akhir" as proposal_suggestion_phase,
         is_active: false,
@@ -578,6 +587,7 @@ const proposalSuggestionsPengmas = [
         year_research_id: 1, // 2023
         schema_id: 1, // Skema Dasar
         lecturer_id: 1, // Mirza Ramadhani
+        department_id: 1,
         status: "diterima" as proposal_suggestion_status,
         phase: "evaluasi_akhir" as proposal_suggestion_phase,
         is_active: true,
@@ -619,6 +629,7 @@ const proposalSuggestionsPengmas = [
         year_research_id: 2, // 2024
         schema_id: 2, // Skema Terapan
         lecturer_id: 1,
+        department_id: 1,
         status: "selesai" as proposal_suggestion_status,
         phase: "penetapan_akhir" as proposal_suggestion_phase,
         is_active: true,
@@ -660,6 +671,7 @@ const proposalSuggestionsPengmas = [
         year_research_id: 3, // 2025
         schema_id: 1,
         lecturer_id: 1,
+        department_id: 1,
         status: "menunggu_proposal" as proposal_suggestion_status,
         phase: "pengajuan" as proposal_suggestion_phase,
         is_active: false,
@@ -701,8 +713,9 @@ const proposalSuggestionsPengmas = [
         schema_id: 2,
         name: "Penggunaan Internet Aman dan Bijak untuk Pelajar di Sekolah Dasar",
         lecturer_id: 2,
+        department_id: 2,
         status: "menunggu_revisi" as proposal_suggestion_status,
-        phase : "penetapan" as proposal_suggestion_phase,
+        phase: "penetapan" as proposal_suggestion_phase,
         is_active: true,
         proposal: {
             create: {
@@ -742,6 +755,7 @@ const proposalSuggestionsPengmas = [
         year_research_id: 2,
         schema_id: 1,
         lecturer_id: 2,
+        department_id: 2,
         status: "menunggu_review" as proposal_suggestion_status,
         phase: "monev" as proposal_suggestion_phase,
         is_active: true,
@@ -783,6 +797,7 @@ const proposalSuggestionsPengmas = [
         year_research_id: 3,
         schema_id: 2,
         lecturer_id: 2,
+        department_id: 2,
         status: "menunggu_admin" as proposal_suggestion_status,
         phase: "monev" as proposal_suggestion_phase,
         is_active: false,
@@ -824,6 +839,7 @@ const proposalSuggestionsPengmas = [
         year_research_id: 1,
         schema_id: 1,
         lecturer_id: 3,
+        department_id: 3,
         status: "diterima" as proposal_suggestion_status,
         phase: "evaluasi_proposal" as proposal_suggestion_phase,
         is_active: true,
@@ -865,6 +881,7 @@ const proposalSuggestionsPengmas = [
         year_research_id: 2,
         schema_id: 2,
         lecturer_id: 3,
+        department_id: 3,
         status: "ditolak" as proposal_suggestion_status,
         phase: "evaluasi_proposal" as proposal_suggestion_phase,
         is_active: true,
@@ -906,6 +923,7 @@ const proposalSuggestionsPengmas = [
         year_research_id: 3,
         schema_id: 1,
         lecturer_id: 3,
+        department_id: 3,
         status: "diterima" as proposal_suggestion_status,
         phase: "evaluasi_akhir" as proposal_suggestion_phase,
         is_active: false,

@@ -40,6 +40,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
   onSuccess,
 }) => {
   const { showNotification } = useNotification();
+  const [type, setType] = useState('penelitian');
 
   // Set action for each role
   const [currentPhase, setCurrentPhase] = useState<string | null>();
@@ -48,13 +49,12 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
   const [infoAction, setInfoAction] = useState<string>("");
   const workflow = new Workflow();
 
-  
-
   // handle each role status phase condition
   const handleUpdate = async (approved: boolean = true) => {
     const { nextPhase, nextStatus } = workflow.getNextPhaseAndStatus(
       currentPhase!,
-      currentStatus!
+      currentStatus!,
+      type
     );
 
     // valu for api
@@ -82,6 +82,30 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
           status = "ditolak";
         }
       }
+
+      //handle for kaprodi
+    } else if (user_type == "kaprodi") {
+      if (roleAction == "approval") {
+        if (approved) {
+          phase = currentPhase;
+          status = nextStatus;
+        } else {
+          phase = currentPhase;
+          status = "ditolak";
+        }
+      }
+    } 
+      //handle for lecturer
+    else if (user_type == "lecturer") {
+      if (roleAction == "approval") {
+        if (approved) {
+          phase = currentPhase;
+          status = nextStatus;
+        } else {
+          phase = currentPhase;
+          status = currentStatus;
+        }
+      }
     } 
 
     const response = await proposalSuggestionAction.updateStatusPhase(
@@ -107,16 +131,22 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
   };
 
   useEffect(() => {
+    if (proposal_suggestion?.research_group_id === null) {
+      setType('pengmas');
+    }
+    
     if (proposal_suggestion?.phase && proposal_suggestion?.status) {
       const action = workflow.getAction(
         proposal_suggestion.status,
         proposal_suggestion.phase,
-        user_type
+        user_type,
+        type
       );
       const info = workflow.getInfo(
         proposal_suggestion.status,
         proposal_suggestion.phase,
-        user_type
+        user_type,
+        type
       );
       setRoleAction(action);
       setInfoAction(info as string);
@@ -196,6 +226,88 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
 
           {/*============================================ KETUA RG ACTIONS ============================================*/}
           {user_type === "ketua_rg" && roleAction && (
+            <>
+              <Paper
+                withBorder
+                className="border-2 border-yellow-500 rounded-lg p-4"
+              >
+                <Flex align="center" gap="xs" mb="md">
+                  <IconAlertCircle size={20} className="text-yellow-500" />
+                  <Text fw={600}>Persetujuan Ketua Research Group</Text>
+                </Flex>
+
+                {roleAction === "approval" ? (
+                  <>
+                    <Text size="sm" mb="sm" c="dimmed">
+                      Setuju usulan
+                    </Text>
+                    <Flex gap="md">
+                      <Button
+                        fullWidth
+                        color="green"
+                        onClick={() => handleUpdate(true)}
+                      >
+                        Setujui
+                      </Button>
+                      <Button
+                        fullWidth
+                        variant="outline"
+                        color="red"
+                        onClick={() => handleUpdate(false)}
+                      >
+                        Tolak
+                      </Button>
+                    </Flex>
+                  </>
+                ) : null}
+              </Paper>
+              <Divider my="sm" />
+            </>
+          )}
+
+          {/*============================================ KAPRODI ACTIONS ============================================*/}
+          {user_type === "kaprodi" && roleAction && (
+            <>
+              <Paper
+                withBorder
+                className="border-2 border-yellow-500 rounded-lg p-4"
+              >
+                <Flex align="center" gap="xs" mb="md">
+                  <IconAlertCircle size={20} className="text-yellow-500" />
+                  <Text fw={600}>Persetujuan Ketua Research Group</Text>
+                </Flex>
+
+                {roleAction === "approval" ? (
+                  <>
+                    <Text size="sm" mb="sm" c="dimmed">
+                      Setuju usulan
+                    </Text>
+                    <Flex gap="md">
+                      <Button
+                        fullWidth
+                        color="green"
+                        onClick={() => handleUpdate(true)}
+                      >
+                        Setujui
+                      </Button>
+                      <Button
+                        fullWidth
+                        variant="outline"
+                        color="red"
+                        onClick={() => handleUpdate(false)}
+                      >
+                        Tolak
+                      </Button>
+                    </Flex>
+                  </>
+                ) : null}
+              </Paper>
+              <Divider my="sm" />
+            </>
+          )}
+
+          {/*============================================ LECTURER ACTIONS ============================================*/}
+          {user_type === "lecturer" && roleAction && (
             <>
               <Paper
                 withBorder

@@ -34,6 +34,7 @@ enum config_type {
 enum proposal_suggestion_status {
   menunggu_proposal
   menunggu_rg
+  menunggu_kaprodi
   menunggu_admin
   menunggu_review
   menunggu_revisi

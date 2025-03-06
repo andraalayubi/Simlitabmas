@@ -1,9 +1,7 @@
 "use client";
 
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useMemo } from "react";
 import { useSession } from "src/components/session/session";
-import LoadingPage from "src/components/usulan/LoadingPage";
-import { notFound } from "next/navigation";
 import { MRT_ColumnDef } from "mantine-react-table";
 import {
   proposal_suggestion,

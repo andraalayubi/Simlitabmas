@@ -49,7 +49,7 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [isEditable, setIsEditable] = useState(false);
   const params = useParams();
-  const usulan_id = Number(params.usulan_id[0]);
+  const usulan_id = Number(params.usulan_id);
 
   const getProposalSchema = useCallback(async () => {
     const response = await memberAction.getProposalSchema(

@@ -19,20 +19,25 @@ const schema = plotSchema.plot
 
 const calculateProgress = (
   phase: proposal_suggestion_phase,
-  status: proposal_suggestion_status
+  status: proposal_suggestion_status,
+  type: string = 'penelitian'
 ): { progress: number; tooltip: string } => {
   const currentPhase = schema.find((s) => s.phase === phase);
   if (!currentPhase) return { progress: 0, tooltip: "" };
+  
+  //melihat apakah ini penelitian atau pengmas
+  const details = (currentPhase.details as any)[type] || (currentPhase.details as any)['penelitian'];
+  if (!details) return { progress: 0, tooltip: "" };
 
-  const currentStatus = currentPhase.details.find((d) => d.status === status);
+  const currentStatus = details.find((d: { status: string; }) => d.status === status);
   if (!currentStatus) return { progress: 0, tooltip: "" };
 
   const phaseIndex = schema.findIndex((s) => s.phase === phase);
   const phaseStep = 100 / schema.length;
-  const statusIndex = currentPhase.details.findIndex(
+  const statusIndex = details.findIndex(
     (d: any) => d.status === status
   );
-  const statusesInPhase = currentPhase.details.length;
+  const statusesInPhase = details.length;
 
   const statusContribution = ((statusIndex + 1) / statusesInPhase) * phaseStep;
   const progress = phaseIndex * phaseStep + statusContribution;
