@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
 
 
         const lecturers = await lecturerService.getByFilter(filter, include);
-        
+
         return NextResponse.json({
             success: true,
             message: "Success getting data",
@@ -49,13 +49,39 @@ export async function GET(req: NextRequest) {
 }
 
 
-// endpoint to create lecturer and first user
+// endpoint to create lecturer
 export async function POST(req: NextRequest, res: NextResponse) {
     const payload = await req.json();
 
     const session = await getSession();
-    console.log(payload);
     try {
+
+        // check if there are no other lecturer as kaprodi
+        if (payload.is_kaprodi == true) {
+            const kaprodi = await lecturerService.getByFilter(
+                { is_kaprodi: true, department_id: payload.department_id }, null)
+
+            if (kaprodi == null) {
+                return NextResponse.json({
+                    success: true,
+                    message: "Another lecturer has become this department leader",
+                }, { status: 400 });
+            }
+        }
+
+        // check if there are no other lecturer as ketua rg
+        if (payload.is_ketua_rg == true) {
+            const ketua_rg = await lecturerService.getByFilter({
+                is_ketua_rg: true, research_group_id: payload.research_group_id
+            }, null)
+            if (ketua_rg != null) {
+                return NextResponse.json({
+                    success: true,
+                    message: "Another lecturer has become this research group leader",
+                }, { status: 400 });
+            }
+        }
+
         const lecturer = await lecturerService.create(payload)
 
         return NextResponse.json({
