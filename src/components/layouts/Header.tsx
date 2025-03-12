@@ -33,13 +33,51 @@ interface HeaderProps {
 
 const menuProfiles = {
   admin: [
-    { label: "Profile", icon: <IconUserCog />, color: "blue", route: "/profile" },
-    { label: "Admin Settings", icon: <IconSettingsExclamation />, color: "blue", route: "/admin" },
+    {
+      label: "Profile",
+      icon: <IconUserCog />,
+      color: "blue",
+      route: "/profile",
+    },
+    {
+      label: "Admin Settings",
+      icon: <IconSettingsExclamation />,
+      color: "blue",
+      route: "/admin",
+    },
   ],
-  lecturer: [{ label: "Profile", icon: <IconUserCog />, color: "blue", route: "/profile" }],
-  ketua_rg: [{ label: "Profile", icon: <IconUserCog />, color: "blue", route: "/profile" }],
-  kaprodi: [{ label: "Profile", icon: <IconUserCog />, color: "blue", route: "/profile" }],
-  default: [{ label: "General Info", icon: <IconHeart />, color: "red", route: "/not-found" }],
+  lecturer: [
+    {
+      label: "Profile",
+      icon: <IconUserCog />,
+      color: "blue",
+      route: "/profile",
+    },
+  ],
+  ketua_rg: [
+    {
+      label: "Profile",
+      icon: <IconUserCog />,
+      color: "blue",
+      route: "/profile",
+    },
+  ],
+  kaprodi: [
+    {
+      label: "Profile",
+      icon: <IconUserCog />,
+      color: "blue",
+      route: "/profile",
+    },
+  ],
+  default: [
+    {
+      label: "General Info",
+      icon: <IconHeart />,
+      color: "red",
+      route: "/not-found",
+    },
+  ],
 };
 
 const menuSettings = {
@@ -50,8 +88,16 @@ const menuSettings = {
     { label: "Logs", icon: <IconActivity />, color: "yellow" },
   ],
   lecturer: [],
-  ketua_rg: [{ label: "Manage Research Groups", icon: <IconUsersGroup />, color: "yellow" }],
-  kaprodi: [{ label: "Manage Departments", icon: <IconUsersGroup />, color: "yellow" }],
+  ketua_rg: [
+    {
+      label: "Manage Research Groups",
+      icon: <IconUsersGroup />,
+      color: "yellow",
+    },
+  ],
+  kaprodi: [
+    { label: "Manage Departments", icon: <IconUsersGroup />, color: "yellow" },
+  ],
   default: [{ label: "General Info", icon: <IconHeart />, color: "red" }],
 };
 
@@ -79,7 +125,7 @@ const Header: React.FC<HeaderProps> = ({ session }) => {
 
   const title = (() => {
     console.log(session?.user_type);
-    
+
     switch (session?.user_type) {
       case "admin":
         return "Administrator";
@@ -94,8 +140,10 @@ const Header: React.FC<HeaderProps> = ({ session }) => {
     }
   })();
 
-  const itemsProfiles = menuProfiles[session?.user_type!] || menuProfiles.default;
-  const itemsSettings = menuSettings[session?.user_type!] || menuSettings.default;
+  const itemsProfiles =
+    menuProfiles[session?.user_type!] || menuProfiles.default;
+  const itemsSettings =
+    menuSettings[session?.user_type!] || menuSettings.default;
 
   return (
     <header className="bg-gray-50 p-5 flex justify-between items-center shadow-md max-h-24">
@@ -117,24 +165,34 @@ const Header: React.FC<HeaderProps> = ({ session }) => {
               variant="light"
               className="flex items-center gap-3 cursor-pointer hover:bg-gray-200 p-2 rounded-lg transition-all"
             >
-              <Avatar src="/path-to-profile-image.jpg" alt="Profile" radius="xl" size={30} />
+              <Avatar
+                src="/path-to-profile-image.jpg"
+                alt="Profile"
+                radius="xl"
+                size={30}
+              />
               <Text size="xl">{session?.name || "Pengguna"}</Text>
-              <IconChevronDown style={{ width: rem(12), height: rem(12) }} stroke={1.5} />
+              <IconChevronDown
+                style={{ width: rem(12), height: rem(12) }}
+                stroke={1.5}
+              />
             </Group>
           </Menu.Target>
           <MenuDropdown>
             <Menu.Label>Profiles</Menu.Label>
             {itemsProfiles.map((item, index) => (
-              <Menu.Item
-                key={index}
-                leftSection={React.cloneElement(item.icon, {
-                  style: { width: rem(16), height: rem(16) },
-                  color: theme.colors[item.color][6],
-                  stroke: 1.5,
-                })}
-              >
-                <Link href={item.route!}>{item.label}</Link>
-              </Menu.Item>
+              <Link href={item.route!}>
+                <Menu.Item
+                  key={index}
+                  leftSection={React.cloneElement(item.icon, {
+                    style: { width: rem(16), height: rem(16) },
+                    color: theme.colors[item.color][6],
+                    stroke: 1.5,
+                  })}
+                >
+                  {item.label}
+                </Menu.Item>
+              </Link>
             ))}
             <Menu.Item
               onClick={handleLogout}

@@ -5,8 +5,8 @@ import { JsonArray } from "@prisma/client/runtime/library";
 // get by id
 const getById = async (id: number) => {
     return await prisma.lecturer.findUnique({
-        where: { id: id },
-    })
+        where: { id: id }
+    });
 }
 
 // get all active
@@ -91,6 +91,55 @@ const addLecturerMember = async (proposalSuggestionId: number, anggota: lecturer
     return result;
 };
 
+// get data for profile
+const getProfile = async (id: number) => {
+    const result = await prisma.$queryRaw<any[]>`
+    SELECT 
+      l.*,
+      d.id as department_id, d.name as department_name,
+      rg.id as research_group_id, rg.name as research_group_name,
+      p.id as position_id, p.name as position_name,
+      (SELECT COUNT(*) FROM proposal_suggestions WHERE lecturer_id = l.id) as leader_proposal,
+      (SELECT COUNT(*) FROM lecturer_members JOIN proposal_suggestions ps ON ps.id = lecturer_members.proposal_suggestion_id WHERE lecturer_members.lecturer_id = l.id AND ps.research_group_id IS NOT NULL) as penelitian_count,
+      (SELECT COUNT(*) FROM lecturer_members JOIN proposal_suggestions ps ON ps.id = lecturer_members.proposal_suggestion_id WHERE lecturer_members.lecturer_id = l.id AND ps.research_group_id IS NULL) as pengmas_count
+    FROM lecturers l
+    LEFT JOIN departments d ON l.department_id = d.id
+    LEFT JOIN research_groups rg ON l.research_group_id = rg.id
+    LEFT JOIN positions p ON l.position_id = p.id    
+    WHERE l.id = ${id}
+  `;
+
+    if (Array.isArray(result) && result.length > 0) {
+        // Convert BigInt values to numbers or strings
+        const processedResult: { [key: string]: any } = {};
+        for (const [key, value] of Object.entries(result[0])) {
+            if (typeof value === 'bigint') {
+                processedResult[key] = Number(value);
+            } else {
+                processedResult[key] = value;
+            }
+        }
+        console.log(processedResult);
+        
+
+        return {
+            id: processedResult.id,
+            name: processedResult.name,
+            nip: processedResult.nip,
+            nidn: processedResult.nidn,
+            degree: processedResult.degree,
+            department: processedResult.department_id ? { id: processedResult.department_id, name: processedResult.department_name } : null,
+            research_group: processedResult.research_group_id ? { id: processedResult.research_group_id, name: processedResult.research_group_name } : null,
+            position: processedResult.position_id ? { id: processedResult.position_id, name: processedResult.position_name } : null,
+            penelitianCount: Number(processedResult.penelitian_count),
+            pengmasCount: Number(processedResult.pengmas_count),
+            leaderProposal: Number(processedResult.leader_proposal),
+        };
+    }
+
+    return null;
+};
+
 const lecturerService = {
     getById,
     getAllActive,
@@ -99,6 +148,7 @@ const lecturerService = {
     remove,
     getAvailableLecturers,
     addLecturerMember,
+    getProfile
 }
 
 export default lecturerService;
