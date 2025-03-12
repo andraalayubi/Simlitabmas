@@ -17,17 +17,24 @@ const lecturers = [
         degree: [
             {
                 degree: "S1" as degree,
-                code: "S.",
+                code: "S.Kom",
                 field: "Computer Science",
                 university: "MIT",
                 year: "2027"
             },
             {
                 degree: "S2" as degree,
+                code: "M.Eng",
+                field: "Engineering",
+                university: "MIT",
+                year: "2030"
+            },
+            {
+                degree: "S3" as degree,
                 code: "Dr.",
                 field: "Computer Science",
                 university: "MIT",
-                year: "2030"
+                year: "2034"
             },
         ] as JsonArray,
         is_ketua_rg: true,
@@ -50,7 +57,7 @@ const lecturers = [
         degree: [
             {
                 degree: "S1" as degree,
-                code: "S.",
+                code: "S.Si",
                 field: "Mathematics",
                 university: "Harvard",
                 year: "2025"
@@ -83,7 +90,7 @@ const lecturers = [
         degree: [
             {
                 degree: "S1" as degree,
-                code: "S.",
+                code: "S.Si",
                 field: "Physics",
                 university: "Stanford",
                 year: "2023"
@@ -217,17 +224,24 @@ const proposalSuggestionsPenelitian = [
                 degree: [
                     {
                         degree: "S1" as degree,
-                        code: "S.",
+                        code: "S.Kom",
                         field: "Computer Science",
                         university: "MIT",
                         year: "2027"
                     },
                     {
                         degree: "S2" as degree,
+                        code: "M.Eng",
+                        field: "Engineering",
+                        university: "MIT",
+                        year: "2030"
+                    },
+                    {
+                        degree: "S3" as degree,
                         code: "Dr.",
                         field: "Computer Science",
                         university: "MIT",
-                        year: "2030"
+                        year: "2034"
                     },
                 ] as JsonArray,
                 is_ketua_rg: true,
@@ -260,17 +274,24 @@ const proposalSuggestionsPenelitian = [
                 degree: [
                     {
                         degree: "S1" as degree,
-                        code: "S.",
+                        code: "S.Kom",
                         field: "Computer Science",
                         university: "MIT",
                         year: "2027"
                     },
                     {
                         degree: "S2" as degree,
+                        code: "M.Eng",
+                        field: "Engineering",
+                        university: "MIT",
+                        year: "2030"
+                    },
+                    {
+                        degree: "S3" as degree,
                         code: "Dr.",
                         field: "Computer Science",
                         university: "MIT",
-                        year: "2030"
+                        year: "2034"
                     },
                 ] as JsonArray,
                 is_ketua_rg: true,
@@ -303,17 +324,24 @@ const proposalSuggestionsPenelitian = [
                 degree: [
                     {
                         degree: "S1" as degree,
-                        code: "S.",
+                        code: "S.Kom",
                         field: "Computer Science",
                         university: "MIT",
                         year: "2027"
                     },
                     {
                         degree: "S2" as degree,
+                        code: "M.Eng",
+                        field: "Engineering",
+                        university: "MIT",
+                        year: "2030"
+                    },
+                    {
+                        degree: "S3" as degree,
                         code: "Dr.",
                         field: "Computer Science",
                         university: "MIT",
-                        year: "2030"
+                        year: "2034"
                     },
                 ] as JsonArray,
                 is_ketua_rg: true,
@@ -346,7 +374,7 @@ const proposalSuggestionsPenelitian = [
                 degree: [
                     {
                         degree: "S1" as degree,
-                        code: "S.",
+                        code: "S.Si",
                         field: "Mathematics",
                         university: "Harvard",
                         year: "2025"
@@ -389,7 +417,7 @@ const proposalSuggestionsPenelitian = [
                 degree: [
                     {
                         degree: "S1" as degree,
-                        code: "S.",
+                        code: "S.Si",
                         field: "Mathematics",
                         university: "Harvard",
                         year: "2025"
@@ -432,7 +460,7 @@ const proposalSuggestionsPenelitian = [
                 degree: [
                     {
                         degree: "S1" as degree,
-                        code: "S.",
+                        code: "S.Si",
                         field: "Mathematics",
                         university: "Harvard",
                         year: "2025"
@@ -475,7 +503,7 @@ const proposalSuggestionsPenelitian = [
                 degree: [
                     {
                         degree: "S1" as degree,
-                        code: "S.",
+                        code: "S.Si",
                         field: "Physics",
                         university: "Stanford",
                         year: "2023"
@@ -518,7 +546,7 @@ const proposalSuggestionsPenelitian = [
                 degree: [
                     {
                         degree: "S1" as degree,
-                        code: "S.",
+                        code: "S.Si",
                         field: "Physics",
                         university: "Stanford",
                         year: "2023"
@@ -561,7 +589,7 @@ const proposalSuggestionsPenelitian = [
                 degree: [
                     {
                         degree: "S1" as degree,
-                        code: "S.",
+                        code: "S.Si",
                         field: "Physics",
                         university: "Stanford",
                         year: "2023"
@@ -606,17 +634,24 @@ const proposalSuggestionsPengmas = [
                 degree: [
                     {
                         degree: "S1" as degree,
-                        code: "S.",
+                        code: "S.Kom",
                         field: "Computer Science",
                         university: "MIT",
                         year: "2027"
                     },
                     {
                         degree: "S2" as degree,
+                        code: "M.Eng",
+                        field: "Engineering",
+                        university: "MIT",
+                        year: "2030"
+                    },
+                    {
+                        degree: "S3" as degree,
                         code: "Dr.",
                         field: "Computer Science",
                         university: "MIT",
-                        year: "2030"
+                        year: "2034"
                     },
                 ] as JsonArray,
                 is_ketua_rg: true,
@@ -648,17 +683,24 @@ const proposalSuggestionsPengmas = [
                 degree: [
                     {
                         degree: "S1" as degree,
-                        code: "S.",
+                        code: "S.Kom",
                         field: "Computer Science",
                         university: "MIT",
                         year: "2027"
                     },
                     {
                         degree: "S2" as degree,
+                        code: "M.Eng",
+                        field: "Engineering",
+                        university: "MIT",
+                        year: "2030"
+                    },
+                    {
+                        degree: "S3" as degree,
                         code: "Dr.",
                         field: "Computer Science",
                         university: "MIT",
-                        year: "2030"
+                        year: "2034"
                     },
                 ] as JsonArray,
                 is_ketua_rg: true,
@@ -690,17 +732,24 @@ const proposalSuggestionsPengmas = [
                 degree: [
                     {
                         degree: "S1" as degree,
-                        code: "S.",
+                        code: "S.Kom",
                         field: "Computer Science",
                         university: "MIT",
                         year: "2027"
                     },
                     {
                         degree: "S2" as degree,
+                        code: "M.Eng",
+                        field: "Engineering",
+                        university: "MIT",
+                        year: "2030"
+                    },
+                    {
+                        degree: "S3" as degree,
                         code: "Dr.",
                         field: "Computer Science",
                         university: "MIT",
-                        year: "2030"
+                        year: "2034"
                     },
                 ] as JsonArray,
                 is_ketua_rg: true,
@@ -732,7 +781,7 @@ const proposalSuggestionsPengmas = [
                 degree: [
                     {
                         degree: "S1" as degree,
-                        code: "S.",
+                        code: "S.Si",
                         field: "Mathematics",
                         university: "Harvard",
                         year: "2025"
@@ -774,7 +823,7 @@ const proposalSuggestionsPengmas = [
                 degree: [
                     {
                         degree: "S1" as degree,
-                        code: "S.",
+                        code: "S.Si",
                         field: "Mathematics",
                         university: "Harvard",
                         year: "2025"
@@ -816,7 +865,7 @@ const proposalSuggestionsPengmas = [
                 degree: [
                     {
                         degree: "S1" as degree,
-                        code: "S.",
+                        code: "S.Si",
                         field: "Mathematics",
                         university: "Harvard",
                         year: "2025"
