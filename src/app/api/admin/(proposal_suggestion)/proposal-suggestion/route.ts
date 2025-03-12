@@ -4,6 +4,7 @@ import proposalSuggestionService from "src/services/proposalSuggestionService";
 import { NextRequest, NextResponse } from "next/server";
 import { proposal_suggestion_status } from "prisma/interfaces";
 import lecturerService from "src/services/lecturerService";
+import proposalService from "src/services/proposalService";
 
 export async function GET(req: NextRequest) {
     try {
@@ -71,6 +72,11 @@ export async function POST(req: NextRequest) {
         }
 
         const result = await lecturerService.addLecturerMember(newProposalSuggestion.id, body.lecturer);
+
+        await proposalService.create(newProposalSuggestion.id, {
+            name: newProposalSuggestion.name,
+            file_url: '',
+        })
 
         return NextResponse.json({
             success: true,

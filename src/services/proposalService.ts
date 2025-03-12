@@ -2,12 +2,19 @@ import { proposal, proposal_suggestion_status } from "prisma/interfaces";
 import prisma from "../client/prisma";
 
 // declare column can be update
-interface UpdateProposal {
+interface Proposal {
     name?: string;
     file_url?: string;
 }
 
-
+const create = async (proposalSuggestionId: number, data: Proposal) => {
+    return await prisma.proposal.create({
+        data: {
+            name: data.name, file_url: data.file_url,
+            proposal_suggestion_id: proposalSuggestionId
+        }
+    });
+}
 
 // get by id
 const getById = async (id: number) => {
@@ -27,7 +34,7 @@ const getByProposalSuggestionId = async (proposalSuggestionId: number) => {
     });
 };
 
-const update = async (proposal_suggestion_id: number, data: UpdateProposal) => {
+const update = async (proposal_suggestion_id: number, data: Proposal) => {
     const updatedProposal = await prisma.proposal.update({
         where: { proposal_suggestion_id },
         data: data,
@@ -54,6 +61,7 @@ const proposalService = {
     getById,
     getByProposalSuggestionId,
     update,
+    create,
     updateByProposalSection,
 }
 
