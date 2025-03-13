@@ -302,6 +302,7 @@ export interface logbook {
   description: string | null;
   file_url: string | null;
   progress: number | null;
+  phase: proposal_suggestion_phase | null;
   createdAt: Date;
   updatedAt: Date;
   deleted: boolean;

@@ -171,9 +171,9 @@ model research_group {
 
   lecturer            lecturer[]
   proposal_suggestion proposal_suggestion[]
+  lecturer_member     lecturer_member[]
 
   @@map("research_groups")
-  lecturer_member lecturer_member[]
 }
 
 model department {
@@ -188,9 +188,9 @@ model department {
   lecturer            lecturer[]
   proposal_suggestion proposal_suggestion[]
   student_member      student_member[]
+  lecturer_member     lecturer_member[]
 
   @@map("departments")
-  lecturer_member lecturer_member[]
 }
 
 model year_research {
@@ -219,9 +219,9 @@ model position {
 
   lecturer        lecturer[]
   position_schema position_schema[]
+  lecturer_member lecturer_member[]
 
   @@map("positions")
-  lecturer_member lecturer_member[]
 }
 
 model position_schema {
@@ -342,8 +342,8 @@ model lecturer_member {
   research_group      research_group?     @relation(fields: [research_group_id], references: [id])
   position            position?           @relation(fields: [position_id], references: [id])
 
-  @@map("lecturer_members")
   @@unique([proposal_suggestion_id, lecturer_id])
+  @@map("lecturer_members")
 }
 
 model student_member {
@@ -360,8 +360,8 @@ model student_member {
   proposal_suggestion proposal_suggestion @relation(fields: [proposal_suggestion_id], references: [id])
   department          department          @relation(fields: [department_id], references: [id])
 
-  @@map("student_members")
   @@unique([proposal_suggestion_id, name, nrp, department_id])
+  @@map("student_members")
 }
 
 model vendor_member {
@@ -429,12 +429,13 @@ model additional_document {
 }
 
 model logbook {
-  id                     Int     @id @default(autoincrement())
+  id                     Int                        @id @default(autoincrement())
   proposal_suggestion_id Int
   name                   String?
   description            String?
   file_url               String?
   progress               Int?
+  phase                  proposal_suggestion_phase?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -488,7 +489,7 @@ model evaluation {
   updatedAt DateTime @updatedAt
   deleted   Boolean  @default(false)
 
-  schema schema?   @relation(fields: [schema_id], references: [id])
+  schema schema?  @relation(fields: [schema_id], references: [id])
   review review[]
 
   @@map("evaluations")
