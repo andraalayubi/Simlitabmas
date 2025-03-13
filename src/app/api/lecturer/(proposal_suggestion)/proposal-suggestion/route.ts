@@ -5,6 +5,7 @@ import { proposal_suggestion_status } from "prisma/interfaces";
 import filterService from "src/services/filterService";
 import lecturerService from "src/services/lecturerService";
 import proposalService from "src/services/proposalService";
+import logbookService from "src/services/logbookService";
 
 export async function GET(req: NextRequest) {
     try {
@@ -75,6 +76,20 @@ export async function POST(req: NextRequest) {
         await proposalService.create(newProposalSuggestion.id, {
             name: newProposalSuggestion.name,
             file_url: '',
+        })
+
+        
+        // create empty logbook with 2 phase
+        await logbookService.create(newProposalSuggestion.id, {
+            name: 'Logbook 1',
+            file_url: '',
+            description: '',
+        })
+
+        await logbookService.create(newProposalSuggestion.id, {
+            name: 'Logbook 2',
+            file_url: '',
+            description: '',
         })
 
         return NextResponse.json({
