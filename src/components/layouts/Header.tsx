@@ -26,18 +26,19 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import useNotification from "../notification/notification";
+import Sqids from "sqids";
 
 interface HeaderProps {
   session?: SessionPayload;
 }
 
-const menuProfiles = {
+const getMenuProfiles = (hashedId: string) => ({
   admin: [
     {
       label: "Profile",
       icon: <IconUserCog />,
       color: "blue",
-      route: "/profile",
+      route: `/profile/${hashedId}`,
     },
     {
       label: "Admin Settings",
@@ -51,7 +52,7 @@ const menuProfiles = {
       label: "Profile",
       icon: <IconUserCog />,
       color: "blue",
-      route: "/profile",
+      route: `/profile/${hashedId}`,
     },
   ],
   ketua_rg: [
@@ -59,7 +60,7 @@ const menuProfiles = {
       label: "Profile",
       icon: <IconUserCog />,
       color: "blue",
-      route: "/profile",
+      route: `/profile/${hashedId}`,
     },
   ],
   kaprodi: [
@@ -67,7 +68,7 @@ const menuProfiles = {
       label: "Profile",
       icon: <IconUserCog />,
       color: "blue",
-      route: "/profile",
+      route: `/profile/${hashedId}`,
     },
   ],
   default: [
@@ -78,7 +79,7 @@ const menuProfiles = {
       route: "/not-found",
     },
   ],
-};
+});
 
 const menuSettings = {
   admin: [
@@ -140,10 +141,16 @@ const Header: React.FC<HeaderProps> = ({ session }) => {
     }
   })();
 
+  const sqids = new Sqids({ minLength: 10 });
+  const hashedId = sqids.encode([session?.lecturer_id!]);
+  
+  const menuProfiles = getMenuProfiles(hashedId);
+
   const itemsProfiles =
     menuProfiles[session?.user_type!] || menuProfiles.default;
   const itemsSettings =
     menuSettings[session?.user_type!] || menuSettings.default;
+
 
   return (
     <header className="bg-gray-50 p-5 flex justify-between items-center shadow-md max-h-24">
@@ -181,9 +188,8 @@ const Header: React.FC<HeaderProps> = ({ session }) => {
           <MenuDropdown>
             <Menu.Label>Profiles</Menu.Label>
             {itemsProfiles.map((item, index) => (
-              <Link href={item.route!}>
+              <Link href={item.route!} key={index}>
                 <Menu.Item
-                  key={index}
                   leftSection={React.cloneElement(item.icon, {
                     style: { width: rem(16), height: rem(16) },
                     color: theme.colors[item.color][6],

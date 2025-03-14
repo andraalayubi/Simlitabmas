@@ -12,6 +12,7 @@ const protectedRoutes = [
     { path: /^\/usulan/, roles: ['admin', 'lecturer', 'kaprodi', 'ketua_rg']},
     { path: /^\/penelitian/, roles: ['admin', 'lecturer', 'kaprodi', 'ketua_rg']},
     { path: /^\/pengmas/, roles: ['admin', 'lecturer', 'kaprodi', 'ketua_rg']},
+    { path: /^\/profile/, roles: ['admin', 'lecturer', 'kaprodi', 'ketua_rg']},
     { path: /^\/dashboard\/lecturer/, roles: ['admin', 'lecturer'] },
 ];
 
