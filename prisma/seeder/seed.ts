@@ -214,6 +214,20 @@ const proposalSuggestionsPenelitian = [
                 name: "Pengembangan UI/UX pada CRM Pengabdian Masyarakat"
             }
         },
+        logbook: {
+            create: [
+                {
+                    name: 'Logbook Awal',
+                    description: "Laporan Perkembangan Awal",
+                    file_url: '',
+                },
+                {
+                    name: 'Logbook Akhir',
+                    description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
         lecturer_member: {
             create: {
                 lecturer_id: 1, // Sama dengan lecturer_id pada proposal_suggestion
@@ -263,6 +277,20 @@ const proposalSuggestionsPenelitian = [
             create: {
                 name: "Integrasi Machine Learning untuk Analisis Data Akuakultur"
             }
+        },
+        logbook: {
+            create: [
+                {
+                    name: 'Logbook Awal',
+                    description: "Laporan Perkembangan Awal",
+                    file_url: '',
+                },
+                {
+                    name: 'Logbook Akhir',
+                    description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
         },
         lecturer_member: {
             create: {
@@ -314,6 +342,20 @@ const proposalSuggestionsPenelitian = [
                 name: "Metodologi Agile dalam Pengembangan Perangkat Lunak Akademik"
             }
         },
+        logbook: {
+            create: [
+                {
+                    name: 'Logbook Awal',
+                    description: "Laporan Perkembangan Awal",
+                    file_url: '',
+                },
+                {
+                    name: 'Logbook Akhir',
+                    description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
         lecturer_member: {
             create: {
                 lecturer_id: 1, // Sama dengan lecturer_id pada proposal_suggestion
@@ -364,6 +406,20 @@ const proposalSuggestionsPenelitian = [
                 name: "Pemanfaatan Biofuel sebagai Alternatif Energi Ramah Lingkungan"
             }
         },
+        logbook: {
+            create: [
+                {
+                    name: 'Logbook Awal',
+                    description: "Laporan Perkembangan Awal",
+                    file_url: '',
+                },
+                {
+                    name: 'Logbook Akhir',
+                    description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
         lecturer_member: {
             create: {
                 lecturer_id: 2, // Sama dengan lecturer_id pada proposal_suggestion
@@ -406,6 +462,20 @@ const proposalSuggestionsPenelitian = [
             create: {
                 name: "Analisis Sinyal Biomedik untuk Diagnosa Dini Penyakit"
             }
+        },
+        logbook: {
+            create: [
+                {
+                    name: 'Logbook Awal',
+                    description: "Laporan Perkembangan Awal",
+                    file_url: '',
+                },
+                {
+                    name: 'Logbook Akhir',
+                    description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
         },
         lecturer_member: {
             create: {
@@ -450,6 +520,20 @@ const proposalSuggestionsPenelitian = [
                 name: "Keamanan Siber pada Infrastruktur Kritis Nasional"
             }
         },
+        logbook: {
+            create: [
+                {
+                    name: 'Logbook Awal',
+                    description: "Laporan Perkembangan Awal",
+                    file_url: '',
+                },
+                {
+                    name: 'Logbook Akhir',
+                    description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
         lecturer_member: {
             create: {
                 lecturer_id: 2, // Sama dengan lecturer_id pada proposal_suggestion
@@ -492,6 +576,20 @@ const proposalSuggestionsPenelitian = [
             create: {
                 name: "Optimalisasi AI dalam Sistem e-Bisnis"
             }
+        },
+        logbook: {
+            create: [
+                {
+                    name: 'Logbook Awal',
+                    description: "Laporan Perkembangan Awal",
+                    file_url: '',
+                },
+                {
+                    name: 'Logbook Akhir',
+                    description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
         },
         lecturer_member: {
             create: {
@@ -536,6 +634,20 @@ const proposalSuggestionsPenelitian = [
                 name: "Pemanfaatan Data Science untuk Pencapaian SDGs"
             }
         },
+        logbook: {
+            create: [
+                {
+                    name: 'Logbook Awal',
+                    description: "Laporan Perkembangan Awal",
+                    file_url: '',
+                },
+                {
+                    name: 'Logbook Akhir',
+                    description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
         lecturer_member: {
             create: {
                 lecturer_id: 3,
@@ -578,6 +690,20 @@ const proposalSuggestionsPenelitian = [
             create: {
                 name: "Inovasi Digital Media untuk Pembelajaran Interaktif"
             }
+        },
+        logbook: {
+            create: [
+                {
+                    name: 'Logbook Awal',
+                    description: "Laporan Perkembangan Awal",
+                    file_url: '',
+                },
+                {
+                    name: 'Logbook Akhir',
+                    description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
         },
         lecturer_member: {
             create: {
@@ -623,6 +749,20 @@ const proposalSuggestionsPengmas = [
             create: {
                 name: "Pelatihan Digital Marketing bagi UMKM Lokal di Era Industri 4.0"
             }
+        },
+        logbook: {
+            create: [
+                {
+                    name: 'Logbook Awal',
+                    description: "Laporan Perkembangan Awal",
+                    file_url: '',
+                },
+                {
+                    name: 'Logbook Akhir',
+                    description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
         },
         lecturer_member: {
             create: {
@@ -673,6 +813,20 @@ const proposalSuggestionsPengmas = [
                 name: "Edukasi dan Implementasi Teknologi Hidroponik bagi Petani Perkotaan"
             }
         },
+        logbook: {
+            create: [
+                {
+                    name: 'Logbook Awal',
+                    description: "Laporan Perkembangan Awal",
+                    file_url: '',
+                },
+                {
+                    name: 'Logbook Akhir',
+                    description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
         lecturer_member: {
             create: {
                 lecturer_id: 1, // Sama dengan lecturer_id pada proposal_suggestion
@@ -721,6 +875,20 @@ const proposalSuggestionsPengmas = [
             create: {
                 name: "Pemberdayaan Ibu Rumah Tangga melalui Program Wirausaha Kuliner Sehat"
             }
+        },
+        logbook: {
+            create: [
+                {
+                    name: 'Logbook Awal',
+                    description: "Laporan Perkembangan Awal",
+                    file_url: '',
+                },
+                {
+                    name: 'Logbook Akhir',
+                    description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
         },
         lecturer_member: {
             create: {
@@ -771,6 +939,20 @@ const proposalSuggestionsPengmas = [
                 name: "Penggunaan Internet Aman dan Bijak untuk Pelajar di Sekolah Dasar"
             }
         },
+        logbook: {
+            create: [
+                {
+                    name: 'Logbook Awal',
+                    description: "Laporan Perkembangan Awal",
+                    file_url: '',
+                },
+                {
+                    name: 'Logbook Akhir',
+                    description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
         lecturer_member: {
             create: {
                 lecturer_id: 2, // Sama dengan lecturer_id pada proposal_suggestion
@@ -812,6 +994,20 @@ const proposalSuggestionsPengmas = [
             create: {
                 name: "Pembuatan Aplikasi Mobile untuk Monitoring Kesehatan Lansia di Puskesmas"
             }
+        },
+        logbook: {
+            create: [
+                {
+                    name: 'Logbook Awal',
+                    description: "Laporan Perkembangan Awal",
+                    file_url: '',
+                },
+                {
+                    name: 'Logbook Akhir',
+                    description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
         },
         lecturer_member: {
             create: {
@@ -855,6 +1051,20 @@ const proposalSuggestionsPengmas = [
                 name: "Pelatihan Desain Grafis bagi Anak Muda sebagai Bekal Karier Kreatif"
             }
         },
+        logbook: {
+            create: [
+                {
+                    name: 'Logbook Awal',
+                    description: "Laporan Perkembangan Awal",
+                    file_url: '',
+                },
+                {
+                    name: 'Logbook Akhir',
+                    description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
         lecturer_member: {
             create: {
                 lecturer_id: 2, // Sama dengan lecturer_id pada proposal_suggestion
@@ -896,6 +1106,20 @@ const proposalSuggestionsPengmas = [
             create: {
                 name: "Pengenalan dan Pemanfaatan AI untuk Peningkatan Efisiensi Administrasi Desa"
             }
+        },
+        logbook: {
+            create: [
+                {
+                    name: 'Logbook Awal',
+                    description: "Laporan Perkembangan Awal",
+                    file_url: '',
+                },
+                {
+                    name: 'Logbook Akhir',
+                    description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
         },
         lecturer_member: {
             create: {
@@ -939,6 +1163,20 @@ const proposalSuggestionsPengmas = [
                 name: "Workshop Pengelolaan Sampah Organik menjadi Pupuk Kompos bagi Masyarakat Desa"
             }
         },
+        logbook: {
+            create: [
+                {
+                    name: 'Logbook Awal',
+                    description: "Laporan Perkembangan Awal",
+                    file_url: '',
+                },
+                {
+                    name: 'Logbook Akhir',
+                    description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
         lecturer_member: {
             create: {
                 lecturer_id: 3,
@@ -980,6 +1218,20 @@ const proposalSuggestionsPengmas = [
             create: {
                 name: "Pemberdayaan Remaja Melalui Pelatihan Public Speaking dan Leadership"
             }
+        },
+        logbook: {
+            create: [
+                {
+                    name: 'Logbook Awal',
+                    description: "Laporan Perkembangan Awal",
+                    file_url: '',
+                },
+                {
+                    name: 'Logbook Akhir',
+                    description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
         },
         lecturer_member: {
             create: {
