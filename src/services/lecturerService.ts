@@ -21,6 +21,8 @@ const getByFilter = async (
         department_id?: number,
         research_group_id?: number
         position_id?: number
+        is_kaprodi?: boolean
+        is_ketua_rg?: boolean
     }, include: any
 ) => {
 
