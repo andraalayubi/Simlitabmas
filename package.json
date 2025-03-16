@@ -71,10 +71,11 @@
     "tabler": "^1.0.0-alpha.8",
     "tiptap": "^0.15.0",
     "tiptap-extension-resize-image": "^1.2.1",
+    "tsx": "^4.19.3",
     "uuid": "^10.0.0"
   },
   "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seeder/seed.ts"
+    "seed": "tsx prisma/seeder/seed.ts"
   },
   "devDependencies": {
     "@edgedb/generate": "^0.5.6",
