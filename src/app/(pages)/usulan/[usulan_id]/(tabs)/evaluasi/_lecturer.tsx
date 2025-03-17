@@ -69,7 +69,7 @@ const EvaluationPage = () => {
     : [];
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="px-4 py-6">
       <Skeleton visible={loading}>
         <ProposalSuggestionSummaryCard
           proposal_suggestion_name={proposalData?.name!}

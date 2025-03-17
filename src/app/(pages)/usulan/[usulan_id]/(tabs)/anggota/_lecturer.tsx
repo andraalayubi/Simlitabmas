@@ -134,7 +134,7 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
 
   return (
     <>
-      <div className="container mx-auto px-4 py-6">
+      <div className="px-4 py-6">
         {/* Baris Judul, Status, dan Tahap Usulan */}
         <Skeleton visible={loadProposal}>
           <ProposalSuggestionSummaryCard

@@ -24,7 +24,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="px-4 py-6">
       {/* Tabs navigation */}
       <Skeleton visible={sessionLoading}>
         {/* <div className="flex justify-between shadow-md rounded-lg"> */}

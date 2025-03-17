@@ -8,6 +8,8 @@ const protectedRoutes = [
     { path: /^\/dashboard/, roles: ['admin', 'lecturer', 'kaprodi', 'ketua_rg'] },
     { path: /^\/audit/, roles: ['admin'] },
     { path: /^\/konfigurasi/, roles: ['admin'] },
+    { path: /^\/research_group/, roles: ['admin'] },
+    { path: /^\/program_studi/, roles: ['admin'] },
     { path: /^\/admin/, roles: ['admin'] },
     { path: /^\/usulan/, roles: ['admin', 'lecturer', 'kaprodi', 'ketua_rg']},
     { path: /^\/penelitian/, roles: ['admin', 'lecturer', 'kaprodi', 'ketua_rg']},
