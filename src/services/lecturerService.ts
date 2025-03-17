@@ -119,8 +119,6 @@ const getProfile = async (id: number) => {
                 processedResult[key] = value;
             }
         }
-        console.log(processedResult);
-        
 
         return {
             id: processedResult.id,

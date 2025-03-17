@@ -85,7 +85,7 @@ export default function AuditResearchGroupPage() {
               data={researchGroup}
               isLoading={loading}
               enableRowClick={true}
-              getRowClickUrl={(row) => `/research_group/${row.id}`}
+              getRowClickUrl={(row) => `/audit/research_group/${row.id}`}
             />
           </div>
         </div>
