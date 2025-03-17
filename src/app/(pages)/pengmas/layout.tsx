@@ -39,7 +39,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="px-4 py-6">
       {/* Tabs navigation */}
       <div className="flex justify-between bg-white shadow-md rounded-lg">
         <Tabs

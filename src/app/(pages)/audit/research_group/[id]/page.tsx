@@ -14,6 +14,7 @@ import {
   ThemeIcon,
   Box,
   Divider,
+  Skeleton,
 } from "@mantine/core";
 import {
   IconUsers,
@@ -80,206 +81,210 @@ export default function ResearchGroupPage() {
           }}
           p="xl"
         >
-          <Group
-            justify="space-between"
-            align="flex-start"
-            grow
-            preventGrowOverflow
-          >
-            <Box>
-              <Group gap="xs" mb="xs" justify="space-between">
-                <Title order={1} c="blue.8" mb="xs">
-                  {researchGroup?.name}
-                </Title>
-                <div className="flex flex-row items-center">
-                  <ThemeIcon
-                    size="md"
-                    radius="xl"
-                    variant="light"
-                    color="blue"
-                    me="sm"
-                  >
-                    <IconMicroscope size={18} />
-                  </ThemeIcon>
-                  <Text size="sm" fw={500} c="dimmed">
-                    Established 2015
-                  </Text>
-                </div>
-              </Group>
+          <Skeleton visible={loading}>
+            <Group
+              justify="space-between"
+              align="flex-start"
+              grow
+              preventGrowOverflow
+            >
+              <Box>
+                <Group gap="xs" mb="xs" justify="space-between">
+                  <Title order={1} c="blue.8" mb="xs">
+                    {researchGroup?.name}
+                  </Title>
+                  <div className="flex flex-row items-center">
+                    <ThemeIcon
+                      size="md"
+                      radius="xl"
+                      variant="light"
+                      color="blue"
+                      me="sm"
+                    >
+                      <IconMicroscope size={18} />
+                    </ThemeIcon>
+                    <Text size="sm" fw={500} c="dimmed">
+                      Established 2015
+                    </Text>
+                  </div>
+                </Group>
 
-              <Text c="dimmed" size="md" mb="md">
-                {researchGroup?.description}
-              </Text>
-            </Box>
-          </Group>
+                <Text c="dimmed" size="md" mb="md">
+                  {researchGroup?.description}
+                </Text>
+              </Box>
+            </Group>
+          </Skeleton>
         </Card>
 
         {/* Stats Cards with Shadow and Hover Effect */}
-        <Grid gutter="md">
-          <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
-            <Card
-              withBorder
-              shadow="sm"
-              p="lg"
-              radius="md"
-              style={{
-                transition: "transform 0.2s, box-shadow 0.2s",
-                "&:hover": {
-                  transform: "translateY(-4px)",
-                  boxShadow: "0 12px 20px -10px rgba(0, 0, 0, 0.1)",
-                },
-              }}
-            >
-              <div className="flex flex-row items-center gap-4">
-                <ThemeIcon
-                  size={56}
-                  radius="md"
-                  variant="light"
-                  color="blue"
-                  mb="md"
-                >
-                  <IconFileText size={28} />
-                </ThemeIcon>
-                <div>
-                  <Text size="sm" c="dimmed" mb={2}>
-                    Jumlah Usulan
-                  </Text>
-                  <Text fw={700} size="xl">
-                    {proposalSuggestions?.length}
-                  </Text>
+        <Skeleton visible={loading}>
+          <Grid gutter="md">
+            <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
+              <Card
+                withBorder
+                shadow="sm"
+                p="lg"
+                radius="md"
+                style={{
+                  transition: "transform 0.2s, box-shadow 0.2s",
+                  "&:hover": {
+                    transform: "translateY(-4px)",
+                    boxShadow: "0 12px 20px -10px rgba(0, 0, 0, 0.1)",
+                  },
+                }}
+              >
+                <div className="flex flex-row items-center gap-4">
+                  <ThemeIcon
+                    size={56}
+                    radius="md"
+                    variant="light"
+                    color="blue"
+                    mb="md"
+                  >
+                    <IconFileText size={28} />
+                  </ThemeIcon>
+                  <div>
+                    <Text size="sm" c="dimmed" mb={2}>
+                      Jumlah Usulan
+                    </Text>
+                    <Text fw={700} size="xl">
+                      {proposalSuggestions?.length}
+                    </Text>
+                  </div>
                 </div>
-              </div>
-            </Card>
-          </Grid.Col>
+              </Card>
+            </Grid.Col>
 
-          <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
-            <Card
-              withBorder
-              shadow="sm"
-              p="lg"
-              radius="md"
-              style={{
-                transition: "transform 0.2s, box-shadow 0.2s",
-                "&:hover": {
-                  transform: "translateY(-4px)",
-                  boxShadow: "0 12px 20px -10px rgba(0, 0, 0, 0.1)",
-                },
-              }}
-            >
-              <div className="flex flex-row items-center gap-4">
-                <ThemeIcon
-                  size={56}
-                  radius="md"
-                  variant="light"
-                  color="blue"
-                  mb="md"
-                >
-                  <IconUsers size={28} />
-                </ThemeIcon>
-                <div>
-                  <Text size="sm" c="dimmed" mb={2}>
-                    Jumlah Anggota
-                  </Text>
-                  <Text fw={700} size="xl">
-                    {lecturers?.length}
-                  </Text>
+            <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
+              <Card
+                withBorder
+                shadow="sm"
+                p="lg"
+                radius="md"
+                style={{
+                  transition: "transform 0.2s, box-shadow 0.2s",
+                  "&:hover": {
+                    transform: "translateY(-4px)",
+                    boxShadow: "0 12px 20px -10px rgba(0, 0, 0, 0.1)",
+                  },
+                }}
+              >
+                <div className="flex flex-row items-center gap-4">
+                  <ThemeIcon
+                    size={56}
+                    radius="md"
+                    variant="light"
+                    color="blue"
+                    mb="md"
+                  >
+                    <IconUsers size={28} />
+                  </ThemeIcon>
+                  <div>
+                    <Text size="sm" c="dimmed" mb={2}>
+                      Jumlah Anggota
+                    </Text>
+                    <Text fw={700} size="xl">
+                      {lecturers?.length}
+                    </Text>
+                  </div>
                 </div>
-              </div>
-            </Card>
-          </Grid.Col>
-        </Grid>
+              </Card>
+            </Grid.Col>
+          </Grid>
+        </Skeleton>
       </Box>
 
       {/* Main Content */}
-      <Tabs defaultValue="research" mb="xl">
-        <Tabs.List mb="md">
-          <Tabs.Tab value="research">Usulan</Tabs.Tab>
-          <Tabs.Tab value="members">Anggota</Tabs.Tab>
-        </Tabs.List>
+      <Skeleton visible={loading}>
+        <Tabs defaultValue="research" mb="xl">
+          <Tabs.List mb="md">
+            <Tabs.Tab value="research">Usulan</Tabs.Tab>
+            <Tabs.Tab value="members">Anggota</Tabs.Tab>
+          </Tabs.List>
 
-        <Tabs.Panel value="research">
-          <Card withBorder shadow="sm">
-            <Card.Section withBorder inheritPadding py="xs">
-              <Title order={3}>Usulan</Title>
-              <Text c="dimmed" size="sm">
-                Usulan penelitian terbaru yang sedang aktif
-              </Text>
-            </Card.Section>
-            <Box mt="md">
-              {proposalSuggestions?.map((proposal, index) => (
-                <Paper withBorder p="md" mb="md" key={index}>
-                  <Group justify="space-between" mb="xs">
-                    <Text fw={600}>{proposal.name}</Text>
-                    <ProposalSuggestionPhaseBadge
-                      phase={proposal.phase}
-                    />
-                  </Group>
-                  <Group gap="xs" c="dimmed">
-                    <Text>Ketua: {proposal.lecturer?.name}</Text>
-                    <Text>•</Text>
-                    <Text>Tahun: {proposal.year_research?.year}</Text>
-                  </Group>
-                </Paper>
-              ))}
-            </Box>
-          </Card>
-        </Tabs.Panel>
+          <Tabs.Panel value="research">
+            <Card withBorder shadow="sm">
+              <Card.Section withBorder inheritPadding py="xs">
+                <Title order={3}>Usulan</Title>
+                <Text c="dimmed" size="sm">
+                  Usulan penelitian terbaru yang sedang aktif
+                </Text>
+              </Card.Section>
+              <Box mt="md">
+                {proposalSuggestions?.map((proposal, index) => (
+                  <Paper withBorder p="md" mb="md" key={index}>
+                    <Group justify="space-between" mb="xs">
+                      <Text fw={600}>{proposal.name}</Text>
+                      <ProposalSuggestionPhaseBadge phase={proposal.phase} />
+                    </Group>
+                    <Group gap="xs" c="dimmed">
+                      <Text>Ketua: {proposal.lecturer?.name}</Text>
+                      <Text>•</Text>
+                      <Text>Tahun: {proposal.year_research?.year}</Text>
+                    </Group>
+                  </Paper>
+                ))}
+              </Box>
+            </Card>
+          </Tabs.Panel>
 
-        <Tabs.Panel value="members">
-          <Grid>
-            {lecturers?.map((lecturer, index) => (
-              <Grid.Col key={index} span={{ base: 12, md: 6, lg: 4 }}>
-                <Card withBorder shadow="sm">
-                  <Group mb="xs">
-                    <Avatar src={""} size="lg" radius="xl">
-                      {lecturer.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </Avatar>
+          <Tabs.Panel value="members">
+            <Grid>
+              {lecturers?.map((lecturer, index) => (
+                <Grid.Col key={index} span={{ base: 12, md: 6, lg: 4 }}>
+                  <Card withBorder shadow="sm">
+                    <Group mb="xs">
+                      <Avatar src={""} size="lg" radius="xl">
+                        {lecturer.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </Avatar>
+                      <Box>
+                        <Text fw={700}>{lecturer.name}</Text>
+                        <Group gap="xs">
+                          <IconBuilding size={14} />
+                          <Text size="sm" c="dimmed">
+                            {lecturer.is_ketua_rg ? "Ketua" : "Anggota"}
+                          </Text>
+                        </Group>
+                      </Box>
+                    </Group>
+                    <Divider my="xs" />
                     <Box>
-                      <Text fw={700}>{lecturer.name}</Text>
-                      <Group gap="xs">
-                        <IconBuilding size={14} />
+                      <Flex justify="space-between" mb="xs">
                         <Text size="sm" c="dimmed">
-                          {lecturer.is_ketua_rg ? "Ketua" : "Anggota"}
+                          NIP:
                         </Text>
-                      </Group>
+                        <Text size="sm" fw={500}>
+                          {lecturer.nip}
+                        </Text>
+                      </Flex>
+                      <Flex justify="space-between" mb="xs">
+                        <Text size="sm" c="dimmed">
+                          NIDN:
+                        </Text>
+                        <Text size="sm" fw={500} ta="right">
+                          {lecturer.nidn}
+                        </Text>
+                      </Flex>
+                      <Flex justify="space-between">
+                        <Text size="sm" c="dimmed">
+                          Departemen:
+                        </Text>
+                        <Text size="sm" fw={500}>
+                          {lecturer.department?.name}
+                        </Text>
+                      </Flex>
                     </Box>
-                  </Group>
-                  <Divider my="xs" />
-                  <Box>
-                    <Flex justify="space-between" mb="xs">
-                      <Text size="sm" c="dimmed">
-                        NIP:
-                      </Text>
-                      <Text size="sm" fw={500}>
-                        {lecturer.nip}
-                      </Text>
-                    </Flex>
-                    <Flex justify="space-between" mb="xs">
-                      <Text size="sm" c="dimmed">
-                        NIDN:
-                      </Text>
-                      <Text size="sm" fw={500} ta="right">
-                        {lecturer.nidn}
-                      </Text>
-                    </Flex>
-                    <Flex justify="space-between">
-                      <Text size="sm" c="dimmed">
-                        Departemen:
-                      </Text>
-                      <Text size="sm" fw={500}>
-                        {lecturer.department?.name}
-                      </Text>
-                    </Flex>
-                  </Box>
-                </Card>
-              </Grid.Col>
-            ))}
-          </Grid>
-        </Tabs.Panel>
-      </Tabs>
+                  </Card>
+                </Grid.Col>
+              ))}
+            </Grid>
+          </Tabs.Panel>
+        </Tabs>
+      </Skeleton>
     </div>
   );
 }
