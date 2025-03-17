@@ -1,4 +1,3 @@
-import Dashboard from "@/app/(pages)/dashboard/page";
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "src/lib/session";
 import filterService from "src/services/filterService";
