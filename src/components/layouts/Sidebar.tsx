@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
-import { Burger } from "@mantine/core";
+import { Burger, ScrollArea } from "@mantine/core";
 import Link from "next/link";
 import { SessionPayload } from "src/lib/encrypt";
 import {
@@ -12,6 +12,7 @@ import {
   IconCalendar,
   IconUser,
   IconBuildingCommunity,
+  IconUserHeart,
 } from "@tabler/icons-react";
 
 // Tipe data untuk konfigurasi menu
@@ -56,27 +57,42 @@ const MENU_CONFIG: Record<string, MenuSection[]> = {
       ],
     },
     {
-      title: "AUDIT",
+      title: "MASTER",
       items: [
         {
           name: "Skema",
           icon: <IconBook />,
-          path: "/audit/skema",
+          path: "/master/skema",
         },
         {
           name: "Research Group",
           icon: <IconBuildingCommunity />,
-          path: "/audit/research_group",
+          path: "/master/research_group",
         },
         {
           name: "Program Studi",
           icon: <IconSchool />,
-          path: "/audit/program_studi",
+          path: "/master/program_studi",
         },
         {
           name: "Tahun",
           icon: <IconCalendar />,
-          path: "/audit/tahun",
+          path: "/master/tahun",
+        },
+      ],
+    },
+    {
+      title: "LAPORAN",
+      items: [
+        {
+          name: "Dosen",
+          icon: <IconUserHeart />,
+          path: "/report/lecturer",
+        },
+        {
+          name: "Research Group",
+          icon: <IconUserHeart />,
+          path: "/report/research_group",
         },
       ],
     },
@@ -197,7 +213,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ session, opened, toggle }) => {
   const pathname = usePathname();
-  const role = session?.user_type!
+  const role = session?.user_type!;
   const menuSections = MENU_CONFIG[role] || MENU_CONFIG.dosen;
 
   const isActive = (item: MenuItem) => {

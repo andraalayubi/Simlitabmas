@@ -85,7 +85,7 @@ export default function AuditDepartementPage() {
               data={department}
               isLoading={loading}
               enableRowClick={true}
-              getRowClickUrl={(row) => `/department/${row.id}`}
+              getRowClickUrl={(row) => `/master/department/${row.id}`}
             />
           </div>
         </div>

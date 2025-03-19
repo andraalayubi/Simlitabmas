@@ -5,15 +5,15 @@ import React, { useEffect } from "react";
 
 // redirecting page only
 
-export default function AuditTahunDetailPage() {
+export default function AuditDetailPage() {
   const router = useRouter();
   const pathname = usePathname();
   const params = useParams();
 
   // redirect to tab 'overview'
   useEffect(() => {
-    if (!pathname.includes("tahun_usulan")) {
-      router.replace(`/audit/tahun/tahun_usulan`);
+    if (!pathname.includes("skema")) {
+      router.replace(`/master/skema`);
     }
   }, [pathname]);
 
