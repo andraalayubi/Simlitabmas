@@ -26,7 +26,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import useNotification from "../notification/notification";
-import Sqids from "sqids";
+import { encode } from "src/lib/sqids";
 
 interface HeaderProps {
   session?: SessionPayload;
@@ -141,8 +141,7 @@ const Header: React.FC<HeaderProps> = ({ session }) => {
     }
   })();
 
-  const sqids = new Sqids({ minLength: 10 });
-  const hashedId = sqids.encode([session?.lecturer_id!]);
+  const hashedId = encode(session?.lecturer_id!);
   
   const menuProfiles = getMenuProfiles(hashedId);
 

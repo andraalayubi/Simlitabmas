@@ -30,8 +30,8 @@ import { user_type } from "@prisma/client";
 import { getSession } from "src/lib/session";
 import { lecturer } from "prisma/interfaces";
 import { useParams } from "next/navigation";
-import Sqids from "sqids";
 import lecturerAction from "src/action/lecturerAction";
+import { decode } from "src/lib/sqids";
 
 interface degreesArray {
   code: string;
@@ -43,7 +43,6 @@ interface degreesArray {
 
 const ProfilePage = () => {
   const theme = useMantineTheme();
-  const sqids = new Sqids();
   const params = useParams();
   const hashedId = params.id;
 
@@ -81,9 +80,9 @@ const ProfilePage = () => {
   }, []);
 
   useEffect(() => {
-    const lecturerId = sqids.decode(hashedId as string);
+    const lecturerId = decode(hashedId as string);
 
-    getUserLecturers(lecturerId[0]);
+    getUserLecturers(lecturerId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getUserLecturers, hashedId]);
 
