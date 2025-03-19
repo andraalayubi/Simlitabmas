@@ -217,12 +217,12 @@ const proposalSuggestionsPenelitian = [
         logbook: {
             create: [
                 {
-                    name: 'Logbook Awal',
+                    name: 'Logbook Laporan Kemajuan',
                     description: "Laporan Perkembangan Awal",
                     file_url: '',
                 },
                 {
-                    name: 'Logbook Akhir',
+                    name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
                     file_url: '',
                 }
@@ -281,12 +281,12 @@ const proposalSuggestionsPenelitian = [
         logbook: {
             create: [
                 {
-                    name: 'Logbook Awal',
+                    name: 'Logbook Laporan Kemajuan',
                     description: "Laporan Perkembangan Awal",
                     file_url: '',
                 },
                 {
-                    name: 'Logbook Akhir',
+                    name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
                     file_url: '',
                 }
@@ -345,12 +345,12 @@ const proposalSuggestionsPenelitian = [
         logbook: {
             create: [
                 {
-                    name: 'Logbook Awal',
+                    name: 'Logbook Laporan Kemajuan',
                     description: "Laporan Perkembangan Awal",
                     file_url: '',
                 },
                 {
-                    name: 'Logbook Akhir',
+                    name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
                     file_url: '',
                 }
@@ -409,12 +409,12 @@ const proposalSuggestionsPenelitian = [
         logbook: {
             create: [
                 {
-                    name: 'Logbook Awal',
+                    name: 'Logbook Laporan Kemajuan',
                     description: "Laporan Perkembangan Awal",
                     file_url: '',
                 },
                 {
-                    name: 'Logbook Akhir',
+                    name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
                     file_url: '',
                 }
@@ -466,12 +466,12 @@ const proposalSuggestionsPenelitian = [
         logbook: {
             create: [
                 {
-                    name: 'Logbook Awal',
+                    name: 'Logbook Laporan Kemajuan',
                     description: "Laporan Perkembangan Awal",
                     file_url: '',
                 },
                 {
-                    name: 'Logbook Akhir',
+                    name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
                     file_url: '',
                 }
@@ -523,12 +523,12 @@ const proposalSuggestionsPenelitian = [
         logbook: {
             create: [
                 {
-                    name: 'Logbook Awal',
+                    name: 'Logbook Laporan Kemajuan',
                     description: "Laporan Perkembangan Awal",
                     file_url: '',
                 },
                 {
-                    name: 'Logbook Akhir',
+                    name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
                     file_url: '',
                 }
@@ -580,12 +580,12 @@ const proposalSuggestionsPenelitian = [
         logbook: {
             create: [
                 {
-                    name: 'Logbook Awal',
+                    name: 'Logbook Laporan Kemajuan',
                     description: "Laporan Perkembangan Awal",
                     file_url: '',
                 },
                 {
-                    name: 'Logbook Akhir',
+                    name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
                     file_url: '',
                 }
@@ -637,12 +637,12 @@ const proposalSuggestionsPenelitian = [
         logbook: {
             create: [
                 {
-                    name: 'Logbook Awal',
+                    name: 'Logbook Laporan Kemajuan',
                     description: "Laporan Perkembangan Awal",
                     file_url: '',
                 },
                 {
-                    name: 'Logbook Akhir',
+                    name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
                     file_url: '',
                 }
@@ -694,12 +694,12 @@ const proposalSuggestionsPenelitian = [
         logbook: {
             create: [
                 {
-                    name: 'Logbook Awal',
+                    name: 'Logbook Laporan Kemajuan',
                     description: "Laporan Perkembangan Awal",
                     file_url: '',
                 },
                 {
-                    name: 'Logbook Akhir',
+                    name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
                     file_url: '',
                 }
@@ -753,12 +753,12 @@ const proposalSuggestionsPengmas = [
         logbook: {
             create: [
                 {
-                    name: 'Logbook Awal',
+                    name: 'Logbook Laporan Kemajuan',
                     description: "Laporan Perkembangan Awal",
                     file_url: '',
                 },
                 {
-                    name: 'Logbook Akhir',
+                    name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
                     file_url: '',
                 }
@@ -816,12 +816,12 @@ const proposalSuggestionsPengmas = [
         logbook: {
             create: [
                 {
-                    name: 'Logbook Awal',
+                    name: 'Logbook Laporan Kemajuan',
                     description: "Laporan Perkembangan Awal",
                     file_url: '',
                 },
                 {
-                    name: 'Logbook Akhir',
+                    name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
                     file_url: '',
                 }
@@ -879,12 +879,12 @@ const proposalSuggestionsPengmas = [
         logbook: {
             create: [
                 {
-                    name: 'Logbook Awal',
+                    name: 'Logbook Laporan Kemajuan',
                     description: "Laporan Perkembangan Awal",
                     file_url: '',
                 },
                 {
-                    name: 'Logbook Akhir',
+                    name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
                     file_url: '',
                 }
@@ -942,12 +942,12 @@ const proposalSuggestionsPengmas = [
         logbook: {
             create: [
                 {
-                    name: 'Logbook Awal',
+                    name: 'Logbook Laporan Kemajuan',
                     description: "Laporan Perkembangan Awal",
                     file_url: '',
                 },
                 {
-                    name: 'Logbook Akhir',
+                    name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
                     file_url: '',
                 }
@@ -998,12 +998,12 @@ const proposalSuggestionsPengmas = [
         logbook: {
             create: [
                 {
-                    name: 'Logbook Awal',
+                    name: 'Logbook Laporan Kemajuan',
                     description: "Laporan Perkembangan Awal",
                     file_url: '',
                 },
                 {
-                    name: 'Logbook Akhir',
+                    name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
                     file_url: '',
                 }
@@ -1054,12 +1054,12 @@ const proposalSuggestionsPengmas = [
         logbook: {
             create: [
                 {
-                    name: 'Logbook Awal',
+                    name: 'Logbook Laporan Kemajuan',
                     description: "Laporan Perkembangan Awal",
                     file_url: '',
                 },
                 {
-                    name: 'Logbook Akhir',
+                    name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
                     file_url: '',
                 }
@@ -1110,12 +1110,12 @@ const proposalSuggestionsPengmas = [
         logbook: {
             create: [
                 {
-                    name: 'Logbook Awal',
+                    name: 'Logbook Laporan Kemajuan',
                     description: "Laporan Perkembangan Awal",
                     file_url: '',
                 },
                 {
-                    name: 'Logbook Akhir',
+                    name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
                     file_url: '',
                 }
@@ -1166,12 +1166,12 @@ const proposalSuggestionsPengmas = [
         logbook: {
             create: [
                 {
-                    name: 'Logbook Awal',
+                    name: 'Logbook Laporan Kemajuan',
                     description: "Laporan Perkembangan Awal",
                     file_url: '',
                 },
                 {
-                    name: 'Logbook Akhir',
+                    name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
                     file_url: '',
                 }
@@ -1222,12 +1222,12 @@ const proposalSuggestionsPengmas = [
         logbook: {
             create: [
                 {
-                    name: 'Logbook Awal',
+                    name: 'Logbook Laporan Kemajuan',
                     description: "Laporan Perkembangan Awal",
                     file_url: '',
                 },
                 {
-                    name: 'Logbook Akhir',
+                    name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
                     file_url: '',
                 }
