@@ -67,7 +67,7 @@ export default function AuditDepartementPage() {
 
   return (
     <>
-      <div className="container mx-auto px-4 py-6">
+      <div className="px-4 py-6">
         <div className="bg-white shadow rounded-lg mt-4">
           <div className="bg-white shadow sm:rounded-lg">
             {/* Judul */}
@@ -85,7 +85,7 @@ export default function AuditDepartementPage() {
               data={department}
               isLoading={loading}
               enableRowClick={true}
-              getRowClickUrl={(row) => `/department/${row.id}`}
+              getRowClickUrl={(row) => `/audit/department/${row.id}`}
             />
           </div>
         </div>

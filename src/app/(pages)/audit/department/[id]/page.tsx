@@ -16,28 +16,20 @@ import {
   Divider,
   Skeleton,
 } from "@mantine/core";
-import {
-  IconUsers,
-  IconFileText,
-  IconBuilding,
-  IconMicroscope,
-} from "@tabler/icons-react";
-import researchGroupAction from "src/action/researchGroupAction";
+import { IconUsers, IconFileText, IconBuilding } from "@tabler/icons-react";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import {
-  lecturer,
-  proposal_suggestion,
-  research_group,
-} from "prisma/interfaces";
+import { lecturer, proposal_suggestion, department } from "prisma/interfaces";
 import useNotification from "src/components/notification/notification";
 import ProposalSuggestionPhaseBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionPhaseBadge";
+import departmentAction from "src/action/departmentAction";
 
 export default function ResearchGroupPage() {
   const user_type = "admin";
   const params = useParams();
   const id = params.id;
-  const [researchGroup, setResearchGroup] = useState<research_group | null>();
+
+  const [department, setDepartment] = useState<department | null>();
   const [lecturers, setLecturers] = useState<lecturer[] | null>();
   const [proposalSuggestions, setProposalSuggestions] = useState<
     proposal_suggestion[] | null
@@ -45,15 +37,15 @@ export default function ResearchGroupPage() {
   const [loading, setLoading] = useState(false);
   const { showNotification } = useNotification();
 
-  const getResearchGroup = useCallback(async () => {
-    const response = await researchGroupAction.getResearchGroupDetail(
+  const getDepartment = useCallback(async () => {
+    const response = await departmentAction.getDepartmentDetail(
       user_type,
       Number(id),
       setLoading
     );
 
     if (response.success) {
-      setResearchGroup(response.data.research_group);
+      setDepartment(response.data.department);
       setLecturers(response.data.lecturers);
       setProposalSuggestions(response.data.proposal_suggestions);
       showNotification({ status: "success", message: response.message });
@@ -63,8 +55,8 @@ export default function ResearchGroupPage() {
   }, [user_type, id]);
 
   useEffect(() => {
-    getResearchGroup();
-  }, [getResearchGroup]);
+    getDepartment();
+  }, [getDepartment]);
 
   return (
     <div className="pt-6">
@@ -89,11 +81,12 @@ export default function ResearchGroupPage() {
               preventGrowOverflow
             >
               <Box>
-                <Title order={1} c="blue.8" mb="sm">
-                  {researchGroup?.name}
-                </Title>
+                  <Title order={1} c="blue.8" mb="sm">
+                    {department?.name}
+                  </Title>
+
                 <Text c="dimmed" size="md" mb="md">
-                  {researchGroup?.description}
+                  {department?.description}
                 </Text>
               </Box>
             </Group>

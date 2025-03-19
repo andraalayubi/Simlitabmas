@@ -1,29 +1,21 @@
-import { getSession } from "src/lib/session";
+import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { NextRequest, NextResponse } from "next/server";
-import departmentService from "src/services/departmentService";
+import departmentService from 'src/services/departmentService';
 
-interface Params {
-    id: string;
-}
-
-export async function GET(req: NextRequest, { params }: { params: Params }) {
-    const department_id = parseInt(params.id);
-
-    try {
-        const session = await getSession();
-
-        const department = await departmentService.getById(department_id);
-
-        return NextResponse.json({
-            success: true,
-            message: "Success getting data",
-            data: department
-        }, { status: 200 })
-
-    } catch (error: any) {
-        return NextResponse.json({
-            success: false,
-            message: `Internal Server error: ${error.message}`
-        }, { status: 500 });
-    }
+export async function GET(request: NextRequest, { params }: { params: Params }) {
+  try {
+    const id = Number(params.id);
+    const department = await departmentService.getProfile(id);
+   
+    return NextResponse.json({
+      success: true,
+      message: "Success getting data",
+      data: department[0]
+    }, { status: 200 });
+  } catch (error: any) {
+    return NextResponse.json({
+      success: false,
+      message: `Internal Server error: ${error.message}`
+    }, { status: 500 });
+  }
 }

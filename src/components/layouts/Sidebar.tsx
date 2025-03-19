@@ -71,7 +71,7 @@ const MENU_CONFIG: Record<string, MenuSection[]> = {
         {
           name: "Program Studi",
           icon: <IconSchool />,
-          path: "/audit/program_studi",
+          path: "/audit/department",
         },
         {
           name: "Tahun",
