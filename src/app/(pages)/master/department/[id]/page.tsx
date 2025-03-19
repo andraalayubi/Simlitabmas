@@ -2,7 +2,6 @@
 
 import {
   Avatar,
-  Badge,
   Card,
   Flex,
   Grid,
@@ -23,6 +22,8 @@ import { lecturer, proposal_suggestion, department } from "prisma/interfaces";
 import useNotification from "src/components/notification/notification";
 import ProposalSuggestionPhaseBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionPhaseBadge";
 import departmentAction from "src/action/departmentAction";
+import Link from "next/link";
+import { encode } from "src/lib/sqids";
 
 export default function ResearchGroupPage() {
   const user_type = "admin";
@@ -81,9 +82,9 @@ export default function ResearchGroupPage() {
               preventGrowOverflow
             >
               <Box>
-                  <Title order={1} c="blue.8" mb="sm">
-                    {department?.name}
-                  </Title>
+                <Title order={1} c="blue.8" mb="sm">
+                  {department?.name}
+                </Title>
 
                 <Text c="dimmed" size="md" mb="md">
                   {department?.description}
@@ -189,17 +190,19 @@ export default function ResearchGroupPage() {
               </Card.Section>
               <Box mt="md">
                 {proposalSuggestions?.map((proposal, index) => (
-                  <Paper withBorder p="md" mb="md" key={index}>
-                    <Group justify="space-between" mb="xs">
-                      <Text fw={600}>{proposal.name}</Text>
-                      <ProposalSuggestionPhaseBadge phase={proposal.phase} />
-                    </Group>
-                    <Group gap="xs" c="dimmed">
-                      <Text>Ketua: {proposal.lecturer?.name}</Text>
-                      <Text>•</Text>
-                      <Text>Tahun: {proposal.year_research?.year}</Text>
-                    </Group>
-                  </Paper>
+                  <Link href={`/usulan/${proposal.id}`} key={index}>
+                    <Paper withBorder p="md" mb="md">
+                      <Group justify="space-between" mb="xs">
+                        <Text fw={600}>{proposal.name}</Text>
+                        <ProposalSuggestionPhaseBadge phase={proposal.phase} />
+                      </Group>
+                      <Group gap="xs" c="dimmed">
+                        <Text>Ketua: {proposal.lecturer?.name}</Text>
+                        <Text>•</Text>
+                        <Text>Tahun: {proposal.year_research?.year}</Text>
+                      </Group>
+                    </Paper>
+                  </Link>
                 ))}
               </Box>
             </Card>
@@ -209,52 +212,54 @@ export default function ResearchGroupPage() {
             <Grid>
               {lecturers?.map((lecturer, index) => (
                 <Grid.Col key={index} span={{ base: 12, md: 6, lg: 4 }}>
-                  <Card withBorder shadow="sm">
-                    <Group mb="xs">
-                      <Avatar src={""} size="lg" radius="xl">
-                        {lecturer.name
-                          .split(" ")
-                          .map((n) => n[0])
-                          .join("")}
-                      </Avatar>
+                  <Link href={`/profile/${encode(lecturer.id)}`}>
+                    <Card withBorder shadow="sm">
+                      <Group mb="xs">
+                        <Avatar src={""} size="lg" radius="xl">
+                          {lecturer.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")}
+                        </Avatar>
+                        <Box>
+                          <Text fw={700}>{lecturer.name}</Text>
+                          <Group gap="xs">
+                            <IconBuilding size={14} />
+                            <Text size="sm" c="dimmed">
+                              {lecturer.is_ketua_rg ? "Ketua" : "Anggota"}
+                            </Text>
+                          </Group>
+                        </Box>
+                      </Group>
+                      <Divider my="xs" />
                       <Box>
-                        <Text fw={700}>{lecturer.name}</Text>
-                        <Group gap="xs">
-                          <IconBuilding size={14} />
+                        <Flex justify="space-between" mb="xs">
                           <Text size="sm" c="dimmed">
-                            {lecturer.is_ketua_rg ? "Ketua" : "Anggota"}
+                            NIP:
                           </Text>
-                        </Group>
+                          <Text size="sm" fw={500}>
+                            {lecturer.nip}
+                          </Text>
+                        </Flex>
+                        <Flex justify="space-between" mb="xs">
+                          <Text size="sm" c="dimmed">
+                            NIDN:
+                          </Text>
+                          <Text size="sm" fw={500} ta="right">
+                            {lecturer.nidn}
+                          </Text>
+                        </Flex>
+                        <Flex justify="space-between">
+                          <Text size="sm" c="dimmed">
+                            Departemen:
+                          </Text>
+                          <Text size="sm" fw={500}>
+                            {lecturer.department?.name}
+                          </Text>
+                        </Flex>
                       </Box>
-                    </Group>
-                    <Divider my="xs" />
-                    <Box>
-                      <Flex justify="space-between" mb="xs">
-                        <Text size="sm" c="dimmed">
-                          NIP:
-                        </Text>
-                        <Text size="sm" fw={500}>
-                          {lecturer.nip}
-                        </Text>
-                      </Flex>
-                      <Flex justify="space-between" mb="xs">
-                        <Text size="sm" c="dimmed">
-                          NIDN:
-                        </Text>
-                        <Text size="sm" fw={500} ta="right">
-                          {lecturer.nidn}
-                        </Text>
-                      </Flex>
-                      <Flex justify="space-between">
-                        <Text size="sm" c="dimmed">
-                          Departemen:
-                        </Text>
-                        <Text size="sm" fw={500}>
-                          {lecturer.department?.name}
-                        </Text>
-                      </Flex>
-                    </Box>
-                  </Card>
+                    </Card>
+                  </Link>
                 </Grid.Col>
               ))}
             </Grid>
