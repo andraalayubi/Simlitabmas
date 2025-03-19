@@ -27,11 +27,6 @@ export default function ConfigurationUserPage() {
   const columns = useMemo<MRT_ColumnDef<lecturer>[]>(
     () => [
       {
-        accessorKey: "id",
-        header: "No",
-        size: 50,
-      },
-      {
         accessorKey: "name",
         header: "Nama Dosen",
         size: 200,

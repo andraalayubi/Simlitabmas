@@ -29,7 +29,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const handleTabChange = (value: string | null) => {
     console.log(value, activeTab);
-    router.push(`/audit/tahun/${value}`);
+    router.push(`/master/tahun/${value}`);
 
   };
 

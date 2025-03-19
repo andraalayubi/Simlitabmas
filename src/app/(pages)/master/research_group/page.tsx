@@ -2,16 +2,16 @@
 
 import { Text } from "@mantine/core";
 import { MRT_ColumnDef } from "mantine-react-table";
-import { department } from "prisma/interfaces";
+import { department, research_group } from "prisma/interfaces";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import departmentAction from "src/action/departmentAction";
+import researchGroupAction from "src/action/researchGroupAction";
 import ModalComponent from "src/components/modal/modal";
 import useNotification from "src/components/notification/notification";
 import TableLayout from "src/components/table/tableLayout";
 
-export default function AuditDepartementPage() {
+export default function AuditResearchGroupPage() {
   const user_type = "admin";
-  const [department, setDepartement] = useState<department[]>([]);
+  const [researchGroup, setResearchGroup] = useState<research_group[]>([]);
   const [loading, setLoading] = useState(true);
   const { showNotification } = useNotification();
 
@@ -25,12 +25,12 @@ export default function AuditDepartementPage() {
       },
       {
         accessorKey: "name",
-        header: "Nama Program Studi",
+        header: "Nama Research Group",
         size: 300,
       },
       {
-        accessorKey: "kaprodi_name",
-        header: "Kaprodi",
+        accessorKey: "ketua_rg_name",
+        header: "Nama Ketua",
         size: 100,
       },
       {
@@ -47,14 +47,14 @@ export default function AuditDepartementPage() {
     []
   );
 
-  const getDepartments = useCallback(async () => {
-    const response = await departmentAction.getDepartment(
+  const getResearchGroup = useCallback(async () => {
+    const response = await researchGroupAction.getResearchGroup(
       user_type,
       setLoading
     );
 
     if (response.success) {
-      setDepartement(response.data);
+      setResearchGroup(response.data);
       showNotification({ status: "success", message: response.message });
     } else {
       showNotification({ status: "error", message: response.message });
@@ -62,8 +62,8 @@ export default function AuditDepartementPage() {
   }, [user_type]);
 
   useEffect(() => {
-    getDepartments();
-  }, [getDepartments]);
+    getResearchGroup();
+  }, [getResearchGroup]);
 
   return (
     <>
@@ -73,19 +73,19 @@ export default function AuditDepartementPage() {
             {/* Judul */}
             <div className="flex justify-between items-center pt-5 pb-2 px-6">
               <Text size="lg" fw={700}>
-                Daftar Program Studi
+                Daftar Research Group
               </Text>
-              <ModalComponent title="Buat Program Studi">
+              <ModalComponent title="Buat Research Group">
                 {(close) =><> </>}
               </ModalComponent>
             </div>
 
             <TableLayout
               columns={columns}
-              data={department}
+              data={researchGroup}
               isLoading={loading}
               enableRowClick={true}
-              getRowClickUrl={(row) => `/audit/department/${row.id}`}
+              getRowClickUrl={(row) => `/master/research_group/${row.id}`}
             />
           </div>
         </div>
