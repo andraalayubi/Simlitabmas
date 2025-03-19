@@ -55,6 +55,7 @@ const LogBookKetuaRG = () => {
               {logbooks.map((logbook) => (
                 <LogbookCard
                   logbook={logbook}
+                  key={logbook.id}
                   onSuccess={getLogbooks}
                   user_type={user_type}
                   editable={false}

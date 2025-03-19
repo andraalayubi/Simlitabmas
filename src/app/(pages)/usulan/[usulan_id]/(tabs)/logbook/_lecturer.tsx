@@ -9,6 +9,7 @@ import logbookAction from "src/action/logbookAction";
 import { Skeleton, Stack } from "@mantine/core";
 import LogbookCard from "src/components/card/proposal_suggestion/LogbookCard";
 import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
+import { useSession } from "src/components/session/session";
 
 const LogBookLecturer = () => {
   const user_type = "lecturer";
@@ -16,9 +17,11 @@ const LogBookLecturer = () => {
   const params = useParams();
   const usulan_id = params.usulan_id;
   const { showNotification } = useNotification();
+  const { session, loading: sessionLoading } = useSession();
   const [proposalSuggestion, setProposalSuggestion] =
     useState<proposal_suggestion | null>(null);
   const [logbooks, setLogbooks] = useState<logbook[]>([]);
+  const [editable, setEditable] = useState<boolean>(false);
 
   const getLogbooks = useCallback(async () => {
     const response = await logbookAction.getLogbooks(
@@ -37,13 +40,23 @@ const LogBookLecturer = () => {
   }, [user_type, usulan_id]);
 
   useEffect(() => {
+    const isEditable = proposalSuggestion?.lecturer_id === session?.lecturer_id;
+    setEditable(isEditable);
+    console.log(
+      proposalSuggestion?.lecturer_id,
+      session?.lecturer_id,
+      isEditable
+    );
+  }, [proposalSuggestion?.lecturer_id, session?.lecturer_id]);
+
+  useEffect(() => {
     getLogbooks();
   }, [getLogbooks]);
 
   return (
     <>
       <div className="bg-white shadow sm:rounded-lg p-6">
-        <Skeleton visible={loading}>
+        <Skeleton visible={loading && sessionLoading}>
           <ProposalSuggestionSummaryCard
             proposal_suggestion_name={proposalSuggestion?.name!}
             status={proposalSuggestion?.status!}
@@ -51,14 +64,15 @@ const LogBookLecturer = () => {
           />
         </Skeleton>
         <div className="mt-6">
-          <Skeleton visible={loading}>
+          <Skeleton visible={loading && sessionLoading}>
             <Stack gap="md">
               {logbooks.map((logbook) => (
                 <LogbookCard
+                  key={logbook.id}
                   logbook={logbook}
                   onSuccess={getLogbooks}
                   user_type={user_type}
-                  editable={true}
+                  editable={editable}
                 />
               ))}
             </Stack>

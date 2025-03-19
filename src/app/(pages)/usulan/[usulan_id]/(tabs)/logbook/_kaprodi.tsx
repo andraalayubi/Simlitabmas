@@ -54,6 +54,7 @@ const LogBookKaprodi = () => {
             <Stack gap="md">
               {logbooks.map((logbook) => (
                 <LogbookCard
+                  key={logbook.id}
                   logbook={logbook}
                   onSuccess={getLogbooks}
                   user_type={user_type}
