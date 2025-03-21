@@ -113,6 +113,8 @@ const createProposalSuggestion = async (
   try {
     const lecturer = await fetch(`/api/${user_type}/lecturer/${lecturer_id}`);
     const lecturerData = await lecturer.json();
+    console.log(lecturerData);
+    
 
     const response = await axios.post(`/api/${user_type}/proposal-suggestion`, {
       ...values,

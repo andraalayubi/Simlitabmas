@@ -39,11 +39,13 @@ const UsulanSayaKetuaRG: React.FC<UsulanSayaKetuaRGProps> = ({ columns }) => {
     } else {
       showNotification({ status: "error", message: response.message });
     }
-  }, [user_type]);
+  }, [user_type, session?.lecturer_id]);
 
   useEffect(() => {
-    getProposalSuggestion();
-  }, [getProposalSuggestion]);
+    if (!sessionLoading && session?.lecturer_id) {
+      getProposalSuggestion();
+    }
+  }, [sessionLoading, session?.lecturer_id, getProposalSuggestion]);
 
   return (
     <Skeleton visible={sessionLoading}>

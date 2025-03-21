@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "@mantine/form";
-import { TextInput, Select, Group, Button, Box } from "@mantine/core";
+import { TextInput, Select, Group, Button, Box, Skeleton } from "@mantine/core";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "mantine-form-zod-resolver";
 import {
@@ -143,31 +143,37 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
         {...form.getInputProps("name")}
       />
       {showResearchGroup && (
+        <Skeleton visible={loading} className="mt-2">
+          <Select
+            className="mt-2"
+            required
+            label="Kelompok Penelitian"
+            placeholder="Pilih kelompok penelitian"
+            data={researchGroups}
+            {...form.getInputProps("research_group_id")}
+          />
+        </Skeleton>
+      )}
+      <Skeleton visible={loading} className="mt-2">
         <Select
           className="mt-2"
           required
-          label="Kelompok Penelitian"
-          placeholder="Pilih kelompok penelitian"
-          data={researchGroups}
-          {...form.getInputProps("research_group_id")}
+          label="Skema Penelitian"
+          placeholder="Pilih skema penelitian"
+          data={schemas}
+          {...form.getInputProps("schema_id")}
         />
-      )}
-      <Select
-        className="mt-2"
-        required
-        label="Skema Penelitian"
-        placeholder="Pilih skema penelitian"
-        data={schemas}
-        {...form.getInputProps("schema_id")}
-      />
-      <Select
-        className="mt-2"
-        required
-        label="Tahun Penelitian"
-        placeholder="Pilih tahun penelitian"
-        data={yearResearches}
-        {...form.getInputProps("year_research_id")}
-      />
+      </Skeleton>
+      <Skeleton visible={loading} className="mt-2">
+        <Select
+          className="mt-2"
+          required
+          label="Tahun Penelitian"
+          placeholder="Pilih tahun penelitian"
+          data={yearResearches}
+          {...form.getInputProps("year_research_id")}
+        />
+      </Skeleton>
       <Group justify="flex-end" mt="md">
         <Button type="submit" loading={loading}>
           Buat Usulan

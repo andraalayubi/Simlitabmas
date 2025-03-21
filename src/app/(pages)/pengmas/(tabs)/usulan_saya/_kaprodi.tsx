@@ -29,18 +29,20 @@ const UsulanSayaKaprodi: React.FC<UsulanSayaKaprodiProps> = ({ columns }) => {
         lecturer_id: lecturerId,
       }
     );
-    
+
     if (response.success) {
       showNotification({ status: "success", message: response.message });
       setData(response.data);
     } else {
       showNotification({ status: "error", message: response.message });
     }
-  }, [user_type]);
+  }, [user_type, session?.lecturer_id]);
 
   useEffect(() => {
-    getProposalSuggestion();
-  }, [getProposalSuggestion]);
+    if (!sessionLoading && session?.lecturer_id) {
+      getProposalSuggestion();
+    }
+  }, [sessionLoading, session?.lecturer_id, getProposalSuggestion]);
 
   return (
     <Skeleton visible={sessionLoading}>

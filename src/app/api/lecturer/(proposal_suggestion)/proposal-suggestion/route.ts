@@ -53,8 +53,6 @@ export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
 
-        const lecturer = await lecturerService.getById(Number(body.lecturer.id));
-
         // Convert string IDs to numbers
         const proposalData = {
             ...body,
@@ -62,7 +60,7 @@ export async function POST(req: NextRequest) {
             schema_id: Number(body.schema_id),
             year_research_id: Number(body.year_research_id),
             lecturer_id: Number(body.lecturer.id),
-            department_id: lecturer?.department_id,
+            department_id: Number(body.lecturer.department_id),
             phase: 'pengajuan' as proposal_suggestion_phase,
             status: 'tersimpan' as proposal_suggestion_status,
             is_active: true
