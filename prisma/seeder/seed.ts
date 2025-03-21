@@ -231,6 +231,20 @@ const proposalSuggestionsPenelitian = [
                 }
             ]
         },
+        final_report: {
+            create: [
+                {
+                    name: 'Laporan Kemajuan',
+                    description: "Laporan Kemajuan",
+                    file_url: '',
+                },
+                {
+                    name: 'Laporan Akhir',
+                    description: "Laporan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
         lecturer_member: {
             create: {
                 lecturer_id: 1, // Sama dengan lecturer_id pada proposal_suggestion
@@ -291,6 +305,20 @@ const proposalSuggestionsPenelitian = [
                 {
                     name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
+        final_report: {
+            create: [
+                {
+                    name: 'Laporan Kemajuan',
+                    description: "Laporan Kemajuan",
+                    file_url: '',
+                },
+                {
+                    name: 'Laporan Akhir',
+                    description: "Laporan Akhir",
                     file_url: '',
                 }
             ]
@@ -359,6 +387,20 @@ const proposalSuggestionsPenelitian = [
                 }
             ]
         },
+        final_report: {
+            create: [
+                {
+                    name: 'Laporan Kemajuan',
+                    description: "Laporan Kemajuan",
+                    file_url: '',
+                },
+                {
+                    name: 'Laporan Akhir',
+                    description: "Laporan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
         lecturer_member: {
             create: {
                 lecturer_id: 1, // Sama dengan lecturer_id pada proposal_suggestion
@@ -423,6 +465,20 @@ const proposalSuggestionsPenelitian = [
                 }
             ]
         },
+        final_report: {
+            create: [
+                {
+                    name: 'Laporan Kemajuan',
+                    description: "Laporan Kemajuan",
+                    file_url: '',
+                },
+                {
+                    name: 'Laporan Akhir',
+                    description: "Laporan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
         lecturer_member: {
             create: {
                 lecturer_id: 2, // Sama dengan lecturer_id pada proposal_suggestion
@@ -476,6 +532,20 @@ const proposalSuggestionsPenelitian = [
                 {
                     name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
+        final_report: {
+            create: [
+                {
+                    name: 'Laporan Kemajuan',
+                    description: "Laporan Kemajuan",
+                    file_url: '',
+                },
+                {
+                    name: 'Laporan Akhir',
+                    description: "Laporan Akhir",
                     file_url: '',
                 }
             ]
@@ -537,6 +607,20 @@ const proposalSuggestionsPenelitian = [
                 }
             ]
         },
+        final_report: {
+            create: [
+                {
+                    name: 'Laporan Kemajuan',
+                    description: "Laporan Kemajuan",
+                    file_url: '',
+                },
+                {
+                    name: 'Laporan Akhir',
+                    description: "Laporan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
         lecturer_member: {
             create: {
                 lecturer_id: 2, // Sama dengan lecturer_id pada proposal_suggestion
@@ -590,6 +674,20 @@ const proposalSuggestionsPenelitian = [
                 {
                     name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
+        final_report: {
+            create: [
+                {
+                    name: 'Laporan Kemajuan',
+                    description: "Laporan Kemajuan",
+                    file_url: '',
+                },
+                {
+                    name: 'Laporan Akhir',
+                    description: "Laporan Akhir",
                     file_url: '',
                 }
             ]
@@ -651,6 +749,20 @@ const proposalSuggestionsPenelitian = [
                 }
             ]
         },
+        final_report: {
+            create: [
+                {
+                    name: 'Laporan Kemajuan',
+                    description: "Laporan Kemajuan",
+                    file_url: '',
+                },
+                {
+                    name: 'Laporan Akhir',
+                    description: "Laporan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
         lecturer_member: {
             create: {
                 lecturer_id: 3,
@@ -704,6 +816,20 @@ const proposalSuggestionsPenelitian = [
                 {
                     name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
+        final_report: {
+            create: [
+                {
+                    name: 'Laporan Kemajuan',
+                    description: "Laporan Kemajuan",
+                    file_url: '',
+                },
+                {
+                    name: 'Laporan Akhir',
+                    description: "Laporan Akhir",
                     file_url: '',
                 }
             ]
@@ -763,6 +889,20 @@ const proposalSuggestionsPengmas = [
                 {
                     name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
+        final_report: {
+            create: [
+                {
+                    name: 'Laporan Kemajuan',
+                    description: "Laporan Kemajuan",
+                    file_url: '',
+                },
+                {
+                    name: 'Laporan Akhir',
+                    description: "Laporan Akhir",
                     file_url: '',
                 }
             ]
@@ -830,6 +970,20 @@ const proposalSuggestionsPengmas = [
                 }
             ]
         },
+        final_report: {
+            create: [
+                {
+                    name: 'Laporan Kemajuan',
+                    description: "Laporan Kemajuan",
+                    file_url: '',
+                },
+                {
+                    name: 'Laporan Akhir',
+                    description: "Laporan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
         lecturer_member: {
             create: {
                 lecturer_id: 1, // Sama dengan lecturer_id pada proposal_suggestion
@@ -889,6 +1043,20 @@ const proposalSuggestionsPengmas = [
                 {
                     name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
+        final_report: {
+            create: [
+                {
+                    name: 'Laporan Kemajuan',
+                    description: "Laporan Kemajuan",
+                    file_url: '',
+                },
+                {
+                    name: 'Laporan Akhir',
+                    description: "Laporan Akhir",
                     file_url: '',
                 }
             ]
@@ -956,6 +1124,20 @@ const proposalSuggestionsPengmas = [
                 }
             ]
         },
+        final_report: {
+            create: [
+                {
+                    name: 'Laporan Kemajuan',
+                    description: "Laporan Kemajuan",
+                    file_url: '',
+                },
+                {
+                    name: 'Laporan Akhir',
+                    description: "Laporan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
         lecturer_member: {
             create: {
                 lecturer_id: 2, // Sama dengan lecturer_id pada proposal_suggestion
@@ -1008,6 +1190,20 @@ const proposalSuggestionsPengmas = [
                 {
                     name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
+        final_report: {
+            create: [
+                {
+                    name: 'Laporan Kemajuan',
+                    description: "Laporan Kemajuan",
+                    file_url: '',
+                },
+                {
+                    name: 'Laporan Akhir',
+                    description: "Laporan Akhir",
                     file_url: '',
                 }
             ]
@@ -1068,6 +1264,20 @@ const proposalSuggestionsPengmas = [
                 }
             ]
         },
+        final_report: {
+            create: [
+                {
+                    name: 'Laporan Kemajuan',
+                    description: "Laporan Kemajuan",
+                    file_url: '',
+                },
+                {
+                    name: 'Laporan Akhir',
+                    description: "Laporan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
         lecturer_member: {
             create: {
                 lecturer_id: 2, // Sama dengan lecturer_id pada proposal_suggestion
@@ -1120,6 +1330,20 @@ const proposalSuggestionsPengmas = [
                 {
                     name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
+        final_report: {
+            create: [
+                {
+                    name: 'Laporan Kemajuan',
+                    description: "Laporan Kemajuan",
+                    file_url: '',
+                },
+                {
+                    name: 'Laporan Akhir',
+                    description: "Laporan Akhir",
                     file_url: '',
                 }
             ]
@@ -1180,6 +1404,20 @@ const proposalSuggestionsPengmas = [
                 }
             ]
         },
+        final_report: {
+            create: [
+                {
+                    name: 'Laporan Kemajuan',
+                    description: "Laporan Kemajuan",
+                    file_url: '',
+                },
+                {
+                    name: 'Laporan Akhir',
+                    description: "Laporan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
         lecturer_member: {
             create: {
                 lecturer_id: 3,
@@ -1232,6 +1470,20 @@ const proposalSuggestionsPengmas = [
                 {
                     name: 'Logbook Laporan Akhir',
                     description: "Laporan Perkembangan Akhir",
+                    file_url: '',
+                }
+            ]
+        },
+        final_report: {
+            create: [
+                {
+                    name: 'Laporan Kemajuan',
+                    description: "Laporan Kemajuan",
+                    file_url: '',
+                },
+                {
+                    name: 'Laporan Akhir',
+                    description: "Laporan Akhir",
                     file_url: '',
                 }
             ]

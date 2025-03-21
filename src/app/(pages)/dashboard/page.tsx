@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import LoadingPage from "src/components/usulan/LoadingPage";
+import LoadingPage from "src/components/Loading/LoadingPage";
 import DashboardAdmin from "./_admin";
 import DashboardKetuaRG from "./_ketuaRg";
 import DashboardLecturer from "./_lecturer";

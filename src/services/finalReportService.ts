@@ -1,4 +1,3 @@
-import { proposal_suggestion_phase } from "prisma/interfaces";
 import prisma from "src/client/prisma";
 
 const getByProposalSuggestionId = async (proposalSuggestionId: number) => {
@@ -7,35 +6,35 @@ const getByProposalSuggestionId = async (proposalSuggestionId: number) => {
         relationLoadStrategy: 'join',
         where: { id: proposalSuggestionId },
         include: {
-            logbook: {
+            final_report: {
                 orderBy: {
                     id: 'asc'
                 }
             }
-        }
+        },
     })
 }
 
-interface Logbook {
+interface FinalReport {
     file_url?: string;
     name?: string;
     description?: string;
 }
 
-const update = async (logbook_id: number, data: Logbook) => {
+const update = async (final_report_id: number, data: FinalReport) => {
 
-    const updatedLogbook = await prisma.logbook.update({
+    const updatedFinalReport = await prisma.final_report.update({
         where: {
-            id: logbook_id
+            id: final_report_id
         },
         data: data,
     });
 
-    return updatedLogbook;
+    return updatedFinalReport;
 }
 
-const create = async (proposal_suggestion_id: number, data: Logbook) => {
-    return prisma.logbook.create({
+const create = async (proposal_suggestion_id: number, data: FinalReport) => {
+    return prisma.final_report.create({
         data: {
             name: data.name,
             file_url: data.file_url,
@@ -44,12 +43,11 @@ const create = async (proposal_suggestion_id: number, data: Logbook) => {
     })
 }
 
-const logbookService = {
+const finalReportService = {
     update,
     create,
     getByProposalSuggestionId,
 }
 
-
-export default logbookService
+export default finalReportService
 

@@ -92,6 +92,8 @@ const create = async (data: proposal_suggestion) => {
             schema_id: data.schema_id,
             lecturer_id: data.lecturer_id,
             research_group_id: data.research_group_id,
+            department_id: data.department_id,
+            phase: data.phase,
             status: data.status,
             is_active: data.is_active,
         },

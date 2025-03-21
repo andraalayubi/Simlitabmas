@@ -7,7 +7,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { MantineReactTable, MRT_ColumnDef } from 'mantine-react-table';
 import MainLayout from 'src/components/layouts/MainLayout';
-import LoadingPage from 'src/components/usulan/LoadingPage';
+import LoadingPage from 'src/components/Loading/LoadingPage';
 
 interface Dokumen {
     id: number;

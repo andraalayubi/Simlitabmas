@@ -192,6 +192,7 @@ export interface proposal_suggestion {
   review?: review[];
   logbook?: logbook[];
   proposal?: proposal | null;
+  final_report?: final_report[];
 }
 
 export interface proposal {
@@ -302,6 +303,19 @@ export interface logbook {
   description: string | null;
   file_url: string | null;
   progress: number | null;
+  phase: proposal_suggestion_phase | null;
+  createdAt: Date;
+  updatedAt: Date;
+  deleted: boolean;
+  proposal_suggestion?: proposal_suggestion;
+}
+
+export interface final_report {
+  id: number;
+  proposal_suggestion_id: number;
+  name: string | null;
+  description: string | null;
+  file_url: string | null;
   phase: proposal_suggestion_phase | null;
   createdAt: Date;
   updatedAt: Date;

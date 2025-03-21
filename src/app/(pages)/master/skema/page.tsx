@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Text } from "@mantine/core";
 import DaftarSkema from "src/components/audit/Skema";
-import LoadingPage from "src/components/usulan/LoadingPage";
+import LoadingPage from "src/components/Loading/LoadingPage";
 import { schema } from "prisma/interfaces";
 import { MRT_ColumnDef } from "mantine-react-table";
 import useNotification from "src/components/notification/notification";

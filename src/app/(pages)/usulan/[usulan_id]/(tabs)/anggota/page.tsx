@@ -13,6 +13,8 @@ import { lecturer, student_member, vendor_member } from "prisma/interfaces";
 
 export default function AnggotaPage() {
     const { session, loading: sessionLoading } = useSession();
+    console.log('tesss');
+    
   
     const columnsLecturer = useMemo<MRT_ColumnDef<lecturer>[]>(
       () => [
@@ -78,6 +80,8 @@ export default function AnggotaPage() {
     );
   
     if(session?.user_type == "admin") {
+      console.log('admin');
+      
       return <Skeleton visible={sessionLoading}><AnggotaAdmin columnsLecturer={columnsLecturer} columnsStudent={columnsStudent} columnsVendor={columnsVendor}/></Skeleton>
     } else if (session?.user_type == "lecturer") {
       return <Skeleton visible={sessionLoading}><AnggotaLecturer session={session} columnsLecturer={columnsLecturer} columnsStudent={columnsStudent} columnsVendor={columnsVendor}/></Skeleton>

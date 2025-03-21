@@ -1,7 +1,7 @@
 'use client'
 
 import { useSession } from "src/components/session/session";
-import LoadingPage from "src/components/usulan/LoadingPage";
+import LoadingPage from "src/components/Loading/LoadingPage";
 import { notFound } from "next/navigation";
 import { useEffect } from "react";
 import EvaluationAdmin from "./_admin";
@@ -12,7 +12,6 @@ import EvaluationLecturer from "./_lecturer";
 
 export default function EvalauasiPage() {
     const { session, loading: sessionLoading } = useSession();
-    const dummy = 'dummy';
   
     useEffect(() => {
       if (!sessionLoading) {
@@ -21,7 +20,7 @@ export default function EvalauasiPage() {
     }, [sessionLoading]);
   
     if (sessionLoading) {
-      return <LoadingPage />;
+      return <></>;
     }
   
     if(session?.user_type == "admin") {
@@ -32,7 +31,5 @@ export default function EvalauasiPage() {
       return <EvaluationKetuaRG />
     } else if (session?.user_type == "kaprodi") {
       return <EvaluationKaprodi />
-    } else {
-      return notFound()
     }
   }

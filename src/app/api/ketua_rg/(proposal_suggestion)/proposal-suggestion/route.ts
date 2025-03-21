@@ -1,11 +1,12 @@
 import { getSession } from "src/lib/session";
 import proposalSuggestionService from "src/services/proposalSuggestionService";
 import { NextRequest, NextResponse } from "next/server";
-import { proposal_suggestion_status } from "prisma/interfaces";
+import { proposal_suggestion_phase, proposal_suggestion_status } from "prisma/interfaces";
 import filterService from "src/services/filterService";
 import lecturerService from "src/services/lecturerService";
 import proposalService from "src/services/proposalService";
 import logbookService from "src/services/logbookService";
+import finalReportService from "src/services/finalReportService";
 
 export async function GET(req: NextRequest) {
     try {
@@ -56,6 +57,8 @@ export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
 
+        const lecturer = await lecturerService.getById(Number(body.lecturer.id));
+
         // Convert string IDs to numbers
         const proposalData = {
             ...body,
@@ -63,6 +66,8 @@ export async function POST(req: NextRequest) {
             schema_id: Number(body.schema_id),
             year_research_id: Number(body.year_research_id),
             lecturer_id: Number(body.lecturer.id),
+            department_id: lecturer?.department_id,
+            phase: 'pengajuan' as proposal_suggestion_phase,
             status: 'tersimpan' as proposal_suggestion_status,
             is_active: true
         };
@@ -91,6 +96,19 @@ export async function POST(req: NextRequest) {
 
         await logbookService.create(newProposalSuggestion.id, {
             name: 'Logbook 2',
+            file_url: '',
+            description: '',
+        })
+
+        // create empty final report with 2 phase
+        await finalReportService.create(newProposalSuggestion.id, {
+            name: 'Laporan Kemajuan',
+            file_url: '',
+            description: '',
+        })
+        
+        await finalReportService.create(newProposalSuggestion.id, {
+            name: 'Laporan Akhir',
             file_url: '',
             description: '',
         })

@@ -1,7 +1,7 @@
 'use client'
 
 import { useSession } from "src/components/session/session";
-import LoadingPage from "src/components/usulan/LoadingPage";
+import LoadingPage from "src/components/Loading/LoadingPage";
 import { notFound } from "next/navigation";
 import { useEffect } from "react";
 import FinalReportAdmin from "./_admin";
@@ -9,12 +9,8 @@ import FinalReportKaprodi from "./_kaprodi";
 import FinalReportKetuaRG from "./_ketua_rg";
 import FinalReportLecturer from "./_lecturer";
 
-
-
-
-export default function LaporanAkhirPage() {
+export default function LogbookPage() {
     const { session, loading: sessionLoading } = useSession();
-    const dummy = 'dummy';
   
     useEffect(() => {
       if (!sessionLoading) {
@@ -34,7 +30,5 @@ export default function LaporanAkhirPage() {
       return <FinalReportKetuaRG />
     } else if (session?.user_type == "kaprodi") {
       return <FinalReportKaprodi />
-    } else {
-      return notFound()
     }
   }

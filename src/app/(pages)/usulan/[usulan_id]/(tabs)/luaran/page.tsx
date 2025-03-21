@@ -1,7 +1,7 @@
 'use client'
 
 import { useSession } from "src/components/session/session";
-import LoadingPage from "src/components/usulan/LoadingPage";
+import LoadingPage from "src/components/Loading/LoadingPage";
 import { notFound } from "next/navigation";
 import { useEffect } from "react";
 import ExternalDocumentAdmin from "./_admin";
