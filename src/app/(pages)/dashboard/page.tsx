@@ -8,61 +8,91 @@ import DashboardKetuaRG from "./_ketuaRg";
 import DashboardLecturer from "./_lecturer";
 import DashboardKaprodi from "./_kaprodi";
 import { useSession } from "src/components/session/session";
-import { notFound } from "next/navigation";
-
-interface Usulan {
-  id: number;
-  title: string;
-  date: string;
-  schema: string;
-  dosenPengusul: string;
-  prodi: string;
-  status: string;
-  statusClass: string;
-}
+import { MRT_ColumnDef } from "mantine-react-table";
+import { proposal_suggestion } from "prisma/interfaces";
+import ProposalSuggestionStatusBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionStatusBadge";
 
 export default function Dashboard() {
-  const [usulan, setUsulan] = useState<Usulan[]>([]);
   const { session, loading: sessionLoading } = useSession();
-  const [loading, setLoading] = useState(true);
 
-  const user_type = session?.user_type === 'ketua_rg' 
-    ? 'research_group' 
-    : session?.user_type === 'lecturer' 
-    ? 'lecturer' 
-    : session?.user_type;
+  const columns = React.useMemo<MRT_ColumnDef<proposal_suggestion>[]>(
+    () => [
+      {
+        accessorKey: "name",
+        header: "Judul Penelitian/Pengmas",
+        size: 300,
+      },
+      {
+        accessorFn: (row) => row.schema?.name,
+        header: "Skema",
+        size: 100,
+      },
+      {
+        accessorFn: (row) => row.lecturer?.name,
+        header: "Dosen Pengusul",
+        size: 150,
+      },
+      {
+        accessorFn: (row) => row.department?.name,
+        header: "Prodi",
+        size: 175,
+      },
+      {
+        accessorKey: "status",
+        header: "Status",
+        Cell: ({ cell }) => {
+          const proposal = cell.row.original as proposal_suggestion;
+          return (
+            <ProposalSuggestionStatusBadge status={proposal.status} />
+          );
+        },
+      },
+    ],
+    []
+  );
 
-  useEffect(() => {
-    const fetchUsulan = async () => {
-      try {
-        const response = await axios.get(`/api/${user_type}/dashboard`);
-        setUsulan(response.data);
-      } catch (error) {
-        console.error("Error fetching proposals:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const columnsLecturer = React.useMemo<MRT_ColumnDef<proposal_suggestion>[]>(
+    () => [
+      {
+        accessorKey: "name",
+        header: "Judul Penelitian/Pengmas",
+        size: 300,
+      },
+      {
+        accessorFn: (row) => row.schema?.name,
+        header: "Skema",
+        size: 100,
+      },
+      {
+        accessorFn: (row) => row.department?.name,
+        header: "Prodi",
+        size: 175,
+      },
+      {
+        accessorKey: "status",
+        header: "Status",
+        Cell: ({ cell }) => {
+          const proposal = cell.row.original as proposal_suggestion;
+          return (
+            <ProposalSuggestionStatusBadge status={proposal.status} />
+          );
+        },
+      },
+    ],
+    []
+  );
 
-    if (!sessionLoading) {
-      fetchUsulan();
-    }
-  }, [sessionLoading]);
-
-  if (loading || sessionLoading) {
+  if (sessionLoading) {
     return <LoadingPage />;
   }
 
   if (session?.user_type === "admin") {
-    return <DashboardAdmin usulan={usulan} />;
-  } else if (session?.user_type === "lecturer") {
-    return <DashboardLecturer usulan={usulan} />;
+    return <DashboardAdmin columns={columns} />;
   } else if (session?.user_type === "ketua_rg") {
-    return <DashboardKetuaRG usulan={usulan} />;
+    return <DashboardKetuaRG columns={columns} />;
   } else if (session?.user_type === "kaprodi") {
-    return <DashboardKetuaRG usulan={usulan} />;
-    // return <DashboardKaprodi usulan={usulan} />;
-  } else {
-    return notFound()
+    return <DashboardKaprodi columns={columns} />;
+  } else if (session?.user_type === "lecturer") {
+    return <DashboardLecturer columns={columnsLecturer} />;
   }
 }

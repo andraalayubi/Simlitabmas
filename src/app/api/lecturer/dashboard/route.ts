@@ -1,15 +1,22 @@
 import proposalSuggestionService from "src/services/proposalSuggestionService";
 import { NextResponse } from "next/server";
+import { getSession } from "src/lib/session";
 
 export async function GET() {
   try {
+    const session = await getSession();
+    console.log('tes', session);
+    
+    const lecturer_id = session?.lecturer_id;
+
     const include = {
       schema: true,
       lecturer: true,
       department: true,
     };
 
-    const proposal_suggestions = await proposalSuggestionService.getByFilter({is_active: true}, include);
+    // get by filter
+    const proposal_suggestions = await proposalSuggestionService.getByFilter({is_active: true, lecturer_id: Number(lecturer_id)}, include);
 
     return NextResponse.json(
       {

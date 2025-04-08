@@ -28,7 +28,6 @@ export async function GET(req: NextRequest, { params }: { params: Params }) {
     }
 }
 
-
 export async function PUT(req: NextRequest, { params }: { params: Params }) {
     const proposal_suggestion_id = parseInt(params.id);
     const data = await req.json();
