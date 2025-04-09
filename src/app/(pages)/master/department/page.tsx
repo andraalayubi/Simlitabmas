@@ -5,6 +5,7 @@ import { MRT_ColumnDef } from "mantine-react-table";
 import { department } from "prisma/interfaces";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import departmentAction from "src/action/departmentAction";
+import AddDepartment from "src/components/modal/master/addDepartment";
 import ModalComponent from "src/components/modal/modal";
 import useNotification from "src/components/notification/notification";
 import TableLayout from "src/components/table/tableLayout";
@@ -76,7 +77,13 @@ export default function AuditDepartementPage() {
                 Daftar Program Studi
               </Text>
               <ModalComponent title="Buat Program Studi">
-                {(close) =><> </>}
+                {(close) => (
+                  <AddDepartment
+                    user_type={user_type}
+                    onClose={() => close()}
+                    onSuccess={() => getDepartments()}
+                  />
+                )}
               </ModalComponent>
             </div>
 

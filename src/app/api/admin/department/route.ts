@@ -2,7 +2,6 @@ import { getSession } from "src/lib/session";
 import { NextRequest, NextResponse } from "next/server";
 import departmentService from "src/services/departmentService";
 
-
 export async function POST(req: NextRequest) {
     const { name, description } = await req.json();
 

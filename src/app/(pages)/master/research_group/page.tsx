@@ -5,6 +5,7 @@ import { MRT_ColumnDef } from "mantine-react-table";
 import { department, research_group } from "prisma/interfaces";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import researchGroupAction from "src/action/researchGroupAction";
+import AddResearchGroup from "src/components/modal/master/addResearchGroup";
 import ModalComponent from "src/components/modal/modal";
 import useNotification from "src/components/notification/notification";
 import TableLayout from "src/components/table/tableLayout";
@@ -76,7 +77,13 @@ export default function AuditResearchGroupPage() {
                 Daftar Research Group
               </Text>
               <ModalComponent title="Buat Research Group">
-                {(close) =><> </>}
+                {(close) => (
+                  <AddResearchGroup
+                    user_type={user_type}
+                    onClose={() => close()}
+                    onSuccess={() => getResearchGroup()}
+                  />
+                )}
               </ModalComponent>
             </div>
 

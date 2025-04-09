@@ -15,6 +15,9 @@ const getAllActive = async () => {
     });
 };
 
+const create = async (data: any) => {
+    return await prisma.year_research.create({ data })
+}
 
 //get summary for audit page
 const getSummaryList = async () => {
@@ -60,6 +63,7 @@ const getSummaryList = async () => {
 const yearResearchService = {
     getById,
     getAllActive,
+    create,
     getSummaryList,
 }
 

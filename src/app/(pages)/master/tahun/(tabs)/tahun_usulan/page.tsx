@@ -9,6 +9,7 @@ import yearResearchAction from "src/action/yearResearchAction";
 import TableLayout from "src/components/table/tableLayout";
 import ModalComponent from "src/components/modal/modal";
 import { Text } from "@mantine/core";
+import AddYearResearch from "src/components/modal/master/addYearResearch";
 
 export default function AuditTahun() {
   const user_type = "admin";
@@ -34,11 +35,27 @@ export default function AuditTahun() {
         accessorKey: "open_date",
         header: "Tanggal Buka",
         size: 200,
+        Cell: ({ cell }) => {
+          const date = new Date(cell.getValue<string>());
+          return date.toLocaleDateString('id-ID', { 
+            day: 'numeric', 
+            month: 'long', 
+            year: 'numeric' 
+          });
+        },
       },
       {
         accessorKey: "closed_date",
         header: "Tanggal Tutup",
         size: 200,
+        Cell: ({ cell }) => {
+          const date = new Date(cell.getValue<string>());
+          return date.toLocaleDateString('id-ID', { 
+            day: 'numeric', 
+            month: 'long', 
+            year: 'numeric' 
+          });
+        },
       },
       {
         accessorKey: "accepted_suggestion_count",
@@ -81,7 +98,13 @@ export default function AuditTahun() {
             Daftar Tahun Usulan
           </Text>
           <ModalComponent title="Buat Tahun Usulan">
-            {(close) => <> </>}
+            {(close) => (
+              <AddYearResearch
+                user_type={user_type}
+                onClose={() => close()}
+                onSuccess={() => getYearResearch()}
+              />
+            )}
           </ModalComponent>
         </div>
 

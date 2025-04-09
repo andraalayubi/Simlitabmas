@@ -1,4 +1,5 @@
-import { user_type } from "prisma/interfaces";
+import axios from "axios";
+import { research_group, user_type } from "prisma/interfaces";
 import { getSession } from "src/lib/session";
 
 // get research group list
@@ -73,15 +74,42 @@ const getResearchGroupDetail = async (
 };
 
 // create research group
-const createResearchGroup = async () => {
+const createResearchGroup = async (
+  user_type: user_type,
+  data: any,
+  setLoading: (loading: boolean) => void
+) => {
+  setLoading(true);
 
-}
+  try {
+    const response = await axios.post(`/api/${user_type}/research_group`, data);
+
+    if (response.status === 200 || response.data.success == true) {
+      return {
+        success: true,
+        message: response.data.message,
+        data: response.data.data,
+      };
+    } else {
+      return {
+        success: false,
+        message: response.data.message,
+      };
+    }
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.response?.data?.message || "An unexpected error occurred",
+    };
+  } finally {
+    setLoading(false);
+  }
+};
 
 const researchGroupAction = {
-    getResearchGroup,
-    getResearchGroupDetail,
-    createResearchGroup,
-}
-
+  getResearchGroup,
+  getResearchGroupDetail,
+  createResearchGroup,
+};
 
 export default researchGroupAction;
