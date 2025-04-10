@@ -28,6 +28,7 @@ const getByFilter = async (filter: {
     schema_id?: number;
     lecturer_id?: number;
     research_group_id?: number | null;
+    department_id?: number;
     is_active?: boolean;
     lecturer_member?: number;
 }, include?: {
@@ -43,6 +44,7 @@ const getByFilter = async (filter: {
         year_research_id: filter.year_research_id,
         schema_id: filter.schema_id,
         research_group_id: filter.research_group_id,
+        department_id: filter.department_id,
         is_active: filter.is_active,
     };
 
