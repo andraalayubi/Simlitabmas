@@ -1,15 +1,74 @@
-'use client'
+"use client";
 
-import React from "react"
+import React, { useCallback, useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import useNotification from "src/components/notification/notification";
+import { external_document, proposal_suggestion } from "prisma/interfaces";
+import externalDocumentAction from "src/action/externalDocumentAction";
+import { Skeleton, Stack } from "@mantine/core";
+import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
+import ExternalDocumentCard from "src/components/card/proposal_suggestion/ExternalDocumentCard";
 
 const ExternalDocumentKetuaRG = () => {
-    
+  const user_type = "ketua_rg";
+  const [loading, setLoading] = useState(true);
+  const params = useParams();
+  const usulan_id = params.usulan_id[0];
+  const { showNotification } = useNotification();
+  const [proposalSuggestion, setProposalSuggestion] =
+    useState<proposal_suggestion | null>(null);
+  const [external_documents, setExternalDocuments] = useState<
+    external_document[]
+  >([]);
 
+  const getExternalDocuments = useCallback(async () => {
+    const response = await externalDocumentAction.getExternalDocuments(
+      user_type,
+      usulan_id,
+      setLoading
+    );
+    if (response.success) {
+      showNotification({ status: "success", message: response.message });
+      setProposalSuggestion(response.data);
+      setExternalDocuments(response.data.external_document);
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  }, [user_type, usulan_id]);
 
-    return <>
-        <div>DOKUMEN LUARAN KETUA  RG TABS</div>
+  useEffect(() => {
+    getExternalDocuments();
+  }, [getExternalDocuments]);
+
+  return (
+    <>
+      <div className="bg-white shadow sm:rounded-lg p-6">
+        <Skeleton visible={loading}>
+          <ProposalSuggestionSummaryCard
+            proposal_suggestion_name={proposalSuggestion?.name!}
+            status={proposalSuggestion?.status!}
+            phase={proposalSuggestion?.phase!}
+          />
+        </Skeleton>
+
+        <div className="mt-6">
+          <Skeleton visible={loading}>
+            <Stack gap="md">
+              {external_documents.map((external_document) => (
+                <ExternalDocumentCard
+                  key={external_document.id}
+                  external_document={external_document}
+                  onSuccess={getExternalDocuments}
+                  user_type={user_type}
+                  editable={false}
+                />
+              ))}
+            </Stack>
+          </Skeleton>
+        </div>
+      </div>
     </>
-}
+  );
+};
 
-
-export default  ExternalDocumentKetuaRG
+export default ExternalDocumentKetuaRG;
