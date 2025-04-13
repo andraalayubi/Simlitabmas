@@ -40,13 +40,10 @@ const getExternalDocuments = async (
 };
 
 const createExternalDocument = async (
-  external_document: external_document,
+  external_document: any,
   proposal_suggestion_id: number,
-  external_document_id: number,
   user_type: user_type,
-  setLoading: (loading: boolean) => void
 ) => {
-  setLoading(true);
 
   try {
     const response = await axios.post(
@@ -69,9 +66,7 @@ const createExternalDocument = async (
       success: false,
       message: error.response?.data?.message || "An unexpected error occurred",
     };
-  } finally {
-    setLoading(false);
-  }
+  } 
 };
 
 const updateExternalDocument = async (
@@ -143,11 +138,49 @@ const deleteExternalDocument = async (
   }
 };
 
+const getExternalDocumentsCategory = async (
+  schema_id: number,
+  user_type: user_type,
+  setLoading: (loading: boolean) => void
+) => {
+  setLoading(true)
+
+  try {
+    const response = await fetch(
+      `/api/${user_type}/external-document-category/${schema_id}`,
+      {
+        method: "GET",
+      }
+    );
+    const result = await response.json();
+    if (result.status === 200 || result.success == true) {
+      return {
+        success: true,
+        message: result.message,
+        data: result.data,
+      };
+    } else {
+      return {
+        success: false,
+        message: result.message,
+      };
+    }
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.response?.data?.message || "An unexpected error occurred",
+    };
+  } finally {
+    setLoading(false);
+  }
+}
+
 const externalDocumentAction = {
   getExternalDocuments,
   createExternalDocument,
   updateExternalDocument,
   deleteExternalDocument,
+  getExternalDocumentsCategory
 };
 
 export default externalDocumentAction;
