@@ -187,7 +187,7 @@ export interface proposal_suggestion {
   student_member?: student_member[];
   vendor_member?: vendor_member[];
   suggestion_cost?: suggestion_cost[];
-  additonal_document?: additional_document[];
+  additional_document?: additional_document[];
   external_document?: external_document[];
   review?: review[];
   logbook?: logbook[];

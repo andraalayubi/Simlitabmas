@@ -2,9 +2,11 @@ import axios from "axios";
 
 const uploadFile = async (
   file: File,
-  setLoading: (loading: boolean) => void
+  setLoading?: (loading: boolean) => void
 ) => {
-  setLoading(true);
+  const setLoadingFinal = setLoading ?? (() => {});
+
+  setLoadingFinal(true);
   const formData = new FormData();
   formData.append("file", file);
 
@@ -28,7 +30,7 @@ const uploadFile = async (
       message: error.response?.data?.message || "An unexpected error occurred",
     };
   } finally {
-    setLoading(false);
+    setLoadingFinal(false);
   }
 };
 
