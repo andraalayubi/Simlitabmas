@@ -143,12 +143,29 @@ const year_researches = [
 const positions = [
     { name: "Professor", description: "A senior academic position for conducting advanced research and teaching." },
     { name: "Associate Professor", description: "An academic position supporting research and lecturing responsibilities." },
-    { name: "Lecturer", description: "A position for teaching and contributing to research activities." }
+    { name: "Lecturer", description: "A position for teaching and contributing to research activities." },
+    {
+        name: "Guru Besar",
+        description: "Jabatan akademik tertinggi dengan kewajiban utama melakukan penelitian unggulan, membimbing penelitian doktoral, dan berkontribusi secara signifikan dalam pengembangan ilmu pengetahuan di tingkat nasional maupun internasional."
+    },
+    {
+        name: "Lektor Kepala",
+        description: "Jabatan akademik madya yang berperan aktif dalam penelitian, menjadi pembimbing utama mahasiswa magister dan doktor, serta menghasilkan publikasi ilmiah bereputasi nasional dan internasional."
+    },
+    {
+        name: "Lektor",
+        description: "Jabatan akademik yang mendukung kegiatan penelitian, aktif dalam publikasi ilmiah, serta terlibat dalam bimbingan tugas akhir dan penelitian mahasiswa tingkat sarjana dan magister."
+    },
+    {
+        name: "Asisten Ahli",
+        description: "Jabatan akademik awal yang mulai terlibat dalam kegiatan penelitian, mendukung penulisan karya ilmiah, serta berpartisipasi dalam kegiatan ilmiah dan seminar akademik."
+    }
 ];
 
 const schemas = [
     { name: "Skema Dasar", description: "Penelitian atau pengabdian yang berfokus pada eksplorasi, penemuan, dan pemahaman konsep, teori, atau fenomena ilmiah tanpa memprioritaskan aplikasi praktis langsung.", max_cost: 500000, min_degree: "S1" as degree, is_student: true, is_partner: true, is_lecturer: true },
-    { name: "Skema Terapan", description: "Penelitian atau pengabdian yang dirancang untuk memecahkan masalah praktis atau menghasilkan produk yang dapat langsung dimanfaatkan oleh masyarakat atau industri.", max_cost: 1000000, min_degree: "S1" as degree, is_student: true, is_partner: true, is_lecturer: true }
+    { name: "Skema Terapan", description: "Penelitian atau pengabdian yang dirancang untuk memecahkan masalah praktis atau menghasilkan produk yang dapat langsung dimanfaatkan oleh masyarakat atau industri.", max_cost: 1000000, min_degree: "S1" as degree, is_student: true, is_partner: true, is_lecturer: true },
+    { name: "Skema Pengembangan", description: "Penelitian atau pengabdian yang dirancang untuk memecahkan masalah praktis atau menghasilkan produk yang dapat langsung dimanfaatkan oleh masyarakat atau industri.", max_cost: 1000000, min_degree: "S1" as degree, is_student: true, is_partner: true, is_lecturer: true }
 ];
 
 const position_schemas = [
@@ -159,6 +176,19 @@ const position_schemas = [
     { schema_id: 2, position_id: 2 },
     { schema_id: 2, position_id: 3 }
 ];
+
+const external_document_categories = [
+    { name: "Publikasi Ilmiah", schema_id: 1,  description: "Artikel jurnal ilimiah terindeks"},
+    { name: "Buku Teks", schema_id: 1,description: "Karya tulis yang menguraikan teori dasar, model konseptual, atau kajian mendalam suatu bidang ilmu"},
+    { name: "Presentasi", schema_id: 1, description: "Makalah yang dipresentasikan dalam forum-forum akademik dan seminar"},
+    { name: "Standar Teoritis", schema_id: 1, description: "Dokumen atau pedoman yang mendefinisikan kerangka konseptual untuk penelitian lanjutan di bidang tertentu."},
+    { name: "Artikel Jurnal", schema_id: 2, description: "Publikasi yang membahas aplikasi teori dalam menyelesaikan persoalan praktis."},
+    { name: "Prototype",schema_id: 2, description: "Hasil rancangan awal atau model uji yang menunjukkan kemampuan penerapan hasil penelitian dalam memecahkan masalah tertentu."},
+    { name: "Panduan Praktis", schema_id: 2, description: "Dokumentasi yang berisi pedoman atau strategi implementasi solusi berbasis penelitian untuk pihak-pihak terkait."},
+    { name: "Paten dan Hak Kekayaan Intelektual (HKI)",schema_id: 3, description: "Dokumen paten atas inovasi teknologi atau metodologi baru yang dihasilkan dari penelitian pengembangan."},
+    { name: "SOP dan Pedoman Operasional", schema_id: 3,  description: "Standar operasional prosedur, modul pelatihan, atau materi pendukung yang disusun untuk mendukung implementasi dan pengembangan lebih lanjut dari produk atau teknologi yang dikembangkan."},
+    { name: "Kemitraan atau Transfer Teknologi", schema_id: 3, description: "Dokumen perjanjian kerja sama dengan pihak industri atau lembaga lain sebagai bentuk penerapan hasil penelitian ke dalam produk atau layanan komersial."}
+]
 
 const departements = [
     { name: "Departemen Teknik Elektro", description: "Menaungi program studi terkait teknik elektro dan aplikasinya." },
@@ -1636,7 +1666,13 @@ const main = async () => {
             data: evaluations
         })
         console.log("Inserting evaluations...");
-
+        
+        // insert external document category
+        await prisma.external_document_category.createMany({
+            data: external_document_categories
+        })
+        console.log("Inserting external category...");
+        
         console.log("Seeding selesai.");
     } catch (error) {
         console.error("Terjadi kesalahan saat seeding:", error);

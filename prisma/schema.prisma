@@ -293,7 +293,7 @@ model proposal_suggestion {
   review             review[]
   logbook            logbook[]
   proposal           proposal?
-  final_report final_report[]
+  final_report       final_report[]
 
   @@map("proposal_suggestions")
 }
@@ -468,7 +468,8 @@ model external_document {
   id                            Int     @id @default(autoincrement())
   name                          String
   proposal_suggestion_id        Int
-  external_document_category_id Int
+  external_document_category_id Int?
+  status                        String?
   description                   String?
   file_url                      String?
 
@@ -476,8 +477,8 @@ model external_document {
   updatedAt DateTime @updatedAt
   deleted   Boolean  @default(false)
 
-  proposal_suggestion        proposal_suggestion        @relation(fields: [proposal_suggestion_id], references: [id])
-  external_document_category external_document_category @relation(fields: [external_document_category_id], references: [id])
+  proposal_suggestion        proposal_suggestion         @relation(fields: [proposal_suggestion_id], references: [id])
+  external_document_category external_document_category? @relation(fields: [external_document_category_id], references: [id])
 
   @@map("external_documents")
 }

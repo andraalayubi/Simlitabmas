@@ -73,16 +73,6 @@ const updateLogbook = async (
   }
 };
 
-
-const uploadLogbookFile =  async (
-  file: File,
-  setLoading: (loading: boolean) => void
-) => {
-  setLoading(true);
-  const formData = new FormData();
-  formData.append("file", file);
-}
-
 const logbookAction = {
   getLogbooks,
   updateLogbook,

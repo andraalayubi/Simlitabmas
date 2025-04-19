@@ -327,14 +327,15 @@ export interface external_document {
   id: number;
   name: string;
   proposal_suggestion_id: number;
-  external_document_category_id: number;
+  external_document_category_id: number | null;
+  status: string | null;
   description: string | null;
   file_url: string | null;
   createdAt: Date;
   updatedAt: Date;
   deleted: boolean;
   proposal_suggestion?: proposal_suggestion;
-  external_document_category?: external_document_category;
+  external_document_category?: external_document_category | null;
 }
 
 export interface log {

@@ -128,7 +128,7 @@ const CreateLecturerModal: React.FC<CreateLecturerModalProps> = ({
 
   return (
     <>
-      <ScrollArea h={500} type="always" offsetScrollbars>
+      {/* <ScrollArea h={500} type="always" offsetScrollbars> */}
         <Box p="md">
           <form onSubmit={lecturerForm.onSubmit(handleSubmit)}>
             <Stack gap="lg">
@@ -194,7 +194,7 @@ const CreateLecturerModal: React.FC<CreateLecturerModalProps> = ({
             </Stack>
           </form>
         </Box>
-      </ScrollArea>
+      {/* </ScrollArea> */}
     </>
   );
 };
