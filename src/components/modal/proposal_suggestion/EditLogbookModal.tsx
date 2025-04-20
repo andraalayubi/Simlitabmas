@@ -35,7 +35,7 @@ const EditLogbookModal: React.FC<EditLogbookModalProps> = ({
   );
   const [newFileUrl, setNewFileUrl] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
+  
   const updateLogbook = async () => {
     const updatedData = {
       name: editedName,

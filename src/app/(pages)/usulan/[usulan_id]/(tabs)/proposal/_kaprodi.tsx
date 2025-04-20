@@ -119,29 +119,6 @@ const ProposalKaprodi = () => {
 
           {/* Kolom Tombol + Hasil Reviewer */}
           <div className="flex flex-col gap-4">
-            {/* Tombol Upload dan Simpan */}
-            <div className="flex gap-x-2">
-              <FileButton
-                onChange={(file) => {
-                  // Langsung gunakan file dari parameter onChange
-                  setProposalFile(file);
-                  handleFileUpload(file);
-                }}
-                accept="application/pdf"
-              >
-                {(props) => <Button {...props}>Upload Proposal</Button>}
-              </FileButton>
-              {/* <Button disabled={!proposalFile} color="red" onClick={clearProposalFile}>
-                Hapus File
-              </Button> */}
-              <Button
-                variant="outline"
-                onClick={updateProposal}
-                // disabled={!proposalFile}
-              >
-                Simpan
-              </Button>
-            </div>
 
             {/* Hasil Reviewer */}
             <div className="grid grid-cols-1 gap-4">
