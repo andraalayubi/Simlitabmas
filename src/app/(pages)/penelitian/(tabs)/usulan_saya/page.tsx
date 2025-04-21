@@ -5,6 +5,7 @@ import { useSession } from "src/components/session/session";
 import { MRT_ColumnDef } from "mantine-react-table";
 import {
   proposal_suggestion,
+  proposal_suggestion_phase,
   proposal_suggestion_status,
 } from "prisma/interfaces";
 import UsulanSayaLecturer from "./_lecturer";
@@ -13,6 +14,7 @@ import UsulanSayaKaprodi from "./_kaprodi";
 import UsulanSayaKetuaRG from "./_ketua_rg";
 import ProposalSuggestionStatusBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionStatusBadge";
 import { Skeleton } from "@mantine/core";
+import ProposalSuggestionPhaseBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionPhaseBadge";
 
 export default function AllSuggestionPage() {
   const { session, loading: sessionLoading } = useSession();
@@ -40,8 +42,17 @@ export default function AllSuggestionPage() {
         size: 200,
       },
       {
+        accessorKey: "phase",
+        header: "Tahap Usulan",
+        Cell: ({ cell }) => (
+          <ProposalSuggestionPhaseBadge
+            phase={cell.getValue<proposal_suggestion_phase>()}
+          />
+        ),
+      },
+      {
         accessorKey: "status",
-        header: "Status Proposal",
+        header: "Status Usulan",
         Cell: ({ cell }) => (
           <ProposalSuggestionStatusBadge
             status={cell.getValue<proposal_suggestion_status>()}
@@ -53,12 +64,28 @@ export default function AllSuggestionPage() {
   );
 
   if (session?.user_type === "admin") {
-    return <Skeleton visible={sessionLoading}><UsulanSayaAdmin columns={columns} /></Skeleton>;
+    return (
+      <Skeleton visible={sessionLoading}>
+        <UsulanSayaAdmin columns={columns} />
+      </Skeleton>
+    );
   } else if (session?.user_type === "lecturer") {
-    return <Skeleton visible={sessionLoading}><UsulanSayaLecturer columns={columns} /></Skeleton>;
+    return (
+      <Skeleton visible={sessionLoading}>
+        <UsulanSayaLecturer columns={columns} />
+      </Skeleton>
+    );
   } else if (session?.user_type === "ketua_rg") {
-    return <Skeleton visible={sessionLoading}><UsulanSayaKetuaRG columns={columns} /></Skeleton>;
+    return (
+      <Skeleton visible={sessionLoading}>
+        <UsulanSayaKetuaRG columns={columns} />
+      </Skeleton>
+    );
   } else if (session?.user_type === "kaprodi") {
-    return <Skeleton visible={sessionLoading}><UsulanSayaKaprodi columns={columns} /></Skeleton>;
+    return (
+      <Skeleton visible={sessionLoading}>
+        <UsulanSayaKaprodi columns={columns} />
+      </Skeleton>
+    );
   }
 }

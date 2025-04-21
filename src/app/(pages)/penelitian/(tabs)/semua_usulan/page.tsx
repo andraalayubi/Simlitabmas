@@ -5,6 +5,7 @@ import { useSession } from "src/components/session/session";
 import { MRT_ColumnDef } from "mantine-react-table";
 import {
   proposal_suggestion,
+  proposal_suggestion_phase,
   proposal_suggestion_status,
 } from "prisma/interfaces";
 import SemuaUsulanLecturer from "./_lecturer";
@@ -13,6 +14,7 @@ import SemuaUsulanKaprodi from "./_kaprodi";
 import SemuaUsulanKetuaRG from "./_ketua_rg";
 import ProposalSuggestionStatusBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionStatusBadge";
 import { Skeleton } from "@mantine/core";
+import ProposalSuggestionPhaseBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionPhaseBadge";
 
 export default function AllSuggestionPage({ refreshTrigger }: { refreshTrigger: number }) {
   console.log(refreshTrigger);
@@ -46,8 +48,17 @@ export default function AllSuggestionPage({ refreshTrigger }: { refreshTrigger: 
         size: 200,
       },
       {
+        accessorKey: "phase",
+        header: "Tahap Usulan",
+        Cell: ({ cell }) => (
+          <ProposalSuggestionPhaseBadge
+            phase={cell.getValue<proposal_suggestion_phase>()}
+          />
+        ),
+      },
+      {
         accessorKey: "status",
-        header: "Status Proposal",
+        header: "Status Usulan",
         Cell: ({ cell }) => (
           <ProposalSuggestionStatusBadge
             status={cell.getValue<proposal_suggestion_status>()}

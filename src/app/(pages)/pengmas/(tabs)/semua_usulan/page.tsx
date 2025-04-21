@@ -8,11 +8,13 @@ import SemuaUsulanKetuaRG from "./_ketua_rg";
 import SemuaUsulanKaprodi from "./_kaprodi";
 import {
   proposal_suggestion,
+  proposal_suggestion_phase,
   proposal_suggestion_status,
 } from "prisma/interfaces";
 import SemuaUsulanAdmin from "./_admin";
 import ProposalSuggestionStatusBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionStatusBadge";
 import { Skeleton } from "@mantine/core";
+import ProposalSuggestionPhaseBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionPhaseBadge";
 
 export default function AllSuggestionPage() {
   const { session, loading: sessionLoading } = useSession();
@@ -40,8 +42,22 @@ export default function AllSuggestionPage() {
         size: 200,
       },
       {
+        accessorFn: (row) => row.department?.name,
+        header: "Program Studi",
+        size: 200,
+      },
+      {
+        accessorKey: "phase",
+        header: "Tahap Usulan",
+        Cell: ({ cell }) => (
+          <ProposalSuggestionPhaseBadge
+            phase={cell.getValue<proposal_suggestion_phase>()}
+          />
+        ),
+      },
+      {
         accessorKey: "status",
-        header: "Status Proposal",
+        header: "Status Usulan",
         Cell: ({ cell }) => (
           <ProposalSuggestionStatusBadge
             status={cell.getValue<proposal_suggestion_status>()}
