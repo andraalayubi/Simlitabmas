@@ -21,7 +21,6 @@ import { IconSearch } from "@tabler/icons-react";
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
 import { department } from "prisma/interfaces";
-import reportAction from "src/action/reportAction";
 import useNotification from "src/components/notification/notification";
 import departmentAction from "src/action/departmentAction";
 
@@ -41,34 +40,22 @@ const getPerformanceLabel = (score: number, topScores: number[]) => {
   return "Needs Improvement";
 };
 
-type DepartmentWithCount = department & {
-  _count: {
-    proposal_suggestion: number;
-  };
-};
-
-type DepartmentWithCountKey = keyof DepartmentWithCount;
-
 export default function DepartmentRankingPage() {
   const user_type = "admin";
   const { showNotification } = useNotification();
   const [loading, setLoading] = useState(false);
 
   const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState<
-    DepartmentWithCountKey | "totalScore" | "proposalCount" | "ranking"
-  >("totalScore");
+  const [sortBy, setSortBy] = useState<any>("totalScore");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-  const [departments, setDepartments] = useState<DepartmentWithCount[]>([]);
+  const [departments, setDepartments] = useState<any[]>([]);
 
   const getDepartment = useCallback(async () => {
-    const response1 = await reportAction.getDepartment(user_type, setLoading);
     const response = await departmentAction.getDepartment(
       user_type,
       setLoading
     );
-    console.log(response);
-    
+
     if (response.success) {
       setDepartments(response.data);
       showNotification({ status: "success", message: response.message });
@@ -83,12 +70,12 @@ export default function DepartmentRankingPage() {
 
   // Calculate sorted scores for dynamic badge/label assignment
   const sortedScores = [
-    ...departments.map((d) => d._count.proposal_suggestion),
+    ...departments.map((d) => d.proposal_suggestion_count),
   ].sort((a, b) => b - a);
 
   // Hitung peringkat tetap berdasarkan proposal_suggestion (descending)
   const rankingByProposal = [...departments]
-    .sort((a, b) => b._count.proposal_suggestion - a._count.proposal_suggestion)
+    .sort((a, b) => b.proposal_suggestion_count - a.proposal_suggestion_count)
     .map((group, idx) => ({ id: group.id, rank: idx + 1 }));
 
   const rankMap = Object.fromEntries(
@@ -106,11 +93,11 @@ export default function DepartmentRankingPage() {
         aValue = rankMap[a.id];
         bValue = rankMap[b.id];
       } else if (sortBy === "totalScore" || sortBy === "proposalCount") {
-        aValue = a._count.proposal_suggestion;
-        bValue = b._count.proposal_suggestion;
+        aValue = a.proposal_suggestion_count;
+        bValue = b.proposal_suggestion_count;
       } else {
-        aValue = a[sortBy as keyof DepartmentWithCount];
-        bValue = b[sortBy as keyof DepartmentWithCount];
+        aValue = a[sortBy as keyof department];
+        bValue = b[sortBy as keyof department];
       }
 
       if (typeof aValue === "number" && typeof bValue === "number") {
@@ -129,13 +116,7 @@ export default function DepartmentRankingPage() {
     if (sortBy === key) {
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     } else {
-      setSortBy(
-        key as
-          | DepartmentWithCountKey
-          | "totalScore"
-          | "proposalCount"
-          | "ranking"
-      );
+      setSortBy(key);
       setSortOrder("desc");
     }
   };
@@ -160,7 +141,7 @@ export default function DepartmentRankingPage() {
             {departments
               .sort(
                 (a, b) =>
-                  b._count.proposal_suggestion - a._count.proposal_suggestion
+                  b.proposal_suggestion_count - a.proposal_suggestion_count
               )
               .slice(0, 3)
               .map((group, index) => (
@@ -173,16 +154,16 @@ export default function DepartmentRankingPage() {
                         sections={[
                           {
                             value:
-                              (group._count.proposal_suggestion / 40) * 100,
+                              (group.proposal_suggestion_count / 40) * 100,
                             color: getBadgeColor(
-                              group._count.proposal_suggestion,
+                              group.proposal_suggestion_count,
                               sortedScores
                             ),
                           },
                         ]}
                         label={
                           <Text ta="center" fw={700} size="xl">
-                            {group._count.proposal_suggestion}
+                            {group.proposal_suggestion_count}
                           </Text>
                         }
                       />
@@ -193,7 +174,7 @@ export default function DepartmentRankingPage() {
                     <Group mt="md" justify="center">
                       <Badge
                         color={getBadgeColor(
-                          group._count.proposal_suggestion,
+                          group.proposal_suggestion_count,
                           sortedScores
                         )}
                         size="lg"
@@ -229,13 +210,7 @@ export default function DepartmentRankingPage() {
             value={sortBy}
             onChange={(value) => {
               if (value)
-                setSortBy(
-                  value as
-                    | keyof DepartmentWithCount
-                    | "totalScore"
-                    | "proposalCount"
-                    | "ranking"
-                );
+                setSortBy(value);
             }}
             style={{ width: 200 }}
           />
@@ -296,14 +271,14 @@ export default function DepartmentRankingPage() {
                 <Table.Tr key={group.id}>
                   <Table.Td>{rankMap[group.id]}</Table.Td>
                   <Table.Td>{group.name}</Table.Td>
-                  <Table.Td>{group._count.proposal_suggestion}</Table.Td>
+                  <Table.Td>{group.proposal_suggestion_count}</Table.Td>
                   <Table.Td>
                     <Group gap="xs">
-                      <Text fw={700}>{group._count.proposal_suggestion}</Text>
+                      <Text fw={700}>{group.proposal_suggestion_count}</Text>
                       <Progress
-                        value={(group._count.proposal_suggestion / 40) * 100}
+                        value={(group.proposal_suggestion_count / 40) * 100}
                         color={getBadgeColor(
-                          group._count.proposal_suggestion,
+                          group.proposal_suggestion_count,
                           sortedScores
                         )}
                         size="sm"
@@ -314,12 +289,12 @@ export default function DepartmentRankingPage() {
                   <Table.Td>
                     <Badge
                       color={getBadgeColor(
-                        group._count.proposal_suggestion,
+                        group.proposal_suggestion_count,
                         sortedScores
                       )}
                     >
                       {getPerformanceLabel(
-                        group._count.proposal_suggestion,
+                        group.proposal_suggestion_count,
                         sortedScores
                       )}
                     </Badge>

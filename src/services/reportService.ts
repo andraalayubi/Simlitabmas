@@ -18,38 +18,6 @@ const getLecturer = async () => {
     });
 }
 
-//get report for research group
-const getResearchGroup = async () => {
-    return await prisma.research_group.findMany({
-        where: {
-            deleted: false,
-        },
-        include: {
-            _count: {
-                select: {
-                    proposal_suggestion: true
-                }
-            }
-        }
-    });
-}
-
-//get report for department
-const getDepartment = async () => {
-    return await prisma.department.findMany({
-        where: {
-            deleted: false,
-        },
-        include: {
-            _count: {
-                select: {
-                    proposal_suggestion: true
-                }
-            }
-        }
-    });
-}
-
 //get report lecturer by department id
 const getLecturerByDepartmentId = async (departmentId: number) => {
     return await prisma.lecturer.findMany({
@@ -70,8 +38,6 @@ const getLecturerByDepartmentId = async (departmentId: number) => {
 
 const evaluationService = {
     getLecturer,
-    getResearchGroup,
-    getDepartment,
     getLecturerByDepartmentId
 };
 
