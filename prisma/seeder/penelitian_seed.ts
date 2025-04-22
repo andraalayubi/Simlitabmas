@@ -33,6 +33,7 @@ const base_final_report = {
 
 
 const proposalSuggestionsPenelitian = [
+    // 1
     {
         name: "Pengembangan UI/UX pada CRM Pengabdian Masyarakat",
         year_research_id: 1,
@@ -60,6 +61,7 @@ const proposalSuggestionsPenelitian = [
             },
         },
     },
+    // 2
     {
         name: "Integrasi Machine Learning untuk Analisis Data Akuakultur",
         year_research_id: 1,
@@ -87,6 +89,7 @@ const proposalSuggestionsPenelitian = [
             },
         },
     },
+    // 3
     {
         name: "Metodologi Agile dalam Pengembangan Perangkat Lunak Akademik",
         year_research_id: 1,
@@ -114,6 +117,7 @@ const proposalSuggestionsPenelitian = [
             },
         },
     },
+    // 4
     {
         year_research_id: 1,
         schema_id: 1,
@@ -141,6 +145,7 @@ const proposalSuggestionsPenelitian = [
             },
         },
     },
+    //5
     {
         name: "Analisis Sinyal Biomedik untuk Diagnosa Dini Penyakit",
         year_research_id: 1,
@@ -168,6 +173,7 @@ const proposalSuggestionsPenelitian = [
             },
         },
     },
+    // 6
     {
         name: "Keamanan Siber pada Infrastruktur Kritis Nasional",
         year_research_id: 1,
@@ -195,6 +201,7 @@ const proposalSuggestionsPenelitian = [
             },
         },
     },
+    // 7
     {
         name: "Optimalisasi AI dalam Sistem e-Bisnis",
         year_research_id: 1,
@@ -222,6 +229,7 @@ const proposalSuggestionsPenelitian = [
             }
         },
     },
+    // 8
     {
         name: "Pemanfaatan Data Science untuk Pencapaian SDGs",
         year_research_id: 1,
@@ -249,6 +257,7 @@ const proposalSuggestionsPenelitian = [
             }
         },
     },
+    // 9
     {
         name: "Inovasi Digital Media untuk Pembelajaran Interaktif",
         year_research_id: 1,
@@ -276,6 +285,7 @@ const proposalSuggestionsPenelitian = [
             }
         },
     },
+    // 10
     {
         name: "Pengembangan Antarmuka Multimedia Responsif untuk Penyandang Disabilitas Sensorik",
         year_research_id: 2,
@@ -303,6 +313,7 @@ const proposalSuggestionsPenelitian = [
             },
         },
     },
+    // 11
     {
         name: "Sistem IoT untuk Optimasi Kualitas Air pada Budidaya Udang Skala Industri",
         year_research_id: 2,
@@ -330,6 +341,7 @@ const proposalSuggestionsPenelitian = [
             },
         },
     },
+    // 12
     {
         name: "Implementasi Framework Scrum dalam Pengembangan Aplikasi Edukasi Berbasis Gamifikasi",
         year_research_id: 2,
@@ -357,6 +369,7 @@ const proposalSuggestionsPenelitian = [
             },
         },
     },
+    // 13
     {
         name: "Pengembangan Biobaterai Berbasis Mikroorganisme untuk Penyimpanan Energi Terbarukan",
         year_research_id: 2,
@@ -384,6 +397,7 @@ const proposalSuggestionsPenelitian = [
             },
         },
     },
+    // 14
     {
         name: "Desain Wearable Device untuk Deteksi Dini Gangguan Irama Jantung dengan Analisis Sinyal ECG",
         year_research_id: 2,
@@ -411,6 +425,7 @@ const proposalSuggestionsPenelitian = [
             },
         },
     },
+    // 15
     {
         name: "Rancangan Sistem Deteksi Intrusi Berbasis AI untuk Jaringan Industri 4.0",
         year_research_id: 2,
@@ -438,6 +453,7 @@ const proposalSuggestionsPenelitian = [
             },
         },
     },
+    // 16
     {
         name: "Integrasi NLP dalam Sistem Rekomendasi Produk untuk Marketplace Lokal",
         year_research_id: 2,
@@ -465,6 +481,7 @@ const proposalSuggestionsPenelitian = [
             }
         },
     },
+    // 17
     {
         name: "Prediksi Ketahanan Pangan Regional Menggunakan Analisis Data Satelit dan Machine Learning",
         year_research_id: 2,
@@ -492,6 +509,7 @@ const proposalSuggestionsPenelitian = [
             }
         },
     },
+    // 18
     {
         name: "Augmented Reality untuk Visualisasi Interaktif Warisan Budaya Indonesia",
         year_research_id: 2,
@@ -520,6 +538,7 @@ const proposalSuggestionsPenelitian = [
             }
         },
     },
+    // 19
     {
         name: "Optimasi Konsumsi Daya pada Sensor Cerdas Pertanian Berbasis TinyML",
         year_research_id: 2,
@@ -547,6 +566,7 @@ const proposalSuggestionsPenelitian = [
             }
         },
     },
+    // 20
     {
         name: "Studi User Experience pada Aplikasi Konferensi Virtual untuk Pendidikan Jarak Jauh",
         year_research_id: 2,
@@ -574,6 +594,7 @@ const proposalSuggestionsPenelitian = [
             },
         },
     },
+    // 21
     {
         name: "Prototipe Autonomous Drone untuk Monitoring Kesehatan Tambak Ikan",
         year_research_id: 2,
@@ -601,6 +622,7 @@ const proposalSuggestionsPenelitian = [
             },
         },
     },
+    // 22
     {
         name: "Adaptasi Metode Kanban dalam Pengembangan Aplikasi Kesehatan Mental",
         year_research_id: 2,
@@ -628,6 +650,7 @@ const proposalSuggestionsPenelitian = [
             },
         },
     },
+    // 23
     {
         name: "Konversi Limbah Pertanian menjadi Biofuel Berbasis Teknologi Elektrokimia",
         year_research_id: 2,
@@ -655,6 +678,7 @@ const proposalSuggestionsPenelitian = [
             },
         },
     },
+    // 25
     {
         name: "Inovasi Alat Pulse Oximeter Portabel dengan Integrasi Cloud Computing",
         year_research_id: 2,
@@ -682,6 +706,7 @@ const proposalSuggestionsPenelitian = [
             },
         },
     },
+    // 25
     {
         name: "Analisis Kerentanan Zero-Day pada Sistem SCADA di Pembangkit Listrik",
         year_research_id: 2,
@@ -709,6 +734,7 @@ const proposalSuggestionsPenelitian = [
             },
         },
     },
+    // 26
     {
         name: "Model Prediksi Dampak Perubahan Iklim terhadap Keanekaragaman Hayati Laut",
         year_research_id: 2,

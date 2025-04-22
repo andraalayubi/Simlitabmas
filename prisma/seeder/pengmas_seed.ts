@@ -32,6 +32,7 @@ const base_final_report = {
 }
 
 const proposalSuggestionsPengmas = [
+    // 1
     {
         name: "Pelatihan Digital Marketing bagi UMKM Lokal di Era Industri 4.0",
         year_research_id: 1,
@@ -58,6 +59,7 @@ const proposalSuggestionsPengmas = [
             }
         },
     },
+    // 2
     {
         name: "Edukasi dan Implementasi Teknologi Hidroponik bagi Petani Perkotaan",
         year_research_id: 2, // 2024
@@ -84,6 +86,7 @@ const proposalSuggestionsPengmas = [
             },
         },
     },
+    // 3
     {
         name: "Pemberdayaan Ibu Rumah Tangga melalui Program Wirausaha Kuliner Sehat",
         year_research_id: 2, // 2025
@@ -110,6 +113,7 @@ const proposalSuggestionsPengmas = [
             },
         },
     },
+    // 4
     {
         year_research_id: 1,
         schema_id: 2,
@@ -136,6 +140,7 @@ const proposalSuggestionsPengmas = [
             },
         },
     },
+    // 5
     {
         name: "Workshop Fotografi dan Editing Konten Visual bagi Pelaku Usaha Kuliner",
         year_research_id: 2,
@@ -162,6 +167,7 @@ const proposalSuggestionsPengmas = [
             },
         },
     },
+    // 6
     {
         name: "Pembuatan Aplikasi Mobile untuk Monitoring Kesehatan Lansia di Puskesmas",
         year_research_id: 2,
@@ -188,6 +194,7 @@ const proposalSuggestionsPengmas = [
             },
         },
     },
+    // 7
     {
         name: "Pelatihan Desain Grafis bagi Anak Muda sebagai Bekal Karier Kreatif",
         year_research_id: 2,
@@ -214,6 +221,7 @@ const proposalSuggestionsPengmas = [
             },
         },
     },
+    // 8
     {
         name: "Pengenalan dan Pemanfaatan AI untuk Peningkatan Efisiensi Administrasi Desa",
         year_research_id: 2,
@@ -240,6 +248,7 @@ const proposalSuggestionsPengmas = [
             }
         },
     },
+    // 9
     {
         name: "Workshop Pengelolaan Sampah Organik menjadi Pupuk Kompos bagi Masyarakat Desa",
         year_research_id: 2,
@@ -266,6 +275,7 @@ const proposalSuggestionsPengmas = [
             }
         },
     },
+    // 10
     {
         name: "Pemberdayaan Remaja Melalui Pelatihan Public Speaking dan Leadership",
         year_research_id: 2,
@@ -292,6 +302,7 @@ const proposalSuggestionsPengmas = [
             }
         },
     },
+    // 11
     {
         name: "Instalasi Panel Surya Off-Grid untuk Desa Terpencil Berbasis Teknologi IoT",
         year_research_id: 2,
@@ -318,6 +329,7 @@ const proposalSuggestionsPengmas = [
             }
         },
     },
+    // 12
     {
         name: "Pelatihan Perbaikan Alat Elektronik Rumah Tangga bagi Pemuda Desa",
         year_research_id: 2,
@@ -344,6 +356,7 @@ const proposalSuggestionsPengmas = [
             }
         },
     },
+    // 13
     {
         name: "Sistem Penerangan Jalan Umum Tenaga Hybrid (Angin-Surya) untuk Kawasan Pedesaan",
         year_research_id: 2,
@@ -370,6 +383,7 @@ const proposalSuggestionsPengmas = [
             }
         },
     },
+    // 14
     {
         name: "Workshop Pembuatan Charger Portabel Berbahan Dasar Limbah Baterai",
         year_research_id: 2,
@@ -396,6 +410,7 @@ const proposalSuggestionsPengmas = [
             }
         },
     },
+    // 15
     {
         year_research_id: 2,
         schema_id: 2,
@@ -422,6 +437,7 @@ const proposalSuggestionsPengmas = [
             },
         },
     },
+    // 16
     {
         year_research_id: 2,
         schema_id: 2,
@@ -448,6 +464,7 @@ const proposalSuggestionsPengmas = [
             },
         },
     },
+    // 17
     {
         year_research_id: 2,
         schema_id: 2,
@@ -474,6 +491,7 @@ const proposalSuggestionsPengmas = [
             },
         },
     },
+    // 18
     {
         year_research_id: 2,
         schema_id: 2,
@@ -500,6 +518,7 @@ const proposalSuggestionsPengmas = [
             },
         },
     },
+    // 19
     {
         year_research_id: 2,
         schema_id: 2,
@@ -526,6 +545,7 @@ const proposalSuggestionsPengmas = [
             },
         },
     },
+    // 20
     {
         name: "Konversi Mesin Diesel ke Biodiesel untuk Kapal Nelayan Tradisional",
         year_research_id: 2, 
@@ -552,6 +572,7 @@ const proposalSuggestionsPengmas = [
             },
         },
     },
+    // 21
     {
         name: "Pelatihan Perawatan Mesin Pertanian Berkelanjutan di Daerah Agraris",
         year_research_id: 2, 
@@ -578,6 +599,7 @@ const proposalSuggestionsPengmas = [
             },
         },
     },
+    // 22
     {
         name: "Pemasangan Biogas dari Limbah Ternak untuk Rumah Tangga Pedesaan",
         year_research_id: 2, 
@@ -604,6 +626,7 @@ const proposalSuggestionsPengmas = [
             },
         },
     },
+    // 23
     {
         name: "Workshop Energi Mikrohidro untuk Pembangkit Listrik Komunitas Pegunungan",
         year_research_id: 2, 
@@ -630,6 +653,7 @@ const proposalSuggestionsPengmas = [
             },
         },
     },
+    // 24
     {
         name: "Pelatihan Animasi 2D untuk Promosi Budaya Lokal melalui Media Sosial",
         year_research_id: 2,
@@ -656,6 +680,7 @@ const proposalSuggestionsPengmas = [
             },
         },
     },
+    // 25
     {
         name: "Pengembangan Konten Edukasi Interaktif tentang Sejarah Lokal Berbasis Augmented Reality",
         year_research_id: 2,
@@ -682,6 +707,7 @@ const proposalSuggestionsPengmas = [
             },
         },
     },
+    // 26
     {
         name: "Sosialisasi Desain Kemasan Produk UMKM dengan Tools Digital Kreatif",
         year_research_id: 2,
