@@ -20,16 +20,17 @@ export default function ProgressRecapPage() {
   const [proposalSuggestion, setProposalSuggestion] = useState<
     proposal_suggestion[]
   >([]);
-  const params = useParams();
   const { showNotification } = useNotification();
 
   // map column
   const columns = useMemo<MRT_ColumnDef<proposal_suggestion>[]>(
     () => [
       {
-        accessorKey: "id",
-        header: "No",
-        size: 50,
+        accessorKey: "jenis",
+        header: "Jenis",
+        size: 80,
+        Cell: ({ row }) =>
+          !row.original.research_group ? "Pengmas" : "Penelitian",
       },
       {
         accessorKey: "name",
@@ -39,12 +40,12 @@ export default function ProgressRecapPage() {
       {
         accessorKey: "schema.name",
         header: "Tahun",
-        size: 100,
+        size: 50,
       },
       {
         accessorKey: "lecturer.name",
         header: "Pengusul",
-        size: 200,
+        size: 100,
       },
       {
         accessorKey: "status",
@@ -74,9 +75,6 @@ export default function ProgressRecapPage() {
     const response = await proposalSuggestionAction.getProposalSuggestion(
       user_type,
       setLoading,
-      {
-        research_group_id: "null",
-      }
     );
     
     if (response.success) {
