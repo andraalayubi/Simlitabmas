@@ -13,6 +13,8 @@ export interface SessionPayload extends JWTPayload {
     username: user['username'];
     user_type: user['user_type'];
     lecturer_id: user['lecturer_id'];
+    department_id: lecturer['department_id'];
+    research_group_id: lecturer['research_group_id'];
 }
 
 // membuat enkripsi payload informasi user
