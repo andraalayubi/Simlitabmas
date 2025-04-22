@@ -79,7 +79,7 @@ const proposalSuggestionsPenelitian = [
         final_report: base_final_report,
         lecturer_member: {
             create: {
-                lecturer_id: 1,
+                lecturer_id: 5,
                 name: "Dr. Agus Indra Gunawan",
                 research_group_id: 5,
                 department_id: 3,
@@ -322,7 +322,7 @@ const proposalSuggestionsPenelitian = [
         final_report: base_final_report,
         lecturer_member: {
             create: {
-                lecturer_id: 1,
+                lecturer_id: 5,
                 name: "Dr. Agus Indra Gunawan",
                 research_group_id: 5,
                 department_id: 3,
@@ -593,7 +593,7 @@ const proposalSuggestionsPenelitian = [
         final_report: base_final_report,
         lecturer_member: {
             create: {
-                lecturer_id: 1,
+                lecturer_id: 5,
                 name: "Dr. Agus Indra Gunawan",
                 research_group_id: 5,
                 department_id: 3,

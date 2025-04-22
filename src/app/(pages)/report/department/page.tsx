@@ -15,6 +15,7 @@ import {
   Grid,
   RingProgress,
   Card,
+  Skeleton,
 } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import "@mantine/core/styles.css";
@@ -22,6 +23,7 @@ import "@mantine/notifications/styles.css";
 import { department } from "prisma/interfaces";
 import reportAction from "src/action/reportAction";
 import useNotification from "src/components/notification/notification";
+import departmentAction from "src/action/departmentAction";
 
 // Function to get badge color based on dynamic top scores
 const getBadgeColor = (score: number, topScores: number[]) => {
@@ -45,22 +47,28 @@ type DepartmentWithCount = department & {
   };
 };
 
+type DepartmentWithCountKey = keyof DepartmentWithCount;
+
 export default function DepartmentRankingPage() {
   const user_type = "admin";
-  const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState<string | null>("totalScore");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-  const [loading, setLoading] = useState(false);
-  const [departments, setDepartments] = useState<
-  DepartmentWithCount[]
-  >([]);
   const { showNotification } = useNotification();
-  console.log(sortBy, sortOrder);
-  
+  const [loading, setLoading] = useState(false);
+
+  const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState<
+    DepartmentWithCountKey | "totalScore" | "proposalCount" | "ranking"
+  >("totalScore");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [departments, setDepartments] = useState<DepartmentWithCount[]>([]);
 
   const getDepartment = useCallback(async () => {
-    const response = await reportAction.getDepartment(user_type, setLoading);
-
+    const response1 = await reportAction.getDepartment(user_type, setLoading);
+    const response = await departmentAction.getDepartment(
+      user_type,
+      setLoading
+    );
+    console.log(response);
+    
     if (response.success) {
       setDepartments(response.data);
       showNotification({ status: "success", message: response.message });
@@ -74,7 +82,18 @@ export default function DepartmentRankingPage() {
   }, [getDepartment]);
 
   // Calculate sorted scores for dynamic badge/label assignment
-  const sortedScores = [...departments.map((d) => d._count.proposal_suggestion)].sort((a, b) => b - a);
+  const sortedScores = [
+    ...departments.map((d) => d._count.proposal_suggestion),
+  ].sort((a, b) => b - a);
+
+  // Hitung peringkat tetap berdasarkan proposal_suggestion (descending)
+  const rankingByProposal = [...departments]
+    .sort((a, b) => b._count.proposal_suggestion - a._count.proposal_suggestion)
+    .map((group, idx) => ({ id: group.id, rank: idx + 1 }));
+
+  const rankMap = Object.fromEntries(
+    rankingByProposal.map((item) => [item.id, item.rank])
+  );
 
   // Filter and sort departments
   const filteredGroups = departments
@@ -82,19 +101,21 @@ export default function DepartmentRankingPage() {
       department.name.toLowerCase().includes(search.toLowerCase())
     )
     .sort((a, b) => {
-      if (!sortBy) return 0;
+      let aValue, bValue;
+      if (sortBy === "ranking") {
+        aValue = rankMap[a.id];
+        bValue = rankMap[b.id];
+      } else if (sortBy === "totalScore" || sortBy === "proposalCount") {
+        aValue = a._count.proposal_suggestion;
+        bValue = b._count.proposal_suggestion;
+      } else {
+        aValue = a[sortBy as keyof DepartmentWithCount];
+        bValue = b[sortBy as keyof DepartmentWithCount];
+      }
 
-      console.log(a, b, sortBy);
-      
-      const aValue = a[sortBy as keyof typeof a];
-      const bValue = b[sortBy as keyof typeof b];
-
-      console.log(aValue, bValue);
-      
       if (typeof aValue === "number" && typeof bValue === "number") {
         return sortOrder === "asc" ? aValue - bValue : bValue - aValue;
       }
-
       if (typeof aValue === "string" && typeof bValue === "string") {
         return sortOrder === "asc"
           ? aValue.localeCompare(bValue)
@@ -104,151 +125,216 @@ export default function DepartmentRankingPage() {
       return 0;
     });
 
-  // Handle sort change
-  const handleSortChange = (column: string) => {
-    if (sortBy === column) {
+  const handleSortChange = (key: string) => {
+    if (sortBy === key) {
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     } else {
-      setSortBy(column);
+      setSortBy(
+        key as
+          | DepartmentWithCountKey
+          | "totalScore"
+          | "proposalCount"
+          | "ranking"
+      );
       setSortOrder("desc");
     }
   };
 
   return (
     <Container size="xl" py="xl">
-      <Title order={1} mb="lg">
-        Peringkat Performa Program Studi
-      </Title>
+      <Skeleton visible={loading}>
+        <Title order={1} mb="lg">
+          Peringkat Performa Program Studi
+        </Title>
+      </Skeleton>
 
       {/* Top Performers */}
       <Paper withBorder p="md" mb="xl">
-        <Title order={3} mb="md">
-          Program Studi Terbaik
-        </Title>
-        <Grid>
-          {departments
-            .sort((a, b) => b._count.proposal_suggestion - a._count.proposal_suggestion)
-            .slice(0, 3)
-            .map((group, index) => (
-              <Grid.Col key={group.id} span={{ base: 12, md: 4 }}>
-                <Card withBorder padding="lg" radius="md">
-                  <Group justify="center" mb="md">
-                    <RingProgress
-                      size={120}
-                      thickness={12}
-                      sections={[
-                        {
-                          value: (group._count.proposal_suggestion / 40) * 100,
-                          color: getBadgeColor(group._count.proposal_suggestion, sortedScores),
-                        },
-                      ]}
-                      label={
-                        <Text ta="center" fw={700} size="xl">
-                          {group._count.proposal_suggestion}
-                        </Text>
-                      }
-                    />
-                  </Group>
-                  <Text ta="center" fw={500} size="lg">
-                    {group.name}
-                  </Text>
-                  <Group mt="md" justify="center">
-                    <Badge color={getBadgeColor(group._count.proposal_suggestion, sortedScores)} size="lg">
-                      Peringkat #{index + 1}
-                    </Badge>
-                  </Group>
-                </Card>
-              </Grid.Col>
-            ))}
-        </Grid>
+        <Skeleton visible={loading}>
+          <Title order={3} mb="md">
+            Program Studi Terbaik
+          </Title>
+        </Skeleton>
+        <Skeleton visible={loading}>
+          <Grid>
+            {departments
+              .sort(
+                (a, b) =>
+                  b._count.proposal_suggestion - a._count.proposal_suggestion
+              )
+              .slice(0, 3)
+              .map((group, index) => (
+                <Grid.Col key={group.id} span={{ base: 12, md: 4 }}>
+                  <Card withBorder padding="lg" radius="md">
+                    <Group justify="center" mb="md">
+                      <RingProgress
+                        size={120}
+                        thickness={12}
+                        sections={[
+                          {
+                            value:
+                              (group._count.proposal_suggestion / 40) * 100,
+                            color: getBadgeColor(
+                              group._count.proposal_suggestion,
+                              sortedScores
+                            ),
+                          },
+                        ]}
+                        label={
+                          <Text ta="center" fw={700} size="xl">
+                            {group._count.proposal_suggestion}
+                          </Text>
+                        }
+                      />
+                    </Group>
+                    <Text ta="center" fw={500} size="lg">
+                      {group.name}
+                    </Text>
+                    <Group mt="md" justify="center">
+                      <Badge
+                        color={getBadgeColor(
+                          group._count.proposal_suggestion,
+                          sortedScores
+                        )}
+                        size="lg"
+                      >
+                        Peringkat #{index + 1}
+                      </Badge>
+                    </Group>
+                  </Card>
+                </Grid.Col>
+              ))}
+          </Grid>
+        </Skeleton>
       </Paper>
 
       {/* Filters */}
-      <Group mb="md">
-        <TextInput
-          placeholder="Cari research group..."
-          value={search}
-          onChange={(event) => setSearch(event.currentTarget.value)}
-          leftSection={<IconSearch size={16} />}
-          style={{ flex: 1 }}
-        />
+      <Skeleton visible={loading}>
+        <Group mb="md">
+          <TextInput
+            placeholder="Cari program studi..."
+            value={search}
+            onChange={(event) => setSearch(event.currentTarget.value)}
+            leftSection={<IconSearch size={16} />}
+            style={{ flex: 1 }}
+          />
 
-        <Select
-          placeholder="Urutkan berdasarkan"
-          data={[
-            { value: "totalScore", label: "Skor Total" },
-          ]}
-          value={sortBy}
-          onChange={setSortBy}
-          style={{ width: 200 }}
-        />
+          <Select
+            placeholder="Urutkan berdasarkan"
+            data={[
+              { value: "ranking", label: "Peringkat" },
+              { value: "proposalCount", label: "Jumlah Usulan" },
+              { value: "totalScore", label: "Skor Total" },
+            ]}
+            value={sortBy}
+            onChange={(value) => {
+              if (value)
+                setSortBy(
+                  value as
+                    | keyof DepartmentWithCount
+                    | "totalScore"
+                    | "proposalCount"
+                    | "ranking"
+                );
+            }}
+            style={{ width: 200 }}
+          />
 
-        <Select
-          placeholder="Urutan"
-          data={[
-            { value: "desc", label: "Tertinggi ke Terendah" },
-            { value: "asc", label: "Terendah ke Tertinggi" },
-          ]}
-          value={sortOrder}
-          onChange={(value) => setSortOrder(value as "asc" | "desc")}
-          style={{ width: 200 }}
-        />
-      </Group>
+          <Select
+            placeholder="Urutan"
+            data={[
+              { value: "desc", label: "Tertinggi ke Terendah" },
+              { value: "asc", label: "Terendah ke Tertinggi" },
+            ]}
+            value={sortOrder}
+            onChange={(value) => setSortOrder(value as "asc" | "desc")}
+            style={{ width: 200 }}
+          />
+        </Group>
+      </Skeleton>
 
       {/* Main Table */}
       <Paper withBorder p="md">
-        <Table striped highlightOnHover>
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th>Peringkat</Table.Th>
-              <Table.Th
-                style={{ cursor: "pointer" }}
-                onClick={() => handleSortChange("name")}
-              >
-                Nama Research Group{" "}
-                {sortBy === "name" && (sortOrder === "asc" ? "↑" : "↓")}
-              </Table.Th>
-              <Table.Th
-                style={{ cursor: "pointer" }}
-                onClick={() => handleSortChange("totalScore")}
-              >
-                Skor Total{" "}
-                {sortBy === "totalScore" && (sortOrder === "asc" ? "↑" : "↓")}
-              </Table.Th>
-              <Table.Th>Performa</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>
-            {filteredGroups.map((group, index) => (
-              <Table.Tr key={group.id}>
-                <Table.Td>{index + 1}</Table.Td>
-                <Table.Td>{group.name}</Table.Td>
-                <Table.Td>
-                  <Group gap="xs">
-                    <Text fw={700}>{group._count.proposal_suggestion}</Text>
-                    <Progress
-                      value={(group._count.proposal_suggestion / 40) * 100}
-                      color={getBadgeColor(group._count.proposal_suggestion, sortedScores)}
-                      size="sm"
-                      w={60}
-                    />
-                  </Group>
-                </Table.Td>
-                <Table.Td>
-                  <Badge color={getBadgeColor(group._count.proposal_suggestion, sortedScores)}>
-                    {getPerformanceLabel(group._count.proposal_suggestion, sortedScores)}
-                  </Badge>
-                </Table.Td>
+        <Skeleton visible={loading}>
+          <Table striped highlightOnHover>
+            <Table.Thead>
+              <Table.Tr>
+                <Table.Th
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleSortChange("ranking")}
+                >
+                  Peringkat{" "}
+                  {sortBy === "ranking" && (sortOrder === "asc" ? "↑" : "↓")}
+                </Table.Th>
+                <Table.Th
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleSortChange("name")}
+                >
+                  Nama Research Group{" "}
+                  {sortBy === "name" && (sortOrder === "asc" ? "↑" : "↓")}
+                </Table.Th>
+                <Table.Th
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleSortChange("proposalCount")}
+                >
+                  Jumlah Usulan{" "}
+                  {sortBy === "proposalCount" &&
+                    (sortOrder === "asc" ? "↑" : "↓")}
+                </Table.Th>
+                <Table.Th
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleSortChange("totalScore")}
+                >
+                  Skor Total{" "}
+                  {sortBy === "totalScore" && (sortOrder === "asc" ? "↑" : "↓")}
+                </Table.Th>
+                <Table.Th>Performa</Table.Th>
               </Table.Tr>
-            ))}
-          </Table.Tbody>
-        </Table>
+            </Table.Thead>
+            <Table.Tbody>
+              {filteredGroups.map((group) => (
+                <Table.Tr key={group.id}>
+                  <Table.Td>{rankMap[group.id]}</Table.Td>
+                  <Table.Td>{group.name}</Table.Td>
+                  <Table.Td>{group._count.proposal_suggestion}</Table.Td>
+                  <Table.Td>
+                    <Group gap="xs">
+                      <Text fw={700}>{group._count.proposal_suggestion}</Text>
+                      <Progress
+                        value={(group._count.proposal_suggestion / 40) * 100}
+                        color={getBadgeColor(
+                          group._count.proposal_suggestion,
+                          sortedScores
+                        )}
+                        size="sm"
+                        w={60}
+                      />
+                    </Group>
+                  </Table.Td>
+                  <Table.Td>
+                    <Badge
+                      color={getBadgeColor(
+                        group._count.proposal_suggestion,
+                        sortedScores
+                      )}
+                    >
+                      {getPerformanceLabel(
+                        group._count.proposal_suggestion,
+                        sortedScores
+                      )}
+                    </Badge>
+                  </Table.Td>
+                </Table.Tr>
+              ))}
+            </Table.Tbody>
+          </Table>
 
-        {filteredGroups.length === 0 && (
-          <Text ta="center" py="xl" c="dimmed">
-            Tidak ada data research group yang sesuai dengan filter
-          </Text>
-        )}
+          {filteredGroups.length === 0 && (
+            <Text ta="center" py="xl" c="dimmed">
+              Tidak ada data research group yang sesuai dengan filter
+            </Text>
+          )}
+        </Skeleton>
       </Paper>
     </Container>
   );
