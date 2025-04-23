@@ -32,7 +32,7 @@ const lecturers = [
             },
         ] as JsonArray,
         is_ketua_rg: true,
-        is_kaprodi: true,
+        is_kaprodi: false,
         position_id: 1,
         user: {
             create: [
@@ -66,7 +66,7 @@ const lecturers = [
             }
         ] as JsonArray,
         is_ketua_rg: true,
-        is_kaprodi: true,
+        is_kaprodi: false,
         position_id: 2,
         user: {
             create: [
@@ -100,7 +100,7 @@ const lecturers = [
             }
         ] as JsonArray,
         is_ketua_rg: true,
-        is_kaprodi: true,
+        is_kaprodi: false,
         position_id: 3,
         user: {
             create: [

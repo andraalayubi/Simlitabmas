@@ -13,6 +13,9 @@ import {
   IconUser,
   IconBuildingCommunity,
   IconUserHeart,
+  IconUserStar,
+  IconTopologyStar,
+  IconBooks,
 } from "@tabler/icons-react";
 
 // Tipe data untuk konfigurasi menu
@@ -86,13 +89,18 @@ const MENU_CONFIG: Record<string, MenuSection[]> = {
       items: [
         {
           name: "Dosen",
-          icon: <IconUserHeart />,
+          icon: <IconUserStar />,
           path: "/report/lecturer",
         },
         {
           name: "Research Group",
-          icon: <IconUserHeart />,
+          icon: <IconTopologyStar />,
           path: "/report/research_group",
+        },
+        {
+          name: "Program Studi",
+          icon: <IconBooks />,
+          path: "/report/department",
         },
       ],
     },

@@ -17,7 +17,7 @@ export default function AuditResearchGroupPage() {
   const { showNotification } = useNotification();
 
   // map columns
-  const columns = useMemo<MRT_ColumnDef<department>[]>(
+  const columns = useMemo<MRT_ColumnDef<research_group>[]>(
     () => [
       {
         accessorKey: "id",
