@@ -22,14 +22,14 @@ export default function AllSuggestionPage() {
   const columns = useMemo<MRT_ColumnDef<proposal_suggestion>[]>(
     () => [
       {
-        accessorKey: "id",
-        header: "No",
-        size: 50,
-      },
-      {
         accessorKey: "name",
         header: "Judul Penelitian",
         size: 300,
+      },
+      {
+        accessorFn: (row) => row.year_research?.year,
+        header: "Tahun",
+        size: 100,
       },
       {
         accessorFn: (row) => row.schema?.name,

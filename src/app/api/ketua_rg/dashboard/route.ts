@@ -12,6 +12,7 @@ export async function GET() {
     const include = {
       schema: true,
       lecturer: true,
+      year_research: true,
       department: true,
     };
 

@@ -2,13 +2,16 @@
 
 import React, { useCallback, useEffect, useState } from "react";
 import { Card, SimpleGrid, Text } from "@mantine/core";
-import { MantineReactTable, MRT_ColumnDef } from "mantine-react-table";
+import { MRT_ColumnDef } from "mantine-react-table";
 import { proposal_suggestion } from "prisma/interfaces";
 import { Skeleton } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import proposalSuggestionAction from "src/action/proposalSuggestionAction";
+import TableLayout from "src/components/table/tableLayout";
 
-const DashboardLecturer: React.FC<{ columns: MRT_ColumnDef<proposal_suggestion>[] }> = ({ columns }) => {
+const DashboardLecturer: React.FC<{
+  columns: MRT_ColumnDef<proposal_suggestion>[];
+}> = ({ columns }) => {
   const user_type = "lecturer";
 
   const [usulan, setUsulan] = useState<proposal_suggestion[]>([]);
@@ -21,14 +24,22 @@ const DashboardLecturer: React.FC<{ columns: MRT_ColumnDef<proposal_suggestion>[
       user_type,
       setLoading
     );
-    
+
     if (response.success) {
       showNotification({ status: "success", message: response.message });
       console.log(response.data);
-      
+
       setUsulan(response.data);
-      setUsulanPenelitianCount(response.data.filter((p: proposal_suggestion) => p.research_group_id !== null).length);
-      setUsulanPengabdianCount(response.data.filter((p: proposal_suggestion) => p.research_group_id === null).length);
+      setUsulanPenelitianCount(
+        response.data.filter(
+          (p: proposal_suggestion) => p.research_group_id !== null
+        ).length
+      );
+      setUsulanPengabdianCount(
+        response.data.filter(
+          (p: proposal_suggestion) => p.research_group_id === null
+        ).length
+      );
     } else {
       showNotification({ status: "error", message: response.message });
     }
@@ -64,7 +75,13 @@ const DashboardLecturer: React.FC<{ columns: MRT_ColumnDef<proposal_suggestion>[
         <Text size="lg" fw={500} mb="md">
           Usulan Terbaru
         </Text>
-        <MantineReactTable columns={columns} data={usulan} />
+        <TableLayout
+          columns={columns}
+          data={usulan}
+          isLoading={loading}
+          enableRowClick={true}
+          getRowClickUrl={(row) => `/usulan/${row.id}`}
+        />
       </Card>
     </Skeleton>
   );

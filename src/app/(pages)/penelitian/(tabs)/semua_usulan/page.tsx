@@ -16,21 +16,20 @@ import ProposalSuggestionStatusBadge from "src/components/badge/proposal_suggest
 import { Skeleton } from "@mantine/core";
 import ProposalSuggestionPhaseBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionPhaseBadge";
 
-export default function AllSuggestionPage({ refreshTrigger }: { refreshTrigger: number }) {
-  console.log(refreshTrigger);
+export default function AllSuggestionPage() {
   const { session, loading: sessionLoading } = useSession();
   
   const columns = useMemo<MRT_ColumnDef<proposal_suggestion>[]>(
     () => [
       {
-        accessorKey: "id",
-        header: "No",
-        size: 50,
-      },
-      {
         accessorKey: "name",
         header: "Judul Penelitian",
         size: 300,
+      },
+      {
+        accessorFn: (row) => row.year_research?.year,
+        header: "Tahun",
+        size: 100,
       },
       {
         accessorFn: (row) => row.schema?.name,

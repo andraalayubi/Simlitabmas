@@ -2,10 +2,11 @@
 
 import React, { useCallback, useEffect, useState } from "react";
 import { Card, SimpleGrid, Text } from "@mantine/core";
-import { MantineReactTable, MRT_ColumnDef } from "mantine-react-table";
+import { MRT_ColumnDef } from "mantine-react-table";
 import { proposal_suggestion } from "prisma/interfaces";
 import { showNotification } from "@mantine/notifications";
 import proposalSuggestionAction from "src/action/proposalSuggestionAction";
+import TableLayout from "src/components/table/tableLayout";
 
 const DashboardKaprodi: React.FC<{ columns: MRT_ColumnDef<proposal_suggestion>[] }> = ({ columns }) => {
   const user_type = "kaprodi";
@@ -63,7 +64,12 @@ const DashboardKaprodi: React.FC<{ columns: MRT_ColumnDef<proposal_suggestion>[]
         <Text size="lg" fw={500} mb="md">
           Usulan Terbaru
         </Text>
-        <MantineReactTable columns={columns} data={usulan} />
+        <TableLayout
+          columns={columns}
+          data={usulan}
+          isLoading={loading}
+          enableRowClick={true}
+          getRowClickUrl={(row) => `/usulan/${row.id}`}/>
       </Card>
     </div>
   );
