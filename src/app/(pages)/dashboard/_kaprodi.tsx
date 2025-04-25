@@ -24,7 +24,6 @@ const DashboardKaprodi: React.FC<{ columns: MRT_ColumnDef<proposal_suggestion>[]
     
     if (response.success) {
       showNotification({ status: "success", message: response.message });
-      console.log(response.data);
       
       setUsulan(response.data);
       setUsulanPenelitianCount(response.data.filter((p: proposal_suggestion) => p.research_group_id !== null).length);

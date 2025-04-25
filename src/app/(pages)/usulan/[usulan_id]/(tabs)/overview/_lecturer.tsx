@@ -34,8 +34,6 @@ const OverviewLecturer: React.FC<OverviewLecturerProps> = ({ session }) => {
     );
 
     if (response.success) {
-      console.log(response.data);
-
       showNotification({ status: "success", message: response.message });
       setProposalSuggestion(response.data);
     } else {
@@ -87,11 +85,10 @@ const OverviewLecturer: React.FC<OverviewLecturerProps> = ({ session }) => {
             <Text>{proposalSuggestion?.schema?.name}</Text>
             <Text>Tahun:</Text>{" "}
             <Text>{proposalSuggestion?.year_research?.year}</Text>
-            <Text>Studi Program:</Text> <Text>Teknik Informatika</Text>
-            <Text>Komentar:</Text>{" "}
-            <Text>Proposal kurang lengkap dan jelas</Text>
+            <Text>Studi Program:</Text>{" "}
+            <Text>{proposalSuggestion?.department?.name}</Text>
           </div>
-          <TableOverview />
+          {/* <TableOverview /> */}
         </Card>
       </Skeleton>
     </>

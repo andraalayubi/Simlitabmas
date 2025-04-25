@@ -27,8 +27,7 @@ const DashboardLecturer: React.FC<{
 
     if (response.success) {
       showNotification({ status: "success", message: response.message });
-      console.log(response.data);
-
+      
       setUsulan(response.data);
       setUsulanPenelitianCount(
         response.data.filter(
