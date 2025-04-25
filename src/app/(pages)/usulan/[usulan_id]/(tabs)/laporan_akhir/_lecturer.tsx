@@ -41,14 +41,14 @@ const FinalReportLecturer = () => {
   }, [user_type, usulan_id]);
 
   useEffect(() => {
-    const isEditable = proposalSuggestion?.lecturer_id === session?.lecturer_id;
+    const createdYear = proposalSuggestion?.year_research?.year;
+    const currentYear = new Date().getFullYear();
+    
+    const isEditable =
+      proposalSuggestion?.lecturer_id === session?.lecturer_id &&
+      createdYear === currentYear;
     setEditable(isEditable);
-    console.log(
-      proposalSuggestion?.lecturer_id,
-      session?.lecturer_id,
-      isEditable
-    );
-  }, [proposalSuggestion?.lecturer_id, session?.lecturer_id]);
+  }, [proposalSuggestion?.lecturer_id, proposalSuggestion?.year_research?.year, session?.lecturer_id]);
 
   useEffect(() => {
     getFinalReports();

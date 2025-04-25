@@ -11,7 +11,8 @@ const getByProposalSuggestionId = async (proposalSuggestionId: number) => {
                 orderBy: {
                     id: 'asc'
                 }
-            }
+            },
+            year_research: true
         }
     })
 }
