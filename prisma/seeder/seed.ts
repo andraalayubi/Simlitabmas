@@ -145,7 +145,7 @@ const main = async () => {
                 "position_schemas", 
                 "proposal_suggestions",
                 "evaluations",
-                "configuration"
+                "configurations"
             RESTART IDENTITY CASCADE;
         `);
 
