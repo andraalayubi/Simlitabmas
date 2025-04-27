@@ -43,6 +43,11 @@ const year_researches = [
     { year: 2026, open_date: new Date("2026-01-01"), closed_date: new Date("2026-12-31") },
 ];
 
+
+const configuration = {
+    year_research_id: 3
+}
+
 const positions = [
     { name: "Lecturer", description: "A position for teaching and contributing to research activities." },
     {
@@ -139,7 +144,8 @@ const main = async () => {
                 "positions", 
                 "position_schemas", 
                 "proposal_suggestions",
-                "evaluations"
+                "evaluations",
+                "configuration"
             RESTART IDENTITY CASCADE;
         `);
 
@@ -204,6 +210,12 @@ const main = async () => {
         })
         console.log("Inserting year research...");
 
+
+        const active_configuration = await prisma.configuration.create({
+            data: configuration,
+        })
+        console.log("Inserting configuration...");
+
         // insert schemas
         await prisma.schema.createMany({
             data: schemas,
@@ -219,21 +231,30 @@ const main = async () => {
 
         // insert proposal suggestions and proposals for penelitian
         await prisma.$transaction(
-            proposalSuggestionsPenelitian.map((suggestion) =>
-                prisma.proposal_suggestion.create({
-                    data: suggestion,
-                })
-            )
+            proposalSuggestionsPenelitian.map((suggestion) => {
+                const is_active = suggestion.year_research_id === active_configuration.year_research_id;
+
+                return prisma.proposal_suggestion.create({
+                    data: {
+                        ...suggestion,
+                        open: is_active,
+                    },
+                });
+            })
         );
-        console.log("Inserting proposal suggestion and proposals for penelitian...");
 
         // insert proposal suggestions and proposals for pengmas
         await prisma.$transaction(
-            proposalSuggestionsPengmas.map((suggestion) =>
-                prisma.proposal_suggestion.create({
-                    data: suggestion,
+            proposalSuggestionsPengmas.map((suggestion) => {
+                const is_active = suggestion.year_research_id === active_configuration.year_research_id;
+
+                return prisma.proposal_suggestion.create({
+                    data: {
+                        ...suggestion,
+                        open: is_active,
+                    },
                 })
-            )
+            })
         );
         console.log("Inserting proposal suggestion and proposals for pengmas...");
 

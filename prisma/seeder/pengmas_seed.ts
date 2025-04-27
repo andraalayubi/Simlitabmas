@@ -31,7 +31,7 @@ const base_final_report = {
     ]
 }
 
-const proposalSuggestionsPengmas = [
+let proposalSuggestionsPengmas = [
     // 1
     {
         name: "Pelatihan Digital Marketing bagi UMKM Lokal di Era Industri 4.0",

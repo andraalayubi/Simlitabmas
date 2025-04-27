@@ -31,8 +31,7 @@ const base_final_report = {
     ]
 }
 
-
-const proposalSuggestionsPenelitian = [
+let proposalSuggestionsPenelitian = [
     // 1
     {
         name: "Pengembangan UI/UX pada CRM Pengabdian Masyarakat",

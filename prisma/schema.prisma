@@ -204,6 +204,7 @@ model year_research {
   deleted   Boolean  @default(false)
 
   proposal_suggestion proposal_suggestion[]
+  configuration configuration?
 
   @@map("year_researches")
 }
@@ -272,6 +273,7 @@ model proposal_suggestion {
   department_id     Int?
   phase             proposal_suggestion_phase?
   status            proposal_suggestion_status?
+  open              Boolean @default(true)
   is_active         Boolean?
 
   createdAt DateTime @default(now())
@@ -548,4 +550,17 @@ model external_document_category {
   external_document external_document[]
 
   @@map("external_document_categories")
+}
+
+
+model configuration {
+  id          Int     @id @default(autoincrement())
+  year_research_id Int? @unique
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  year_research     year_research?    @relation(fields: [year_research_id], references: [id])
+
+  @@map("configurations")
 }

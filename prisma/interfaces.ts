@@ -120,6 +120,7 @@ export interface year_research {
   updatedAt: Date;
   deleted: boolean;
   proposal_suggestion?: proposal_suggestion[];
+  configuration?: configuration | null;
 }
 
 export interface position {
@@ -174,6 +175,7 @@ export interface proposal_suggestion {
   department_id: number | null;
   phase: proposal_suggestion_phase | null;
   status: proposal_suggestion_status | null;
+  open: boolean;
   is_active: boolean | null;
   createdAt: Date;
   updatedAt: Date;
@@ -387,6 +389,14 @@ export interface external_document_category {
   deleted: boolean;
   schema?: schema;
   external_document?: external_document[];
+}
+
+export interface configuration {
+  id: number;
+  year_research_id: number | null;
+  createdAt: Date;
+  updatedAt: Date;
+  year_research?: year_research | null;
 }
 
 type JsonValue = string | number | boolean | { [key in string]?: JsonValue } | Array<JsonValue> | null;
