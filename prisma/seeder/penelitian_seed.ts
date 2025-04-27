@@ -98,7 +98,7 @@ let proposalSuggestionsPenelitian = [
         department_id: 2,
         status: "menunggu_rg" as proposal_suggestion_status,
         phase: "pengajuan" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Metodologi Agile dalam Pengembangan Perangkat Lunak Akademik"
@@ -182,7 +182,7 @@ let proposalSuggestionsPenelitian = [
         department_id: 1,
         status: "menunggu_admin" as proposal_suggestion_status,
         phase: "evaluasi_proposal" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Keamanan Siber pada Infrastruktur Kritis Nasional"
@@ -266,7 +266,7 @@ let proposalSuggestionsPenelitian = [
         department_id: 4,
         status: "diterima" as proposal_suggestion_status,
         phase: "evaluasi_proposal" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Inovasi Digital Media untuk Pembelajaran Interaktif"
@@ -294,7 +294,7 @@ let proposalSuggestionsPenelitian = [
         department_id: 4,
         status: "menunggu_admin" as proposal_suggestion_status,
         phase: "penetapan" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Pengembangan Antarmuka Multimedia Responsif untuk Penyandang Disabilitas Sensorik"
@@ -322,7 +322,7 @@ let proposalSuggestionsPenelitian = [
         department_id: 3,
         status: "menunggu_revisi" as proposal_suggestion_status,
         phase: "penetapan" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Sistem IoT untuk Optimasi Kualitas Air pada Budidaya Udang Skala Industri",
@@ -350,7 +350,7 @@ let proposalSuggestionsPenelitian = [
         department_id: 2,
         status: "tersimpan" as proposal_suggestion_status,
         phase: "penetapan" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Implementasi Framework Scrum dalam Pengembangan Aplikasi Edukasi Berbasis Gamifikasi"
@@ -378,7 +378,7 @@ let proposalSuggestionsPenelitian = [
         department_id: 1,
         status: "menunggu_laporan" as proposal_suggestion_status,
         phase: "monev" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Pengembangan Biobaterai Berbasis Mikroorganisme untuk Penyimpanan Energi Terbarukan"
@@ -406,7 +406,7 @@ let proposalSuggestionsPenelitian = [
         department_id: 3,
         status: "tersimpan" as proposal_suggestion_status,
         phase: "monev" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Desain Wearable Device untuk Deteksi Dini Gangguan Irama Jantung dengan Analisis Sinyal ECG"
@@ -434,7 +434,7 @@ let proposalSuggestionsPenelitian = [
         department_id: 1,
         status: "menunggu_admin" as proposal_suggestion_status,
         phase: "monev" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Rancangan Sistem Deteksi Intrusi Berbasis AI untuk Jaringan Industri 4.0"
@@ -462,7 +462,7 @@ let proposalSuggestionsPenelitian = [
         department_id: 1,
         status: "menunggu_review" as proposal_suggestion_status,
         phase: "monev" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Integrasi NLP dalam Sistem Rekomendasi Produk untuk Marketplace Lokal"
@@ -490,7 +490,7 @@ let proposalSuggestionsPenelitian = [
         department_id: 2,
         status: "ditolak" as proposal_suggestion_status,
         phase: "monev" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Prediksi Ketahanan Pangan Regional Menggunakan Analisis Data Satelit dan Machine Learning"
@@ -518,7 +518,7 @@ let proposalSuggestionsPenelitian = [
         department_id: 4,
         status: "diterima" as proposal_suggestion_status,
         phase: "monev" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Augmented Reality untuk Visualisasi Interaktif Warisan Budaya Indonesia"
@@ -547,7 +547,7 @@ let proposalSuggestionsPenelitian = [
         department_id: 1,
         status: "menunggu_laporan" as proposal_suggestion_status,
         phase: "evaluasi_akhir" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Optimasi Konsumsi Daya pada Sensor Cerdas Pertanian Berbasis TinyML"
@@ -575,7 +575,7 @@ let proposalSuggestionsPenelitian = [
         department_id: 4,
         status: "tersimpan" as proposal_suggestion_status,
         phase: "evaluasi_akhir" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Studi User Experience pada Aplikasi Konferensi Virtual untuk Pendidikan Jarak Jauh"
@@ -603,7 +603,7 @@ let proposalSuggestionsPenelitian = [
         department_id: 3,
         status: "menunggu_admin" as proposal_suggestion_status,
         phase: "evaluasi_akhir" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Prototipe Autonomous Drone untuk Monitoring Kesehatan Tambak Ikan"
@@ -631,7 +631,7 @@ let proposalSuggestionsPenelitian = [
         department_id: 2,
         status: "menunggu_review" as proposal_suggestion_status,
         phase: "evaluasi_akhir" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Adaptasi Metode Kanban dalam Pengembangan Aplikasi Kesehatan Mental"
@@ -659,7 +659,7 @@ let proposalSuggestionsPenelitian = [
         department_id: 1,
         status: "ditolak" as proposal_suggestion_status,
         phase: "evaluasi_akhir" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Konversi Limbah Pertanian menjadi Biofuel Berbasis Teknologi Elektrokimia"
@@ -687,7 +687,7 @@ let proposalSuggestionsPenelitian = [
         department_id: 3,
         status: "diterima" as proposal_suggestion_status,
         phase: "evaluasi_akhir" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Inovasi Alat Pulse Oximeter Portabel dengan Integrasi Cloud Computing"
@@ -715,7 +715,7 @@ let proposalSuggestionsPenelitian = [
         department_id: 1,
         status: "menunggu_admin" as proposal_suggestion_status,
         phase: "penetapan_akhir" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Analisis Kerentanan Zero-Day pada Sistem SCADA di Pembangkit Listrik"
@@ -743,7 +743,7 @@ let proposalSuggestionsPenelitian = [
         department_id: 2,
         status: "selesai" as proposal_suggestion_status,
         phase: "penetapan_akhir" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Model Prediksi Dampak Perubahan Iklim terhadap Keanekaragaman Hayati Laut"

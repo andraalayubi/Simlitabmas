@@ -95,7 +95,7 @@ let proposalSuggestionsPengmas = [
         department_id: 3,
         status: "menunggu_kaprodi" as proposal_suggestion_status,
         phase: "pengajuan" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Pemberdayaan Ibu Rumah Tangga melalui Program Wirausaha Kuliner Sehat"
@@ -149,7 +149,7 @@ let proposalSuggestionsPengmas = [
         department_id: 4,
         status: "diterima" as proposal_suggestion_status,
         phase: "pengajuan" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Workshop Fotografi dan Editing Konten Visual bagi Pelaku Usaha Kuliner"
@@ -203,7 +203,7 @@ let proposalSuggestionsPengmas = [
         department_id: 4,
         status: "menunggu_review" as proposal_suggestion_status,
         phase: "evaluasi_proposal" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Pelatihan Desain Grafis bagi Anak Muda sebagai Bekal Karier Kreatif"
@@ -284,7 +284,7 @@ let proposalSuggestionsPengmas = [
         department_id: 1,
         status: "menunggu_admin" as proposal_suggestion_status,
         phase: "penetapan" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Pemberdayaan Remaja Melalui Pelatihan Public Speaking dan Leadership"
@@ -311,7 +311,7 @@ let proposalSuggestionsPengmas = [
         department_id: 1,
         status: "menunggu_revisi" as proposal_suggestion_status,
         phase: "penetapan" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Instalasi Panel Surya Off-Grid untuk Desa Terpencil Berbasis Teknologi IoT"
@@ -338,7 +338,7 @@ let proposalSuggestionsPengmas = [
         department_id: 1,
         status: "tersimpan" as proposal_suggestion_status,
         phase: "penetapan" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Pelatihan Perbaikan Alat Elektronik Rumah Tangga bagi Pemuda Desa"
@@ -365,7 +365,7 @@ let proposalSuggestionsPengmas = [
         department_id: 1,
         status: "menunggu_laporan" as proposal_suggestion_status,
         phase: "monev" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Sistem Penerangan Jalan Umum Tenaga Hybrid (Angin-Surya) untuk Kawasan Pedesaan"
@@ -392,7 +392,7 @@ let proposalSuggestionsPengmas = [
         department_id: 1,
         status: "tersimpan" as proposal_suggestion_status,
         phase: "monev" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Workshop Pembuatan Charger Portabel Berbahan Dasar Limbah Baterai"
@@ -554,7 +554,7 @@ let proposalSuggestionsPengmas = [
         department_id: 3,
         status: "tersimpan" as proposal_suggestion_status,
         phase: "evaluasi_akhir" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Konversi Mesin Diesel ke Biodiesel untuk Kapal Nelayan Tradisional"
@@ -581,7 +581,7 @@ let proposalSuggestionsPengmas = [
         department_id: 3,
         status: "menunggu_admin" as proposal_suggestion_status,
         phase: "evaluasi_akhir" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Pelatihan Perawatan Mesin Pertanian Berkelanjutan di Daerah Agraris"
@@ -608,7 +608,7 @@ let proposalSuggestionsPengmas = [
         department_id: 3,
         status: "menunggu_review" as proposal_suggestion_status,
         phase: "evaluasi_akhir" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Pemasangan Biogas dari Limbah Ternak untuk Rumah Tangga Pedesaan"
@@ -635,7 +635,7 @@ let proposalSuggestionsPengmas = [
         department_id: 3,
         status: "ditolak" as proposal_suggestion_status,
         phase: "evaluasi_akhir" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Workshop Energi Mikrohidro untuk Pembangkit Listrik Komunitas Pegunungan"
@@ -662,7 +662,7 @@ let proposalSuggestionsPengmas = [
         department_id: 4,
         status: "diterima" as proposal_suggestion_status,
         phase: "evaluasi_akhir" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Pelatihan Animasi 2D untuk Promosi Budaya Lokal melalui Media Sosial"
@@ -689,7 +689,7 @@ let proposalSuggestionsPengmas = [
         department_id: 4,
         status: "menunggu_admin" as proposal_suggestion_status,
         phase: "penetapan_akhir" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Pengembangan Konten Edukasi Interaktif tentang Sejarah Lokal Berbasis Augmented Reality"
@@ -716,7 +716,7 @@ let proposalSuggestionsPengmas = [
         department_id: 4,
         status: "selesai" as proposal_suggestion_status,
         phase: "penetapan_akhir" as proposal_suggestion_phase,
-        is_active: false,
+        is_active: true,
         proposal: {
             create: {
                 name: "Sosialisasi Desain Kemasan Produk UMKM dengan Tools Digital Kreatif"
