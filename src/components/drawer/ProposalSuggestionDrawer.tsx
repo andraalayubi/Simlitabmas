@@ -11,7 +11,12 @@ import {
   Text,
   TextInput,
 } from "@mantine/core";
-import { proposal_suggestion, proposal_suggestion_phase, proposal_suggestion_status, user_type } from "prisma/interfaces";
+import {
+  proposal_suggestion,
+  proposal_suggestion_phase,
+  proposal_suggestion_status,
+  user_type,
+} from "prisma/interfaces";
 import ProposalSuggestionStatusBadge from "../badge/proposal_suggestion/ProposalSuggestionStatusBadge";
 import ProposalSuggestionPhaseBadge from "../badge/proposal_suggestion/ProposalSuggestionPhaseBadge";
 import { DateInput } from "@mantine/dates";
@@ -40,7 +45,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
   onSuccess,
 }) => {
   const { showNotification } = useNotification();
-  const [type, setType] = useState('penelitian');
+  const [type, setType] = useState("penelitian");
 
   // Set action for each role
   const [currentPhase, setCurrentPhase] = useState<string | null>();
@@ -94,8 +99,8 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
           status = "ditolak";
         }
       }
-    } 
-      //handle for lecturer
+    }
+    //handle for lecturer
     else if (user_type == "lecturer") {
       if (roleAction == "approval") {
         if (approved) {
@@ -106,7 +111,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
           status = currentStatus;
         }
       }
-    } 
+    }
 
     const response = await proposalSuggestionAction.updateStatusPhase(
       user_type,
@@ -132,9 +137,9 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
 
   useEffect(() => {
     if (proposal_suggestion?.research_group_id === null) {
-      setType('pengmas');
+      setType("pengmas");
     }
-    
+
     if (proposal_suggestion?.phase && proposal_suggestion?.status) {
       const action = workflow.getAction(
         proposal_suggestion.status,
@@ -274,7 +279,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
               >
                 <Flex align="center" gap="xs" mb="md">
                   <IconAlertCircle size={20} className="text-yellow-500" />
-                  <Text fw={600}>Persetujuan Ketua Research Group</Text>
+                  <Text fw={600}>Persetujuan Kaprodi</Text>
                 </Flex>
 
                 {roleAction === "approval" ? (
@@ -315,7 +320,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
               >
                 <Flex align="center" gap="xs" mb="md">
                   <IconAlertCircle size={20} className="text-yellow-500" />
-                  <Text fw={600}>Persetujuan Ketua Research Group</Text>
+                  <Text fw={600}>Persetujuan Pengusul</Text>
                 </Flex>
 
                 {roleAction === "approval" ? (
@@ -340,6 +345,36 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
                         Tolak
                       </Button>
                     </Flex>
+                  </>
+                ) : roleAction === "input" ? (
+                  <>
+                    <Text size="sm" mb="sm" c="dimmed">
+                      {workflow.getInfo(
+                        currentStatus!,
+                        currentPhase!,
+                        user_type
+                      )}
+                    </Text>
+                    <Button
+                      fullWidth
+                      color="blue"
+                      onClick={() => handleUpdate()}
+                    >
+                      Unggah Lampiran dan Lanjutkan Tahap
+                    </Button>
+                  </>
+                ) : roleAction === "next" ? (
+                  <>
+                    <Text size="sm" mb="sm" c="dimmed">
+                      Lanjutkan ke tahap selajutnya
+                    </Text>
+                    <Button
+                      fullWidth
+                      color="blue"
+                      onClick={() => handleUpdate()}
+                    >
+                      Lanjutkan Tahap
+                    </Button>
                   </>
                 ) : null}
               </Paper>
