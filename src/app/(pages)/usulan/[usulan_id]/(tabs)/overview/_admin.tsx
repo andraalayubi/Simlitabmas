@@ -82,9 +82,10 @@ const OverviewAdmin = () => {
             <Text>{proposalSuggestion?.schema?.name}</Text>
             <Text>Tahun:</Text>{" "}
             <Text>{proposalSuggestion?.year_research?.year}</Text>
-            <Text>Studi Program:</Text> <Text>Teknik Informatika</Text>
+            <Text>Studi Program:</Text>{" "}
+            <Text>{proposalSuggestion?.department?.name}</Text>
           </div>
-          <TableOverview />
+          {/* <TableOverview /> */}
         </Card>
       </Skeleton>
     </>

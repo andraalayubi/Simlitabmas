@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import LoadingPage from "src/components/Loading/LoadingPage";
 import DashboardAdmin from "./_admin";
 import DashboardKetuaRG from "./_ketuaRg";
@@ -23,6 +22,11 @@ export default function Dashboard() {
         size: 300,
       },
       {
+        accessorFn: (row) => row.year_research?.year,
+        header: "Tahun",
+        size: 100,
+      },
+      {
         accessorFn: (row) => row.schema?.name,
         header: "Skema",
         size: 100,
@@ -42,9 +46,7 @@ export default function Dashboard() {
         header: "Status",
         Cell: ({ cell }) => {
           const proposal = cell.row.original as proposal_suggestion;
-          return (
-            <ProposalSuggestionStatusBadge status={proposal.status} />
-          );
+          return <ProposalSuggestionStatusBadge status={proposal.status} />;
         },
       },
     ],
@@ -57,6 +59,11 @@ export default function Dashboard() {
         accessorKey: "name",
         header: "Judul Penelitian/Pengmas",
         size: 300,
+      },
+      {
+        accessorFn: (row) => row.year_research?.year,
+        header: "Tahun",
+        size: 100,
       },
       {
         accessorFn: (row) => row.schema?.name,
@@ -73,9 +80,7 @@ export default function Dashboard() {
         header: "Status",
         Cell: ({ cell }) => {
           const proposal = cell.row.original as proposal_suggestion;
-          return (
-            <ProposalSuggestionStatusBadge status={proposal.status} />
-          );
+          return <ProposalSuggestionStatusBadge status={proposal.status} />;
         },
       },
     ],

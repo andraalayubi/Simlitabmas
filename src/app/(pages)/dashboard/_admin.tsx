@@ -2,11 +2,12 @@
 
 import React from "react";
 import { Card, SimpleGrid, Skeleton, Text } from "@mantine/core";
-import { MantineReactTable, MRT_ColumnDef } from "mantine-react-table";
+import { MRT_ColumnDef } from "mantine-react-table";
 import { proposal_suggestion } from "prisma/interfaces";
 import { useCallback, useEffect, useState } from "react";
 import { showNotification } from "@mantine/notifications";
 import proposalSuggestionAction from "src/action/proposalSuggestionAction";
+import TableLayout from "src/components/table/tableLayout";
 
 const DashboardAdmin: React.FC<{ columns: MRT_ColumnDef<proposal_suggestion>[] }> = ({ columns }) => {
   const user_type = "admin";
@@ -24,7 +25,6 @@ const DashboardAdmin: React.FC<{ columns: MRT_ColumnDef<proposal_suggestion>[] }
     
     if (response.success) {
       showNotification({ status: "success", message: response.message });
-      console.log(response.data);
       
       setUsulan(response.data);
       setUsulanPenelitianCount(response.data.filter((p: proposal_suggestion) => p.research_group_id !== null).length);
@@ -64,7 +64,12 @@ const DashboardAdmin: React.FC<{ columns: MRT_ColumnDef<proposal_suggestion>[] }
         <Text size="lg" fw={500} mb="md">
           Usulan Terbaru
         </Text>
-        <MantineReactTable columns={columns} data={usulan} />
+        <TableLayout
+          columns={columns}
+          data={usulan}
+          isLoading={loading}
+          enableRowClick={true}
+          getRowClickUrl={(row) => `/usulan/${row.id}`}/>
       </Card>
     </Skeleton>
   );

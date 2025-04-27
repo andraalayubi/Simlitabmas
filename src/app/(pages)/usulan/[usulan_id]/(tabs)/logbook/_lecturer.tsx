@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
-import { proposal_suggestion } from "@prisma/client";
+import { proposal_suggestion } from "prisma/interfaces";
 import { useParams } from "next/navigation";
 import useNotification from "src/components/notification/notification";
 import { logbook } from "prisma/interfaces";
@@ -40,14 +40,14 @@ const LogBookLecturer = () => {
   }, [user_type, usulan_id]);
 
   useEffect(() => {
-    const isEditable = proposalSuggestion?.lecturer_id === session?.lecturer_id;
+    const createdYear = proposalSuggestion?.year_research?.year;
+    const currentYear = new Date().getFullYear();
+
+    const isEditable =
+      proposalSuggestion?.lecturer_id === session?.lecturer_id &&
+      createdYear === currentYear;
     setEditable(isEditable);
-    console.log(
-      proposalSuggestion?.lecturer_id,
-      session?.lecturer_id,
-      isEditable
-    );
-  }, [proposalSuggestion?.lecturer_id, session?.lecturer_id]);
+  }, [proposalSuggestion?.lecturer_id, proposalSuggestion?.year_research?.year, session?.lecturer_id]);
 
   useEffect(() => {
     getLogbooks();
