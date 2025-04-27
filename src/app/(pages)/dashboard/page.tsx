@@ -8,8 +8,9 @@ import DashboardLecturer from "./_lecturer";
 import DashboardKaprodi from "./_kaprodi";
 import { useSession } from "src/components/session/session";
 import { MRT_ColumnDef } from "mantine-react-table";
-import { proposal_suggestion } from "prisma/interfaces";
+import { proposal_suggestion, proposal_suggestion_phase } from "prisma/interfaces";
 import ProposalSuggestionStatusBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionStatusBadge";
+import ProposalSuggestionPhaseBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionPhaseBadge";
 
 export default function Dashboard() {
   const { session, loading: sessionLoading } = useSession();
@@ -40,6 +41,15 @@ export default function Dashboard() {
         accessorFn: (row) => row.department?.name,
         header: "Prodi",
         size: 175,
+      },
+      {
+        accessorKey: "phase",
+        header: "Tahap Usulan",
+        Cell: ({ cell }) => (
+          <ProposalSuggestionPhaseBadge
+            phase={cell.getValue<proposal_suggestion_phase>()}
+          />
+        ),
       },
       {
         accessorKey: "status",
@@ -74,6 +84,15 @@ export default function Dashboard() {
         accessorFn: (row) => row.department?.name,
         header: "Prodi",
         size: 175,
+      },
+      {
+        accessorKey: "phase",
+        header: "Tahap Usulan",
+        Cell: ({ cell }) => (
+          <ProposalSuggestionPhaseBadge
+            phase={cell.getValue<proposal_suggestion_phase>()}
+          />
+        ),
       },
       {
         accessorKey: "status",
