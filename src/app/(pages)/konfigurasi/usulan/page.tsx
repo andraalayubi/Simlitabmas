@@ -45,7 +45,7 @@ export default function ConfigurationProposalSuggestionPage() {
       setLoading(true);
 
       const [yearResponse, configResponse, schemaResponse] = await Promise.all([
-        yearResearchAction.getYearResearches(user_type, setFakeLoading),
+        yearResearchAction.getYearResearches(user_type, setFakeLoading, null),
         configurationAction.getConfiguration(user_type, setFakeLoading),
         schemaAction.getSchemas(user_type, setFakeLoading, null),
       ]);

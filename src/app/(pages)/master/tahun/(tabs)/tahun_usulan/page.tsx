@@ -72,7 +72,7 @@ export default function AuditTahun() {
   );
 
   const getYearResearch = useCallback(async () => {
-    const response = await yearResearchAction.getYearResearches(
+    const response = await yearResearchAction.getYearResearchesSummary(
       user_type,
       setLoading
     );

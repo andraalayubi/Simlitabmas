@@ -9,9 +9,12 @@ const getById = async (id: number) => {
 }
 
 // get all active
-const getAllActive = async () => {
+const getByFilter = async (filter: any) => {
     return await prisma.year_research.findMany({
-        where: { deleted: false },
+        where: filter,
+        orderBy: {
+            id: "asc"
+        }
     });
 };
 
@@ -78,7 +81,7 @@ const getSummaryList = async () => {
 
 const yearResearchService = {
     getById,
-    getAllActive,
+    getByFilter,
     create,
     getSummaryList,
     update,
