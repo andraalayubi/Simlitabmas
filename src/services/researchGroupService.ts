@@ -152,12 +152,12 @@ const getProfileRG = async (id: number) => {
                 l.name AS lecturer_name,
                 yr.id AS year_research_id,
                 yr.year AS year_research_year
-            FROM research_groups rg
-            LEFT JOIN proposal_suggestions ps ON rg.id = ps.research_group_id
+            FROM proposal_suggestions ps
+            LEFT JOIN research_groups rg ON ps.research_group_id = rg.id
             LEFT JOIN lecturers l ON ps.lecturer_id = l.id
             LEFT JOIN year_researches yr ON ps.year_research_id = yr.id
             WHERE rg.id = ${id}
-            ORDER BY rg.id ASC
+            ORDER BY ps.id ASC
             LIMIT 3;
         `
     ]);

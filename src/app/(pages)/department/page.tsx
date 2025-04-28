@@ -24,11 +24,10 @@ import ProposalSuggestionPhaseBadge from "src/components/badge/proposal_suggesti
 import departmentAction from "src/action/departmentAction";
 import Link from "next/link";
 import { encode } from "src/lib/sqids";
+import { getSession } from "src/lib/session";
 
 export default function ResearchGroupPage() {
-  const user_type = "admin";
-  const params = useParams();
-  const id = params.id;
+  const user_type = "kaprodi";
 
   const [department, setDepartment] = useState<department | null>();
   const [lecturers, setLecturers] = useState<lecturer[] | null>();
@@ -39,12 +38,13 @@ export default function ResearchGroupPage() {
   const { showNotification } = useNotification();
 
   const getDepartment = useCallback(async () => {
+    const session = await getSession();
     const response = await departmentAction.getDepartmentDetail(
       user_type,
-      Number(id),
+      Number(session?.department_id),
       setLoading
     );
-
+              
     if (response.success) {
       setDepartment(response.data.department);
       setLecturers(response.data.lecturers);
@@ -53,7 +53,7 @@ export default function ResearchGroupPage() {
     } else {
       showNotification({ status: "error", message: response.message });
     }
-  }, [user_type, id]);
+  }, [user_type]);
 
   useEffect(() => {
     getDepartment();
@@ -189,7 +189,7 @@ export default function ResearchGroupPage() {
                 </Text>
               </Card.Section>
               <Box mt="md">
-                {!proposalSuggestions || proposalSuggestions.length === 0 ? (
+              {!proposalSuggestions || proposalSuggestions.length === 0 ? (
                   <Text c="dimmed" ta="center" my="xl">
                     Tidak ada usulan ditemukan
                   </Text>

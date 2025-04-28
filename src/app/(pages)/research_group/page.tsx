@@ -2,6 +2,7 @@
 
 import {
   Avatar,
+  Badge,
   Card,
   Flex,
   Grid,
@@ -16,21 +17,24 @@ import {
   Skeleton,
 } from "@mantine/core";
 import { IconUsers, IconFileText, IconBuilding } from "@tabler/icons-react";
+import researchGroupAction from "src/action/researchGroupAction";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { lecturer, proposal_suggestion, department } from "prisma/interfaces";
+import {
+  lecturer,
+  proposal_suggestion,
+  research_group,
+} from "prisma/interfaces";
 import useNotification from "src/components/notification/notification";
 import ProposalSuggestionPhaseBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionPhaseBadge";
-import departmentAction from "src/action/departmentAction";
 import Link from "next/link";
 import { encode } from "src/lib/sqids";
+import { getSession } from "src/lib/session";
 
 export default function ResearchGroupPage() {
-  const user_type = "admin";
-  const params = useParams();
-  const id = params.id;
-
-  const [department, setDepartment] = useState<department | null>();
+  const user_type = "ketua_rg";
+  
+  const [researchGroup, setResearchGroup] = useState<research_group | null>();
   const [lecturers, setLecturers] = useState<lecturer[] | null>();
   const [proposalSuggestions, setProposalSuggestions] = useState<
     proposal_suggestion[] | null
@@ -38,26 +42,28 @@ export default function ResearchGroupPage() {
   const [loading, setLoading] = useState(false);
   const { showNotification } = useNotification();
 
-  const getDepartment = useCallback(async () => {
-    const response = await departmentAction.getDepartmentDetail(
+  const getResearchGroup = useCallback(async () => {
+    const session = await getSession();
+    const response = await researchGroupAction.getResearchGroupDetail(
       user_type,
-      Number(id),
+      Number(session?.research_group_id),
       setLoading
     );
 
     if (response.success) {
-      setDepartment(response.data.department);
+      setResearchGroup(response.data.research_group);
       setLecturers(response.data.lecturers);
+      console.log(response.data)
       setProposalSuggestions(response.data.proposal_suggestions);
       showNotification({ status: "success", message: response.message });
     } else {
       showNotification({ status: "error", message: response.message });
     }
-  }, [user_type, id]);
+  }, [user_type]);
 
   useEffect(() => {
-    getDepartment();
-  }, [getDepartment]);
+    getResearchGroup();
+  }, [getResearchGroup]);
 
   return (
     <div className="pt-6">
@@ -83,11 +89,10 @@ export default function ResearchGroupPage() {
             >
               <Box>
                 <Title order={1} c="blue.8" mb="sm">
-                  {department?.name}
+                  {researchGroup?.name}
                 </Title>
-
                 <Text c="dimmed" size="md" mb="md">
-                  {department?.description}
+                  {researchGroup?.description}
                 </Text>
               </Box>
             </Group>
@@ -189,7 +194,7 @@ export default function ResearchGroupPage() {
                 </Text>
               </Card.Section>
               <Box mt="md">
-                {!proposalSuggestions || proposalSuggestions.length === 0 ? (
+                {(!proposalSuggestions || proposalSuggestions.length === 0) ? (
                   <Text c="dimmed" ta="center" my="xl">
                     Tidak ada usulan ditemukan
                   </Text>
@@ -199,9 +204,7 @@ export default function ResearchGroupPage() {
                       <Paper withBorder p="md" mb="md">
                         <Group justify="space-between" mb="xs">
                           <Text fw={600}>{proposal.name}</Text>
-                          <ProposalSuggestionPhaseBadge
-                            phase={proposal.phase}
-                          />
+                          <ProposalSuggestionPhaseBadge phase={proposal.phase} />
                         </Group>
                         <Group gap="xs" c="dimmed">
                           <Text>Ketua: {proposal.lecturer?.name}</Text>

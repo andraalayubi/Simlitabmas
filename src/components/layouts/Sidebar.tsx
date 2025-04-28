@@ -142,7 +142,12 @@ const MENU_CONFIG: Record<string, MenuSection[]> = {
         {
           name: "Prodi",
           icon: <IconSchool />,
-          path: "/prodi",
+          path: "/department",
+        },
+        {
+          name: "Laporan",
+          icon: <IconBooks />,
+          path: "/report/lecturer",
         },
       ],
     },
@@ -179,7 +184,12 @@ const MENU_CONFIG: Record<string, MenuSection[]> = {
         {
           name: "Research Group",
           icon: <IconBuildingCommunity />,
-          path: "/rg",
+          path: "/research_group",
+        },
+        {
+          name: "Laporan",
+          icon: <IconTopologyStar />,
+          path: "/report/lecturer",
         },
       ],
     },
