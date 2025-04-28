@@ -9,11 +9,15 @@ const getById = async (id: number) => {
 }
 
 // get all active
-const getAllActive = async () => {
+const getByFilter = async (filter: any) => {
     return await prisma.schema.findMany({
-        where: { deleted: false },
+        where: filter,
+        orderBy: {
+            id: "asc"
+        }
     });
 };
+
 
 // get by proposal suggestion id
 const getByProposalSuggestionId = async (proposal_suggestion_id: number) => {
@@ -79,7 +83,7 @@ const getSummaryList =  async () => {
 
 const schemaService = {
     getById,
-    getAllActive,
+    getByFilter,
     getByProposalSuggestionId,
     getSummaryList,
     update,

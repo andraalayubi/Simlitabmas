@@ -47,7 +47,7 @@ export default function ConfigurationProposalSuggestionPage() {
       const [yearResponse, configResponse, schemaResponse] = await Promise.all([
         yearResearchAction.getYearResearches(user_type, setFakeLoading),
         configurationAction.getConfiguration(user_type, setFakeLoading),
-        schemaAction.getSchemas(user_type, setFakeLoading),
+        schemaAction.getSchemas(user_type, setFakeLoading, null),
       ]);
 
       const newState = {

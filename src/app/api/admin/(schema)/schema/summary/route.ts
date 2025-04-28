@@ -1,20 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import schemaService from 'src/services/schemaService';
-import { getSession } from "src/lib/session";
-import filterService from 'src/services/filterService';
 
 export async function GET(request: NextRequest) {
     try {
-        const session = await getSession();
-
-        let filter = filterService.getFilter(request.nextUrl.searchParams, [
-            { key: "id", type: "number" },
-            { key: "name", type: "string" },
-            { key: "is_active", type: "boolean" },
-            { key: "min_degree", type: "string" },
-        ]);
-
-        const schemas = await schemaService.getByFilter(filter);
+        const schemas = await schemaService.getSummaryList();
 
         return NextResponse.json({
             success: true,

@@ -45,7 +45,7 @@ export default function AuditSchemaPage() {
 
   // get schema list
   const getSchema = useCallback(async () => {
-    const response = await schemaAction.getSchemas(user_type, setLoading);
+    const response = await schemaAction.getSchemasSummary(user_type, setLoading);
 
     console.log(response.data);
     if (response.success) {
