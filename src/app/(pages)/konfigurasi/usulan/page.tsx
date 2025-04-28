@@ -22,7 +22,7 @@ interface FormValues {
   schemas: Record<string, boolean>;
 }
 
-export default function ConfigurationYearPage() {
+export default function ConfigurationProposalSuggestionPage() {
   const user_type = "admin";
   const { showNotification } = useNotification();
   const [loading, setLoading] = useState(true);
