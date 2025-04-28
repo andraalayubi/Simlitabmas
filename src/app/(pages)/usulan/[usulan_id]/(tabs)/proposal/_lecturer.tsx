@@ -34,7 +34,17 @@ const ProposalLecturer = ({ session }: { session: SessionPayload }) => {
       setProposalSuggestion(response.data);
       setProposal(response.data.proposal);
 
-      response.data.lecturer_id == session.lecturer_id && setIsEditable(true);
+      // check editable
+      const isEditableByLecturer =
+        response.data.lecturer_id === session.lecturer_id;
+
+      const isEditableByConditions =
+        (response.data.phase === "pengajuan" &&
+          response.data.status === "menunggu_proposal") ||
+        (response.data.phase === "penetapan" &&
+          response.data.status === "menunggu_revisi");
+
+      setIsEditable(isEditableByLecturer && isEditableByConditions);
     } else {
       showNotification({ status: "error", message: response.message });
     }

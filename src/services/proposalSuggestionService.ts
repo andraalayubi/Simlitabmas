@@ -110,12 +110,22 @@ const update = async (id: number, data: any) => {
     })
 }
 
+
+const updateByWhere = async (where: any, data: any) => {
+    
+    return await prisma.proposal_suggestion.updateMany({
+        data: data,
+        where: where
+    })
+}
+
 const proposalSuggestionService = {
     getById,
     getByLecturerId,
     getByFilter,
     create,
-    update
+    update,
+    updateByWhere
 }
 
 export default proposalSuggestionService
