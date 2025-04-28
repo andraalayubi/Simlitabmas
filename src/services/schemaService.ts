@@ -30,6 +30,24 @@ const getByProposalSuggestionId = async (proposal_suggestion_id: number) => {
     })
 }
 
+// const update
+const update = async (id: number, data: any) => {
+    return await prisma.schema.update({
+        data: data,
+        where: { id: id }
+    })
+}
+
+
+const updateByWhere = async (where: any, data: any) => {
+    
+    return await prisma.schema.updateMany({
+        data: data,
+        where: where
+    })
+}
+
+
 //get summary for audit page
 const getSummaryList =  async () => {
     const [schemas, proposalSuggestionCount] = await prisma.$transaction([
@@ -64,6 +82,8 @@ const schemaService = {
     getAllActive,
     getByProposalSuggestionId,
     getSummaryList,
+    update,
+    updateByWhere
 }
 
 

@@ -19,6 +19,22 @@ const create = async (data: any) => {
     return await prisma.year_research.create({ data })
 }
 
+
+const update = async (id: number, data: any) => {
+    return await prisma.year_research.update({
+        data: data,
+        where: { id: id }
+    })
+}
+
+const updateByWhere = async (where: any, data: any) => {
+    
+    return await prisma.year_research.updateMany({
+        data: data,
+        where: where
+    })
+}
+
 //get summary for audit page
 const getSummaryList = async () => {
     const [yearResearches, acceptedSuggestionCount, proposalSuggestionCount] = await prisma.$transaction([
@@ -65,6 +81,8 @@ const yearResearchService = {
     getAllActive,
     create,
     getSummaryList,
+    update,
+    updateByWhere
 }
 
 

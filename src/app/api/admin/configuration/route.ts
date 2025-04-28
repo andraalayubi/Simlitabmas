@@ -1,7 +1,10 @@
+import { Schema } from "@tiptap/pm/model";
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "src/lib/session";
 import configurationService from "src/services/configurationService";
 import proposalSuggestionService from "src/services/proposalSuggestionService";
+import schemaService from "src/services/schemaService";
+import yearResearchService from "src/services/yearResearchService";
 
 
 export async function GET(req: NextRequest) {
@@ -30,18 +33,18 @@ export async function GET(req: NextRequest) {
 export async function PUT(req: NextRequest) {
     const payload = await req.json();
 
-
     try {
         const session = await getSession();
 
         // check updated data
         const lastConfig = await configurationService.get();
 
-        // update all proposal suggestion open
+        // update all proposal suggestion open column
         if (payload.year_research_id != lastConfig?.year_research_id) {
 
             const year_research_id = parseInt(payload.year_research_id);
 
+            // update all proposal suggestion 'open' column
             await proposalSuggestionService.updateByWhere(
                 { year_research_id: year_research_id },
                 { open: true }
@@ -55,9 +58,20 @@ export async function PUT(req: NextRequest) {
                 },
                 { open: false }
             )
+
+            // update column is_active year_research
+            await yearResearchService.update(year_research_id, { is_active: true })
+
+            await yearResearchService.update(lastConfig?.year_research_id!, { is_active: false })
         }
 
-        const config = await configurationService.update(payload);
+        const config = await configurationService.update({ year_research_id: payload.year_research_id });
+
+        // update active schema
+        payload.schemas.map(async (item: any) => {
+            return await schemaService.update(item.schema_id, { is_active: item.is_active });
+            // console.log(updated)
+        })
 
         return NextResponse.json({
             success: true,

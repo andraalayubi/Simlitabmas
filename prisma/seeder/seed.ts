@@ -37,10 +37,10 @@ const departements = [
 
 
 const year_researches = [
-    { year: 2023, open_date: new Date("2023-01-01"), closed_date: new Date("2023-12-31") },
-    { year: 2024, open_date: new Date("2024-01-01"), closed_date: new Date("2024-12-31") },
-    { year: 2025, open_date: new Date("2025-01-01"), closed_date: new Date("2025-12-31") },
-    { year: 2026, open_date: new Date("2026-01-01"), closed_date: new Date("2026-12-31") },
+    { year: 2023, open_date: new Date("2023-01-01"), closed_date: new Date("2023-12-31"), is_active: false },
+    { year: 2024, open_date: new Date("2024-01-01"), closed_date: new Date("2024-12-31"), is_active: false },
+    { year: 2025, open_date: new Date("2025-01-01"), closed_date: new Date("2025-12-31"), is_active: true },
+    { year: 2026, open_date: new Date("2026-01-01"), closed_date: new Date("2026-12-31"), is_active: false },
 ];
 
 
@@ -69,9 +69,9 @@ const positions = [
 ];
 
 const schemas = [
-    { name: "Skema Dasar", description: "Penelitian atau pengabdian yang berfokus pada eksplorasi, penemuan, dan pemahaman konsep, teori, atau fenomena ilmiah tanpa memprioritaskan aplikasi praktis langsung.", max_cost: 500000, min_degree: "S1" as degree, is_student: true, is_partner: true, is_lecturer: true },
-    { name: "Skema Terapan", description: "Penelitian atau pengabdian yang dirancang untuk memecahkan masalah praktis atau menghasilkan produk yang dapat langsung dimanfaatkan oleh masyarakat atau industri.", max_cost: 1000000, min_degree: "S1" as degree, is_student: true, is_partner: true, is_lecturer: true },
-    { name: "Skema Pengembangan", description: "Penelitian atau pengabdian yang dirancang untuk memecahkan masalah praktis atau menghasilkan produk yang dapat langsung dimanfaatkan oleh masyarakat atau industri.", max_cost: 1000000, min_degree: "S1" as degree, is_student: true, is_partner: true, is_lecturer: true }
+    { name: "Skema Dasar", is_active: true, description: "Penelitian atau pengabdian yang berfokus pada eksplorasi, penemuan, dan pemahaman konsep, teori, atau fenomena ilmiah tanpa memprioritaskan aplikasi praktis langsung.", max_cost: 500000, min_degree: "S1" as degree, is_student: true, is_partner: true, is_lecturer: true },
+    { name: "Skema Terapan", is_active: true, description: "Penelitian atau pengabdian yang dirancang untuk memecahkan masalah praktis atau menghasilkan produk yang dapat langsung dimanfaatkan oleh masyarakat atau industri.", max_cost: 1000000, min_degree: "S1" as degree, is_student: true, is_partner: true, is_lecturer: true },
+    { name: "Skema Pengembangan", is_active: false, description: "Penelitian atau pengabdian yang dirancang untuk memecahkan masalah praktis atau menghasilkan produk yang dapat langsung dimanfaatkan oleh masyarakat atau industri.", max_cost: 1000000, min_degree: "S1" as degree, is_student: true, is_partner: true, is_lecturer: true }
 ];
 
 const position_schemas = [

@@ -198,6 +198,7 @@ model year_research {
   year        Int      @unique
   open_date   DateTime
   closed_date DateTime
+  is_active   Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -249,6 +250,7 @@ model schema {
   is_student  Boolean?
   is_partner  Boolean?
   is_lecturer Boolean?
+  is_active   Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
