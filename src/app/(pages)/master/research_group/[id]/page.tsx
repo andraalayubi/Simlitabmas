@@ -192,21 +192,27 @@ export default function ResearchGroupPage() {
                 </Text>
               </Card.Section>
               <Box mt="md">
-                {proposalSuggestions?.map((proposal, index) => (
-                  <Link href={`/usulan/${proposal.id}`} key={index}>
-                    <Paper withBorder p="md" mb="md">
-                      <Group justify="space-between" mb="xs">
-                        <Text fw={600}>{proposal.name}</Text>
-                        <ProposalSuggestionPhaseBadge phase={proposal.phase} />
-                      </Group>
-                      <Group gap="xs" c="dimmed">
-                        <Text>Ketua: {proposal.lecturer?.name}</Text>
-                        <Text>•</Text>
-                        <Text>Tahun: {proposal.year_research?.year}</Text>
-                      </Group>
-                    </Paper>
-                  </Link>
-                ))}
+              {(!proposalSuggestions || proposalSuggestions.length === 0) ? (
+                  <Text c="dimmed" ta="center" my="xl">
+                    Tidak ada usulan ditemukan
+                  </Text>
+                ) : (
+                  proposalSuggestions?.map((proposal, index) => (
+                    <Link href={`/usulan/${proposal.id}`} key={index}>
+                      <Paper withBorder p="md" mb="md">
+                        <Group justify="space-between" mb="xs">
+                          <Text fw={600}>{proposal.name}</Text>
+                          <ProposalSuggestionPhaseBadge phase={proposal.phase} />
+                        </Group>
+                        <Group gap="xs" c="dimmed">
+                          <Text>Ketua: {proposal.lecturer?.name}</Text>
+                          <Text>•</Text>
+                          <Text>Tahun: {proposal.year_research?.year}</Text>
+                        </Group>
+                      </Paper>
+                    </Link>
+                  ))
+                )}
               </Box>
             </Card>
           </Tabs.Panel>
