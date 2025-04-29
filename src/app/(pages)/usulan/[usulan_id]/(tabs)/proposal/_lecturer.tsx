@@ -33,7 +33,7 @@ const ProposalLecturer = ({ session }: { session: SessionPayload }) => {
       showNotification({ status: "success", message: response.message });
       setProposalSuggestion(response.data);
       setProposal(response.data.proposal);
-
+      
       // check editable
       const isEditableByLecturer =
         response.data.lecturer_id === session.lecturer_id;
@@ -44,11 +44,13 @@ const ProposalLecturer = ({ session }: { session: SessionPayload }) => {
         (response.data.phase === "penetapan" &&
           response.data.status === "menunggu_revisi");
 
-      setIsEditable(isEditableByLecturer && isEditableByConditions);
+      const isEditableByYear = response.data.open;
+
+      setIsEditable(isEditableByLecturer && isEditableByConditions && isEditableByYear);
     } else {
       showNotification({ status: "error", message: response.message });
     }
-  }, [user_type, usulan_id]); // use cache if user_type and usulan_id are same
+  }, [user_type, usulan_id, session]); // use cache if user_type and usulan_id are same
 
   // update proposal
   const updateProposal = async () => {

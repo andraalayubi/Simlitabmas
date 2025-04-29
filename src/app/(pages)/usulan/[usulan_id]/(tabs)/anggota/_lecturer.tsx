@@ -63,17 +63,24 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
       setProposalSuggestion(response.data);
       setSchema(response.data.schema);
       setLoadProposal(false);
-
-      response.data.lecturer.id == session.lecturer_id && setIsEditable(true);
+      
       if (!response.data.schema.is_lecturer) {
         setLecturers([response.data.lecturer]);
       } else {
         getLecturers();
       }
+
+      //check editable
+      const isEditableByLecturer =
+        response.data.lecturer_id === session.lecturer_id;
+
+      const isEditableByYear = response.data.open;
+
+      setIsEditable(isEditableByLecturer && isEditableByYear);
     } else {
       showNotification({ status: "error", message: response.message });
     }
-  }, [user_type, usulan_id, refreshTrigger]);
+  }, [user_type, usulan_id, refreshTrigger, session]);
 
   const getLecturers = useCallback(async () => {
     const response = await lecturerAction.getLecturerMember(
@@ -164,8 +171,7 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
                 </Tabs.List>
               </div>
               <div>
-                {isEditable && (
-                  <ModalComponent title="Tambah Anggota">
+                  <ModalComponent title="Tambah Anggota" disabled={!isEditable}>
                     {(close) => (
                       <AnggotaModal
                         user_type={user_type}
@@ -178,7 +184,6 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
                       />
                     )}
                   </ModalComponent>
-                )}
               </div>
             </div>
             <Tabs.Panel value="lecturer">

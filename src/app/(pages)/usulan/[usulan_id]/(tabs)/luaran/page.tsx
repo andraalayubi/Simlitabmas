@@ -26,7 +26,7 @@ export default function LuaranPage() {
     if(session?.user_type == "admin") {
       return <ExternalDocumentAdmin />
     } else if (session?.user_type == "lecturer") {
-      return <ExternalDocumentLecturer  />
+      return <ExternalDocumentLecturer session={session} />
     } else if (session?.user_type == "ketua_rg") {
       return <ExternalDocumentKetuaRG />
     } else if (session?.user_type == "kaprodi") {

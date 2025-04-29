@@ -25,7 +25,7 @@ export default function LogbookPage() {
     if(session?.user_type == "admin") {
       return <FinalReportAdmin />
     } else if (session?.user_type == "lecturer") {
-      return <FinalReportLecturer  />
+      return <FinalReportLecturer session={session} />
     } else if (session?.user_type == "ketua_rg") {
       return <FinalReportKetuaRG />
     } else if (session?.user_type == "kaprodi") {

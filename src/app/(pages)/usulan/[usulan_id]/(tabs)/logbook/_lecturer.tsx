@@ -9,15 +9,14 @@ import logbookAction from "src/action/logbookAction";
 import { Skeleton, Stack } from "@mantine/core";
 import LogbookCard from "src/components/card/proposal_suggestion/LogbookCard";
 import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
-import { useSession } from "src/components/session/session";
+import { SessionPayload } from "src/lib/encrypt";
 
-const LogBookLecturer = () => {
+const LogBookLecturer = ({ session }: { session: SessionPayload }) => {
   const user_type = "lecturer";
   const [loading, setLoading] = useState(true);
   const params = useParams();
   const usulan_id = params.usulan_id;
   const { showNotification } = useNotification();
-  const { session, loading: sessionLoading } = useSession();
   const [proposalSuggestion, setProposalSuggestion] =
     useState<proposal_suggestion | null>(null);
   const [logbooks, setLogbooks] = useState<logbook[]>([]);
@@ -34,20 +33,18 @@ const LogBookLecturer = () => {
       showNotification({ status: "success", message: response.message });
       setProposalSuggestion(response.data);
       setLogbooks(response.data.logbook);
+
+      //check editable
+      const isEditableByLecturer =
+        response.data.lecturer_id === session.lecturer_id;
+
+      const isEditableByYear = response.data.open;
+
+      setEditable(isEditableByLecturer && isEditableByYear);
     } else {
       showNotification({ status: "error", message: response.message });
     }
-  }, [user_type, usulan_id]);
-
-  useEffect(() => {
-    const createdYear = proposalSuggestion?.year_research?.year;
-    const currentYear = new Date().getFullYear();
-
-    const isEditable =
-      proposalSuggestion?.lecturer_id === session?.lecturer_id &&
-      createdYear === currentYear;
-    setEditable(isEditable);
-  }, [proposalSuggestion?.lecturer_id, proposalSuggestion?.year_research?.year, session?.lecturer_id]);
+  }, [user_type, usulan_id, session]);
 
   useEffect(() => {
     getLogbooks();
@@ -56,7 +53,7 @@ const LogBookLecturer = () => {
   return (
     <>
       <div className="bg-white shadow sm:rounded-lg p-6">
-        <Skeleton visible={loading && sessionLoading}>
+        <Skeleton visible={loading}>
           <ProposalSuggestionSummaryCard
             proposal_suggestion_name={proposalSuggestion?.name!}
             status={proposalSuggestion?.status!}
@@ -64,7 +61,7 @@ const LogBookLecturer = () => {
           />
         </Skeleton>
         <div className="mt-6">
-          <Skeleton visible={loading && sessionLoading}>
+          <Skeleton visible={loading}>
             <Stack gap="md">
               {logbooks.map((logbook) => (
                 <LogbookCard

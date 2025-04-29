@@ -40,13 +40,15 @@ const AdditionalDocumentLecturer: React.FC<AdditionalDocumentLecturerProps> = ({
   // State for modals
   const [opened, { open, close }] = useDisclosure(false);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
-  const [selectedDokumen, setSelectedDokumen] = useState<additional_document | null>(null);
+  const [selectedDokumen, setSelectedDokumen] =
+    useState<additional_document | null>(null);
 
   // General state
   const [isEditable, setIsEditable] = useState(false);
   const [dokumens, setDokumens] = useState<additional_document[]>([]);
   const [loading, setLoading] = useState(true);
-  const [proposalSuggestion, setProposalSuggestion] = useState<proposal_suggestion | null>(null);
+  const [proposalSuggestion, setProposalSuggestion] =
+    useState<proposal_suggestion | null>(null);
 
   const fetchDokumens = useCallback(async () => {
     const response = await additionalDocumentAction.getAdditionalDocuments(
@@ -60,11 +62,17 @@ const AdditionalDocumentLecturer: React.FC<AdditionalDocumentLecturerProps> = ({
       setDokumens(response.data.additional_document);
       setProposalSuggestion(response.data);
 
-      response.data.lecturer.id == session.lecturer_id && setIsEditable(true);
+      //check editable
+      const isEditableByLecturer =
+        response.data.lecturer_id === session.lecturer_id;
+
+      const isEditableByYear = response.data.open;
+
+      setIsEditable(isEditableByLecturer && isEditableByYear);      
     } else {
       showNotification({ status: "error", message: response.message });
     }
-  }, [user_type, proposal_suggestion_id]);
+  }, [user_type, proposal_suggestion_id, session]);
 
   useEffect(() => {
     fetchDokumens();
@@ -130,14 +138,13 @@ const AdditionalDocumentLecturer: React.FC<AdditionalDocumentLecturerProps> = ({
           <Skeleton visible={loading}>
             <div className="mb-4 mx-4 flex justify-between items-center">
               <h2 className="text-xl font-semibold">Daftar Dokumen Tambahan</h2>
-              {isEditable && (
-                <Button
-                  onClick={open}
-                  className="bg-blue-800 text-white"
-                >
-                  Tambah Dokumen
-                </Button>
-              )}
+              <Button
+                onClick={open}
+                disabled={!isEditable}
+                className={isEditable ? "bg-blue-800 text-white" : "bg-gray-300 text-gray-600"}
+              >
+                Tambah Dokumen
+              </Button>
             </div>
           </Skeleton>
           <div className="w-full">

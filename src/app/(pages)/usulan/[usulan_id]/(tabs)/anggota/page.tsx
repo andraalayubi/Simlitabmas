@@ -13,9 +13,7 @@ import { lecturer, student_member, vendor_member } from "prisma/interfaces";
 
 export default function AnggotaPage() {
     const { session, loading: sessionLoading } = useSession();
-    console.log('tesss');
-    
-  
+
     const columnsLecturer = useMemo<MRT_ColumnDef<lecturer>[]>(
       () => [
         {

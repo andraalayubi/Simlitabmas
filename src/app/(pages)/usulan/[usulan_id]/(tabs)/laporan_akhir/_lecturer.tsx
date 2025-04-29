@@ -9,15 +9,14 @@ import { Skeleton } from "@mantine/core";
 import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
 import finalReportAction from "src/action/finalReportAction";
 import FinalReportCard from "src/components/card/proposal_suggestion/FinalReportCard";
-import { useSession } from "src/components/session/session";
+import { SessionPayload } from "src/lib/encrypt";
 
-const FinalReportLecturer = () => {
+const FinalReportLecturer = ({ session }: { session: SessionPayload }) => {
   const user_type = "lecturer";
   const params = useParams();
   const usulan_id = params.usulan_id;
   const { showNotification } = useNotification();
 
-  const { session, loading: sessionLoading } = useSession();
   const [loading, setLoading] = useState(true);
   const [proposalSuggestion, setProposalSuggestion] =
     useState<proposal_suggestion | null>(null);
@@ -35,20 +34,18 @@ const FinalReportLecturer = () => {
       showNotification({ status: "success", message: response.message });
       setProposalSuggestion(response.data);
       setFinalReports(response.data.final_report);
+
+      //check editable
+      const isEditableByLecturer =
+        response.data.lecturer_id === session.lecturer_id;
+
+      const isEditableByYear = response.data.open;
+
+      setEditable(isEditableByLecturer && isEditableByYear);
     } else {
       showNotification({ status: "error", message: response.message });
     }
-  }, [user_type, usulan_id]);
-
-  useEffect(() => {
-    const createdYear = proposalSuggestion?.year_research?.year;
-    const currentYear = new Date().getFullYear();
-    
-    const isEditable =
-      proposalSuggestion?.lecturer_id === session?.lecturer_id &&
-      createdYear === currentYear;
-    setEditable(isEditable);
-  }, [proposalSuggestion?.lecturer_id, proposalSuggestion?.year_research?.year, session?.lecturer_id]);
+  }, [user_type, usulan_id, session]);
 
   useEffect(() => {
     getFinalReports();
@@ -57,7 +54,7 @@ const FinalReportLecturer = () => {
   return (
     <>
       <div className="bg-white shadow sm:rounded-lg p-6">
-        <Skeleton visible={loading && sessionLoading}>
+        <Skeleton visible={loading}>
           <ProposalSuggestionSummaryCard
             proposal_suggestion_name={proposalSuggestion?.name!}
             status={proposalSuggestion?.status!}
@@ -66,7 +63,7 @@ const FinalReportLecturer = () => {
         </Skeleton>
 
         <div className="mt-6">
-          <Skeleton visible={loading && sessionLoading}>
+          <Skeleton visible={loading}>
             <Stack gap="md">
               {finalReports.map((final_report) => (
                 <FinalReportCard
