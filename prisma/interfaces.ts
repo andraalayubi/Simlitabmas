@@ -116,6 +116,7 @@ export interface year_research {
   year: number;
   open_date: Date;
   closed_date: Date;
+  is_active: boolean;
   createdAt: Date;
   updatedAt: Date;
   deleted: boolean;
@@ -155,6 +156,7 @@ export interface schema {
   is_student: boolean | null;
   is_partner: boolean | null;
   is_lecturer: boolean | null;
+  is_active: boolean;
   createdAt: Date;
   updatedAt: Date;
   deleted: boolean;

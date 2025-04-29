@@ -9,11 +9,15 @@ const getById = async (id: number) => {
 }
 
 // get all active
-const getAllActive = async () => {
+const getByFilter = async (filter: any) => {
     return await prisma.schema.findMany({
-        where: { deleted: false },
+        where: filter,
+        orderBy: {
+            id: "asc"
+        }
     });
 };
+
 
 // get by proposal suggestion id
 const getByProposalSuggestionId = async (proposal_suggestion_id: number) => {
@@ -29,6 +33,24 @@ const getByProposalSuggestionId = async (proposal_suggestion_id: number) => {
         }
     })
 }
+
+// const update
+const update = async (id: number, data: any) => {
+    return await prisma.schema.update({
+        data: data,
+        where: { id: id }
+    })
+}
+
+
+const updateByWhere = async (where: any, data: any) => {
+    
+    return await prisma.schema.updateMany({
+        data: data,
+        where: where
+    })
+}
+
 
 //get summary for audit page
 const getSummaryList =  async () => {
@@ -61,9 +83,11 @@ const getSummaryList =  async () => {
 
 const schemaService = {
     getById,
-    getAllActive,
+    getByFilter,
     getByProposalSuggestionId,
     getSummaryList,
+    update,
+    updateByWhere
 }
 
 

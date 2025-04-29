@@ -53,10 +53,11 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
   const router = useRouter();
 
   const getData = useCallback(async () => {
-    const getSchemas = await schemaAction.getSchemas(user_type, setLoading);
+    const getSchemas = await schemaAction.getSchemas(user_type, setLoading, { is_active: true});
     const getYearResearches = await yearResearchAction.getYearResearches(
       user_type,
-      setLoading
+      setLoading,
+      {is_active: true}
     );
     const getResearchGroups = await researchGroupAction.getResearchGroup(
       user_type,

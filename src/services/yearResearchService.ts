@@ -9,14 +9,33 @@ const getById = async (id: number) => {
 }
 
 // get all active
-const getAllActive = async () => {
+const getByFilter = async (filter: any) => {
     return await prisma.year_research.findMany({
-        where: { deleted: false },
+        where: filter,
+        orderBy: {
+            id: "asc"
+        }
     });
 };
 
 const create = async (data: any) => {
     return await prisma.year_research.create({ data })
+}
+
+
+const update = async (id: number, data: any) => {
+    return await prisma.year_research.update({
+        data: data,
+        where: { id: id }
+    })
+}
+
+const updateByWhere = async (where: any, data: any) => {
+    
+    return await prisma.year_research.updateMany({
+        data: data,
+        where: where
+    })
 }
 
 //get summary for audit page
@@ -62,9 +81,11 @@ const getSummaryList = async () => {
 
 const yearResearchService = {
     getById,
-    getAllActive,
+    getByFilter,
     create,
     getSummaryList,
+    update,
+    updateByWhere
 }
 
 
