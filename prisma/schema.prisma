@@ -140,6 +140,7 @@ model lecturer {
   degree            Json?
   is_ketua_rg       Boolean?
   is_kaprodi        Boolean? @default(false)
+  highest_degree        degree?
   position_id       Int?
   signature_url     String?
 
@@ -198,14 +199,14 @@ model year_research {
   year        Int      @unique
   open_date   DateTime
   closed_date DateTime
-  is_active   Boolean @default(true)
+  is_active   Boolean  @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deleted   Boolean  @default(false)
 
   proposal_suggestion proposal_suggestion[]
-  configuration configuration?
+  configuration       configuration?
 
   @@map("year_researches")
 }
@@ -250,7 +251,7 @@ model schema {
   is_student  Boolean?
   is_partner  Boolean?
   is_lecturer Boolean?
-  is_active   Boolean @default(true)
+  is_active   Boolean  @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -275,7 +276,7 @@ model proposal_suggestion {
   department_id     Int?
   phase             proposal_suggestion_phase?
   status            proposal_suggestion_status?
-  open              Boolean @default(true)
+  open              Boolean                     @default(true)
   is_active         Boolean?
 
   createdAt DateTime @default(now())
@@ -288,16 +289,16 @@ model proposal_suggestion {
   research_group research_group? @relation(fields: [research_group_id], references: [id])
   department     department?     @relation(fields: [department_id], references: [id])
 
-  lecturer_member    lecturer_member[]
-  student_member     student_member[]
-  vendor_member      vendor_member[]
-  suggestion_cost    suggestion_cost[]
+  lecturer_member     lecturer_member[]
+  student_member      student_member[]
+  vendor_member       vendor_member[]
+  suggestion_cost     suggestion_cost[]
   additional_document additional_document[]
-  external_document  external_document[]
-  review             review[]
-  logbook            logbook[]
-  proposal           proposal?
-  final_report       final_report[]
+  external_document   external_document[]
+  review              review[]
+  logbook             logbook[]
+  proposal            proposal?
+  final_report        final_report[]
 
   @@map("proposal_suggestions")
 }
@@ -554,15 +555,14 @@ model external_document_category {
   @@map("external_document_categories")
 }
 
-
 model configuration {
-  id          Int     @id @default(autoincrement())
+  id               Int  @id @default(autoincrement())
   year_research_id Int? @unique
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  year_research     year_research?    @relation(fields: [year_research_id], references: [id])
+  year_research year_research? @relation(fields: [year_research_id], references: [id])
 
   @@map("configurations")
 }

@@ -1,4 +1,4 @@
-import { lecturer_member } from "prisma/interfaces";
+import { lecturer, lecturer_member } from "prisma/interfaces";
 import prisma from "../client/prisma";
 import { JsonArray } from "@prisma/client/runtime/library";
 
@@ -46,6 +46,13 @@ const remove = async (lecturer_id: number) => {
     return await prisma.lecturer.update({
         where: { id: lecturer_id },
         data: { deleted: true }
+    })
+}
+
+const update = async (lecturer_id: number, lecturer: any) => {
+    return await prisma.lecturer.update({
+        where: { id: lecturer_id },
+        data: lecturer
     })
 }
 
@@ -143,6 +150,7 @@ const lecturerService = {
     getAllActive,
     getByFilter,
     create,
+    update,
     remove,
     getAvailableLecturers,
     addLecturerMember,

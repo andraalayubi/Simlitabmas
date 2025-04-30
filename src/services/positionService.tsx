@@ -6,6 +6,12 @@ const getById = async (id: number) => {
   });
 };
 
+const getByFilter = async (filter: any) => {
+  return await prisma.position.findFirst({
+    where: filter,
+  });
+};
+
 const getAllActive = async () => {
   return await prisma.position.findMany({
     where: { deleted: false },
@@ -15,6 +21,7 @@ const getAllActive = async () => {
 const positionService = {
   getById,
   getAllActive,
+  getByFilter,
 };
 
 export default positionService;

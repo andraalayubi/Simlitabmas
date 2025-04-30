@@ -71,6 +71,7 @@ export interface lecturer {
   degree: JsonValue | null;
   is_ketua_rg: boolean | null;
   is_kaprodi: boolean | null;
+  highest_degree: degree | null;
   position_id: number | null;
   signature_url: string | null;
   createdAt: Date;
