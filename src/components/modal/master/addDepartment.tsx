@@ -6,6 +6,7 @@ import {
   Group,
   Button,
   Stack,
+  Textarea,
 } from "@mantine/core";
 import { departmentSchema } from "src/schemas/masterSchema";
 import departmentAction from "src/action/departmentAction";
@@ -58,7 +59,8 @@ const AddDepartment: React.FC<AddDepartmentProps> = ({
                 placeholder="Silahkan Isi Nama Prodi"
                 {...departmentForm.getInputProps("name")}
               />
-              <TextInput
+              
+              <Textarea
                 label="Deskripsi Prodi"
                 placeholder="Silahkan Isi Deskripsi Prodi"
                 {...departmentForm.getInputProps("description")}

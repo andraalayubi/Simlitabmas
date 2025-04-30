@@ -21,3 +21,26 @@ export const yearResearchSchema = z.object({
 });
 
 export type YearResearchFormValues = z.infer<typeof yearResearchSchema>;
+
+export const schemaSchema = z.object({
+  name: z.string().min(1, { message: "Nama wajib diisi" }),
+  description: z.string().min(1, { message: "Deskripsi wajib diisi" }),
+  min_degree: z.enum(['S1', 'S2', 'S3'], { 
+    errorMap: () => ({ message: "Pilih jenjang yang valid" }) 
+  }),
+  is_lecturer: z.boolean().optional(),
+  is_student: z.boolean().optional(),
+  is_partner: z.boolean().optional(),
+  positions: z.record(z.boolean()).refine(
+    (val) => Object.values(val).some(v => v),
+    { message: "Satu jabatan harus dipilih" }
+  )
+}).refine(
+  (data) => data.is_lecturer || data.is_student || data.is_partner,
+  {
+    message: "Pilih minimal satu jenis anggota",
+    path: ["member_selection"]
+  }
+);
+
+export type SchemaFormValues = z.infer<typeof schemaSchema>;

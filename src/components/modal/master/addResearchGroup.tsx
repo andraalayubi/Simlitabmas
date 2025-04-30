@@ -6,6 +6,7 @@ import {
   Group,
   Button,
   Stack,
+  Textarea,
 } from "@mantine/core";
 import { researchGroupSchema } from "src/schemas/masterSchema";
 import useNotification from "src/components/notification/notification";
@@ -58,7 +59,7 @@ const AddResearchGroup: React.FC<AddResearchGroupProps> = ({
                 placeholder="Silahkan Isi Nama Research Group"
                 {...researchGroupForm.getInputProps("name")}
               />
-              <TextInput
+              <Textarea
                 label="Deskripsi Research Group"
                 placeholder="Silahkan Isi Deskripsi Research Group"
                 {...researchGroupForm.getInputProps("description")}

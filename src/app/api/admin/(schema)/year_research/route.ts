@@ -29,12 +29,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-    console.log('kesini');
-    
     const { year, open_date, closed_date } = await req.json();
 
     try {
-        console.log(year, open_date, closed_date);
         const year_research = await yearResearchService.create({
             year,
             open_date,

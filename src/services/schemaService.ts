@@ -42,6 +42,11 @@ const update = async (id: number, data: any) => {
     })
 }
 
+const create = async (data: any) => {
+    return await prisma.schema.create({
+        data: data
+    })
+}
 
 const updateByWhere = async (where: any, data: any) => {
     
@@ -56,7 +61,13 @@ const updateByWhere = async (where: any, data: any) => {
 const getSummaryList =  async () => {
     const [schemas, proposalSuggestionCount] = await prisma.$transaction([
         prisma.schema.findMany({
-            
+            include: {
+                position_schema: {
+                    include: {
+                        position: true
+                    }
+                }
+            }
         }),
         prisma.$queryRaw<{ id: bigint; proposal_suggestion_count: bigint }[]>`
             SELECT
@@ -80,6 +91,11 @@ const getSummaryList =  async () => {
     return formattedResult
 }
 
+const createPosition = async (data: any) => {
+    return await prisma.position_schema.createMany({
+        data: data
+    });
+}
 
 const schemaService = {
     getById,
@@ -87,8 +103,9 @@ const schemaService = {
     getByProposalSuggestionId,
     getSummaryList,
     update,
-    updateByWhere
+    create,
+    updateByWhere,
+    createPosition,
 }
-
 
 export default schemaService;
