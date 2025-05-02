@@ -33,6 +33,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S3" as degree,
         position_id: 1,
         highest_degree: "S2" as degree,
         user: {
@@ -68,6 +69,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S2" as degree,
         position_id: 2,
         highest_degree: "S2" as degree,
         user: {
@@ -103,6 +105,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S2" as degree,
         position_id: 3,
         highest_degree: "S2" as degree,
         user: {
@@ -127,6 +130,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S3" as degree,
         position_id: 1,
         highest_degree: "S2" as degree,
         user: {
@@ -150,6 +154,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S3" as degree,
         position_id: 2,
         highest_degree: "S2" as degree,
         user: {
@@ -173,6 +178,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S2" as degree,
         position_id: 3,
         highest_degree: "S2" as degree,
         user: {
@@ -196,6 +202,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S2" as degree,
         position_id: 1,
         highest_degree: "S2" as degree,
         user: {
@@ -219,6 +226,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S3" as degree,
         position_id: 2,
         highest_degree: "S2" as degree,
         user: {
@@ -242,6 +250,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S2" as degree,
         position_id: 3,
         highest_degree: "S2" as degree,
         user: {
@@ -265,6 +274,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S2" as degree,
         position_id: 2,
         highest_degree: "S2" as degree,
         user: {
@@ -300,6 +310,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S2" as degree,
         position_id: 1,
         highest_degree: "S2" as degree,
         user: {
@@ -335,6 +346,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S2" as degree,
         position_id: 4,
         highest_degree: "S2" as degree,
         user: {
@@ -377,6 +389,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: true,
+        highest_degree: "S3" as degree,
         position_id: 4,
         highest_degree: "S2" as degree,
         user: {
@@ -420,6 +433,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: false,
         is_kaprodi: true,
+        highest_degree: "S3" as degree,
         position_id: 4,
         highest_degree: "S2" as degree,
         user: {
@@ -462,6 +476,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: false,
         is_kaprodi: true,
+        highest_degree: "S3" as degree,
         position_id: 4,
         highest_degree: "S2" as degree,
         user: {
@@ -504,6 +519,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: false,
         is_kaprodi: true,
+        highest_degree: "S3" as degree,
         position_id: 4,
         highest_degree: "S2" as degree,
         user: {
