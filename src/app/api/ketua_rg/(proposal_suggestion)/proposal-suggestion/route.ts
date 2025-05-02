@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
             lecturer_id: Number(body.lecturer.id),
             department_id: Number(body.lecturer.department_id),
             phase: 'pengajuan' as proposal_suggestion_phase,
-            status: 'tersimpan' as proposal_suggestion_status,
+            status: 'menunggu_proposal' as proposal_suggestion_status,
             is_active: true
         };
 
