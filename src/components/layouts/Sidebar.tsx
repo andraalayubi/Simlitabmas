@@ -12,11 +12,11 @@ import {
   IconCalendar,
   IconUser,
   IconBuildingCommunity,
-  IconUserHeart,
   IconBookUpload,
   IconUserStar,
   IconTopologyStar,
   IconBooks,
+  IconUserEdit,
 } from "@tabler/icons-react";
 
 // Tipe data untuk konfigurasi menu
@@ -82,6 +82,11 @@ const MENU_CONFIG: Record<string, MenuSection[]> = {
           name: "Tahun",
           icon: <IconCalendar />,
           path: "/master/tahun",
+        },
+        {
+          name: "Dosen",
+          icon: <IconUserEdit />,
+          path: "/master/dosen",
         },
       ],
     },

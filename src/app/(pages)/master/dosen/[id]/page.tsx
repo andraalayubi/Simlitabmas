@@ -64,7 +64,6 @@ const EditLecturerPage = () => {
   const lecturer_id = parseInt(params.id[0]);
   const { showNotification } = useNotification();
   const [loading, setLoading] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
 
   const lecturerForm = useForm<LecturerFormValues>({
     initialValues: {
