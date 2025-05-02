@@ -3,12 +3,13 @@ import { Skeleton, Text } from "@mantine/core";
 import React, { useState, useEffect, useCallback } from "react";
 import TableLayout from "src/components/table/tableLayout";
 import { getSession } from "src/lib/session";
-import { proposal_suggestion } from "prisma/interfaces";
+import { proposal_suggestion, lecturer } from "prisma/interfaces";
 import proposalSuggestionAction from "src/action/proposalSuggestionAction";
 import { showNotification } from "@mantine/notifications";
 import ModalComponent from "src/components/modal/modal";
 import ProposalSuggestionModal from "src/components/modal/proposal_suggestion/proposal_suggesion";
 import { useSession } from "src/components/session/session";
+import lecturerAction from "src/action/lecturerAction";
 
 interface UsulanSayaKetuaRGProps {
   columns: MRT_ColumnDef<proposal_suggestion>[];
@@ -18,6 +19,7 @@ const UsulanSayaKetuaRG: React.FC<UsulanSayaKetuaRGProps> = ({ columns }) => {
   const user_type = "ketua_rg";
   const { session, loading: sessionLoading } = useSession();
   const [data, setData] = useState<proposal_suggestion[]>([]);
+  const [lecturer, setLecturer] = useState<lecturer>({} as lecturer);
   const [loading, setLoading] = useState(true);
 
   const getProposalSuggestion = useCallback(async () => {
@@ -41,11 +43,26 @@ const UsulanSayaKetuaRG: React.FC<UsulanSayaKetuaRGProps> = ({ columns }) => {
     }
   }, [user_type, session?.lecturer_id]);
 
+  const getLecturer = useCallback(async () => {
+    const response = await lecturerAction.getById(
+      user_type,
+      Number(session?.lecturer_id),
+      setLoading
+    );
+
+    if (response.success) {
+      setLecturer(response.data);
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  }, [user_type, session?.lecturer_id]);
+
   useEffect(() => {
     if (!sessionLoading && session?.lecturer_id) {
       getProposalSuggestion();
+      getLecturer();
     }
-  }, [sessionLoading, session?.lecturer_id, getProposalSuggestion]);
+  }, [sessionLoading, session?.lecturer_id, getProposalSuggestion, getLecturer]);
 
   return (
     <Skeleton visible={sessionLoading}>
@@ -60,7 +77,7 @@ const UsulanSayaKetuaRG: React.FC<UsulanSayaKetuaRGProps> = ({ columns }) => {
                 onClose={close}
                 showResearchGroup={true}
                 type="penelitian"
-                lecturer_id={Number(session?.lecturer_id)}
+                lecturer={lecturer}
                 refreshData={() => getProposalSuggestion()}
               />
             )}

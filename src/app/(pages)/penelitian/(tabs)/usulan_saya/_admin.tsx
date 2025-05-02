@@ -53,7 +53,7 @@ const UsulanSayaAdmin: React.FC<UsulanSayaAdminProps> = ({ columns }) => {
         <Text size="lg" fw={700}>
           Daftar Usulan Saya
         </Text>
-        <ModalComponent title="Buat Usulan">
+        {/* <ModalComponent title="Buat Usulan">
           {(close) => (
             <ProposalSuggestionModal
               user_type={user_type}
@@ -64,7 +64,7 @@ const UsulanSayaAdmin: React.FC<UsulanSayaAdminProps> = ({ columns }) => {
               refreshData={() => getProposalSuggestion()}
             />
           )}
-        </ModalComponent>
+        </ModalComponent> */}
       </div>
       <div>
         <TableLayout

@@ -14,14 +14,14 @@ import proposalSuggestionAction from "src/action/proposalSuggestionAction";
 import schemaAction from "src/action/schemaAction";
 import yearResearchAction from "src/action/yearResearchAction";
 import researchGroupAction from "src/action/researchGroupAction";
-import { user_type } from "prisma/interfaces";
+import { user_type, lecturer } from "prisma/interfaces";
 
 interface ProposalSuggestionModalProps {
   user_type: user_type;
   onClose: () => void;
   showResearchGroup?: boolean;
   type: string;
-  lecturer_id: number;
+  lecturer: lecturer;
   refreshData: () => void;
 }
 
@@ -42,7 +42,7 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
   onClose,
   showResearchGroup = true,
   type,
-  lecturer_id,
+  lecturer,
   refreshData
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -50,10 +50,13 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
   const [yearResearches, setYearResearches] = useState<{ value: string; label: string }[]>([]);
   const [researchGroups, setResearchGroups] = useState<{ value: string; label: string }[]>([]);
   const { showNotification } = useNotification();
-  const router = useRouter();
 
   const getData = useCallback(async () => {
-    const getSchemas = await schemaAction.getSchemas(user_type, setLoading, { is_active: true});
+    const getSchemas = await schemaAction.getSchemas(
+      user_type,
+      setLoading,
+      { is_active: true, min_degree: lecturer.highest_degree }
+    );
     const getYearResearches = await yearResearchAction.getYearResearches(
       user_type,
       setLoading,
@@ -89,6 +92,7 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
 
   useEffect(() => {
     getData();
+    console.log(lecturer);
   }, [getData]);
 
   const form = useForm({
@@ -122,7 +126,7 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
       user_type,
       values,
       setLoading,
-      lecturer_id
+      lecturer.id
     );
 
     if (result.success) {

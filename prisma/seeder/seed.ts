@@ -80,7 +80,11 @@ const position_schemas = [
     { schema_id: 1, position_id: 3 },
     { schema_id: 2, position_id: 1 },
     { schema_id: 2, position_id: 2 },
-    { schema_id: 2, position_id: 3 }
+    { schema_id: 2, position_id: 3 },
+    { schema_id: 3, position_id: 2 },
+    { schema_id: 3, position_id: 3 },
+    { schema_id: 3, position_id: 4 },
+    { schema_id: 3, position_id: 5 },
 ];
 
 const external_document_categories = [
