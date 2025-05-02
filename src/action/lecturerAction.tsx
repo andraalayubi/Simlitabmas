@@ -9,9 +9,50 @@ const getLecturerMember = async (
   setLoading(true);
 
   try {
-    const response = await fetch(`/api/${user_type}/member/${usulan_id}/lecturer`);
-    const result = await response.json();    
+    const response = await fetch(
+      `/api/${user_type}/member/${usulan_id}/lecturer`
+    );
+    const result = await response.json();
 
+    if (result.status === 200 || result.success == true) {
+      return {
+        success: true,
+        message: result.message,
+        data: result.data,
+      };
+    } else {
+      return {
+        success: false,
+        message: result.message,
+      };
+    }
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.response?.data?.message || "An unexpected error occurred",
+    };
+  } finally {
+    setLoading(false);
+  }
+};
+
+const getLecturers = async (
+  user_type: user_type,
+  setLoading: (loading: boolean) => void,
+  filter: any | null
+) => {
+  setLoading(true);
+
+  let url = `/api/${user_type}/lecturer`;
+
+  if (filter) {
+    const params = new URLSearchParams(filter);
+    url += `?${params.toString()}`;
+  }
+
+  const response = await fetch(url);
+  const result = await response.json();
+  try {
     if (result.status === 200 || result.success == true) {
       return {
         success: true,
@@ -60,12 +101,11 @@ const createLecturer = async (user_type: user_type, lecturer: any) => {
   }
 };
 
-const deleteLecturer = async (
-  user_type: user_type,
-  lecturer_id: number,
-) => {
+const deleteLecturer = async (user_type: user_type, lecturer_id: number) => {
   try {
-    const response = await axios.delete(`/api/${user_type}/lecturer/${lecturer_id}`);
+    const response = await axios.delete(
+      `/api/${user_type}/lecturer/${lecturer_id}`
+    );
 
     if (response.status === 200 || response.data.success) {
       return {
@@ -101,7 +141,7 @@ const getProfile = async (
       method: "GET",
     });
 
-    const result = await response.json();    
+    const result = await response.json();
     if (result.status === 200 || result.success == true) {
       return {
         success: true,
@@ -124,22 +164,20 @@ const getProfile = async (
   }
 };
 
-
 const updateLecturerProfile = async (
   user_type: user_type,
   lecturer_id: number,
   lecturer: any,
   setLoading: (loading: boolean) => void
 ) => {
-  setLoading(true); 
+  setLoading(true);
 
   try {
-
     const response = await axios.put(
       `/api/${user_type}/lecturer/${lecturer_id}`,
       lecturer
-    )
-    
+    );
+
     if (response.status === 200 && response.data.success) {
       return {
         success: true,
@@ -159,17 +197,15 @@ const updateLecturerProfile = async (
   } finally {
     setLoading(false);
   }
-
-  
-  
-}
+};
 
 const lecturerAction = {
   getLecturerMember,
+  getLecturers,
   createLecturer,
   deleteLecturer,
   getProfile,
-  updateLecturerProfile
-}
+  updateLecturerProfile,
+};
 
 export default lecturerAction;

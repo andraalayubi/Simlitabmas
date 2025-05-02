@@ -28,6 +28,10 @@ export async function GET(req: NextRequest) {
             department: req.nextUrl.searchParams.get("get_department") === "true"
                 ? { where: { deleted: false } }
                 : false,
+
+            position: req.nextUrl.searchParams.get("get_position") === "true"
+                ? { where: { deleted: false } }
+                : false,
         }
 
 
