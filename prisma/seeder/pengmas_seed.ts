@@ -50,13 +50,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 16,
-                name: "Kholid Fathoni , S.Kom., MT.",
-                research_group_id: null,
-                department_id: 4,
-                nip: "33445569",
-            }
+            create: [
+                {
+                    lecturer_id: 16,
+                    name: "Kholid Fathoni , S.Kom., MT.",
+                    research_group_id: null,
+                    department_id: 4,
+                    nip: "33445569",
+                },
+                {
+                    lecturer_id: 4,
+                    name: "Sritrusta Sukaridhoto, ST., Ph.D",
+                    research_group_id: 4,
+                    department_id: 4,
+                    nip: "196904121995021001",
+                }
+            ],
         },
     },
     // 2
@@ -77,13 +86,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 15,
-                name: "Mohammad Nasyir Tamara, S.ST., M.T.",
-                research_group_id: null,
-                department_id: 3,
-                nip: "33445568",
-            },
+            create: [
+                {
+                    lecturer_id: 15,
+                    name: "Mohammad Nasyir Tamara, S.ST., M.T.",
+                    research_group_id: null,
+                    department_id: 3,
+                    nip: "33445568",
+                },
+                {
+                    lecturer_id: 5,
+                    name: "Agus Indra Gunawan, S.ST., M.T.",
+                    research_group_id: 5,
+                    department_id: 3,
+                    nip: "33445567",
+                }
+            ],
         },
     },
     // 3
@@ -104,13 +122,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 15,
-                name: "Mohammad Nasyir Tamara, S.ST., M.T.",
-                research_group_id: null,
-                department_id: 3,
-                nip: "33445568",
-            },
+            create: [
+                {
+                    lecturer_id: 15,
+                    name: "Mohammad Nasyir Tamara, S.ST., M.T.",
+                    research_group_id: null,
+                    department_id: 3,
+                    nip: "33445568",
+                },
+                {
+                    lecturer_id: 16,
+                    name: "Kholid Fathoni , S.Kom., MT.",
+                    research_group_id: null,
+                    department_id: 4,
+                    nip: "33445569",
+                }
+            ],
         },
     },
     // 4
@@ -131,13 +158,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 14,
-                name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
-                research_group_id: null,
-                department_id: 2,
-                nip: "33445567",
-            },
+            create: [
+                {
+                    lecturer_id: 14,
+                    name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+                    research_group_id: null,
+                    department_id: 2,
+                    nip: "33445567",
+                },
+                {
+                    lecturer_id: 16,
+                    name: "Kholid Fathoni , S.Kom., MT.",
+                    research_group_id: null,
+                    department_id: 4,
+                    nip: "33445569",
+                }
+            ],
         },
     },
     // 5
@@ -158,13 +194,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 16,
-                name: "Kholid Fathoni , S.Kom., MT.",
-                research_group_id: null,
-                department_id: 4,
-                nip: "33445569",
-            },
+            create: [
+                {
+                    lecturer_id: 16,
+                    name: "Kholid Fathoni , S.Kom., MT.",
+                    research_group_id: null,
+                    department_id: 4,
+                    nip: "33445569",
+                },
+                {
+                    lecturer_id: 15,
+                    name: "Mohammad Nasyir Tamara, S.ST., M.T.",
+                    research_group_id: null,
+                    department_id: 3,
+                    nip: "33445568",
+                }
+            ],
         },
     },
     // 6
@@ -185,13 +230,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 14,
-                name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
-                research_group_id: null,
-                department_id: 2,
-                nip: "33445567",
-            },
+            create: [
+                {
+                    lecturer_id: 14,
+                    name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+                    research_group_id: null,
+                    department_id: 2,
+                    nip: "33445567",
+                },
+                {
+                    lecturer_id: 16,
+                    name: "Kholid Fathoni , S.Kom., MT.",
+                    research_group_id: null,
+                    department_id: 4,
+                    nip: "33445569",
+                }
+            ],
         },
     },
     // 7
@@ -212,13 +266,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 16,
-                name: "Kholid Fathoni , S.Kom., MT.",
-                research_group_id: null,
-                department_id: 4,
-                nip: "33445569",
-            },
+            create: [
+                {
+                    lecturer_id: 16,
+                    name: "Kholid Fathoni , S.Kom., MT.",
+                    research_group_id: null,
+                    department_id: 4,
+                    nip: "33445569",
+                },
+                {
+                    lecturer_id: 15,
+                    name: "Mohammad Nasyir Tamara, S.ST., M.T.",
+                    research_group_id: null,
+                    department_id: 3,
+                    nip: "33445568",
+                }
+            ],
         },
     },
     // 8
@@ -239,13 +302,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 14,
-                name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
-                research_group_id: null,
-                department_id: 2,
-                nip: "33445567",
-            }
+            create: [
+                {
+                    lecturer_id: 14,
+                    name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+                    research_group_id: null,
+                    department_id: 2,
+                    nip: "33445567",
+                },
+                {
+                    lecturer_id: 16,
+                    name: "Kholid Fathoni , S.Kom., MT.",
+                    research_group_id: null,
+                    department_id: 4,
+                    nip: "33445569",
+                }
+            ],
         },
     },
     // 9
@@ -266,13 +338,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 15,
-                name: "Mohammad Nasyir Tamara, S.ST., M.T.",
-                research_group_id: null,
-                department_id: 3,
-                nip: "33445568",
-            }
+            create: [
+                {
+                    lecturer_id: 15,
+                    name: "Mohammad Nasyir Tamara, S.ST., M.T.",
+                    research_group_id: null,
+                    department_id: 3,
+                    nip: "33445568",
+                },
+                {
+                    lecturer_id: 16,
+                    name: "Kholid Fathoni , S.Kom., MT.",
+                    research_group_id: null,
+                    department_id: 4,
+                    nip: "33445569",
+                }
+            ],
         },
     },
     // 10
@@ -293,13 +374,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 13,
-                name: "Dr. Arif Irwansyah, S.T., M.Eng",
-                research_group_id: null,
-                department_id: 1,
-                nip: "33445566",
-            }
+            create: [
+                {
+                    lecturer_id: 13,
+                    name: "Dr. Arif Irwansyah, S.T., M.Eng",
+                    research_group_id: 13,
+                    department_id: 1,
+                    nip: "33445566",
+                },
+                {
+                    lecturer_id: 12,
+                    name: "Moh. Hasbi Assidigi",
+                    research_group_id: 12,
+                    department_id: 3,
+                    nip: "22334455",
+                }
+            ],
         },
     },
     // 11
@@ -320,13 +410,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 13,
-                name: "Dr. Arif Irwansyah, S.T., M.Eng",
-                research_group_id: null,
-                department_id: 1,
-                nip: "33445566",
-            }
+            create: [
+                {
+                    lecturer_id: 13,
+                    name: "Dr. Arif Irwansyah, S.T., M.Eng",
+                    research_group_id: null,
+                    department_id: 1,
+                    nip: "33445566",
+                },
+                {
+                    lecturer_id: 12,
+                    name: "Moh. Hasbi Assidigi",
+                    research_group_id: 12,
+                    department_id: 3,
+                    nip: "22334455",
+                }
+            ],
         },
     },
     // 12
@@ -347,13 +446,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 13,
-                name: "Dr. Arif Irwansyah, S.T., M.Eng",
-                research_group_id: null,
-                department_id: 1,
-                nip: "33445566",
-            }
+            create: [
+                {
+                    lecturer_id: 13,
+                    name: "Dr. Arif Irwansyah, S.T., M.Eng",
+                    research_group_id: null,
+                    department_id: 1,
+                    nip: "33445566",
+                },
+                {
+                    lecturer_id: 12,
+                    name: "Moh. Hasbi Assidigi",
+                    research_group_id: 12,
+                    department_id: 3,
+                    nip: "22334455",
+                }
+            ],
         },
     },
     // 13
@@ -374,13 +482,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 13,
-                name: "Dr. Arif Irwansyah, S.T., M.Eng",
-                research_group_id: null,
-                department_id: 1,
-                nip: "33445566",
-            }
+            create: [
+                {
+                    lecturer_id: 13,
+                    name: "Dr. Arif Irwansyah, S.T., M.Eng",
+                    research_group_id: null,
+                    department_id: 1,
+                    nip: "33445566",
+                },
+                {
+                    lecturer_id: 12,
+                    name: "Moh. Hasbi Assidigi",
+                    research_group_id: 12,
+                    department_id: 3,
+                    nip: "22334455",
+                }
+            ],
         },
     },
     // 14
@@ -401,13 +518,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 13,
-                name: "Dr. Arif Irwansyah, S.T., M.Eng",
-                research_group_id: null,
-                department_id: 1,
-                nip: "33445566",
-            }
+            create: [
+                {
+                    lecturer_id: 13,
+                    name: "Dr. Arif Irwansyah, S.T., M.Eng",
+                    research_group_id: null,
+                    department_id: 1,
+                    nip: "33445566",
+                },
+                {
+                    lecturer_id: 12,
+                    name: "Moh. Hasbi Assidigi",
+                    research_group_id: 12,
+                    department_id: 3,
+                    nip: "22334455",
+                }
+            ],
         },
     },
     // 15
@@ -428,13 +554,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 14,
-                name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
-                research_group_id: null,
-                department_id: 2,
-                nip: "33445567",
-            },
+            create: [
+                {
+                    lecturer_id: 14,
+                    name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+                    research_group_id: null,
+                    department_id: 2,
+                    nip: "33445567",
+                },
+                {
+                    lecturer_id: 13,
+                    name: "Dr. Arif Irwansyah, S.T., M.Eng",
+                    research_group_id: 13,
+                    department_id: 1,
+                    nip: "33445566",
+                }
+            ],
         },
     },
     // 16
@@ -455,13 +590,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 14,
-                name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
-                research_group_id: null,
-                department_id: 2,
-                nip: "33445567",
-            },
+            create: [
+                {
+                    lecturer_id: 14,
+                    name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+                    research_group_id: null,
+                    department_id: 2,
+                    nip: "33445567",
+                },
+                {
+                    lecturer_id: 13,
+                    name: "Dr. Arif Irwansyah, S.T., M.Eng",
+                    research_group_id: 13,
+                    department_id: 1,
+                    nip: "33445566",
+                }
+            ],
         },
     },
     // 17
@@ -482,13 +626,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 14,
-                name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
-                research_group_id: null,
-                department_id: 2,
-                nip: "33445567",
-            },
+            create: [
+                {
+                    lecturer_id: 14,
+                    name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+                    research_group_id: null,
+                    department_id: 2,
+                    nip: "33445567",
+                },
+                {
+                    lecturer_id: 13,
+                    name: "Dr. Arif Irwansyah, S.T., M.Eng",
+                    research_group_id: 13,
+                    department_id: 1,
+                    nip: "33445566",
+                }
+            ],
         },
     },
     // 18
@@ -509,13 +662,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 14,
-                name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
-                research_group_id: null,
-                department_id: 2,
-                nip: "33445567",
-            },
+            create: [
+                {
+                    lecturer_id: 14,
+                    name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+                    research_group_id: null,
+                    department_id: 2,
+                    nip: "33445567",
+                },
+                {
+                    lecturer_id: 13,
+                    name: "Dr. Arif Irwansyah, S.T., M.Eng",
+                    research_group_id: 13,
+                    department_id: 1,
+                    nip: "33445566",
+                }
+            ],
         },
     },
     // 19
@@ -536,13 +698,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 14,
-                name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
-                research_group_id: null,
-                department_id: 2,
-                nip: "33445567",
-            },
+            create: [
+                {
+                    lecturer_id: 14,
+                    name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+                    research_group_id: null,
+                    department_id: 2,
+                    nip: "33445567",
+                },
+                {
+                    lecturer_id: 13,
+                    name: "Dr. Arif Irwansyah, S.T., M.Eng",
+                    research_group_id: 13,
+                    department_id: 1,
+                    nip: "33445566",
+                }
+            ],
         },
     },
     // 20
@@ -563,13 +734,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 15,
-                name: "Mohammad Nasyir Tamara, S.ST., M.T.",
-                research_group_id: null,
-                department_id: 3,
-                nip: "33445568",
-            },
+            create: [
+                {
+                    lecturer_id: 15,
+                    name: "Mohammad Nasyir Tamara, S.ST., M.T.",
+                    research_group_id: null,
+                    department_id: 3,
+                    nip: "33445568",
+                },
+                {
+                    lecturer_id: 14,
+                    name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+                    research_group_id: null,
+                    department_id: 2,
+                    nip: "33445567",
+                }
+            ],
         },
     },
     // 21
@@ -590,13 +770,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 15,
-                name: "Mohammad Nasyir Tamara, S.ST., M.T.",
-                research_group_id: null,
-                department_id: 3,
-                nip: "33445568",
-            },
+            create: [
+                {
+                    lecturer_id: 15,
+                    name: "Mohammad Nasyir Tamara, S.ST., M.T.",
+                    research_group_id: null,
+                    department_id: 3,
+                    nip: "33445568",
+                },
+                {
+                    lecturer_id: 14,
+                    name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+                    research_group_id: null,
+                    department_id: 2,
+                    nip: "33445567",
+                }
+            ],
         },
     },
     // 22
@@ -617,13 +806,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 15,
-                name: "Mohammad Nasyir Tamara, S.ST., M.T.",
-                research_group_id: null,
-                department_id: 3,
-                nip: "33445568",
-            },
+            create: [
+                {
+                    lecturer_id: 15,
+                    name: "Mohammad Nasyir Tamara, S.ST., M.T.",
+                    research_group_id: null,
+                    department_id: 3,
+                    nip: "33445568",
+                },
+                {
+                    lecturer_id: 14,
+                    name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+                    research_group_id: null,
+                    department_id: 2,
+                    nip: "33445567",
+                }
+            ],
         },
     },
     // 23
@@ -644,13 +842,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 15,
-                name: "Mohammad Nasyir Tamara, S.ST., M.T.",
-                research_group_id: null,
-                department_id: 3,
-                nip: "33445568",
-            },
+            create: [
+                {
+                    lecturer_id: 15,
+                    name: "Mohammad Nasyir Tamara, S.ST., M.T.",
+                    research_group_id: null,
+                    department_id: 3,
+                    nip: "33445568",
+                },
+                {
+                    lecturer_id: 14,
+                    name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+                    research_group_id: null,
+                    department_id: 2,
+                    nip: "33445567",
+                }
+            ],
         },
     },
     // 24
@@ -671,13 +878,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 16,
-                name: "Kholid Fathoni , S.Kom., MT.",
-                research_group_id: null,
-                department_id: 4,
-                nip: "33445569",
-            },
+            create: [
+                {
+                    lecturer_id: 16,
+                    name: "Kholid Fathoni , S.Kom., MT.",
+                    research_group_id: null,
+                    department_id: 4,
+                    nip: "33445569",
+                },
+                {
+                    lecturer_id: 14,
+                    name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+                    research_group_id: null,
+                    department_id: 2,
+                    nip: "33445567",
+                }
+            ],
         },
     },
     // 25
@@ -698,13 +914,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 16,
-                name: "Kholid Fathoni , S.Kom., MT.",
-                research_group_id: null,
-                department_id: 4,
-                nip: "33445569",
-            },
+            create: [
+                {
+                    lecturer_id: 16,
+                    name: "Kholid Fathoni , S.Kom., MT.",
+                    research_group_id: null,
+                    department_id: 4,
+                    nip: "33445569",
+                },
+                {
+                    lecturer_id: 14,
+                    name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+                    research_group_id: null,
+                    department_id: 2,
+                    nip: "33445567",
+                }
+            ],
         },
     },
     // 26
@@ -725,13 +950,22 @@ let proposalSuggestionsPengmas = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 16,
-                name: "Kholid Fathoni , S.Kom., MT.",
-                research_group_id: null,
-                department_id: 4,
-                nip: "33445569",
-            },
+            create: [
+                {
+                    lecturer_id: 16,
+                    name: "Kholid Fathoni , S.Kom., MT.",
+                    research_group_id: null,
+                    department_id: 4,
+                    nip: "33445569",
+                },
+                {
+                    lecturer_id: 15,
+                    name: "Mohammad Nasyir Tamara, S.ST., M.T.",
+                    research_group_id: null,
+                    department_id: 3,
+                    nip: "33445568",
+                }
+            ],
         },
     },
 ];

@@ -51,13 +51,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 4,
-                name: "Sritrusta Sukaridhoto, ST., Ph.D.",
-                research_group_id: 4,
-                department_id: 4,
-                nip: "196904121995021001",
-            },
+            create: [
+                {
+                    lecturer_id: 4,
+                    name: "Sritrusta Sukaridhoto, ST., Ph.D.",
+                    research_group_id: 4,
+                    department_id: 4,
+                    nip: "196904121995021001",
+                },
+                {
+                    lecturer_id: 5,
+                    name: "Dr. Agus Indra Gunawan",
+                    research_group_id: 5,
+                    department_id: 3,
+                    nip: "197304131998031001",
+                }
+            ],
         },
     },
     // 2
@@ -79,13 +88,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 5,
-                name: "Dr. Agus Indra Gunawan",
-                research_group_id: 5,
-                department_id: 3,
-                nip: "197304131998031001",
-            },
+            create: [
+                {
+                    lecturer_id: 5,
+                    name: "Dr. Agus Indra Gunawan",
+                    research_group_id: 5,
+                    department_id: 3,
+                    nip: "197304131998031001",
+                },
+                {
+                    lecturer_id: 6,
+                    name: "Umi Sa'adah",
+                    research_group_id: 6,
+                    department_id: 2,
+                    nip: "198004152000122001",
+                }
+            ],
         },
     },
     // 3
@@ -107,13 +125,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 6,
-                name: "Umi Sa'adah",
-                research_group_id: 6,
-                department_id: 2,
-                nip: "198004152000122001",
-            },
+            create: [
+                {
+                    lecturer_id: 6,
+                    name: "Umi Sa'adah",
+                    research_group_id: 6,
+                    department_id: 2,
+                    nip: "198004152000122001",
+                },
+                {
+                    lecturer_id: 7,
+                    name: "Ri'fah Amalia",
+                    research_group_id: 7,
+                    department_id: 1,
+                    nip: "78901234",
+                }
+            ],
         },
     },
     // 4
@@ -135,13 +162,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 7,
-                name: "Ri'fah Amalia",
-                research_group_id: 7,
-                department_id: 1,
-                nip: "78901234",
-            },
+            create: [
+                {
+                    lecturer_id: 7,
+                    name: "Ri'fah Amalia",
+                    research_group_id: 7,
+                    department_id: 1,
+                    nip: "78901234",
+                },
+                {
+                    lecturer_id: 8,
+                    name: "Arna Fariza",
+                    research_group_id: 8,
+                    department_id: 2,
+                    nip: "01234567",
+                }
+            ],
         },
     },
     //5
@@ -163,13 +199,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 8,
-                name: "Rika Rokhana",
-                research_group_id: 8,
-                department_id: 3,
-                nip: "89012345",
-            },
+            create: [
+                {
+                    lecturer_id: 8,
+                    name: "Rika Rokhana",
+                    research_group_id: 8,
+                    department_id: 3,
+                    nip: "89012345",
+                },
+                {
+                    lecturer_id: 9,
+                    name: "Ferry Astika Saputra",
+                    research_group_id: 9,
+                    department_id: 2,
+                    nip: "90123456",
+                }
+            ],
         },
     },
     // 6
@@ -191,13 +236,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 9,
-                name: "Ferry Astika Saputra",
-                research_group_id: 9,
-                department_id: 2,
-                nip: "90123456",
-            },
+            create: [
+                {
+                    lecturer_id: 9,
+                    name: "Ferry Astika Saputra",
+                    research_group_id: 9,
+                    department_id: 2,
+                    nip: "90123456",
+                },
+                {
+                    lecturer_id: 10,
+                    name: "Arna Fariza",
+                    research_group_id: 10,
+                    department_id: 2,
+                    nip: "01234567",
+                }
+            ],
         },
     },
     // 7
@@ -219,13 +273,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 10,
-                name: "Arna Fariza",
-                research_group_id: 10,
-                department_id: 2,
-                nip: "01234567",
-            }
+            create: [
+                {
+                    lecturer_id: 10,
+                    name: "Arna Fariza",
+                    research_group_id: 10,
+                    department_id: 2,
+                    nip: "01234567",
+                },
+                {
+                    lecturer_id: 11,
+                    name: "Ronny Susetyoko",
+                    research_group_id: 11,
+                    department_id: 2,
+                    nip: "11223344",
+                }
+            ],
         },
     },
     // 8
@@ -247,13 +310,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 11,
-                name: "Ronny Susetyoko",
-                research_group_id: 11,
-                department_id: 2,
-                nip: "11223344",
-            }
+            create: [
+                {
+                    lecturer_id: 11,
+                    name: "Ronny Susetyoko",
+                    research_group_id: 11,
+                    department_id: 2,
+                    nip: "11223344",
+                },
+                {
+                    lecturer_id: 12,
+                    name: "Ronny Susetyoko",
+                    research_group_id: 12,
+                    department_id: 2,
+                    nip: "11223344",
+                }
+            ],
         },
     },
     // 9
@@ -275,13 +347,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 12,
-                name: "Moh. Hasbi Assidigi",
-                research_group_id: 12,
-                department_id: 4,
-                nip: "22334455",
-            }
+            create: [
+                {
+                    lecturer_id: 12,
+                    name: "Moh. Hasbi Assidigi",
+                    research_group_id: 12,
+                    department_id: 4,
+                    nip: "22334455",
+                },
+                {
+                    lecturer_id: 13,
+                    name: "Moh. Hasbi Assidigi",
+                    research_group_id: 12,
+                    department_id: 4,
+                    nip: "22334455",
+                }
+            ],
         },
     },
     // 10
@@ -303,13 +384,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 4,
-                name: "Sritrusta Sukaridhoto, ST., Ph.D.",
-                research_group_id: 4,
-                department_id: 4,
-                nip: "196904121995021001",
-            },
+            create: [
+                {
+                    lecturer_id: 4,
+                    name: "Sritrusta Sukaridhoto, ST., Ph.D.",
+                    research_group_id: 4,
+                    department_id: 4,
+                    nip: "196904121995021001",
+                },
+                {
+                    lecturer_id: 5,
+                    name: "Dr. Agus Indra Gunawan",
+                    research_group_id: 5,
+                    department_id: 3,
+                    nip: "197304131998031001",
+                }
+            ],
         },
     },
     // 11
@@ -331,13 +421,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 5,
-                name: "Dr. Agus Indra Gunawan",
-                research_group_id: 5,
-                department_id: 3,
-                nip: "197304131998031001",
-            },
+            create: [
+                {
+                    lecturer_id: 5,
+                    name: "Dr. Agus Indra Gunawan",
+                    research_group_id: 5,
+                    department_id: 3,
+                    nip: "197304131998031001",
+                },
+                {
+                    lecturer_id: 6,
+                    name: "Umi Sa'adah",
+                    research_group_id: 6,
+                    department_id: 2,
+                    nip: "198004152000122001",
+                }
+            ],
         },
     },
     // 12
@@ -359,13 +458,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 6,
-                name: "Umi Sa'adah",
-                research_group_id: 6,
-                department_id: 2,
-                nip: "198004152000122001",
-            },
+            create: [
+                {
+                    lecturer_id: 6,
+                    name: "Umi Sa'adah",
+                    research_group_id: 6,
+                    department_id: 2,
+                    nip: "198004152000122001",
+                },
+                {
+                    lecturer_id: 7,
+                    name: "Ri'fah Amalia",
+                    research_group_id: 7,
+                    department_id: 1,
+                    nip: "78901234",
+                }
+            ],
         },
     },
     // 13
@@ -387,13 +495,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 7,
-                name: "Ri'fah Amalia",
-                research_group_id: 7,
-                department_id: 1,
-                nip: "78901234",
-            },
+            create: [
+                {
+                    lecturer_id: 7,
+                    name: "Ri'fah Amalia",
+                    research_group_id: 7,
+                    department_id: 1,
+                    nip: "78901234",
+                },
+                {
+                    lecturer_id: 8,
+                    name: "Arna Fariza",
+                    research_group_id: 8,
+                    department_id: 2,
+                    nip: "01234567",
+                }
+            ],
         },
     },
     // 14
@@ -415,13 +532,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 8,
-                name: "Rika Rokhana",
-                research_group_id: 8,
-                department_id: 3,
-                nip: "89012345",
-            },
+            create: [
+                {
+                    lecturer_id: 8,
+                    name: "Rika Rokhana",
+                    research_group_id: 8,
+                    department_id: 3,
+                    nip: "89012345",
+                },
+                {
+                    lecturer_id: 9,
+                    name: "Ferry Astika Saputra",
+                    research_group_id: 9,
+                    department_id: 2,
+                    nip: "90123456",
+                }
+            ],
         },
     },
     // 15
@@ -443,13 +569,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 9,
-                name: "Ferry Astika Saputra",
-                research_group_id: 9,
-                department_id: 2,
-                nip: "90123456",
-            },
+            create: [
+                {
+                    lecturer_id: 9,
+                    name: "Ferry Astika Saputra",
+                    research_group_id: 9,
+                    department_id: 2,
+                    nip: "90123456",
+                },
+                {
+                    lecturer_id: 10,
+                    name: "Arna Fariza",
+                    research_group_id: 10,
+                    department_id: 2,
+                    nip: "01234567",
+                }
+            ],
         },
     },
     // 16
@@ -471,13 +606,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 10,
-                name: "Arna Fariza",
-                research_group_id: 10,
-                department_id: 2,
-                nip: "01234567",
-            }
+            create: [
+                {
+                    lecturer_id: 10,
+                    name: "Arna Fariza",
+                    research_group_id: 10,
+                    department_id: 2,
+                    nip: "01234567",
+                },
+                {
+                    lecturer_id: 11,
+                    name: "Ronny Susetyoko",
+                    research_group_id: 11,
+                    department_id: 2,
+                    nip: "11223344",
+                }
+            ],
         },
     },
     // 17
@@ -499,13 +643,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 11,
-                name: "Ronny Susetyoko",
-                research_group_id: 11,
-                department_id: 2,
-                nip: "11223344",
-            }
+            create: [
+                {
+                    lecturer_id: 11,
+                    name: "Ronny Susetyoko",
+                    research_group_id: 11,
+                    department_id: 2,
+                    nip: "11223344",
+                },
+                {
+                    lecturer_id: 12,
+                    name: "Moh. Hasbi Assidigi",
+                    research_group_id: 12,
+                    department_id: 4,
+                    nip: "22334455",
+                }
+            ],
         },
     },
     // 18
@@ -527,14 +680,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 12,
-                name: "Moh. Hasbi Assidigi",
-                research_group_id: 12,
-                department_id: 4,
-                nip: "22334455",
-
-            }
+            create: [
+                {
+                    lecturer_id: 12,
+                    name: "Moh. Hasbi Assidigi",
+                    research_group_id: 12,
+                    department_id: 4,
+                    nip: "22334455",
+                },
+                {
+                    lecturer_id: 13,
+                    name: "Dr. Agus Indra Gunawan",
+                    research_group_id: 13,
+                    department_id: 3,
+                    nip: "197304131998031001",
+                }
+            ],
         },
     },
     // 19
@@ -556,13 +717,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 10,
-                name: "Arna Fariza",
-                research_group_id: 10,
-                department_id: 2,
-                nip: "01234567",
-            }
+            create: [
+                {
+                    lecturer_id: 10,
+                    name: "Arna Fariza",
+                    research_group_id: 10,
+                    department_id: 2,
+                    nip: "01234567",
+                },
+                {
+                    lecturer_id: 14,
+                    name: "Moh. Hasbi Assidigi",
+                    research_group_id: null,
+                    department_id: 4,
+                    nip: "22334455",
+                }
+            ],
         },
     },
     // 20
@@ -584,13 +754,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 4,
-                name: "Sritrusta Sukaridhoto, ST., Ph.D.",
-                research_group_id: 4,
-                department_id: 4,
-                nip: "196904121995021001",
-            },
+            create: [
+                {
+                    lecturer_id: 4,
+                    name: "Sritrusta Sukaridhoto, ST., Ph.D.",
+                    research_group_id: 4,
+                    department_id: 4,
+                    nip: "196904121995021001",
+                },
+                {
+                    lecturer_id: 5,
+                    name: "Dr. Agus Indra Gunawan",
+                    research_group_id: 5,
+                    department_id: 3,
+                    nip: "197304131998031001",
+                }
+            ],
         },
     },
     // 21
@@ -612,13 +791,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 5,
-                name: "Dr. Agus Indra Gunawan",
-                research_group_id: 5,
-                department_id: 3,
-                nip: "197304131998031001",
-            },
+            create: [
+                {
+                    lecturer_id: 5,
+                    name: "Dr. Agus Indra Gunawan",
+                    research_group_id: 5,
+                    department_id: 3,
+                    nip: "197304131998031001",
+                },
+                {
+                    lecturer_id: 6,
+                    name: "Umi Sa'adah",
+                    research_group_id: 6,
+                    department_id: 2,
+                    nip: "198004152000122001",
+                }
+            ],
         },
     },
     // 22
@@ -640,13 +828,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 6,
-                name: "Umi Sa'adah",
-                research_group_id: 6,
-                department_id: 2,
-                nip: "198004152000122001",
-            },
+            create: [
+                {
+                    lecturer_id: 6,
+                    name: "Umi Sa'adah",
+                    research_group_id: 6,
+                    department_id: 2,
+                    nip: "198004152000122001",
+                },
+                {
+                    lecturer_id: 7,
+                    name: "Ri'fah Amalia",
+                    research_group_id: 7,
+                    department_id: 1,
+                    nip: "78901234",
+                }
+            ],
         },
     },
     // 23
@@ -668,13 +865,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 7,
-                name: "Ri'fah Amalia",
-                research_group_id: 7,
-                department_id: 1,
-                nip: "78901234",
-            },
+            create: [
+                {
+                    lecturer_id: 7,
+                    name: "Ri'fah Amalia",
+                    research_group_id: 7,
+                    department_id: 1,
+                    nip: "78901234",
+                },
+                {
+                    lecturer_id: 8,
+                    name: "Rika Rokhana",
+                    research_group_id: 8,
+                    department_id: 3,
+                    nip: "89012345",
+                }
+            ],
         },
     },
     // 25
@@ -696,13 +902,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 8,
-                name: "Rika Rokhana",
-                research_group_id: 8,
-                department_id: 3,
-                nip: "89012345",
-            },
+            create: [
+                {
+                    lecturer_id: 8,
+                    name: "Rika Rokhana",
+                    research_group_id: 8,
+                    department_id: 3,
+                    nip: "89012345",
+                },
+                {
+                    lecturer_id: 9,
+                    name: "Ferry Astika Saputra",
+                    research_group_id: 9,
+                    department_id: 2,
+                    nip: "90123456",
+                }
+            ],
         },
     },
     // 25
@@ -724,13 +939,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 9,
-                name: "Ferry Astika Saputra",
-                research_group_id: 9,
-                department_id: 2,
-                nip: "90123456",
-            },
+            create: [
+                {
+                    lecturer_id: 9,
+                    name: "Ferry Astika Saputra",
+                    research_group_id: 9,
+                    department_id: 2,
+                    nip: "90123456",
+                },
+                {
+                    lecturer_id: 10,
+                    name: "Arna Fariza",
+                    research_group_id: 10,
+                    department_id: 1,
+                    nip: "01234567",
+                }
+            ],
         },
     },
     // 26
@@ -752,13 +976,22 @@ let proposalSuggestionsPenelitian = [
         logbook: base_logbook,
         final_report: base_final_report,
         lecturer_member: {
-            create: {
-                lecturer_id: 11,
-                name: "Ronny Susetyoko",
-                research_group_id: 11,
-                department_id: 2,
-                nip: "11223344",
-            }
+            create: [
+                {
+                    lecturer_id: 11,
+                    name: "Ronny Susetyoko",
+                    research_group_id: 11,
+                    department_id: 2,
+                    nip: "11223344",
+                },
+                {
+                    lecturer_id: 12,
+                    name: "Dr. Agus Indra Gunawan",
+                    research_group_id: 12,
+                    department_id: 3,
+                    nip: "197304131998031001",
+                }
+            ],
         },
     },
 ];

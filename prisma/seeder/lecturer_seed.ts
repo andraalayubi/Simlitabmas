@@ -33,6 +33,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S3" as degree,
         position_id: 1,
         user: {
             create: [
@@ -67,6 +68,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S2" as degree,
         position_id: 2,
         user: {
             create: [
@@ -101,6 +103,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S2" as degree,
         position_id: 3,
         user: {
             create: [
@@ -124,6 +127,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S3" as degree,
         position_id: 1,
         user: {
             create: [
@@ -146,6 +150,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S3" as degree,
         position_id: 2,
         user: {
             create: [
@@ -168,6 +173,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S2" as degree,
         position_id: 3,
         user: {
             create: [
@@ -190,6 +196,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S2" as degree,
         position_id: 1,
         user: {
             create: [
@@ -212,6 +219,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S3" as degree,
         position_id: 2,
         user: {
             create: [
@@ -234,6 +242,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S2" as degree,
         position_id: 3,
         user: {
             create: [
@@ -256,6 +265,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S2" as degree,
         position_id: 2,
         user: {
             create: [
@@ -290,6 +300,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S2" as degree,
         position_id: 1,
         user: {
             create: [
@@ -324,6 +335,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
+        highest_degree: "S2" as degree,
         position_id: 4,
         user: {
             create: [
@@ -365,6 +377,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: true,
+        highest_degree: "S3" as degree,
         position_id: 4,
         user: {
             create: [
@@ -407,6 +420,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: false,
         is_kaprodi: true,
+        highest_degree: "S3" as degree,
         position_id: 4,
         user: {
             create: [
@@ -448,6 +462,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: false,
         is_kaprodi: true,
+        highest_degree: "S3" as degree,
         position_id: 4,
         user: {
             create: [
@@ -489,6 +504,7 @@ const lecturers = [
         ] as JsonArray,
         is_ketua_rg: false,
         is_kaprodi: true,
+        highest_degree: "S3" as degree,
         position_id: 4,
         user: {
             create: [
