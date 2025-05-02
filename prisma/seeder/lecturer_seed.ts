@@ -35,7 +35,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S3" as degree,
         position_id: 1,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Admin Mirza", email: "adminMirza@gmail.com", user_type: 'admin' as user_type, password: "Mirza123!" },
@@ -71,7 +70,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S2" as degree,
         position_id: 2,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Admin Andra", email: "adminAndra@gmail.com", user_type: 'admin' as user_type, password: "Andra123!" },
@@ -107,7 +105,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S2" as degree,
         position_id: 3,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Admin Hammam", email: "adminHammam@gmail.com", user_type: 'admin' as user_type, password: "Hammam123!" },
@@ -132,7 +129,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S3" as degree,
         position_id: 1,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Dosen Sritrusta", email: "dosen.sritrusta@pens.ac.id", user_type: 'lecturer', password: "DosenSritrusta2023!" },
@@ -156,7 +152,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S3" as degree,
         position_id: 2,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Dosen Agus", email: "agus.gunawan@pens.ac.id", user_type: 'lecturer', password: "DosenAgus2023!" },
@@ -180,7 +175,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S2" as degree,
         position_id: 3,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Dosen Umi", email: "umi.saadah@pens.ac.id", user_type: 'lecturer', password: "DosenUmi2023!" },
@@ -204,7 +198,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S2" as degree,
         position_id: 1,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Dosen Rifah", email: "rifah.amalia@pens.ac.id", user_type: 'lecturer' as user_type, password: "Rifah123!" },
@@ -228,7 +221,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S3" as degree,
         position_id: 2,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Dosen Rika", email: "rika.rokhana@pens.ac.id", user_type: 'lecturer' as user_type, password: "Rika123!" },
@@ -252,7 +244,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S2" as degree,
         position_id: 3,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Dosen Ferry", email: "ferry.astika@pens.ac.id", user_type: 'lecturer' as user_type, password: "Ferry123!" },
@@ -276,7 +267,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S2" as degree,
         position_id: 2,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Dosen Arna", email: "arna.fariza@pens.ac.id", user_type: 'lecturer' as user_type, password: "Arna123!" },
@@ -312,7 +302,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S2" as degree,
         position_id: 1,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Dosen Ronny", email: "ronny.susetyoko@pens.ac.id", user_type: 'lecturer' as user_type, password: "DosenRonny2023!" },
@@ -348,7 +337,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S2" as degree,
         position_id: 4,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Dosen Hasbi", email: "hasbi.assidigi@pens.ac.id", user_type: 'lecturer' as user_type, password: "DosenHasbi2023!" },
@@ -391,7 +379,6 @@ const lecturers = [
         is_kaprodi: true,
         highest_degree: "S3" as degree,
         position_id: 4,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Admin Arif", email: "admin.arif@pens.ac.id", user_type: 'admin' as user_type, password: "AdminArif2023!" },
@@ -435,7 +422,6 @@ const lecturers = [
         is_kaprodi: true,
         highest_degree: "S3" as degree,
         position_id: 4,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Admin Udin", email: "admin.udin@pens.ac.id", user_type: 'admin' as user_type, password: "AdminUdin2023!" },
@@ -478,7 +464,6 @@ const lecturers = [
         is_kaprodi: true,
         highest_degree: "S3" as degree,
         position_id: 4,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Admin Nasyir", email: "admin.nasyir@pens.ac.id", user_type: 'admin' as user_type, password: "AdminNasyir2023!" },
@@ -521,7 +506,6 @@ const lecturers = [
         is_kaprodi: true,
         highest_degree: "S3" as degree,
         position_id: 4,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Admin Kholid", email: "admin.kholid@pens.ac.id", user_type: 'admin' as user_type, password: "AdminKholid2023!" },
