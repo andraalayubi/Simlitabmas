@@ -55,7 +55,7 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
     const getSchemas = await schemaAction.getSchemas(
       user_type,
       setLoading,
-      { is_active: true, min_degree: lecturer.highest_degree }
+      { is_active: true, min_degree: lecturer.highest_degree, position_id: lecturer.position_id }
     );
     const getYearResearches = await yearResearchAction.getYearResearches(
       user_type,
