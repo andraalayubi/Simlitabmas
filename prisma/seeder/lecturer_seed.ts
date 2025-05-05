@@ -35,7 +35,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S3" as degree,
         position_id: 1,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Admin Mirza", email: "adminMirza@gmail.com", user_type: 'admin' as user_type, password: "Mirza123!" },
@@ -71,7 +70,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S2" as degree,
         position_id: 2,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Admin Andra", email: "adminAndra@gmail.com", user_type: 'admin' as user_type, password: "Andra123!" },
@@ -107,7 +105,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S2" as degree,
         position_id: 3,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Admin Hammam", email: "adminHammam@gmail.com", user_type: 'admin' as user_type, password: "Hammam123!" },
@@ -132,7 +129,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S3" as degree,
         position_id: 1,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Dosen Sritrusta", email: "dosen.sritrusta@pens.ac.id", user_type: 'lecturer', password: "DosenSritrusta2023!" },
@@ -156,7 +152,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S3" as degree,
         position_id: 2,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Dosen Agus", email: "agus.gunawan@pens.ac.id", user_type: 'lecturer', password: "DosenAgus2023!" },
@@ -180,7 +175,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S2" as degree,
         position_id: 3,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Dosen Umi", email: "umi.saadah@pens.ac.id", user_type: 'lecturer', password: "DosenUmi2023!" },
@@ -204,7 +198,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S2" as degree,
         position_id: 1,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Dosen Rifah", email: "rifah.amalia@pens.ac.id", user_type: 'lecturer' as user_type, password: "Rifah123!" },
@@ -228,7 +221,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S3" as degree,
         position_id: 2,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Dosen Rika", email: "rika.rokhana@pens.ac.id", user_type: 'lecturer' as user_type, password: "Rika123!" },
@@ -252,7 +244,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S2" as degree,
         position_id: 3,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Dosen Ferry", email: "ferry.astika@pens.ac.id", user_type: 'lecturer' as user_type, password: "Ferry123!" },
@@ -276,7 +267,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S2" as degree,
         position_id: 2,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Dosen Arna", email: "arna.fariza@pens.ac.id", user_type: 'lecturer' as user_type, password: "Arna123!" },
@@ -312,7 +302,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S2" as degree,
         position_id: 1,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Dosen Ronny", email: "ronny.susetyoko@pens.ac.id", user_type: 'lecturer' as user_type, password: "DosenRonny2023!" },
@@ -348,7 +337,6 @@ const lecturers = [
         is_kaprodi: false,
         highest_degree: "S2" as degree,
         position_id: 4,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Dosen Hasbi", email: "hasbi.assidigi@pens.ac.id", user_type: 'lecturer' as user_type, password: "DosenHasbi2023!" },
@@ -391,7 +379,6 @@ const lecturers = [
         is_kaprodi: true,
         highest_degree: "S3" as degree,
         position_id: 4,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Admin Arif", email: "admin.arif@pens.ac.id", user_type: 'admin' as user_type, password: "AdminArif2023!" },
@@ -435,7 +422,6 @@ const lecturers = [
         is_kaprodi: true,
         highest_degree: "S3" as degree,
         position_id: 4,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Admin Udin", email: "admin.udin@pens.ac.id", user_type: 'admin' as user_type, password: "AdminUdin2023!" },
@@ -478,7 +464,6 @@ const lecturers = [
         is_kaprodi: true,
         highest_degree: "S3" as degree,
         position_id: 4,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Admin Nasyir", email: "admin.nasyir@pens.ac.id", user_type: 'admin' as user_type, password: "AdminNasyir2023!" },
@@ -518,10 +503,9 @@ const lecturers = [
             }
         ] as JsonArray,
         is_ketua_rg: false,
-        is_kaprodi: true,
+        is_kaprodi: false,
         highest_degree: "S3" as degree,
         position_id: 4,
-        highest_degree: "S2" as degree,
         user: {
             create: [
                 { name: "Admin Kholid", email: "admin.kholid@pens.ac.id", user_type: 'admin' as user_type, password: "AdminKholid2023!" },
@@ -529,7 +513,244 @@ const lecturers = [
                 { name: "Kaprodi IT Kholid", email: "kaprodi.kholid@pens.ac.id", user_type: 'kaprodi' as user_type, password: "KaprodiKholid2023!" }
             ]
         }
+    },
+    {
+        name: "Budi Santoso, S.T., M.Eng.",
+        research_group_id: null,
+        department_id: 3,
+        nidn: "3122500001",
+        nip: "33445570",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.T",
+                field: "Electrical Engineering",
+                university: "Institut Teknologi Bandung",
+                year: "2010"
+            },
+            {
+                degree: "S2",
+                code: "M.Eng",
+                field: "Power Systems",
+                university: "National University of Singapore",
+                year: "2015"
+            }
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S2",
+        position_id: 2,
+        user: {
+            create: [
+                {
+                    name: "Dosen Budi",
+                    email: "budi.santoso@pens.ac.id",
+                    user_type: 'lecturer',
+                    password: "DosenBudi2023!"
+                }
+            ]
+        }
+    },
+    {
+        name: "Anisa Rahma, S.Kom., M.Kom.",
+        research_group_id: null,
+        department_id: 1,
+        nidn: "3122500002",
+        nip: "33445571",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.Kom",
+                field: "Information Systems",
+                university: "Universitas Indonesia",
+                year: "2012"
+            },
+            {
+                degree: "S2",
+                code: "M.Kom",
+                field: "Data Science",
+                university: "Universitas Gadjah Mada",
+                year: "2017"
+            }
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S2",
+        position_id: 3,
+        user: {
+            create: [
+                {
+                    name: "Dosen Anisa",
+                    email: "anisa.rahma@pens.ac.id",
+                    user_type: 'lecturer',
+                    password: "DosenAnisa2023!"
+                }
+            ]
+        }
+    },
+    {
+        name: "Hendra Pratama, S.T., M.Sc., Ph.D.",
+        research_group_id: null,
+        department_id: 4,
+        nidn: "3122500003",
+        nip: "33445572",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.T",
+                field: "Mechanical Engineering",
+                university: "Institut Teknologi Sepuluh Nopember",
+                year: "2009"
+            },
+            {
+                degree: "S2",
+                code: "M.Sc",
+                field: "Robotics",
+                university: "Technical University of Munich",
+                year: "2014"
+            },
+            {
+                degree: "S3",
+                code: "Ph.D",
+                field: "Mechatronics",
+                university: "ETH Zurich",
+                year: "2020"
+            }
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S3",
+        position_id: 1,
+        user: {
+            create: [
+                {
+                    name: "Dosen Hendra",
+                    email: "hendra.pratama@pens.ac.id",
+                    user_type: 'lecturer',
+                    password: "DosenHendra2023!"
+                }
+            ]
+        }
+    },
+    {
+        name: "Dewi Anggraeni, S.Si., M.T.",
+        research_group_id: null,
+        department_id: 2,
+        nidn: "3122500004",
+        nip: "33445573",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.Si",
+                field: "Computer Science",
+                university: "Universitas Airlangga",
+                year: "2013"
+            },
+            {
+                degree: "S2",
+                code: "M.T",
+                field: "Information Technology",
+                university: "University of Melbourne",
+                year: "2016"
+            }
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S2",
+        position_id: 4,
+        user: {
+            create: [
+                {
+                    name: "Dosen Dewi",
+                    email: "dewi.anggraeni@pens.ac.id",
+                    user_type: 'lecturer',
+                    password: "DosenDewi2023!"
+                }
+            ]
+        }
+    },
+    {
+        name: "Rudi Hermawan, S.T., M.Eng., Ph.D.",
+        research_group_id: null,
+        department_id: 1,
+        nidn: "3122500005",
+        nip: "33445574",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.T",
+                field: "Electrical Engineering",
+                university: "Institut Teknologi Sepuluh Nopember",
+                year: "2010"
+            },
+            {
+                degree: "S2",
+                code: "M.Eng",
+                field: "Renewable Energy",
+                university: "Delft University of Technology",
+                year: "2015"
+            },
+            {
+                degree: "S3",
+                code: "Ph.D",
+                field: "Energy Systems",
+                university: "Massachusetts Institute of Technology",
+                year: "2020"
+            }
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S3",
+        position_id: 3,
+        user: {
+            create: [
+                {
+                    name: "Dosen Rudi",
+                    email: "rudi.hermawan@pens.ac.id",
+                    user_type: 'lecturer',
+                    password: "DosenRudi2023!"
+                }
+            ]
+        }
+    },
+    {
+        name: "Fitria Wulandari, S.Kom., M.Kom.",
+        research_group_id: null,
+        department_id: 4,
+        nidn: "3122500006",
+        nip: "33445575",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.Kom",
+                field: "Information Systems",
+                university: "Universitas Gadjah Mada",
+                year: "2014"
+            },
+            {
+                degree: "S2",
+                code: "M.Kom",
+                field: "Cybersecurity",
+                university: "Universitas Indonesia",
+                year: "2019"
+            }
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S2",
+        position_id: 2,
+        user: {
+            create: [
+                {
+                    name: "Dosen Fitria",
+                    email: "fitria.wulandari@pens.ac.id",
+                    user_type: 'lecturer',
+                    password: "DosenFitria2023!"
+                }
+            ]
+        }
     }
+
 ]
 
 
