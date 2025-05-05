@@ -2,17 +2,35 @@ import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { NextRequest, NextResponse } from "next/server";
 import lecturerService from "src/services/lecturerService";
 import memberService from "src/services/memberService";
+import proposalSuggestionService from "src/services/proposalSuggestionService";
+import schemaService from "src/services/schemaService";
 
 export async function GET(req: NextRequest, { params }: { params: Params }) {
 
     try {
         const proposalSuggestionId = parseInt(params.proposal_suggestion_id, 10);
-        const proposal_suggestion = await lecturerService.getAvailableLecturers(proposalSuggestionId);
-        
+
+        const proposalSuggestion = await proposalSuggestionService.getById(proposalSuggestionId);
+
+        // get lecturer not already inlcude in lecturer member
+        const availableLecturers = await lecturerService.getAvailableLecturers(proposalSuggestionId);
+
+        let lecturers = availableLecturers;
+
+        // check schema if research
+        if (proposalSuggestion?.research_group_id != null) {
+            
+            const validLecturerIds = await lecturerService.getLecturerIdsBySchema(proposalSuggestionId)
+            
+            lecturers = availableLecturers.filter(lecturer => 
+                validLecturerIds.includes(lecturer.id)
+            );
+        }
+
         return NextResponse.json({
             success: true,
             message: "Success getting data",
-            data: proposal_suggestion
+            data: lecturers
         }, { status: 200 })
 
     } catch (error: any) {

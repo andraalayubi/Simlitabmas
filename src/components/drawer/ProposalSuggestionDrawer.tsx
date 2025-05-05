@@ -102,7 +102,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
     }
     //handle for lecturer
     else if (user_type == "lecturer") {
-      if (roleAction == "approval") {
+      if (roleAction == "approval" || roleAction == "input") {
         if (approved) {
           phase = currentPhase;
           status = nextStatus;
@@ -110,6 +110,11 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
           phase = currentPhase;
           status = currentStatus;
         }
+      }
+
+      if (roleAction == "next") {
+        phase = nextPhase;
+        status = nextStatus;
       }
     }
 

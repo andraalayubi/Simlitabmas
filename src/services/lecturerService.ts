@@ -75,6 +75,45 @@ const getAvailableLecturers = async (proposalSuggestionId: number) => {
     });
 };
 
+// get lecturer_id by schema id
+const getLecturerIdsBySchema = async (proposalSuggestionId: number) => {
+
+    const proposalSuggestion = await prisma.proposal_suggestion.findUnique({
+        where: { id: proposalSuggestionId },
+        include: {
+            schema: true,
+        }
+    });
+
+    const schema = proposalSuggestion?.schema;
+
+    const positionSchemas = await prisma.position_schema.findMany({
+        where: {schema_id: proposalSuggestion?.schema_id!}
+    })
+
+    const allowedlecturerIds = [];
+
+    const lecturers  = await prisma.lecturer.findMany();
+
+    const degreeHierarchy = ['S1', 'S2', 'S3'];
+    const minDegreeIndex = degreeHierarchy.indexOf(schema?.min_degree!);
+
+    const allowedPositionIds = positionSchemas.map(ps => ps.position_id);
+
+    const allowedLecturers = lecturers.filter(lecturer => {
+        const lecturerDegreeIndex = degreeHierarchy.indexOf(lecturer.highest_degree!);
+        
+        const isDegreeValid = lecturerDegreeIndex >= minDegreeIndex;
+        
+        // Cek position_id
+        const isPositionValid = allowedPositionIds.includes(lecturer.position_id!);
+
+        return isDegreeValid && isPositionValid;
+    });
+
+    return allowedLecturers.map(lecturer => lecturer.id);
+}
+
 // add lecturer to proposal suggestion
 const addLecturerMember = async (proposalSuggestionId: number, anggota: lecturer_member[] | lecturer_member) => {
     const lecturers = Array.isArray(anggota) ? anggota : [anggota];
@@ -149,6 +188,7 @@ const lecturerService = {
     getById,
     getAllActive,
     getByFilter,
+    getLecturerIdsBySchema,
     create,
     update,
     remove,
