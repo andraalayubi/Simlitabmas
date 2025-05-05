@@ -40,8 +40,8 @@ const AddSchema: React.FC<AddSchemaProps> = ({
     initialValues: {
       name: "",
       description: "",
-      type: "penelitian",
-      min_degree: "S1",
+      type: "",
+      min_degree: "",
       is_lecturer: true,
       is_student: true,
       is_partner: true,

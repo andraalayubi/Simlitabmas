@@ -14,10 +14,9 @@ export async function GET(request: NextRequest) {
       { key: "name", type: "string" },
       { key: "is_active", type: "boolean" },
       { key: "min_degree", type: "string" },
+      { key: "type", type: "string" },
       { key: "position_id", type: 'number' }
     ]);
-
-    console.log(filter.position_id)
 
     // Jika filter min_degree ada, modifikasi untuk mengambil semua degree yang lebih rendah/sama
     if (filter.min_degree) {
@@ -45,14 +44,11 @@ export async function GET(request: NextRequest) {
     if (filter.position_id != null) {
       requiredPositionId = filter.position_id
       
-
       delete filter.position_id;
     }
 
     // Panggil service dengan filter yang sudah dimodifikasi
     let schemas = await schemaService.getByFilter(filter);
-
-    console.log(schemas, requiredPositionId);
 
     if (requiredPositionId !== null) {
       schemas = schemas.filter((schema: any) => {

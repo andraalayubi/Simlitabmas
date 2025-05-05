@@ -76,6 +76,7 @@ const SemuaUsulanLecturer: React.FC<SemuaUsulanLecturerProps> = ({
               type="pengmas"
               lecturer={lecturer}
               refreshData={() => getProposalSuggestion()}
+              proposal_suggestion_type={"pengmas"}
             />
           )}
         </ModalComponent>

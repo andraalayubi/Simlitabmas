@@ -78,6 +78,7 @@ const UsulanSayaLecturer: React.FC<UsulanSayaLecturerProps> = ({ columns }) => {
               type="pengmas"
               lecturer={lecturer}
               refreshData={() => getProposalSuggestion()}
+              proposal_suggestion_type={"pengmas"}
             />
           )}
         </ModalComponent>
