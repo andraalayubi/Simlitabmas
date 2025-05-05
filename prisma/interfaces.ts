@@ -152,6 +152,7 @@ export interface schema {
   id: number;
   name: string;
   description: string | null;
+  type: string | null;
   max_cost: Decimal | null;
   min_degree: degree | null;
   is_student: boolean | null;

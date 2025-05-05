@@ -25,6 +25,9 @@ export type YearResearchFormValues = z.infer<typeof yearResearchSchema>;
 export const schemaSchema = z.object({
   name: z.string().min(1, { message: "Nama wajib diisi" }),
   description: z.string().min(1, { message: "Deskripsi wajib diisi" }),
+  type: z.enum(['penelitian', 'pengmas'], { 
+    errorMap: () => ({ message: "Pilih jenis skema yang valid" }) 
+  }),
   min_degree: z.enum(['S1', 'S2', 'S3'], { 
     errorMap: () => ({ message: "Pilih jenjang yang valid" }) 
   }),

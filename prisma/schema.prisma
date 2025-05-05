@@ -246,6 +246,7 @@ model schema {
   id          Int      @id @default(autoincrement())
   name        String
   description String?
+  type        String?
   max_cost    Decimal? @db.Decimal(20, 2)
   min_degree  degree?
   is_student  Boolean?
