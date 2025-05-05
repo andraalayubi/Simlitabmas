@@ -22,11 +22,11 @@ export default function AuditSchemaPage() {
 
   const columns = React.useMemo<MRT_ColumnDef<schema>[]>(
     () => [
-      // {
-      //   accessorKey: "id",
-      //   header: "No",
-      //   size: 50,
-      // },
+      {
+        accessorKey: "type",
+        header: "Tipe",
+        size: 100,
+      },
       {
         accessorKey: "name",
         header: "Nama Skema",

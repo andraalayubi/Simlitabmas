@@ -69,9 +69,11 @@ const positions = [
 ];
 
 const schemas = [
-    { name: "Skema Dasar", is_active: true, description: "Penelitian atau pengabdian yang berfokus pada eksplorasi, penemuan, dan pemahaman konsep, teori, atau fenomena ilmiah tanpa memprioritaskan aplikasi praktis langsung.", max_cost: 500000, min_degree: "S1" as degree, is_student: true, is_partner: true, is_lecturer: true },
-    { name: "Skema Terapan", is_active: true, description: "Penelitian atau pengabdian yang dirancang untuk memecahkan masalah praktis atau menghasilkan produk yang dapat langsung dimanfaatkan oleh masyarakat atau industri.", max_cost: 1000000, min_degree: "S1" as degree, is_student: true, is_partner: true, is_lecturer: true },
-    { name: "Skema Pengembangan", is_active: false, description: "Penelitian atau pengabdian yang dirancang untuk memecahkan masalah praktis atau menghasilkan produk yang dapat langsung dimanfaatkan oleh masyarakat atau industri.", max_cost: 1000000, min_degree: "S1" as degree, is_student: true, is_partner: true, is_lecturer: true }
+    { name: "Skema Dasar", type: "penelitian", is_active: true, description: "Penelitian atau pengabdian yang berfokus pada eksplorasi, penemuan, dan pemahaman konsep, teori, atau fenomena ilmiah tanpa memprioritaskan aplikasi praktis langsung.", max_cost: 500000, min_degree: "S1" as degree, is_student: true, is_partner: true, is_lecturer: true },
+    { name: "Skema Terapan", type: "penelitian", is_active: true, description: "Penelitian atau pengabdian yang dirancang untuk memecahkan masalah praktis atau menghasilkan produk yang dapat langsung dimanfaatkan oleh masyarakat atau industri.", max_cost: 1000000, min_degree: "S1" as degree, is_student: true, is_partner: true, is_lecturer: true },
+    { name: "Skema Pengembangan", type: "penelitian", is_active: false, description: "Penelitian atau pengabdian yang dirancang untuk memecahkan masalah praktis atau menghasilkan produk yang dapat langsung dimanfaatkan oleh masyarakat atau industri.", max_cost: 1000000, min_degree: "S1" as degree, is_student: true, is_partner: true, is_lecturer: true },
+    { name: "Skema Pemberdayaan Masyarakat", type: "pengmas", is_active: true, description: "Pengabdian kepada masyarakat yang berfokus pada pemberdayaan, pelatihan, atau pendampingan masyarakat untuk meningkatkan kapasitas, kesejahteraan, atau kemandirian.", max_cost: 800000, min_degree: "S1" as degree, is_student: true, is_partner: true, is_lecturer: true },
+    { name: "Skema Inovasi Sosial", type: "pengmas", is_active: true, description: "Pengabdian kepada masyarakat yang menitikberatkan pada penciptaan solusi inovatif untuk permasalahan sosial di masyarakat.", max_cost: 1200000, min_degree: "S1" as degree, is_student: true, is_partner: true, is_lecturer: true }
 ];
 
 const position_schemas = [

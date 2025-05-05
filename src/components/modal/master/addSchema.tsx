@@ -40,6 +40,7 @@ const AddSchema: React.FC<AddSchemaProps> = ({
     initialValues: {
       name: "",
       description: "",
+      type: "penelitian",
       min_degree: "S1",
       is_lecturer: true,
       is_student: true,
@@ -92,6 +93,20 @@ const AddSchema: React.FC<AddSchemaProps> = ({
               }
               placeholder="Silahkan Isi Deskripsi"
               {...schemaForm.getInputProps("description")}
+            />
+
+            <Select
+              label={
+                <Text fs="14" fw={500}>
+                  Tipe
+                </Text>
+              }
+              placeholder="Pilih tipe"
+              {...schemaForm.getInputProps("type")}
+              data={[
+                { value: "penelitian", label: "Penelitian" },
+                { value: "pengmas", label: "Pengmas" },
+              ]}
             />
 
             <Select
