@@ -233,13 +233,13 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
           {/* Input Nama */}
           <TextInput
             label="Nama"
-            placeholder="Masukkan nama mahasiswa"
+            placeholder="Masukkan nama vendor"
             {...vendorForm.getInputProps("anggota.name")}
           />
           {/* Input Deskripsi */}
           <TextInput
             label="Deskripsi"
-            placeholder="Masukkan deskripsi mahasiswa"
+            placeholder="Masukkan deskripsi vendor"
             {...vendorForm.getInputProps("anggota.description")}
           />
         </div>

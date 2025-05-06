@@ -90,7 +90,7 @@ export default function AuditSchemaPage() {
       },
       {
         accessorKey: "is_partner",
-        header: "Partner",
+        header: "Vendor",
         size: 80,
         Cell: ({ cell }) => (
           <div style={{ textAlign: 'center' }}>
