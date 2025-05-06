@@ -153,8 +153,8 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
     <Box component="form" onSubmit={form.onSubmit(handleSubmit)}>
       <TextInput
         required
-        label="Judul Penelitian"
-        placeholder="Masukkan judul penelitian"
+        label={type === 'penelitian' ? 'Judul Penelitian' : 'Judul Pengabdian'}
+        placeholder={type === 'penelitian' ? 'Masukkan judul penelitian' : 'Masukkan judul pengabdian'}
         {...form.getInputProps("name")}
       />
       {showResearchGroup && (
@@ -173,8 +173,8 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
         <Select
           className="mt-2"
           required
-          label="Skema Penelitian"
-          placeholder="Pilih skema penelitian"
+          label={type === 'penelitian' ? 'Skema Penelitian' : 'Skema Pengabdian'}
+          placeholder={type === 'penelitian' ? 'Pilih skema penelitian' : 'Pilih skema pengabdian'}
           data={schemas}
           {...form.getInputProps("schema_id")}
         />
@@ -183,8 +183,8 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
         <Select
           className="mt-2"
           required
-          label="Tahun Penelitian"
-          placeholder="Pilih tahun penelitian"
+          label={type === 'penelitian' ? 'Tahun Penelitian' : 'Tahun Pengabdian'}
+          placeholder={type === 'penelitian' ? 'Pilih tahun penelitian' : 'Pilih tahun pengabdian'}
           data={yearResearches}
           {...form.getInputProps("year_research_id")}
         />

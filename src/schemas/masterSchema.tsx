@@ -28,18 +28,46 @@ export const schemaSchema = z.object({
   type: z.enum(['penelitian', 'pengmas'], { 
     errorMap: () => ({ message: "Pilih jenis skema yang valid" }) 
   }),
-  min_degree: z.enum(['S1', 'S2', 'S3'], { 
-    errorMap: () => ({ message: "Pilih jenjang yang valid" }) 
-  }),
+  min_degree: z.string().trim().optional().nullable(),
   is_lecturer: z.boolean().optional(),
   is_student: z.boolean().optional(),
   is_partner: z.boolean().optional(),
-  positions: z.record(z.boolean()).refine(
-    (val) => Object.values(val).some(v => v),
-    { message: "Satu jabatan harus dipilih" }
-  )
+  positions: z.record(z.boolean()).optional()
 }).refine(
-  (data) => data.is_lecturer || data.is_student || data.is_partner,
+  (data) => {
+    if (data.type === 'pengmas') return true;
+    
+    if (data.min_degree) {
+      return ['S1', 'S2', 'S3'].includes(data.min_degree);
+    }
+    
+    return false;
+  },
+  {
+    message: "Minimal gelar harus diisi (S1, S2, atau S3)",
+    path: ["min_degree"]
+  }
+).refine(
+  (data) => {
+    if (data.type === 'pengmas') return true;
+    
+    const hasSelectedPosition = data.positions ? 
+      Object.values(data.positions).some(v => v) : false;
+    
+    return hasSelectedPosition;
+  },
+  {
+    message: "Satu jabatan harus dipilih",
+    path: ["positions"]
+  }
+).refine(
+  (data) => {
+    if (data.type === 'pengmas') return true;
+    
+    const hasMemberSelection = data.is_lecturer || data.is_student || data.is_partner;
+    
+    return hasMemberSelection;
+  },
   {
     message: "Pilih minimal satu jenis anggota",
     path: ["member_selection"]
