@@ -1,9 +1,6 @@
 import { degree, PrismaClient } from '@prisma/client'
 
-import { user_type } from "@prisma/client";
-import { JsonArray } from '@prisma/client/runtime/library';
 import bcrypt from "bcrypt";
-import { proposal_suggestion_phase, proposal_suggestion_status } from 'prisma/interfaces';
 import { evaluation_phase } from 'prisma/interfaces';
 import proposalSuggestionsPenelitian from './penelitian_seed';
 import proposalSuggestionsPengmas from './pengmas_seed';

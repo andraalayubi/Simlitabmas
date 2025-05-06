@@ -538,7 +538,7 @@ const lecturers = [
         ],
         is_ketua_rg: false,
         is_kaprodi: false,
-        highest_degree: "S2",
+        highest_degree: "S2" as degree,
         position_id: 2,
         user: {
             create: [
@@ -575,7 +575,7 @@ const lecturers = [
         ],
         is_ketua_rg: false,
         is_kaprodi: false,
-        highest_degree: "S2",
+        highest_degree: "S2" as degree,
         position_id: 3,
         user: {
             create: [
@@ -619,7 +619,7 @@ const lecturers = [
         ],
         is_ketua_rg: false,
         is_kaprodi: false,
-        highest_degree: "S3",
+        highest_degree: "S3" as degree,
         position_id: 1,
         user: {
             create: [
@@ -656,7 +656,7 @@ const lecturers = [
         ],
         is_ketua_rg: false,
         is_kaprodi: false,
-        highest_degree: "S2",
+        highest_degree: "S2" as degree,
         position_id: 4,
         user: {
             create: [
@@ -700,7 +700,7 @@ const lecturers = [
         ],
         is_ketua_rg: false,
         is_kaprodi: false,
-        highest_degree: "S3",
+        highest_degree: "S3" as degree,
         position_id: 3,
         user: {
             create: [
@@ -737,7 +737,7 @@ const lecturers = [
         ],
         is_ketua_rg: false,
         is_kaprodi: false,
-        highest_degree: "S2",
+        highest_degree: "S2" as degree,
         position_id: 2,
         user: {
             create: [
