@@ -41,6 +41,7 @@ export async function POST(request: NextRequest) {
             is_lecturer: body.is_lecturer,
             is_student: body.is_student,
             is_partner: body.is_partner,
+            type: body.type
         };
 
         const schema = await schemaService.create(newSchema);

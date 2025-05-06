@@ -55,7 +55,8 @@ const SemuaUsulanAdmin: React.FC<SemuaUsulanAdminProps> = ({ columns }) => {
               showResearchGroup={true}
               type="penelitian"
               lecturer_id={Number(session?.lecturer_id)}
-              refreshData={() => getProposalSuggestion()}
+              refreshData={() => getProposalSuggestion()
+              proposal_suggestion_type={"penelitian"}}
             />
           )}
         </ModalComponent> */}

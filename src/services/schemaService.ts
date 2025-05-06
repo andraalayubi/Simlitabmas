@@ -12,6 +12,7 @@ const getById = async (id: number) => {
 const getByFilter = async (filter: any) => {
     return await prisma.schema.findMany({
         where: filter,
+        include : {position_schema: true},
         orderBy: {
             id: "asc"
         }

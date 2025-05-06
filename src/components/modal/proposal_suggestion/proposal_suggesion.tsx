@@ -23,6 +23,7 @@ interface ProposalSuggestionModalProps {
   type: string;
   lecturer: lecturer;
   refreshData: () => void;
+  proposal_suggestion_type: string;
 }
 
 const transformData = <T extends {
@@ -43,7 +44,8 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
   showResearchGroup = true,
   type,
   lecturer,
-  refreshData
+  refreshData,
+  proposal_suggestion_type,
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [schemas, setSchemas] = useState<{ value: string; label: string }[]>([]);
@@ -52,10 +54,18 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
   const { showNotification } = useNotification();
 
   const getData = useCallback(async () => {
+    
+    // get schema by type
+    let schemaFilters = null
+    if (proposal_suggestion_type == 'penelitian') {
+      schemaFilters = { is_active: true, min_degree: lecturer.highest_degree, type: "penelitian", position_id: lecturer.position_id }
+    } else {
+      schemaFilters = { is_active: true, type: 'pengmas' }
+    }
     const getSchemas = await schemaAction.getSchemas(
       user_type,
       setLoading,
-      { is_active: true, min_degree: lecturer.highest_degree }
+      schemaFilters,
     );
     const getYearResearches = await yearResearchAction.getYearResearches(
       user_type,
