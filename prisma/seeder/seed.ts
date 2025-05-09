@@ -96,7 +96,15 @@ const external_document_categories = [
     { name: "Panduan Praktis", schema_id: 2, description: "Dokumentasi yang berisi pedoman atau strategi implementasi solusi berbasis penelitian untuk pihak-pihak terkait." },
     { name: "Paten dan Hak Kekayaan Intelektual (HKI)", schema_id: 3, description: "Dokumen paten atas inovasi teknologi atau metodologi baru yang dihasilkan dari penelitian pengembangan." },
     { name: "SOP dan Pedoman Operasional", schema_id: 3, description: "Standar operasional prosedur, modul pelatihan, atau materi pendukung yang disusun untuk mendukung implementasi dan pengembangan lebih lanjut dari produk atau teknologi yang dikembangkan." },
-    { name: "Kemitraan atau Transfer Teknologi", schema_id: 3, description: "Dokumen perjanjian kerja sama dengan pihak industri atau lembaga lain sebagai bentuk penerapan hasil penelitian ke dalam produk atau layanan komersial." }
+    { name: "Kemitraan atau Transfer Teknologi", schema_id: 3, description: "Dokumen perjanjian kerja sama dengan pihak industri atau lembaga lain sebagai bentuk penerapan hasil penelitian ke dalam produk atau layanan komersial." },
+    { name: "Modul/Buku Panduan", schema_id: 4, description: "Materi edukasi praktis (cetak/digital) untuk masyarakat, seperti panduan pelatihan, buku kesehatan, atau teknik pertanian." },
+    { name: "Pelatihan dan Sertifikasi", schema_id: 4, description: "Program pelatihan keterampilan (contoh: kewirausahaan, teknologi) dengan sertifikat bagi peserta." },
+    { name: "Produk Teknologi Tepat Guna", schema_id: 4, description: "Alat/sistem inovatif yang dibuat untuk memecahkan masalah masyarakat, misalnya alat pertanian atau sistem penyaringan air." },
+    { name: "Video Dokumentasi", schema_id: 4, description: "Rekaman kegiatan, wawancara mitra, dan hasil program yang diunggah ke media sosial/website." },
+    { name: "Modul/Buku Panduan", schema_id: 5, description: "Materi edukasi praktis (cetak/digital) untuk masyarakat, seperti panduan pelatihan, buku kesehatan, atau teknik pertanian." },
+    { name: "Pelatihan dan Sertifikasi", schema_id: 5, description: "Program pelatihan keterampilan (contoh: kewirausahaan, teknologi) dengan sertifikat bagi peserta." },
+    { name: "Produk Teknologi Tepat Guna", schema_id: 5, description: "Alat/sistem inovatif yang dibuat untuk memecahkan masalah masyarakat, misalnya alat pertanian atau sistem penyaringan air." },
+    { name: "Video Dokumentasi", schema_id: 5, description: "Rekaman kegiatan, wawancara mitra, dan hasil program yang diunggah ke media sosial/website." }
 ]
 
 const evaluations = [

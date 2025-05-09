@@ -156,7 +156,7 @@ export default function LecturerRankingPage() {
     <Container size="xl" py="xl">
       <Skeleton visible={loading}>
         <Title order={1} mb="lg">
-          Peringkat Performa Dosen Penelitian
+          Peringkat Performa Dosen
         </Title>
       </Skeleton>
 
@@ -279,7 +279,7 @@ export default function LecturerRankingPage() {
                   style={{ cursor: "pointer" }}
                   onClick={() => handleSortChange("proposalCount")}
                 >
-                  Usulan Penelitian{" "}
+                  Usulan Pengabdian{" "}
                   {sortBy === "proposalCount" &&
                     (sortOrder === "asc" ? "↑" : "↓")}
                 </Table.Th>
@@ -287,7 +287,7 @@ export default function LecturerRankingPage() {
                   style={{ cursor: "pointer" }}
                   onClick={() => handleSortChange("participationCount")}
                 >
-                  Partisipasi Penelitian{" "}
+                  Partisipasi Pengabdian{" "}
                   {sortBy === "participationCount" &&
                     (sortOrder === "asc" ? "↑" : "↓")}
                 </Table.Th>
