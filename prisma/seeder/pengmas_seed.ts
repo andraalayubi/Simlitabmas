@@ -145,7 +145,7 @@ let proposalSuggestionsPengmas = [
         year_research_id: 1,
         schema_id: 2,
         name: "Penggunaan Internet Aman dan Bijak untuk Pelajar di Sekolah Dasar",
-        lecturer_id: 14,
+        lecturer_id: 2,
         department_id: 2,
         status: "ditolak" as proposal_suggestion_status,
         phase: "pengajuan" as proposal_suggestion_phase,
@@ -160,7 +160,7 @@ let proposalSuggestionsPengmas = [
         lecturer_member: {
             create: [
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -217,7 +217,7 @@ let proposalSuggestionsPengmas = [
         name: "Pembuatan Aplikasi Mobile untuk Monitoring Kesehatan Lansia di Puskesmas",
         year_research_id: 2,
         schema_id: 1,
-        lecturer_id: 14,
+        lecturer_id: 2,
         department_id: 2,
         status: "menunggu_admin" as proposal_suggestion_status,
         phase: "evaluasi_proposal" as proposal_suggestion_phase,
@@ -232,7 +232,7 @@ let proposalSuggestionsPengmas = [
         lecturer_member: {
             create: [
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -289,7 +289,7 @@ let proposalSuggestionsPengmas = [
         name: "Pengenalan dan Pemanfaatan AI untuk Peningkatan Efisiensi Administrasi Desa",
         year_research_id: 2,
         schema_id: 1,
-        lecturer_id: 14,
+        lecturer_id: 2,
         department_id: 2,
         status: "ditolak" as proposal_suggestion_status,
         phase: "evaluasi_proposal" as proposal_suggestion_phase,
@@ -304,7 +304,7 @@ let proposalSuggestionsPengmas = [
         lecturer_member: {
             create: [
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -541,7 +541,7 @@ let proposalSuggestionsPengmas = [
         year_research_id: 2,
         schema_id: 2,
         name: "Pelatihan Pembuatan Aplikasi Pencatatan Keuangan UMKM Berbasis Android",
-        lecturer_id: 14,
+        lecturer_id: 2,
         department_id: 2,
         status: "menunggu_admin" as proposal_suggestion_status,
         phase: "monev" as proposal_suggestion_phase,
@@ -556,7 +556,7 @@ let proposalSuggestionsPengmas = [
         lecturer_member: {
             create: [
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -577,7 +577,7 @@ let proposalSuggestionsPengmas = [
         year_research_id: 2,
         schema_id: 2,
         name: "Sosialisasi Keamanan Data Pribadi dan Enkripsi untuk Komunitas Digital",
-        lecturer_id: 14,
+        lecturer_id: 2,
         department_id: 2,
         status: "menunggu_review" as proposal_suggestion_status,
         phase: "monev" as proposal_suggestion_phase,
@@ -592,7 +592,7 @@ let proposalSuggestionsPengmas = [
         lecturer_member: {
             create: [
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -613,7 +613,7 @@ let proposalSuggestionsPengmas = [
         year_research_id: 2,
         schema_id: 2,
         name: "Pengembangan Sistem Monitoring Tanaman Hidroponik Berbasis Raspberry Pi",
-        lecturer_id: 14,
+        lecturer_id: 2,
         department_id: 2,
         status: "ditolak" as proposal_suggestion_status,
         phase: "monev" as proposal_suggestion_phase,
@@ -628,7 +628,7 @@ let proposalSuggestionsPengmas = [
         lecturer_member: {
             create: [
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -649,7 +649,7 @@ let proposalSuggestionsPengmas = [
         year_research_id: 2,
         schema_id: 2,
         name: "Workshop Chatbot untuk Layanan Pelanggan Usaha Kecil",
-        lecturer_id: 14,
+        lecturer_id: 2,
         department_id: 2,
         status: "diterima" as proposal_suggestion_status,
         phase: "monev" as proposal_suggestion_phase,
@@ -664,7 +664,7 @@ let proposalSuggestionsPengmas = [
         lecturer_member: {
             create: [
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -685,7 +685,7 @@ let proposalSuggestionsPengmas = [
         year_research_id: 2,
         schema_id: 2,
         name: "Pelatihan Pemrograman Dasar Python bagi Siswa SMA/SMK",
-        lecturer_id: 14,
+        lecturer_id: 2,
         department_id: 2,
         status: "menunggu_laporan" as proposal_suggestion_status,
         phase: "evaluasi_akhir" as proposal_suggestion_phase,
@@ -700,7 +700,7 @@ let proposalSuggestionsPengmas = [
         lecturer_member: {
             create: [
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -743,7 +743,7 @@ let proposalSuggestionsPengmas = [
                     nip: "33445568",
                 },
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -779,7 +779,7 @@ let proposalSuggestionsPengmas = [
                     nip: "33445568",
                 },
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -815,7 +815,7 @@ let proposalSuggestionsPengmas = [
                     nip: "33445568",
                 },
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -851,7 +851,7 @@ let proposalSuggestionsPengmas = [
                     nip: "33445568",
                 },
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -887,7 +887,7 @@ let proposalSuggestionsPengmas = [
                     nip: "33445569",
                 },
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -923,7 +923,7 @@ let proposalSuggestionsPengmas = [
                     nip: "33445569",
                 },
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
