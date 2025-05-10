@@ -17,6 +17,11 @@ import {
   IconTopologyStar,
   IconBooks,
   IconUserEdit,
+  IconUserCog,
+  IconPencilCog,
+  IconNotes,
+  IconPencilPlus,
+  IconUsersPlus
 } from "@tabler/icons-react";
 
 // Tipe data untuk konfigurasi menu
@@ -108,6 +113,26 @@ const MENU_CONFIG: Record<string, MenuSection[]> = {
           icon: <IconBooks />,
           path: "/report/department",
         },
+        {
+          name: "Reviewer",
+          icon: <IconNotes />,
+          path: "/report/reviewer",
+        },
+      ],
+    },
+    {
+      title: "PLOTTING REVIEWER",
+      items: [
+        {
+          name: "Penelitian",
+          icon: <IconPencilPlus />,
+          path: "/plotting_reviewer/penelitian",
+        },
+        {
+          name: "Pengmas",
+          icon: <IconUsersPlus />,
+          path: "/plotting_reviewer/pengmas",
+        },
       ],
     },
     {
@@ -122,6 +147,16 @@ const MENU_CONFIG: Record<string, MenuSection[]> = {
           name: "Usulan",
           icon: <IconBookUpload />,
           path: "/konfigurasi/usulan",
+        },
+        {
+          name: "Reviewer",
+          icon: <IconUserCog/>,
+          path: "/konfigurasi/reviewer",
+        },
+        {
+          name: "Kriteria Penilaian",
+          icon: <IconPencilCog/>,
+          path: "/konfigurasi/kriteria_penilaian",
         },
       ],
     },
