@@ -93,6 +93,11 @@ const MENU_CONFIG: Record<string, MenuSection[]> = {
           icon: <IconUserEdit />,
           path: "/master/dosen",
         },
+        {
+          name: "Reviewer",
+          icon: <IconUserCog/>,
+          path: "/master/reviewer",
+        },
       ],
     },
     {
@@ -147,11 +152,6 @@ const MENU_CONFIG: Record<string, MenuSection[]> = {
           name: "Usulan",
           icon: <IconBookUpload />,
           path: "/konfigurasi/usulan",
-        },
-        {
-          name: "Reviewer",
-          icon: <IconUserCog/>,
-          path: "/konfigurasi/reviewer",
         },
         {
           name: "Kriteria Penilaian",
