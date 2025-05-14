@@ -15,22 +15,22 @@ export async function GET(req: NextRequest, { params }: { params: Params }) {
         // get lecturer not already inlcude in lecturer member
         const availableLecturers = await lecturerService.getAvailableLecturers(proposalSuggestionId);
 
-        let lecturers = availableLecturers;
+        // let lecturers = availableLecturers;
 
-        // check schema if research
-        if (proposalSuggestion?.research_group_id != null) {
+        // // check schema if research
+        // if (proposalSuggestion?.research_group_id != null) {
             
-            const validLecturerIds = await lecturerService.getLecturerIdsBySchema(proposalSuggestionId)
+        //     const validLecturerIds = await lecturerService.getLecturerIdsBySchema(proposalSuggestionId)
             
-            lecturers = availableLecturers.filter(lecturer => 
-                validLecturerIds.includes(lecturer.id)
-            );
-        }
+        //     lecturers = availableLecturers.filter(lecturer => 
+        //         validLecturerIds.includes(lecturer.id)
+        //     );
+        // }
 
         return NextResponse.json({
             success: true,
             message: "Success getting data",
-            data: lecturers
+            data: availableLecturers
         }, { status: 200 })
 
     } catch (error: any) {
