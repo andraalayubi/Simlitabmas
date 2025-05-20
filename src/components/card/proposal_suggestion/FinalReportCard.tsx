@@ -43,6 +43,8 @@ const FinalReportCard: React.FC<FinalReportCardProps> = ({
     }
   };
 
+  console.log(final_report);
+
   return (
     <>
       <Card key={final_report.id} shadow="sm" padding="lg" radius="md" withBorder>
@@ -58,7 +60,7 @@ const FinalReportCard: React.FC<FinalReportCardProps> = ({
           </Group>
 
           <Group gap="xs">
-            <ModalComponent title="Edit Final Report" disabled={!editable}>
+            <ModalComponent title={final_report.file_url ? "Edit Final Report" : "Tambah Final Report"} disabled={!editable}>
               {(close) => (
                 <EditFinalReportModal
                   final_report={final_report}

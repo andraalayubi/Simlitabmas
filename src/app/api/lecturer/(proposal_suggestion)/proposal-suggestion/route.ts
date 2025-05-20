@@ -84,13 +84,13 @@ export async function POST(req: NextRequest) {
         
         // create empty logbook with 2 phase
         await logbookService.create(newProposalSuggestion.id, {
-            name: 'Logbook 1',
+            name: 'Logbook Laporan Kemajuan',
             file_url: '',
             description: '',
         })
 
         await logbookService.create(newProposalSuggestion.id, {
-            name: 'Logbook 2',
+            name: 'Logbook Laporan Akhir',
             file_url: '',
             description: '',
         })
