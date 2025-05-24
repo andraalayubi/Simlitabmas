@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "src/lib/session";
+import externalDocumentCategoryService from "src/services/externalDocumentCategoryService";
 import externalDocumentService from "src/services/externalDocumentService";
 
 interface Params {
@@ -37,7 +38,18 @@ export async function POST(req: NextRequest, { params }: { params: Params }) {
     const session = await getSession();
 
     try {
-        const external_doc = await externalDocumentService.create(proposal_suggestion_id, payload)
+
+        const external_document_category = await externalDocumentCategoryService.getById(payload.external_document_category_id)
+
+        const data = {
+            name: external_document_category?.name,
+            description: external_document_category?.description,
+            category_name: external_document_category?.name,
+            file_url: "",
+            status: "",
+        }
+
+        const external_doc = await externalDocumentService.create(proposal_suggestion_id, data)
 
         return NextResponse.json({
             success: true,

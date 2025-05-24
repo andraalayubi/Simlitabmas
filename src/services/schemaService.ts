@@ -4,15 +4,19 @@ import { schema } from "prisma/interfaces";
 // get by id
 const getById = async (id: number) => {
     return await prisma.schema.findUnique({
+        include: {
+            position_schema: true,
+            external_document_category: true
+        },
         where: { id: id },
     })
 }
 
 // get all active
-const getByFilter = async (filter: any) => {
+const getByFilter = async (filter: any, include: any) => {
     return await prisma.schema.findMany({
         where: filter,
-        include : {position_schema: true},
+        include : include,
         orderBy: {
             id: "asc"
         }

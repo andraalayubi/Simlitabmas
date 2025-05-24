@@ -6,6 +6,8 @@ import {
   Button,
   Group,
   Text,
+  Spoiler,
+  Divider,
 } from "@mantine/core";
 import { external_document, user_type } from "prisma/interfaces";
 import { useState } from "react";
@@ -33,9 +35,6 @@ const EditExternalDocumentModal: React.FC<EditExternalDocumentProps> = ({
     external_document.description
   );
   const [editedStatus, setEditedStatus] = useState(external_document.status);
-  const [editedExternalCategory, setExternalDocumentCategory] = useState(
-    external_document.external_document_category_id
-  );
   const [uploadLoading, setUploadLoading] = useState(false);
   const [newFileUrl, setNewFileUrl] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -96,16 +95,19 @@ const EditExternalDocumentModal: React.FC<EditExternalDocumentProps> = ({
       <Box>
         <Stack>
           <TextInput
+            label="Kategori Luaran"
+            value={external_document.category_name ?? ""}
+            disabled={true}
+          />
+          <Spoiler maxHeight={25} showLabel="Tampilkan" hideLabel="Sembunyikan">
+            {editedDescription}
+          </Spoiler>
+
+          <Divider />
+          <TextInput
             label="Nama Luaran"
             value={editedName ?? ""}
             onChange={(e) => setEditedName(e.currentTarget.value)}
-            disabled={loading}
-          />
-
-          <TextInput
-            label="Deskripsi Luaran"
-            value={editedDescription ?? ""}
-            onChange={(e) => setEditedDescription(e.currentTarget.value)}
             disabled={loading}
           />
           <TextInput

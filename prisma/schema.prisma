@@ -474,7 +474,7 @@ model external_document {
   id                            Int     @id @default(autoincrement())
   name                          String
   proposal_suggestion_id        Int
-  external_document_category_id Int?
+  category_name                 String?
   status                        String?
   description                   String?
   file_url                      String?
@@ -484,7 +484,6 @@ model external_document {
   deleted   Boolean  @default(false)
 
   proposal_suggestion        proposal_suggestion         @relation(fields: [proposal_suggestion_id], references: [id])
-  external_document_category external_document_category? @relation(fields: [external_document_category_id], references: [id])
 
   @@map("external_documents")
 }
@@ -551,7 +550,6 @@ model external_document_category {
   deleted   Boolean  @default(false)
 
   schema            schema              @relation(fields: [schema_id], references: [id])
-  external_document external_document[]
 
   @@map("external_document_categories")
 }

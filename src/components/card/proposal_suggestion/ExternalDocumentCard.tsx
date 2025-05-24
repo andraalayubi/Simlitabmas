@@ -58,14 +58,11 @@ const ExternalDocumentCard: React.FC<ExternalDucmentCardProps> = ({
             <div>
               <Text fw={500}>{external_document.name}</Text>
               <Text size="sm" c="dimmed">
-                {external_document.description}
-              </Text>
-              <Text size="sm" c="dimmed">
                 {external_document.status}
               </Text>
               <Text size="sm" c="dimmed">
                 Kategori Luaran :{" "}
-                {external_document.external_document_category?.name}
+                {external_document.category_name}
               </Text>
             </div>
           </Group>

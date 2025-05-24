@@ -333,7 +333,7 @@ export interface external_document {
   id: number;
   name: string;
   proposal_suggestion_id: number;
-  external_document_category_id: number | null;
+  category_name: string | null;
   status: string | null;
   description: string | null;
   file_url: string | null;
@@ -341,7 +341,6 @@ export interface external_document {
   updatedAt: Date;
   deleted: boolean;
   proposal_suggestion?: proposal_suggestion;
-  external_document_category?: external_document_category | null;
 }
 
 export interface log {
@@ -392,7 +391,6 @@ export interface external_document_category {
   updatedAt: Date;
   deleted: boolean;
   schema?: schema;
-  external_document?: external_document[];
 }
 
 export interface configuration {
