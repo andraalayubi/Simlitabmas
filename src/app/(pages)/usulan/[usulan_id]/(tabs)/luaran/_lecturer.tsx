@@ -89,7 +89,7 @@ const ExternalDocumentLecturer = ({ session }: { session: SessionPayload }) => {
                   external_document={external_document}
                   onSuccess={getExternalDocuments}
                   user_type={user_type}
-                  editable={false}
+                  editable={editable}
                 />
               ))}
             </Stack>

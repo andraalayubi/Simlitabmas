@@ -14,7 +14,17 @@ export async function GET(request: NextRequest) {
             { key: "min_degree", type: "string" },
         ]);
 
-        const schemas = await schemaService.getByFilter(filter);
+        const include = {
+            position_schema: request.nextUrl.searchParams.get("get_position_schema") === "true" ? {
+                include: {
+                    position: true
+                }
+            } : false,
+
+            external_document_category: request.nextUrl.searchParams.get("get_external_document_category") === "true" ? true : false
+        }
+
+        const schemas = await schemaService.getByFilter(filter, include);
 
         return NextResponse.json({
             success: true,
@@ -33,7 +43,7 @@ export async function POST(request: NextRequest) {
     try {
         const session = await getSession();
         const body = await request.json();
-        
+
         const newSchema = {
             name: body.name,
             description: body.description,

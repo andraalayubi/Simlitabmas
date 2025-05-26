@@ -18,6 +18,8 @@ const getAllActive = async () => {
   });
 };
 
+
+
 const positionService = {
   getById,
   getAllActive,

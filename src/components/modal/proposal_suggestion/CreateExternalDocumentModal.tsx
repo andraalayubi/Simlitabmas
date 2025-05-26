@@ -31,8 +31,6 @@ const CreateExternalDocumentModal: React.FC<CreateExternalModalProps> = ({
 }: CreateExternalModalProps) => {
   const { showNotification } = useNotification();
   const [loading, setLoading] = useState(false);
-  // const [proposalSuggestion, setProposalSuggestion] =
-  //   useState<proposal_suggestion>(proposal_suggestion);
   const [externalDocumentCategories, setExternalDocumentCategories] = useState<
     any[]
   >([]);
@@ -52,7 +50,6 @@ const CreateExternalDocumentModal: React.FC<CreateExternalModalProps> = ({
       setLoading
     );
 
-    console.log('sa',response);
     if (response.success) {
       const transformedData = response.data.map((item: any) => ({
         value: item.id.toString(),
@@ -94,27 +91,30 @@ const CreateExternalDocumentModal: React.FC<CreateExternalModalProps> = ({
       <Box>
         <form onSubmit={externalDocumentForm.onSubmit(handleSubmit)}>
           <Stack>
-          <TextInput
+          {/* <TextInput
                 label="Nama Luaran"
                 placeholder="Jurnal..."
+                required
                 {...externalDocumentForm.getInputProps("name")}
               />
           
           <TextInput
                 label="Status Luaran"
                 placeholder="dalam progress..."
+                required
                 {...externalDocumentForm.getInputProps("status")}
               />
-          
-          <TextInput
+           */}
+          {/* <TextInput
                 label="Deskripsi Luaran"
                 placeholder="penjelasan singkat luaran"
                 {...externalDocumentForm.getInputProps("description")}
-              />
+              /> */}
           
           <Select
                 label="Pilih Category Luaran"
                 placeholder="pilih kategori luaran"
+                required
                 data={externalDocumentCategories}
                 {...externalDocumentForm.getInputProps("external_document_category_id")}
                 searchable

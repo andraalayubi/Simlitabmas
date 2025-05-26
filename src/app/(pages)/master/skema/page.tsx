@@ -186,7 +186,7 @@ export default function AuditSchemaPage() {
               data={schema}
               isLoading={loading}
               enableRowClick={true}
-              getRowClickUrl={(row) => `/schema/${row.id}`}
+              getRowClickUrl={(row) => `/master/skema/${row.id}`}
             />
           </div>
         </div>

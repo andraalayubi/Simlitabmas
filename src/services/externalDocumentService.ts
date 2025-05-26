@@ -20,13 +20,13 @@ const getByProposalSuggestionId = async (proposalSuggestionId: number) => {
 }
 
 
-const create = async (proposal_suggestion_id: number, data: external_document) => {
+const create = async (proposal_suggestion_id: number, data: any) => {
 
     return prisma.external_document.create({
         data: {
             name: data.name,
             proposal_suggestion_id: proposal_suggestion_id,
-            external_document_category_id: data.external_document_category_id,
+            category_name: data.category_name,
             description: data.description,
             status: data.status,
             file_url: data.file_url

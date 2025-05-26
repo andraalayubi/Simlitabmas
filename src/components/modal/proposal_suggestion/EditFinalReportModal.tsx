@@ -30,16 +30,12 @@ const EditFinalReportModal: React.FC<EditFinalReportModalProps> = ({
   const [loading, setLoading] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
   const [editedName, setEditedName] = useState(final_report.name);
-  const [editedDescription, setEditedDescription] = useState(
-    final_report.description
-  );
   const [newFileUrl, setNewFileUrl] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const updateFinalReport = async () => {
     const updatedData = {
       name: editedName,
-      description: editedDescription,
       file_url: newFileUrl || final_report.file_url,
     };
 
@@ -96,14 +92,21 @@ const EditFinalReportModal: React.FC<EditFinalReportModalProps> = ({
           disabled={loading}
         />
 
-        <TextInput
-          label="Deskripsi"
-          value={editedDescription ?? ""}
-          onChange={(e) => setEditedDescription(e.currentTarget.value)}
-          disabled={loading}
-        />
+        {selectedFile ? (
+          <Text size="sm" c="blue">
+            Mengupload {selectedFile.name}...
+          </Text>
+        ) : newFileUrl ? (
+          <Text size="sm" c="green">
+            File terunggah: {newFileUrl.split("/").pop()}
+          </Text>
+        ) : (
+          <Text size="sm" c="red">
+            Format file yang diizinkan: .pdf, .doc, .docx (Maksimal 10MB)
+          </Text>
+        )}
 
-        <Group>
+        <Group justify="space-between">
           <FileButton
             onChange={handleFileUpload}
             accept=".pdf,.doc,.docx"
@@ -116,34 +119,22 @@ const EditFinalReportModal: React.FC<EditFinalReportModalProps> = ({
             )}
           </FileButton>
 
-          {selectedFile && (
-            <Text size="sm" c="blue">
-              Mengupload {selectedFile.name}...
-            </Text>
-          )}
-
-          {newFileUrl && (
-            <Text size="sm" c="green">
-              File terunggah: {newFileUrl.split("/").pop()}
-            </Text>
-          )}
-        </Group>
-
-        <Group justify="flex-end" mt="md">
-          <Button
-            variant="default"
-            onClick={onClose}
-            disabled={loading || uploadLoading}
-          >
-            Batal
-          </Button>
-          <Button
-            onClick={updateFinalReport}
-            loading={loading}
-            disabled={uploadLoading}
-          >
-            Simpan Perubahan
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant="default"
+              onClick={onClose}
+              disabled={loading || uploadLoading}
+            >
+              Batal
+            </Button>
+            <Button
+              onClick={updateFinalReport}
+              loading={loading}
+              disabled={uploadLoading}
+            >
+              Simpan Perubahan
+            </Button>
+          </div>
         </Group>
       </Stack>
     </Box>

@@ -87,7 +87,21 @@ const AdditionalDocumentAddModal: React.FC<AdditionalDocumentAddModalProps> = ({
         required
       />
 
-      <Group>
+      {selectedFile ? (
+        <Text size="sm" c="blue">
+          Mengupload {selectedFile.name}...
+        </Text>
+      ) : newFileUrl ? (
+        <Text size="sm" c="green">
+          File terunggah: {newFileUrl.split("/").pop()}
+        </Text>
+      ) : (
+        <Text size="sm" c="red">
+          Format file yang diizinkan: .pdf, .doc, .docx (Maksimal 10MB)
+        </Text>
+      )}
+
+      <Group justify="space-between" mt="md">
         <FileButton
           onChange={handleFileUpload}
           accept=".pdf,.doc,.docx"
@@ -100,22 +114,19 @@ const AdditionalDocumentAddModal: React.FC<AdditionalDocumentAddModalProps> = ({
           )}
         </FileButton>
 
-        {selectedFile && (
-          <Text size="sm" c="blue">
-            Mengupload {selectedFile.name}...
-          </Text>
-        )}
-
-        {newFileUrl && (
-          <Text size="sm" c="green">
-            File terunggah: {newFileUrl.split("/").pop()}
-          </Text>
-        )}
+        <div className="flex gap-2">
+          <Button
+            variant="default"
+            onClick={onClose}
+            disabled={loading || uploadLoading}
+          >
+            Batal
+          </Button>
+          <Button onClick={handleUpload} className="bg-blue-800 text-white">
+            Simpan
+          </Button>
+        </div>
       </Group>
-
-      <Button onClick={handleUpload} className="mt-4 bg-blue-800 text-white">
-        Simpan
-      </Button>
     </Modal>
   );
 };

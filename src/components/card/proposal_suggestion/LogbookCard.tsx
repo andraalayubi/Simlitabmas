@@ -58,7 +58,7 @@ const LogbookCard: React.FC<LogbookCardProps> = ({
           </Group>
 
           <Group gap="xs">
-            <ModalComponent title="Edit Logbook" disabled={!editable}>
+            <ModalComponent title={logbook.file_url ? 'Edit Logbook' : 'Tambah Logbook'} disabled={!editable}>
               {(close) => (
                 <EditLogbookModal
                   logbook={logbook}
