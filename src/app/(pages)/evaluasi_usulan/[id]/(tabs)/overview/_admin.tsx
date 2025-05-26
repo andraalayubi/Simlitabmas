@@ -1,0 +1,238 @@
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Button, Card, Text } from "@mantine/core";
+import { Skeleton } from "@mantine/core";
+import { useParams } from "next/navigation";
+import useNotification from "src/components/notification/notification";
+import {
+  evaluation,
+  proposal_suggestion_status,
+  review,
+  reviewer,
+} from "prisma/interfaces";
+import ProposalSuggestionStatusBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionStatusBadge";
+import ProposalSuggestionPhaseBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionPhaseBadge";
+import evaluationAction from "src/action/evaluationAction";
+import DrawerPlottingReviewer from "src/components/drawer/PlottingReviewerDrawer";
+import reviewerAction from "src/action/reviewerAction";
+import TableLayout from "src/components/table/tableLayout";
+import { MRT_ColumnDef } from "mantine-react-table";
+import reviewAction from "src/action/reviewAction";
+import ActionButton from "src/components/button/actionButton";
+
+const OverviewAdmin = () => {
+  const user_type = "admin";
+  const [loading, setLoading] = useState(true);
+  const [drawerOpened, setDrawerOpened] = useState(false);
+  const [evaluation, setEvaluation] = useState<evaluation | null>(null);
+  const { showNotification } = useNotification();
+  const params = useParams();
+  const evaluation_id = params.id as string;
+  const phase = evaluation?.evaluation_phase;
+  const [reviewers, setReviewers] = useState<reviewer[]>([]);
+  const [reviews, setReviews] = useState<review[]>([]);
+  const [existingReviewerIds, setExistingReviewerIds] = useState<number[]>([]);
+
+  const getReviewers = useCallback(async () => {
+    if (!evaluation?.category) return;
+
+    const response = await reviewerAction.getReviewers(user_type, setLoading, {
+      get_lecturer: true,
+      get_review: true,
+      category: evaluation.category,
+    });
+
+    if (response.success) {
+      setReviewers(response.data);
+      showNotification({ status: "success", message: response.message });
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  }, [evaluation, user_type]);
+
+  const getReviews = useCallback(async () => {
+    if (!evaluation?.proposal_suggestion_id) return;
+
+    const response = await reviewAction.getReviews(user_type, setLoading, {
+      get_reviewer: true,
+      get_evaluation: true,
+      proposal_suggestion_id: evaluation.proposal_suggestion_id,
+    });
+
+    if (response.success) {
+      setReviews(response.data);
+      const ids = response.data
+        .filter(
+          (r: review) =>
+            r.evaluation?.evaluation_phase === evaluation?.evaluation_phase
+        )
+        .map((r: review) => r.reviewer_id);
+
+      setExistingReviewerIds(ids);
+      showNotification({ status: "success", message: response.message });
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  }, [evaluation, user_type]);
+
+  const getEvaluation = useCallback(async () => {
+    const response = await evaluationAction.getEvaluation(
+      user_type,
+      setLoading,
+      Number(evaluation_id)
+    );
+
+    if (response.success) {
+      setEvaluation(response.data);
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  }, [evaluation_id, user_type]);
+
+  // close drawer and refetch data
+  const handleSuccess = useCallback(() => {
+    getEvaluation();
+    setDrawerOpened(false);
+  }, [getEvaluation]);
+
+  useEffect(() => {
+    getEvaluation();
+  }, [getEvaluation]);
+
+  useEffect(() => {
+    if (evaluation?.category && evaluation?.proposal_suggestion_id) {
+      getReviewers();
+      getReviews();
+    }
+  }, [evaluation]);
+
+  const deleteReview = async (review_id: number) => {
+    if (confirm("Apakah Anda yakin ingin menghapus review dari tahap ini?")) {
+      const response = await reviewAction.deleteReview(user_type, review_id);
+
+      if (response.success) {
+        showNotification({ status: "success", message: response.message });
+        getEvaluation();
+      } else {
+        showNotification({ status: "error", message: response.message });
+      }
+    }
+  };
+
+  const columns = useMemo<MRT_ColumnDef<review>[]>(
+    () => [
+      {
+        accessorFn: (row) => row.reviewer?.lecturer?.name,
+        header: "Nama Reviewer",
+        size: 200,
+      },
+      {
+        accessorFn: (row) => row.average_score,
+        header: "Nilai",
+        size: 50,
+      },
+      {
+        accessorFn: (row) => row.note,
+        header: "Catatan",
+        size: 250,
+      },
+      {
+        accessorFn: (row) => row.evaluation?.evaluation_phase,
+        header: "Tahap Review",
+        Cell: ({ cell }) => {
+          const value = cell.getValue<string>();
+          return value
+            .split("_")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" "); // kapitalisasi + ubah underscore ke spasi
+        },
+      },
+      {
+        accessorKey: "status",
+        header: "Status Review",
+        Cell: ({ cell }) => (
+          <ProposalSuggestionStatusBadge
+            status={cell.getValue<proposal_suggestion_status>()}
+          />
+        ),
+      },
+      {
+        header: "Aksi",
+        size: 50,
+        Cell: ({ row }) => (
+          <ActionButton
+            type="delete"
+            label="Hapus Review"
+            onClick={() => {
+              deleteReview(row.original.id);
+            }}
+          ></ActionButton>
+        ),
+      },
+    ],
+    []
+  );
+
+  return (
+    <>
+      <DrawerPlottingReviewer
+        user_type={user_type}
+        evaluation={evaluation!}
+        phase={phase!}
+        type={evaluation?.category!}
+        reviewer={reviewers.filter(
+          (r) =>
+            !existingReviewerIds.includes(r.id) &&
+            r.lecturer_id !== evaluation?.proposal_suggestion?.lecturer_id
+        )}
+        opened={drawerOpened}
+        onClose={() => setDrawerOpened(false)}
+        editable={false}
+        loading={loading}
+        onSuccess={handleSuccess}
+        existingReviewerCount={existingReviewerIds.length}
+      />
+
+      <Skeleton visible={loading}>
+        <Card shadow="sm" padding="lg" mb="lg">
+          <div className="flex justify-between">
+            <h2 className="text-xl font-semibold">Ringkasan Usulan</h2>
+            <div className="flex space-x-4">
+              <Button color="blue" onClick={() => setDrawerOpened(true)}>
+                Pilih Reviewer
+              </Button>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4 mb-8">
+            <Text>Status Usulan:</Text>{" "}
+            <ProposalSuggestionStatusBadge
+              status={evaluation?.proposal_suggestion?.status!}
+            />
+            <Text>Tahap Usulan:</Text>{" "}
+            <ProposalSuggestionPhaseBadge
+              phase={evaluation?.proposal_suggestion?.phase!}
+            />
+            <Text>Judul Usulan:</Text>
+            <Text>{evaluation?.proposal_suggestion?.name}</Text>
+            <Text>Skema Penelitian:</Text>{" "}
+            <Text>{evaluation?.proposal_suggestion?.schema?.name}</Text>
+            <Text>Tahun:</Text>{" "}
+            <Text>{evaluation?.proposal_suggestion?.year_research?.year}</Text>
+            <Text>Studi Program:</Text>{" "}
+            <Text>{evaluation?.proposal_suggestion?.department?.name}</Text>
+          </div>
+          {/* <TableOverview /> */}
+        </Card>
+        <div>
+          <TableLayout
+            columns={columns}
+            data={reviews}
+            isLoading={loading}
+            enableRowClick={false}
+          />
+        </div>
+      </Skeleton>
+    </>
+  );
+};
+
+export default OverviewAdmin;

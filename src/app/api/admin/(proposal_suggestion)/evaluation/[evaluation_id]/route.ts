@@ -6,8 +6,8 @@ import evaluationService from "src/services/evaluationService";
 export async function GET(req: NextRequest, { params }: { params: Params }) {
 
     try {
-        const proposalSuggestionId = parseInt(params.proposal_suggestion_id, 10);
-        const evaluations = await evaluationService.getById(proposalSuggestionId);
+        const evaluationId = parseInt(params.evaluation_id, 10);
+        const evaluations = await evaluationService.getById(evaluationId);
         
         return NextResponse.json({
             success: true,

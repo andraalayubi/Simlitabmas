@@ -21,7 +21,11 @@ const addNewUser = async (user: user) => {
 const getUserByEmail = async (email: string, user_type: user_type) => {
     return await prisma.user.findUnique({
         where: { email: email, user_type: user_type, deleted: false },
-        include: { lecturer: true },
+        include: { lecturer: {
+            include: {
+                reviewer: true
+            }
+        } },
     });
 };
 
@@ -29,7 +33,11 @@ const getUserByEmail = async (email: string, user_type: user_type) => {
 const getUserByUsername = async (username: string, user_type: user_type) => {
     return await prisma.user.findUnique({
         where: { username: username, user_type: user_type, deleted: false },
-        include: { lecturer: true },
+        include: { lecturer: {
+            include: {
+                reviewer: true
+            }
+        } },
     });
 };
 

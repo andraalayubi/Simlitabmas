@@ -38,10 +38,15 @@ export async function GET(req: NextRequest) {
         let filter = filterService.getFilter(req.nextUrl.searchParams,
             [
                 { key: "lecturer_id", type: "number" },
+                { key: "evaluation", type: "string" },
+                { key: "category", type: "string" },
             ])
 
         const include = {
             lecturer: req.nextUrl.searchParams.get("get_lecturer") === "true"
+                ? { where: { deleted: false } }
+                : false,
+            review: req.nextUrl.searchParams.get("get_review") === "true"
                 ? { where: { deleted: false } }
                 : false,
         }

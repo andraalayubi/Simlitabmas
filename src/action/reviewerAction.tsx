@@ -39,7 +39,7 @@ const getReviewers = async (
   filter: any | null
 ) => {
   setLoading(true);
-
+  console.log(filter)
   let url = `/api/${user_type}/reviewer`;
 
   if (filter) {

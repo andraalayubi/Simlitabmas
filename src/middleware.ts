@@ -20,6 +20,7 @@ const protectedRoutes = [
     { path: /^\/dashboard\/lecturer/, roles: ['admin', 'lecturer'] },
     { path: /^\/plotting_reviewer/, roles: ['admin'] },
     { path: /^\/review/, roles: ['lecturer'] },
+    { path: /^\/evaluasi_usulan/, roles: ['admin', 'lecturer']},
 
 ];
 

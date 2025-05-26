@@ -12,7 +12,7 @@ export default function PlottingReviewerPage() {
 
   // redirect to tab 'overview'
   useEffect(() => {
-    if (!pathname.includes("skema")) {
+    if (!pathname.includes("penelitian")) {
       router.replace(`/plotting_reviewer/penelitian`);
     }
   }, [pathname]);

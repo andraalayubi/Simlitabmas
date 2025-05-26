@@ -9,9 +9,9 @@ const create = async (data: any) => {
 const getByFilter = async (
     filter: {
         lecturer_id?: number,
+        category?: string
     }, include: any
 ) => {
-
     return await prisma.reviewer.findMany({
         where: {
             ...filter,

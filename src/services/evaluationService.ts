@@ -1,31 +1,80 @@
+import { evaluation_phase } from "prisma/interfaces";
 import prisma from "src/client/prisma";
 
 //include with proposal_suggestion and lecturer who reviewed
 const getById = async (id: number) => {
-    return await prisma.proposal_suggestion.findUnique({
+    return await prisma.evaluation.findUnique({
         where: {
             id: id,
             deleted: false,
         },
         include: {
-            review: {
-                where: {
-                    deleted: false,
-                },
+            proposal_suggestion: {
                 include: {
                     lecturer: true,
-                    evaluation: true
-                },
-                orderBy: {
-                    evaluation_id: "asc"
+                    schema: true,
+                    year_research: true,
+                    proposal: true,
+                    department:true
+                }
+            },
+            review: {
+                include: {
+                    reviewer: {
+                        include: {
+                            lecturer: true
+                        }
+                    }
                 }
             }
         }
     });
 };
 
+type GetEvaluationsParams = {
+  phase: string;
+  type: string;
+  lecturerId?: number; // tetap opsional
+};
+
+async function getEvaluations({ phase, type, lecturerId }: GetEvaluationsParams) {
+  const where: any = {
+    evaluation_phase: phase as evaluation_phase,
+    category: type,
+  };
+
+  if (lecturerId !== undefined) {
+    where.review = {
+      some: {
+        reviewer: {
+          is: {
+            lecturerId,
+          },
+        },
+      },
+    };
+  }
+
+  return await prisma.evaluation.findMany({
+    where,
+    include: {
+      proposal_suggestion: {
+        include: {
+          lecturer: true,
+          schema: true,
+          year_research: true,
+          proposal: true,
+        },
+      },
+      review: true
+    },
+  });
+}
+
+
 const evaluationService = {
     getById,
+    getEvaluations
 };
 
 export default evaluationService;

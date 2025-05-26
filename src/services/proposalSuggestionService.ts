@@ -1,7 +1,7 @@
 
 
 import prisma from '../client/prisma'
-import { proposal_suggestion, proposal_suggestion_status } from 'prisma/interfaces'
+import { evaluation_phase, proposal_suggestion, proposal_suggestion_phase, proposal_suggestion_status } from 'prisma/interfaces'
 
 // get all proposal suggestion 
 const getById = async (id: number) => {
@@ -119,13 +119,40 @@ const updateByWhere = async (where: any, data: any) => {
     })
 }
 
+const createEvaluation = async(
+    id: number,
+    category: string
+) => {
+    await prisma.proposal_suggestion.update({
+        data: {
+            status: "diterima" as proposal_suggestion_status,
+            phase: "evaluasi_proposal" as proposal_suggestion_phase
+        },
+        where: {
+            id: id
+        }
+    })
+
+    const evaluation = await prisma.evaluation.create({
+        data: {
+            proposal_suggestion_id: id,
+            category: category,
+            evaluation_phase: "evaluasi_proposal" as evaluation_phase,
+            status: "menunggu_admin" as proposal_suggestion_status
+        },
+    })
+
+    return evaluation;
+}
+
 const proposalSuggestionService = {
     getById,
     getByLecturerId,
     getByFilter,
     create,
     update,
-    updateByWhere
+    updateByWhere,
+    createEvaluation
 }
 
 export default proposalSuggestionService

@@ -61,3 +61,27 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
         }, { status: 500 });
     }
 }
+
+export async function POST(req: NextRequest, { params }: { params: Params }) {
+    const proposal_suggestion_id = parseInt(params.id);
+    const { user_type } = await req.json();
+
+    const category = user_type === "ketua_rg" ? "penelitian" : "pengmas";
+
+    try {
+        const session = await getSession();
+
+        const proposal_suggestion = await proposalSuggestionService.createEvaluation(proposal_suggestion_id, category)
+
+        return NextResponse.json({
+            success: true,
+            message: "Success",
+            data: proposal_suggestion
+        }, { status: 200 })
+    } catch (error: any) {
+        return NextResponse.json({
+            success: false,
+            message: `Internal Server error: ${error.message}`
+        }, { status: 500 });
+    }
+}

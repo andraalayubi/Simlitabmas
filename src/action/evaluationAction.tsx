@@ -1,16 +1,15 @@
 import { user_type } from "prisma/interfaces";
 import { getSession } from "src/lib/session";
 
-// get research group list
 const getEvaluation = async (
   user_type: user_type,
-  usulan_id: number,
-  setLoading: (loading: boolean) => void
+  setLoading: (loading: boolean) => void,
+  evaluation_id: number,
 ) => {
   setLoading(true);
-
+  
   try {
-    const response = await fetch(`/api/${user_type}/evaluation/${usulan_id}`, {
+    const response = await fetch(`/api/${user_type}/evaluation/${evaluation_id}`, {
       method: "GET",
     });
 
@@ -37,14 +36,48 @@ const getEvaluation = async (
   }
 };
 
+const getEvaluations = async (
+  user_type: user_type,
+  setLoading: (loading: boolean) => void,
+  data: any
+) => {
+  setLoading(true);
 
-const createEvaluation = async () => {
+  let url = `/api/${user_type}/evaluation`;
 
-}
+  if (data) {
+    const params = new URLSearchParams(data);
+    url += `?${params.toString()}`;
+  }
+
+  const response = await fetch(url);
+  const result = await response.json();
+  try {
+    if (result.status === 200 || result.success == true) {
+      return {
+        success: true,
+        message: result.message,
+        data: result.data,
+      };
+    } else {
+      return {
+        success: false,
+        message: result.message,
+      };
+    }
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.response?.data?.message || "An unexpected error occurred",
+    };
+  } finally {
+    setLoading(false);
+  }
+};
 
 const evaluationAction = {
     getEvaluation,
-    createEvaluation
+    getEvaluations
 }
 
 
