@@ -23,14 +23,13 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
             // handle position schema
             const positions = await positionService.getAllActive();
 
-            let newPositionSchema = positions.map((item: any) => {
-                if (payload.positions.includes(item.name)) {
-                    return {
-                        schema_id: schema_id,
-                        position_id: item.id
-                    }
-                }
-            })
+
+            let newPositionSchema = positions
+                .filter((item: any) => payload.positions.includes(item.name))
+                .map((item: any) => ({
+                    schema_id: schema_id,
+                    position_id: item.id
+                }));
 
             // overwrite positions schema
             await positionSchemaService.deleteByWhere({ schema_id: schema_id })
