@@ -1,4 +1,4 @@
-import { proposal_suggestion_status } from "prisma/interfaces";
+import { proposal_suggestion_status, evaluation_phase } from "prisma/interfaces";
 import prisma from "../client/prisma";
 
 const create = async (evaluationId: number, reviewerId: number) => {
@@ -14,8 +14,12 @@ const create = async (evaluationId: number, reviewerId: number) => {
 const getByFilter = async (
   filter: {
     proposal_suggestion_id?: number;
+    lecturer_id?: number,
+    evaluation_phase?: string,
+    type?: string,
+    evaluation_id?: number;
   },
-  include: any
+  include?: any
 ) => {
   const where: any = {
     deleted: false,
@@ -24,8 +28,20 @@ const getByFilter = async (
   if (filter.proposal_suggestion_id) {
     where.evaluation = {
       proposal_suggestion_id: filter.proposal_suggestion_id,
+      evaluation_phase: filter.evaluation_phase as evaluation_phase
     };
   }
+
+if (filter.lecturer_id) {
+  where.reviewer = {
+    lecturer_id: filter.lecturer_id,
+  };
+
+  where.evaluation = {
+    evaluation_phase: filter.evaluation_phase as evaluation_phase,
+    category: filter.type,
+  };
+}
 
   return await prisma.review.findMany({
     where,
@@ -39,11 +55,36 @@ const remove = async (reviewId: number) => {
       });
 }
 
+const getById = async (
+  id: number,
+  filter: {},
+  include: any
+) => {
+  return await prisma.review.findUnique({
+    where: {
+      id: id,
+      deleted: false
+    },
+    include,
+  });
+};
+
+const update = async (review_id: number, data: any) => {
+  return await prisma.review.update({
+    where: {
+      id: review_id
+    },
+    data: data
+  });
+}
+
 
 const reviewService = {
     create,
     getByFilter,
-    remove
+    remove,
+    getById,
+    update
 }
 
 export default reviewService;

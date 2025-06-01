@@ -1,13 +1,21 @@
 "use client";
 
-import { Button, Skeleton, Card, Text, FileButton } from "@mantine/core";
+import {
+  Button,
+  Skeleton,
+  Card,
+  Text,
+  FileButton,
+  Divider,
+} from "@mantine/core";
 import { useParams } from "next/navigation";
-import { proposal_suggestion, evaluation } from "prisma/interfaces";
+import { proposal_suggestion, evaluation, review } from "prisma/interfaces";
 import React, { useCallback, useEffect, useState } from "react";
 import PdfViewer from "src/components/pdf/pdfViewer";
 import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
 import useNotification from "src/components/notification/notification";
 import evaluationAction from "src/action/evaluationAction";
+import reviewAction from "src/action/reviewAction";
 
 const ProposalAdmin = () => {
   const user_type = "admin";
@@ -16,6 +24,7 @@ const ProposalAdmin = () => {
   const evaluation_id = params.id as string;
   const { showNotification } = useNotification();
   const [evaluation, setEvaluation] = useState<evaluation | null>(null);
+  const [reviews, setReviews] = useState<review[]>([]);
 
   const getProposalSuggestion = useCallback(async () => {
     const response = await evaluationAction.getEvaluation(
@@ -32,9 +41,33 @@ const ProposalAdmin = () => {
     }
   }, [evaluation_id, user_type]);
 
+  const getReviews = useCallback(async () => {
+    if (!evaluation?.proposal_suggestion_id) return;
+
+    const response = await reviewAction.getReviews(user_type, setLoading, {
+      get_reviewer: true,
+      get_evaluation: true,
+      proposal_suggestion_id: evaluation.proposal_suggestion_id,
+    });
+
+    if (response.success) {
+      setReviews(response.data);
+      showNotification({ status: "success", message: response.message });
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  }, [evaluation, user_type]);
+
   useEffect(() => {
     getProposalSuggestion();
+    getReviews();
   }, [getProposalSuggestion]);
+
+  useEffect(() => {
+    if (evaluation?.proposal_suggestion_id) {
+      getReviews();
+    }
+  }, [evaluation]);
 
   return (
     <>
@@ -62,11 +95,30 @@ const ProposalAdmin = () => {
             </Skeleton>
           </div>
 
-          {/* Kolom Tombol + Hasil Reviewer */}
-          <div className="flex flex-col gap-4">
-            {/* Hasil Reviewer */}
-            <div className="grid grid-cols-1 gap-4"></div>
-          </div>
+          {/* Hasil Reviewer */}
+          <Skeleton visible={loading}>
+            <div className="grid grid-cols-1 gap-4">
+              <div className="flex justify-center">
+                <Text size="lg" fw={600}>
+                  Komentar Reviewer
+                </Text>
+              </div>
+              <Divider size="md"></Divider>
+              {reviews
+                .filter(
+                  (row) =>
+                    row.evaluation?.evaluation_phase === "evaluasi_proposal"
+                )
+                .map((row) => (
+                  <Card shadow="sm" padding="lg" key={row.id}>
+                    <Text size="md" fw={600}>
+                      {row.reviewer?.lecturer?.name}
+                    </Text>
+                    <Text size="sm">{row.note ?? "-"}</Text>
+                  </Card>
+                ))}
+            </div>
+          </Skeleton>
         </div>
       </div>
     </>

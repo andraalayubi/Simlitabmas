@@ -2,9 +2,9 @@
 
 import React from "react";
 import { useSession } from "src/components/session/session";
-import OverviewAdmin from "./_admin";
 import OverviewLecturer from "./_lecturer";
 import { Skeleton } from "@mantine/core";
+import OverviewAdmin from "./_admin";
 
 export default function OverviewPage() {
   const { session, loading: sessionLoading } = useSession();

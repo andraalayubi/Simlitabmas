@@ -10,7 +10,6 @@ import {
   reviewer,
 } from "prisma/interfaces";
 import ProposalSuggestionStatusBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionStatusBadge";
-import ProposalSuggestionPhaseBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionPhaseBadge";
 import evaluationAction from "src/action/evaluationAction";
 import DrawerPlottingReviewer from "src/components/drawer/PlottingReviewerDrawer";
 import reviewerAction from "src/action/reviewerAction";
@@ -18,6 +17,8 @@ import TableLayout from "src/components/table/tableLayout";
 import { MRT_ColumnDef } from "mantine-react-table";
 import reviewAction from "src/action/reviewAction";
 import ActionButton from "src/components/button/actionButton";
+import EvaluationPhaseBadge from "src/components/badge/evaluation/EvaluationPhaseBadge";
+import { text } from "stream/consumers";
 
 const OverviewAdmin = () => {
   const user_type = "admin";
@@ -99,7 +100,11 @@ const OverviewAdmin = () => {
   }, [getEvaluation]);
 
   useEffect(() => {
-    if (evaluation?.category && evaluation?.proposal_suggestion_id) {
+    if (
+      evaluation?.category &&
+      evaluation?.proposal_suggestion_id &&
+      evaluation.evaluation_phase
+    ) {
       getReviewers();
       getReviews();
     }
@@ -158,18 +163,19 @@ const OverviewAdmin = () => {
       {
         header: "Aksi",
         size: 50,
-        Cell: ({ row }) => (
-          <ActionButton
-            type="delete"
-            label="Hapus Review"
-            onClick={() => {
-              deleteReview(row.original.id);
-            }}
-          ></ActionButton>
-        ),
+        Cell: ({ row }) => {
+          return row.original.evaluation?.evaluation_phase ===
+            evaluation?.evaluation_phase ? (
+            <ActionButton
+              type="delete"
+              label="Hapus Review"
+              onClick={() => deleteReview(row.original.id)}
+            />
+          ) : null;
+        },
       },
     ],
-    []
+    [evaluation?.evaluation_phase]
   );
 
   return (
@@ -195,7 +201,7 @@ const OverviewAdmin = () => {
       <Skeleton visible={loading}>
         <Card shadow="sm" padding="lg" mb="lg">
           <div className="flex justify-between">
-            <h2 className="text-xl font-semibold">Ringkasan Usulan</h2>
+            <h2 className="text-xl font-semibold">Ringkasan Evaluasi Usulan</h2>
             <div className="flex space-x-4">
               <Button color="blue" onClick={() => setDrawerOpened(true)}>
                 Pilih Reviewer
@@ -204,13 +210,9 @@ const OverviewAdmin = () => {
           </div>
           <div className="grid grid-cols-2 gap-4 mb-8">
             <Text>Status Usulan:</Text>{" "}
-            <ProposalSuggestionStatusBadge
-              status={evaluation?.proposal_suggestion?.status!}
-            />
+            <ProposalSuggestionStatusBadge status={evaluation?.status!} />
             <Text>Tahap Usulan:</Text>{" "}
-            <ProposalSuggestionPhaseBadge
-              phase={evaluation?.proposal_suggestion?.phase!}
-            />
+            <EvaluationPhaseBadge phase={evaluation?.evaluation_phase!} />
             <Text>Judul Usulan:</Text>
             <Text>{evaluation?.proposal_suggestion?.name}</Text>
             <Text>Skema Penelitian:</Text>{" "}
@@ -222,6 +224,8 @@ const OverviewAdmin = () => {
           </div>
           {/* <TableOverview /> */}
         </Card>
+      </Skeleton>
+      <Skeleton visible={loading}>
         <div>
           <TableLayout
             columns={columns}

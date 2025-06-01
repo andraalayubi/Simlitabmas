@@ -20,7 +20,6 @@ interface Condition {
 export default function ConfigurationCriterionPage() {
   const user_type = "admin";
   const [conditions, setConditions] = useState<Condition[]>([]);
-  const [criteria, setCriteria] = useState<criterion[]>([]);
   const [loading, setLoading] = useState(true);
   const { showNotification } = useNotification();
 
@@ -83,7 +82,8 @@ export default function ConfigurationCriterionPage() {
 
       const criteriaResponse = await criterionAction.getCriteria(
         user_type,
-        setLoading
+        setLoading,
+        null
       );
 
       // Check if both requests were successful
@@ -99,7 +99,6 @@ export default function ConfigurationCriterionPage() {
         );
 
         setConditions(mergedConditions);
-        setCriteria(criteriaResponse.data); // Masih disimpan jika kamu butuh nanti
 
         showNotification({
           status: "success",

@@ -53,7 +53,7 @@ export default function AllEvaluationPage() {
       },
       {
         accessorFn: (row) => row.proposal_suggestion?.name,
-        header: "Judul Pengmas",
+        header: "Judul Penelitian",
         size: 300,
       },
       {

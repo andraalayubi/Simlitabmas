@@ -8,15 +8,15 @@ export default function EvaluationDetailPage() {
     const router = useRouter();
     const pathname = usePathname();
     const params = useParams();
-    const evaluation_id = params.id;
+    const id = params.id;
 
 
     // redirect to tab 'overview'
     useEffect(() => {
         if (!pathname.includes("overview")) {
-          router.replace(`/evaluasi_usulan/${evaluation_id}/overview`);
+          router.replace(`/evaluasi_usulan/${id}/overview`);
         }
-      }, [pathname, evaluation_id]);  
+      }, [pathname, id]);  
 
       return <>
       </>

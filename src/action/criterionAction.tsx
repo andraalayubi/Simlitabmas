@@ -68,44 +68,50 @@ const createCriterion = async (
 };
 
 const getCriteria = async (
-    user_type: user_type,
-    setLoading: (loading: boolean) => void
-) => {
-    setLoading(true);
-
-    try {
-        const response = await fetch(`/api/${user_type}/criterion`);
-        const result = await response.json();
-    
-        if (result.status === 200 || result.success == true) {
-          return {
-            success: true,
-            message: result.message,
-            data: result.data,
-          };
-        } else {
-          return {
-            success: false,
-            message: result.message,
-          };
-        }
-      } catch (error: any) {
-        return {
-          success: false,
-          message: error.response?.data?.message || "An unexpected error occurred",
-        };
-      } finally {
-        setLoading(false);
-      }
-}
-
-const deleteCriterion = async (
   user_type: user_type,
-  criterion_id: number,
+  setLoading: (loading: boolean) => void,
+  filter: any | null
 ) => {
+  setLoading(true);
+
+  let url = `/api/${user_type}/criterion`;
+
+  if (filter) {
+    const params = new URLSearchParams(filter);
+    url += `?${params.toString()}`;
+  }
+
+  const response = await fetch(url);
+  const result = await response.json();
+
+  try {
+    if (result.status === 200 || result.success == true) {
+      return {
+        success: true,
+        message: result.message,
+        data: result.data,
+      };
+    } else {
+      return {
+        success: false,
+        message: result.message,
+      };
+    }
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.response?.data?.message || "An unexpected error occurred",
+    };
+  } finally {
+    setLoading(false);
+  }
+};
+
+const deleteCriterion = async (user_type: user_type, criterion_id: number) => {
   try {
     const response = await axios.patch(
-      `/api/${user_type}/criterion/${criterion_id}`);
+      `/api/${user_type}/criterion/${criterion_id}`
+    );
 
     if (response.status === 200 || response.data.success) {
       return {
@@ -133,7 +139,7 @@ const criterionAction = {
   getConditions,
   createCriterion,
   getCriteria,
-  deleteCriterion
+  deleteCriterion,
 };
 
 export default criterionAction;

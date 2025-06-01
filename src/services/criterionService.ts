@@ -1,3 +1,4 @@
+import { evaluation_phase } from "prisma/interfaces";
 import prisma from "../client/prisma";
 
 const create = async (data: any) => {
@@ -42,10 +43,27 @@ const update = async (criterion_id: number) => {
     })
 }
 
+
+const getByFilter = async (
+  filter: {
+    phase?: string,
+    category?: string
+  }
+) => {
+  return await prisma.criterion.findMany({
+    where: {
+      phase: filter.phase as evaluation_phase,
+      category: filter.category,
+      deleted: false
+    },
+  });
+};
+
 const criterionService = {
     create,
     getCriteria,
-    update
+    update,
+    getByFilter
 }
 
 export default criterionService;

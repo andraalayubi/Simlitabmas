@@ -2,12 +2,13 @@ import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { NextRequest, NextResponse } from "next/server";
 import lecturerService from "src/services/lecturerService";
 import evaluationService from "src/services/evaluationService";
+import { getSession } from "src/lib/session";
 
 export async function GET(req: NextRequest, { params }: { params: Params }) {
 
     try {
-        const proposalSuggestionId = parseInt(params.proposal_suggestion_id, 10);
-        const evaluations = await evaluationService.getById(proposalSuggestionId);
+        const evaluationId = parseInt(params.id, 10);
+        const evaluations = await evaluationService.getById(evaluationId);
         
         return NextResponse.json({
             success: true,
@@ -21,28 +22,32 @@ export async function GET(req: NextRequest, { params }: { params: Params }) {
             message: `Internal Server error: ${error.message}`
         }, { status: 500 });
     }
-
 }
 
-export async function POST(req: NextRequest, { params }: { params: Params }) {
-    try {      
-        const proposalSuggestionId = parseInt(params.proposal_suggestion_id, 10);
 
-        const body = await req.json();
+export async function PATCH(request: NextRequest,  { params }: { params: Params }) {
+    try {
+        const session = await getSession();
+        const evaluationId = parseInt(params.id, 10);
+        const body = await request.json();
+        
+        const updateEvaluation = {
+            status: body.status
+        };
 
-        const result = await lecturerService.addLecturerMember(proposalSuggestionId, body.lecturerId);
+        const review = await evaluationService.update(evaluationId, updateEvaluation);
 
         return NextResponse.json({
             success: true,
-            data: result,
-            message: "Lecturer associated with proposal suggestion successfully"
+            message: "Success creating data",
+            data: review
         }, { status: 201 });
-
     } catch (error: any) {
-        console.error("Error creating proposal suggestion:", error);
+        console.log(error);
+
         return NextResponse.json({
             success: false,
-            message: `Internal Server Error: ${error.message}`,
+            message: `Internal Server error: ${error.message}`
         }, { status: 500 });
     }
 }

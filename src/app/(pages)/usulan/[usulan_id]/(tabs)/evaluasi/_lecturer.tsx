@@ -40,8 +40,7 @@ const EvaluationPage = () => {
       const response = await evaluationAction.getEvaluation(
         user_type,
         usulan_id,
-        setLoading
-      );
+z      );
 
       if (response.success) {
         showNotification({ status: "success", message: response.message });

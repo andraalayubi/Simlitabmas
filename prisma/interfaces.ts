@@ -369,7 +369,7 @@ export interface evaluation {
   proposal_suggestion_id: number | null;
   evaluation_phase: evaluation_phase | null;
   category: string | null;
-  status: string | null;
+  status: proposal_suggestion_status | null;
   createdAt: Date;
   updatedAt: Date;
   deleted: boolean;
@@ -383,7 +383,7 @@ export interface review {
   reviewer_id: number;
   note: string | null;
   average_score: number | null;
-  status: string | null;
+  status: proposal_suggestion_status | null;
   createdAt: Date;
   updatedAt: Date;
   deleted: boolean;

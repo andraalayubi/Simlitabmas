@@ -1,15 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Badge, Button, Card, Text } from "@mantine/core";
-import TableOverview from "src/components/usulan/overview/TableOverview";
-import { SessionPayload } from "src/lib/encrypt";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Button, Card, Text } from "@mantine/core";
 import { Skeleton } from "@mantine/core";
 import { useParams } from "next/navigation";
-import proposalSuggestionAction from "src/action/proposalSuggestionAction";
 import useNotification from "src/components/notification/notification";
-import { proposal_suggestion } from "prisma/interfaces";
-import ProposalSuggestionPhaseBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionPhaseBadge";
+import { review } from "prisma/interfaces";
 import ProposalSuggestionStatusBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionStatusBadge";
-import DrawerProposalSuggestion from "src/components/drawer/ProposalSuggestionDrawer";
+import reviewAction from "src/action/reviewAction";
+import EvaluationPhaseBadge from "src/components/badge/evaluation/EvaluationPhaseBadge";
+import { SessionPayload } from "src/lib/encrypt";
 
 interface OverviewLecturerProps {
   session: SessionPayload;
@@ -18,75 +16,59 @@ interface OverviewLecturerProps {
 const OverviewLecturer: React.FC<OverviewLecturerProps> = ({ session }) => {
   const user_type = "lecturer";
   const [loading, setLoading] = useState(true);
-  const [drawerOpened, setDrawerOpened] = useState(false);
-  const [proposalSuggestion, setProposalSuggestion] =
-    useState<proposal_suggestion | null>(null);
-
+  const [review, setReviews] = useState<review | null>(null);
   const { showNotification } = useNotification();
   const params = useParams();
-  const usulan_id = params.usulan_id as string;
+  const review_id = params.id as string;
 
-  const getProposalSuggestion = useCallback(async () => {
-    const response = await proposalSuggestionAction.getById(
+  const getReview = useCallback(async () => {
+    const response = await reviewAction.getById(
       user_type,
-      usulan_id,
-      setLoading
+      setLoading,
+      Number(review_id),
+      {get_evaluation: true, get_proposal_suggestion: true }
     );
 
     if (response.success) {
+      setReviews(response.data);
       showNotification({ status: "success", message: response.message });
-      setProposalSuggestion(response.data);
     } else {
       showNotification({ status: "error", message: response.message });
     }
-    setLoading(false);
-  }, [usulan_id, user_type]);
-
-  const handleSuccess = useCallback(() => {
-    getProposalSuggestion();
-    setDrawerOpened(false);
-  }, [getProposalSuggestion]);
+  }, [user_type]);
 
   useEffect(() => {
-    getProposalSuggestion();
-  }, [getProposalSuggestion]);
+    getReview();
+  }, [getReview]);
 
   return (
     <>
-      <DrawerProposalSuggestion
-        user_type={user_type}
-        proposal_suggestion={proposalSuggestion!}
-        opened={drawerOpened}
-        onClose={() => setDrawerOpened(false)}
-        editable={false}
-        loading={loading}
-        onSuccess={handleSuccess}
-      />
       <Skeleton visible={loading}>
         <Card shadow="sm" padding="lg" mb="lg">
           <div className="flex justify-between">
             <h2 className="text-xl font-semibold">Ringkasan Usulan</h2>
-            <div className="flex space-x-4">
-              <Button color="blue" onClick={() => setDrawerOpened(true)}>
-                Edit Usulan
-              </Button>
-            </div>
           </div>
           <div className="grid grid-cols-2 gap-4 mb-8">
-            <Text>Status Usulan:</Text>{" "}
+            <Text>Status Review:</Text>{" "}
             <ProposalSuggestionStatusBadge
-              status={proposalSuggestion?.status!}
+              status={review?.status!}
             />
             <Text>Tahap Usulan:</Text>{" "}
-            <ProposalSuggestionPhaseBadge phase={proposalSuggestion?.phase!} />
+            <EvaluationPhaseBadge
+              phase={review?.evaluation?.evaluation_phase!}
+            />
             <Text>Judul Usulan:</Text>
-            <Text>{proposalSuggestion?.name}</Text>
+            <Text>{review?.evaluation?.proposal_suggestion?.name}</Text>
             <Text>Skema Penelitian:</Text>{" "}
-            <Text>{proposalSuggestion?.schema?.name}</Text>
+            <Text>{review?.evaluation?.proposal_suggestion?.schema?.name}</Text>
             <Text>Tahun:</Text>{" "}
-            <Text>{proposalSuggestion?.year_research?.year}</Text>
+            <Text>
+              {review?.evaluation?.proposal_suggestion?.year_research?.year}
+            </Text>
             <Text>Studi Program:</Text>{" "}
-            <Text>{proposalSuggestion?.department?.name}</Text>
+            <Text>
+              {review?.evaluation?.proposal_suggestion?.department?.name}
+            </Text>
           </div>
           {/* <TableOverview /> */}
         </Card>

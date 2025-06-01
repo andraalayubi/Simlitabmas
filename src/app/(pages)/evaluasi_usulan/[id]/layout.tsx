@@ -31,14 +31,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { showNotification } = useNotification();
   const params = useParams();
-  const evaluation_id = parseInt(params.id as string);
+  const id = parseInt(params.id as string);
 
   // Menentukan tab aktif berdasarkan URL
   const activeTab =
     TabMenus.find((tab) => pathname.includes(tab.value))?.value || "overview";
 
   const handleTabChange = (value: string | null) => {
-    router.push(`/evaluasi_usulan/${evaluation_id}/${value}`);
+    router.push(`/evaluasi_usulan/${id}/${value}`);
   };
 
   useEffect(() => {}, []);

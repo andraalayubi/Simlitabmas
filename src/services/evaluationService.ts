@@ -71,10 +71,18 @@ async function getEvaluations({ phase, type, lecturerId }: GetEvaluationsParams)
   });
 }
 
-
+const update = async (evaluation_id: number, data: any) => {
+  return await prisma.evaluation.update({
+    where: {
+      id: evaluation_id
+    },
+    data: data
+  });
+}
 const evaluationService = {
     getById,
-    getEvaluations
+    getEvaluations,
+    update
 };
 
 export default evaluationService;
