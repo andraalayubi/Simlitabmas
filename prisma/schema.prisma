@@ -140,9 +140,10 @@ model lecturer {
   degree            Json?
   is_ketua_rg       Boolean?
   is_kaprodi        Boolean? @default(false)
-  highest_degree        degree?
+  highest_degree    degree?
   position_id       Int?
   signature_url     String?
+  phone_number      String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

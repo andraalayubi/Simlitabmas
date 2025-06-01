@@ -49,15 +49,17 @@ const OverviewAdmin = () => {
 
   return (
     <>
-      <DrawerProposalSuggestion
-        user_type={user_type}
-        proposal_suggestion={proposalSuggestion!}
-        opened={drawerOpened}
-        onClose={() => setDrawerOpened(false)}
-        editable={false}
-        loading={loading}
-        onSuccess={handleSuccess}
-      />
+      {proposalSuggestion && (
+        <DrawerProposalSuggestion
+          user_type={user_type}
+          proposal_suggestion={proposalSuggestion}
+          opened={drawerOpened}
+          onClose={() => setDrawerOpened(false)}
+          editable={false}
+          loading={loading}
+          onSuccess={handleSuccess}
+        />
+      )}
 
       <Skeleton visible={loading}>
         <Card shadow="sm" padding="lg" mb="lg">

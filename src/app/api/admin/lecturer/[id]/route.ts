@@ -82,6 +82,7 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
             name: payload.name,
             nip: payload.nip,
             nidn: payload.nidn,
+            phone_number: payload.phone_number,
             position_id: position!.id!,
             highest_degree: payload.degree[index_highest_degree].degree,
             degree: payload.degree

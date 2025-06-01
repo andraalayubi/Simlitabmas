@@ -151,10 +151,10 @@ const updateStatusPhase = async (
   phase: proposal_suggestion_phase | '',
   status: proposal_suggestion_status | '',
   proposal_suggestion_id: number,
-  // setLoading: (loading: boolean) => void
+  // setLoading: (loading: boolean) => void 
 ) => {
   // setLoading(true);
-  try {
+  try {    
     const response = await axios.put(
       `/api/${user_type}/proposal-suggestion/${proposal_suggestion_id}`,
       {
@@ -162,6 +162,14 @@ const updateStatusPhase = async (
         status: status,
       }
     );
+    console.log(response);
+
+    if (phase === 'pengajuan' && response.data.data.research_group_id == null) {
+      const notification = await axios.post(`/api/${user_type}/notification`, {
+        status: status,
+        proposal_suggestion: response.data.data
+      });
+    }
 
     if (response.status === 200 || response.data.success) {
       return {

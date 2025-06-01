@@ -46,9 +46,13 @@ export async function GET(request: NextRequest) {
       
       delete filter.position_id;
     }
+    console.log(filter);
 
     // Panggil service dengan filter yang sudah dimodifikasi
-    let schemas = await schemaService.getByFilter(filter);
+    let schemas = await schemaService.getByFilter(filter, {
+      position_schema: true
+    });
+    console.log(schemas);
 
     if (requiredPositionId !== null) {
       schemas = schemas.filter((schema: any) => {
@@ -61,6 +65,7 @@ export async function GET(request: NextRequest) {
         );
       });
     }
+    console.log(schemas);
 
     return NextResponse.json({
       success: true,

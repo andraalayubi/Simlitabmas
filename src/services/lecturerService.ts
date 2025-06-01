@@ -172,6 +172,7 @@ const getProfile = async (id: number) => {
             nip: processedResult.nip,
             nidn: processedResult.nidn,
             degree: processedResult.degree,
+            phone_number: processedResult.phone_number,
             department: processedResult.department_id ? { id: processedResult.department_id, name: processedResult.department_name } : null,
             research_group: processedResult.research_group_id ? { id: processedResult.research_group_id, name: processedResult.research_group_name } : null,
             position: processedResult.position_id ? { id: processedResult.position_id, name: processedResult.position_name } : null,

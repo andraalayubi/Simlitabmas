@@ -4,6 +4,7 @@ import { degree, user_type } from "prisma/interfaces";
 const lecturers = [
     {
         name: "Mirza Ramadhani",
+        phone_number: '085163142760',
         research_group_id: 1,
         department_id: 1,
         nidn: "3122500044",
@@ -46,6 +47,7 @@ const lecturers = [
     },
     {
         name: "Andra Al Ayubi",
+        phone_number: '085163142760',
         research_group_id: 2,
         department_id: 2,
         nidn: "3122500045",
@@ -81,6 +83,7 @@ const lecturers = [
     },
     {
         name: "Hammam Mujahid",
+        phone_number: '085163142760',
         research_group_id: 3,
         department_id: 3,
         nidn: "3122500046",
@@ -116,6 +119,7 @@ const lecturers = [
     // Human Centric Multimedia (RG 4) / lecturer id 4
     {
         name: "Sritrusta Sukaridhoto, ST., Ph.D.",
+        phone_number: '085163142760',
         research_group_id: 4,
         department_id: 4,
         nidn: "0412056701",
@@ -140,6 +144,7 @@ const lecturers = [
     // ACE-ATech (RG 5) / lecturer id 5
     {
         name: "Dr. Agus Indra Gunawan",
+        phone_number: '085163142760',
         research_group_id: 5,
         department_id: 3,
         nidn: "0413123456",
@@ -163,6 +168,7 @@ const lecturers = [
     // Agile Product Development (RG 6) / lecturer id 6
     {
         name: "Umi Sa'adah",
+        phone_number: '085163142760',
         research_group_id: 6,
         department_id: 2,
         nidn: "0415123456",
@@ -186,6 +192,7 @@ const lecturers = [
     // Bio Electrochemistry System (RG 7) / lecturer id 7
     {
         name: "Ri'fah Amalia",
+        phone_number: '085163142760',
         research_group_id: 7,
         department_id: 1,
         nidn: "3122500050",
@@ -209,6 +216,7 @@ const lecturers = [
     // Biosignal and Instrumentation Biomedic (RG 8) / lecturer id 8
     {
         name: "Rika Rokhana",
+        phone_number: '085163142760',
         research_group_id: 8,
         department_id: 3,
         nidn: "3122500051",
@@ -232,6 +240,7 @@ const lecturers = [
     // Cyber Security (RG 9) / lecturer id 9
     {
         name: "Ferry Astika Saputra",
+        phone_number: '085163142760',
         research_group_id: 9,
         department_id: 1,
         nidn: "3122500052",
@@ -255,6 +264,7 @@ const lecturers = [
     // Data Centric AI and e-Bussines System (RG 10) / lecturer id 10
     {
         name: "Arna Fariza",
+        phone_number: '085163142760',
         research_group_id: 10,
         department_id: 1,
         nidn: "3122500053",
@@ -278,6 +288,7 @@ const lecturers = [
     // Data Science for SDGs Applied Solutions (RG 11) / lecturer id 11
     {
         name: "Ronny Susetyoko",
+        phone_number: '085163142760',
         research_group_id: 11,
         department_id: 2,
         nidn: "3122500054",
@@ -313,6 +324,7 @@ const lecturers = [
     // Digital Media (RG 12) / lecturer id 12
     {
         name: "Moh. Hasbi Assidigi",
+        phone_number: '085163142760',
         research_group_id: 12,
         department_id: 4,
         nidn: "3122500055",
@@ -348,6 +360,7 @@ const lecturers = [
     // Embedded AI (RG 13) & Kaprodi Electornic Departement / lecturer id 13
     {
         name: "Dr. Arif Irwansyah, S.T., M.Eng",
+        phone_number: '085163142760',
         research_group_id: 13,
         department_id: 1,
         nidn: "3122500056",
@@ -391,6 +404,7 @@ const lecturers = [
     // Kaprodi IT  Departement  / lecturer id 14
     {
         name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+        phone_number: '085163142760',
         research_group_id: null,
         department_id: 2,
         nidn: "3122500057",
@@ -433,6 +447,7 @@ const lecturers = [
     // Kaprodi Mechatronic  Departement  /  lecturer id 15
     {
         name: "Mohammad Nasyir Tamara, S.ST., M.T.",
+        phone_number: '085163142760',
         research_group_id: null,
         department_id: 3,
         nidn: "3122500058",
@@ -475,6 +490,7 @@ const lecturers = [
     // Kaprodi Multimedia Departement  / lecturer id 16
     {
         name: "Kholid Fathoni , S.Kom., MT.",
+        phone_number: '085163142760',
         research_group_id: null,
         department_id: 4,
         nidn: "3122500059",
@@ -516,6 +532,7 @@ const lecturers = [
     },
     {
         name: "Budi Santoso, S.T., M.Eng.",
+        phone_number: '085163142760',
         research_group_id: null,
         department_id: 3,
         nidn: "3122500001",
@@ -553,6 +570,7 @@ const lecturers = [
     },
     {
         name: "Anisa Rahma, S.Kom., M.Kom.",
+        phone_number: '085163142760',
         research_group_id: null,
         department_id: 1,
         nidn: "3122500002",
@@ -590,6 +608,7 @@ const lecturers = [
     },
     {
         name: "Hendra Pratama, S.T., M.Sc., Ph.D.",
+        phone_number: '085163142760',
         research_group_id: null,
         department_id: 4,
         nidn: "3122500003",
@@ -634,6 +653,7 @@ const lecturers = [
     },
     {
         name: "Dewi Anggraeni, S.Si., M.T.",
+        phone_number: '085163142760',
         research_group_id: null,
         department_id: 2,
         nidn: "3122500004",
@@ -671,6 +691,7 @@ const lecturers = [
     },
     {
         name: "Rudi Hermawan, S.T., M.Eng., Ph.D.",
+        phone_number: '085163142760',
         research_group_id: null,
         department_id: 1,
         nidn: "3122500005",
@@ -715,6 +736,7 @@ const lecturers = [
     },
     {
         name: "Fitria Wulandari, S.Kom., M.Kom.",
+        phone_number: '085163142760',
         research_group_id: null,
         department_id: 4,
         nidn: "3122500006",

@@ -40,6 +40,7 @@ interface LecturerFormValues {
   position: string;
   nip: number | "";
   nidn: number | "";
+  phone_number: number | "";
   education: EducationEntry[];
 }
 
@@ -71,6 +72,7 @@ const EditLecturerPage = () => {
       position: "",
       nip: "",
       nidn: "",
+      phone_number: "",
       education: [],
     },
     validate: {
@@ -103,6 +105,7 @@ const EditLecturerPage = () => {
           nip: data.nip,
           nidn: data.nidn,
           position: data.position.name,
+          phone_number: data.phone_number,
           education: data.degree.map((item: any) => ({
             code: item.code,
             degree: item.degree,
@@ -125,6 +128,7 @@ const EditLecturerPage = () => {
       ...data,
       nip: data.nip.toString(),
       nidn: data.nidn.toString(),
+      phone_number: data.phone_number.toString(),
       degree: data.education,
     };
 
@@ -222,6 +226,15 @@ const EditLecturerPage = () => {
                   required
                   hideControls
                   {...lecturerForm.getInputProps("nidn")}
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, md: 6 }}>
+                <NumberInput
+                  label="Nomor Telepon"
+                  placeholder="Masukkan Nomor Telepon"
+                  required
+                  hideControls
+                  {...lecturerForm.getInputProps("phone_number")}
                 />
               </Grid.Col>
             </Grid>

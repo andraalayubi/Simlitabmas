@@ -74,6 +74,7 @@ export interface lecturer {
   highest_degree: degree | null;
   position_id: number | null;
   signature_url: string | null;
+  phone_number: string | null;
   createdAt: Date;
   updatedAt: Date;
   deleted: boolean;

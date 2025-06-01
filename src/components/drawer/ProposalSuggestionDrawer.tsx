@@ -93,7 +93,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
       if (roleAction == "approval") {
         if (approved) {
           phase = currentPhase;
-          status = nextStatus;
+          status = "diterima";
         } else {
           phase = currentPhase;
           status = "ditolak";

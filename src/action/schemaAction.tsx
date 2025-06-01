@@ -17,8 +17,11 @@ const getSchemas = async (
       url += `?${params.toString()}`;
     }
 
+    console.log(url);
     const response = await fetch(url);
     const result = await response.json();
+    console.log(result);
+    
 
     if (result.status === 200 || result.success == true) {
       return {
