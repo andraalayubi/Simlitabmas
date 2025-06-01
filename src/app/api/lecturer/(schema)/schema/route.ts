@@ -43,22 +43,20 @@ export async function GET(request: NextRequest) {
     let requiredPositionId = null
     if (filter.position_id != null) {
       requiredPositionId = filter.position_id
-      
+
       delete filter.position_id;
     }
     console.log(filter);
 
     // Panggil service dengan filter yang sudah dimodifikasi
-    let schemas = await schemaService.getByFilter(filter, {
-      position_schema: true
-    });
-    console.log(schemas);
+    let schemas = await schemaService.getByFilter(filter, { position_schema: true });
+
 
     if (requiredPositionId !== null) {
       schemas = schemas.filter((schema: any) => {
         // Pastikan position_schemas terload dan tidak null
         if (!schema.position_schema) return false;
-        
+
         // Cek apakah ada position schema yang match
         return schema.position_schema.some(
           (ps: any) => ps.position_id === requiredPositionId
