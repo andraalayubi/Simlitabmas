@@ -47,7 +47,6 @@ const OverviewKaprodi = () => {
   useEffect(() => {
     getProposalSuggestion();
   }, [getProposalSuggestion]);
-  console.log(proposalSuggestion);
 
   return (
     <>
