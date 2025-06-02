@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "src/lib/session";
 import lecturerService from "src/services/lecturerService";
+import axios from "axios";
 
 export async function POST(req: NextRequest) {
     const token = process.env.FONNTE_TOKEN;    
@@ -44,13 +45,14 @@ export async function POST(req: NextRequest) {
         const headers = new Headers();
         headers.append('Authorization', token!);
 
-        const response = await fetch("https://api.fonnte.com/send", {
-            method: "POST",
-            headers: headers,
-            body: formData,
+        const response = await axios.post("https://api.fonnte.com/send", formData, {
+            headers: {
+                'Authorization': token!,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
         });
 
-        const result = await response.json();
+        const result = response.data;
 
         return NextResponse.json({
             success: true,

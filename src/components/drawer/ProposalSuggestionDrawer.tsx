@@ -144,7 +144,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
     if (proposal_suggestion?.research_group_id === null) {
       setType("pengmas");
     }
-
+    
     if (proposal_suggestion?.phase && proposal_suggestion?.status) {
       const action = workflow.getAction(
         proposal_suggestion.status,
@@ -164,7 +164,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
       setCurrentPhase(proposal_suggestion.phase);
       setCurrentStatus(proposal_suggestion.status);
     }
-  }, [proposal_suggestion?.phase!, proposal_suggestion?.status!, user_type]);
+  }, [proposal_suggestion?.phase!, proposal_suggestion?.status!, user_type, type]);
 
   return (
     <Skeleton visible={loading}>
