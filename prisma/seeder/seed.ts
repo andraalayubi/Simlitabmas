@@ -26,10 +26,10 @@ const research_groups = [
 ]
 
 const departements = [
-    { name: "Departemen Teknik Elektro", description: "Menaungi program studi terkait teknik elektro dan aplikasinya." },
-    { name: "Departemen Teknik Informatika dan Komputer", description: "Menaungi program studi yang berfokus pada informatika dan ilmu komputer." },
-    { name: "Departemen Teknik Mekanika dan Energi", description: "Menaungi program studi yang berkaitan dengan mekanika dan sistem energi." },
-    { name: "Departemen Teknologi Multimedia Kreatif", description: "Menaungi program studi yang berfokus pada multimedia dan industri kreatif." },
+    { name: "Program Studi Teknik Elektro", description: "Program studi yang mempelajari teknik elektro dan aplikasinya." },
+    { name: "Program Studi Teknik Informatika dan Komputer", description: "Program studi yang berfokus pada informatika dan ilmu komputer." },
+    { name: "Program Studi Teknik Mekanika dan Energi", description: "Program studi yang mempelajari mekanika dan sistem energi." },
+    { name: "Program Studi Teknologi Multimedia Kreatif", description: "Program studi yang berfokus pada multimedia dan industri kreatif." },
 ];
 
 

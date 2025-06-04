@@ -143,6 +143,7 @@ model lecturer {
   highest_degree    degree?
   position_id       Int?
   signature_url     String?
+  phone_number      String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

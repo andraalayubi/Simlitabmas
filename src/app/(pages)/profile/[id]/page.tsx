@@ -191,6 +191,12 @@ const ProfilePage = () => {
                   </Text>
                   <Text>{professorData?.department?.name}</Text>
                 </Grid.Col>
+                <Grid.Col span={{ base: 12, xs: 6, md: 4 }}>
+                  <Text color="dimmed" size="sm">
+                    Nomor Telepon
+                  </Text>
+                  <Text>{professorData?.phone_number || '-'}</Text>
+                </Grid.Col>
               </Grid>
             </Skeleton>
           </Box>

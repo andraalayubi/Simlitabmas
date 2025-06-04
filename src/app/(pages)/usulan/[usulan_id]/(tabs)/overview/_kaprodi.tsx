@@ -50,22 +50,24 @@ const OverviewKaprodi = () => {
 
   return (
     <>
-      <DrawerProposalSuggestion
-        user_type={user_type}
-        proposal_suggestion={proposalSuggestion!}
-        opened={drawerOpened}
-        onClose={() => setDrawerOpened(false)}
-        editable={false}
-        loading={loading}
-        onSuccess={handleSuccess}
-      />
+      {proposalSuggestion && (
+        <DrawerProposalSuggestion
+          user_type={user_type}
+          proposal_suggestion={proposalSuggestion}
+          opened={drawerOpened}
+          onClose={() => setDrawerOpened(false)}
+          editable={false}
+          loading={loading}
+          onSuccess={handleSuccess}
+        />
+      )}
       <Skeleton visible={loading}>
         <Card shadow="sm" padding="lg" mb="lg">
           <div className="flex justify-between">
             <h2 className="text-xl font-semibold">Ringkasan Usulan</h2>
             <div className="flex space-x-4">
               <Button color="blue" onClick={() => setDrawerOpened(true)}>
-                Edit Usulan
+                Proses Usulan
               </Button>
             </div>
           </div>
