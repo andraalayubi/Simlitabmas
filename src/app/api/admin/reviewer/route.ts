@@ -47,7 +47,11 @@ export async function GET(req: NextRequest) {
                 ? { where: { deleted: false } }
                 : false,
             review: req.nextUrl.searchParams.get("get_review") === "true"
-                ? { where: { deleted: false } }
+                ? { 
+                    include: {
+                        evaluation: true
+                    }
+                 }
                 : false,
         }
 

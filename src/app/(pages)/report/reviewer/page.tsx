@@ -1,0 +1,177 @@
+"use client";
+
+import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  Table,
+  Badge,
+  TextInput,
+  Group,
+  Text,
+  Paper,
+  Container,
+  Title,
+  Select,
+  Progress,
+  Grid,
+  RingProgress,
+  Card,
+  Skeleton,
+} from "@mantine/core";
+import "@mantine/core/styles.css";
+import "@mantine/notifications/styles.css";
+import { lecturer, reviewer } from "prisma/interfaces";
+import useNotification from "src/components/notification/notification";
+import reviewerAction from "src/action/reviewerAction";
+import TableLayout from "src/components/table/tableLayout";
+import React from "react";
+import { MRT_ColumnDef } from "mantine-react-table";
+
+export default function ReviewerRekapPage() {
+  const user_type = "admin";
+  const { showNotification } = useNotification();
+  const [loading, setLoading] = useState(false);
+  const [reviewers, setReviewers] = useState<reviewer[]>([]);
+  const [selectedYear, setSelectedYear] = useState<string | null>(null);
+
+  const columns = React.useMemo<MRT_ColumnDef<reviewer>[]>(
+    () => [
+      {
+        header: "No",
+        Cell: ({ row, table }) => {
+          const rows = table.getRowModel().rows;
+          const index = rows.findIndex((r) => r.id === row.id);
+          return index + 1;
+        },
+        size: 50,
+      },
+      {
+        accessorKey: "lecturer.name",
+        header: "Nama Dosen",
+        size: 150,
+      },
+      {
+        accessorKey: "lecturer.nidn",
+        header: "NIDN",
+        size: 150,
+      },
+      {
+        header: "Review Penelitian",
+        accessorFn: (row) =>
+          row.review?.filter(
+            (r) =>
+              (r.status === "ditolak" || r.status === "diterima") &&
+              r.evaluation?.category === "penelitian"
+          ).length ?? 0,
+        Cell: ({ cell }) => <span>{cell.getValue<number>()}</span>,
+        sortingFn: "basic", // opsional, karena sudah angka
+        size: 100,
+      },
+      {
+        header: "Review Pengmas",
+        accessorFn: (row) =>
+          row.review?.filter(
+            (r) =>
+              (r.status === "ditolak" || r.status === "diterima") &&
+              r.evaluation?.category === "pengmas"
+          ).length ?? 0,
+        Cell: ({ cell }) => <span>{cell.getValue<number>()}</span>,
+        sortingFn: "basic",
+        size: 100,
+      },
+      {
+        id: "total_review",
+        header: "Total Review",
+        accessorFn: (row) =>
+          row.review?.filter(
+            (r) => r.status === "ditolak" || r.status === "diterima"
+          ).length ?? 0,
+        Cell: ({ cell }) => <span>{cell.getValue<number>()}</span>,
+        sortingFn: "basic",
+        size: 100,
+      },
+    ],
+    []
+  );
+
+  const getReviewer = useCallback(async () => {
+    const response = await reviewerAction.getReviewers(user_type, setLoading, {
+      get_lecturer: true,
+      get_review: true,
+    });
+
+    if (response.success) {
+      console.log(response.data);
+      setReviewers(response.data);
+      showNotification({ status: "success", message: response.message });
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  }, [user_type]);
+
+  const years = useMemo(() => {
+    const allYears = reviewers
+      .flatMap((r) =>
+        r.review?.map((rev) => new Date(rev.createdAt).getFullYear())
+      )
+      .filter((y) => y !== undefined) as number[];
+
+    const uniqueYears = Array.from(new Set(allYears));
+    return uniqueYears.sort((a, b) => b - a); // terbaru ke lama
+  }, [reviewers]);
+
+  const filteredReviewers = useMemo(() => {
+    if (!selectedYear) return reviewers;
+
+    return reviewers.map((r) => ({
+      ...r,
+      review: r.review?.filter(
+        (rev) =>
+          new Date(rev.createdAt).getFullYear().toString() === selectedYear
+      ),
+    }));
+  }, [reviewers, selectedYear]);
+
+  useEffect(() => {
+    getReviewer();
+  }, [getReviewer]);
+
+  return (
+    <Container size="xl" py="xl">
+      <Skeleton visible={loading}>
+        <Title order={1} mb="lg">
+          Rekapitulasi Reviewer
+        </Title>
+      </Skeleton>
+
+      {/* Filters */}
+      <Skeleton visible={loading}>
+        <Group mb="md">
+          <Select
+            placeholder="Filter Tahun"
+            data={years.map((year) => ({
+              value: String(year),
+              label: String(year),
+            }))}
+            value={selectedYear}
+            onChange={(value) => setSelectedYear(value)}
+            style={{ width: 200 }}
+          />
+        </Group>
+      </Skeleton>
+
+      {/* Main Table */}
+      <Paper withBorder p="md">
+        <Skeleton visible={loading}>
+          <TableLayout
+            columns={columns}
+            data={filteredReviewers}
+            isLoading={loading}
+            initialState={{
+              sorting: [{ id: "total_review", desc: true }],
+            }}
+          />
+        </Skeleton>
+      </Paper>
+    </Container>
+  );
+}

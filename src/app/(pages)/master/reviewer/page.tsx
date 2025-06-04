@@ -53,7 +53,9 @@ export default function MasterReviewerPage() {
             <ActionButton
               type="edit"
               label="Ubah Tipe Usulan"
-              onClick={() => updateReviewerType(row.original.id, row.original.category)} // trigger modal
+              onClick={() =>
+                updateReviewerType(row.original.id, row.original.category)
+              } // trigger modal
             ></ActionButton>
             <ActionButton
               type="delete"
@@ -90,7 +92,7 @@ export default function MasterReviewerPage() {
       // Check if both requests were successful
       if (lecturerResponse.success && reviewerResponse.success) {
         setLecturers(lecturerResponse.data);
-        setReviewers(reviewerResponse.data);
+        setReviewers(reviewerResponse.data.filter((r: reviewer) => !r.deleted));
         showNotification({
           status: "success",
           message: "Data berhasil dimuat",

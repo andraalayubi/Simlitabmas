@@ -17,7 +17,7 @@ import useNotification from "src/components/notification/notification";
 import evaluationAction from "src/action/evaluationAction";
 import reviewAction from "src/action/reviewAction";
 
-const FinalReportAdmin = () => {
+const MonevAdmin = () => {
   const user_type = "admin";
   const [loading, setLoading] = useState(true);
   const params = useParams();
@@ -107,7 +107,7 @@ const FinalReportAdmin = () => {
               {reviews
                 .filter(
                   (row) =>
-                    row.evaluation?.evaluation_phase === "evaluasi_akhir"
+                    row.evaluation?.evaluation_phase === "evaluasi_monev"
                 )
                 .map((row) => (
                   <Card shadow="sm" padding="lg" key={row.id}>
@@ -125,4 +125,4 @@ const FinalReportAdmin = () => {
   );
 };
 
-export default FinalReportAdmin;
+export default MonevAdmin;

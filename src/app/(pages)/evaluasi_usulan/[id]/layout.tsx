@@ -19,8 +19,8 @@ const TabMenus = [
   //   path: "dokumen_tambahan",
   //   tabName: "Dokumen Tambahan",
   // },
-  // { value: "laporan_akhir", path: "laporan_akhir", tabName: "Laporan Akhir" },
-  // { value: "evaluasi", path: "evaluasi", tabName: "Evaluasi" },
+  { value: "monev", path: "monev", tabName: "monev" },
+  { value: "laporan_akhir", path: "laporan_akhir", tabName: "Laporan Akhir" },
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -44,29 +44,29 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {}, []);
 
   return (
-    <div className="px-4 py-6">       
-              <div className="bg-white shadow-md rounded-lg">
-              <Tabs
-                defaultValue="overview"
-                value={activeTab}
-                onChange={(value) => handleTabChange(value)}
+    <div className="px-4 py-6">
+      <div className="bg-white shadow-md rounded-lg">
+        <Tabs
+          defaultValue="overview"
+          value={activeTab}
+          onChange={(value) => handleTabChange(value)}
+        >
+          <Tabs.List className="flex border-b border-gray-200">
+            {TabMenus.map((tab: any) => (
+              <Tabs.Tab
+                key={tab.value}
+                value={tab.value}
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 focus:outline-none"
               >
-                <Tabs.List className="flex border-b border-gray-200">
-                  {TabMenus.map((tab: any) => (
-                    <Tabs.Tab
-                      key={tab.value}
-                      value={tab.value}
-                      className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 focus:outline-none"
-                    >
-                      {tab.tabName}
-                    </Tabs.Tab>
-                  ))}
-                </Tabs.List>
-              </Tabs>
-            </div>
+                {tab.tabName}
+              </Tabs.Tab>
+            ))}
+          </Tabs.List>
+        </Tabs>
+      </div>
 
-            {/* Tab Content */}
-            <div className="bg-white shadow rounded-lg mt-4">{children}</div>
+      {/* Tab Content */}
+      <div className="bg-white shadow rounded-lg mt-4">{children}</div>
     </div>
   );
 }

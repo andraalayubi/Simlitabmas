@@ -15,7 +15,6 @@ const getByFilter = async (
     return await prisma.reviewer.findMany({
         where: {
             ...filter,
-            deleted: false
         },
         include: include
     })

@@ -23,12 +23,11 @@ import reviewAction from "src/action/reviewAction";
 import criterionScoreAction from "src/action/criterionScoreAction";
 import evaluationAction from "src/action/evaluationAction";
 import proposalSuggestionAction from "src/action/proposalSuggestionAction";
-import ReviewSummaryCard from "src/components/card/proposal_suggestion/ReviewSummaryCard";
 import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
 
-const ProposalLecturer = ({ session }: { session: SessionPayload }) => {
+const MonevLecturer = ({ session }: { session: SessionPayload }) => {
   const user_type = "lecturer";
-  const evaluation_phase = "evaluasi_proposal";
+  const evaluation_phase = "evaluasi_monev";
   const [loading, setLoading] = useState(true);
   const params = useParams();
   const { showNotification } = useNotification();
@@ -268,15 +267,15 @@ const updateStatus = async (statusMayoritas: "diterima" | "ditolak") => {
   if (statusMayoritas === "diterima") {
     await proposalSuggestionAction.updateStatusPhase(
       user_type,
-      "penetapan",
-      "menunggu_admin",
+      "evaluasi_akhir",
+      "menunggu_laporan",
       proposal_suggestion_id
     );
   } else {
     // Jika mayoritas ditolak, status langsung jadi ditolak dan phase tetap
     await proposalSuggestionAction.updateStatusPhase(
       user_type,
-      "evaluasi_proposal", // phase tidak diubah
+      "monev", // phase tidak diubah
       "ditolak",
       proposal_suggestion_id
     );
@@ -490,4 +489,4 @@ const updateStatus = async (statusMayoritas: "diterima" | "ditolak") => {
   );
 };
 
-export default ProposalLecturer;
+export default MonevLecturer;
