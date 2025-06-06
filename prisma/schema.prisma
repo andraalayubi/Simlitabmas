@@ -156,10 +156,26 @@ model lecturer {
   user                user[]
   proposal_suggestion proposal_suggestion[]
   lecturer_member     lecturer_member[]
-  review              review[]
+  reviewer            reviewer[]
   user_profile        user_profile?
 
   @@map("lecturers")
+}
+
+model reviewer {
+  id                Int      @id @default(autoincrement())
+  lecturer_id       Int
+  category          String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  lecturer       lecturer?       @relation(fields: [lecturer_id], references: [id])
+
+  review           review[]
+
+  @@map("reviewers")
 }
 
 model research_group {
@@ -262,7 +278,6 @@ model schema {
   position_schema            position_schema[]
   proposal_suggestion        proposal_suggestion[]
   cost_category              cost_category[]
-  evaluation                 evaluation[]
   external_document_category external_document_category[]
 
   @@map("schemas")
@@ -297,10 +312,10 @@ model proposal_suggestion {
   suggestion_cost     suggestion_cost[]
   additional_document additional_document[]
   external_document   external_document[]
-  review              review[]
   logbook             logbook[]
   proposal            proposal?
   final_report        final_report[]
+  evaluation          evaluation[]
 
   @@map("proposal_suggestions")
 }
@@ -505,16 +520,18 @@ model log {
 }
 
 model evaluation {
-  id               Int               @id @default(autoincrement())
-  name             String?
-  evaluation_phase evaluation_phase?
-  schema_id        Int?
+  id                        Int               @id @default(autoincrement())
+  proposal_suggestion_id    Int?
+  evaluation_phase          evaluation_phase?
+  category                  String?
+  status                    proposal_suggestion_status?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deleted   Boolean  @default(false)
 
-  schema schema?  @relation(fields: [schema_id], references: [id])
+  proposal_suggestion        proposal_suggestion?         @relation(fields: [proposal_suggestion_id], references: [id])
+
   review review[]
 
   @@map("evaluations")
@@ -523,21 +540,52 @@ model evaluation {
 model review {
   id                     Int     @id @default(autoincrement())
   evaluation_id          Int
-  lecturer_id            Int
-  proposal_suggestion_id Int
+  reviewer_id            Int
   note                   String?
-  score                  Float?
-  status                 String?
+  average_score          Float?
+  status                 proposal_suggestion_status?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deleted   Boolean  @default(false)
 
   evaluation          evaluation          @relation(fields: [evaluation_id], references: [id])
-  lecturer            lecturer            @relation(fields: [lecturer_id], references: [id])
-  proposal_suggestion proposal_suggestion @relation(fields: [proposal_suggestion_id], references: [id])
+  reviewer            reviewer            @relation(fields: [reviewer_id], references: [id])
+
+  criterion_score     criterion_score[]
 
   @@map("reviews")
+}
+
+model criterion {
+  id        Int     @id @default(autoincrement())
+  name      String
+  category  String?
+  phase     evaluation_phase
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  criterion_score criterion_score[]
+
+  @@map("criteria")
+}
+
+model criterion_score {
+  id            Int     @id @default(autoincrement())
+  criterion_id  Int
+  review_id     Int
+  score         Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  criterion         criterion          @relation(fields: [criterion_id], references: [id])
+  review            review            @relation(fields: [review_id], references: [id])
+
+  @@map("criteria_scores")
 }
 
 model external_document_category {

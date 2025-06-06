@@ -18,6 +18,10 @@ const protectedRoutes = [
     { path: /^\/pengmas/, roles: ['admin', 'lecturer', 'kaprodi', 'ketua_rg']},
     { path: /^\/profile/, roles: ['admin', 'lecturer', 'kaprodi', 'ketua_rg']},
     { path: /^\/dashboard\/lecturer/, roles: ['admin', 'lecturer'] },
+    { path: /^\/plotting_reviewer/, roles: ['admin'] },
+    { path: /^\/review/, roles: ['lecturer'] },
+    { path: /^\/evaluasi_usulan/, roles: ['admin', 'lecturer']},
+
 ];
 
 // make api endpoint dinamically for protected routing

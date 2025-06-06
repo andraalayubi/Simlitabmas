@@ -232,12 +232,50 @@ const getDashboard = async (
   }
 };
 
+const createEvaluation = async (
+  user_type: user_type,
+  setLoading: (loading: boolean) => void,
+  proposalsuggestion_id: number,
+) => {
+  setLoading(true);
+
+  try {
+    const response = await axios.post(`/api/${user_type}/proposal-suggestion/${proposalsuggestion_id}`, 
+      {
+        user_type: user_type
+      }
+    );
+
+    if (response.status === 201 && response.data.success) {
+      return {
+        success: true,
+        message: "Success",
+      };
+    } else {
+      return {
+        success: false,
+        message:
+          response.data?.message ||
+          "Failed to create a proposal suggestion. Please try again.",
+      };
+    }
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.response?.data?.message || "An unexpected error occurred",
+    };
+  } finally {
+    setLoading(false);
+  }
+};
+
 const proposalSuggestionAction = {
   getProposalSuggestion,
   getById,
   createProposalSuggestion,
   updateStatusPhase,
-  getDashboard
+  getDashboard,
+  createEvaluation
 };
 
 export default proposalSuggestionAction;

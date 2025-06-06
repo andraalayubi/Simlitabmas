@@ -84,8 +84,19 @@ export interface lecturer {
   user?: user[];
   proposal_suggestion?: proposal_suggestion[];
   lecturer_member?: lecturer_member[];
-  review?: review[];
+  reviewer?: reviewer[];
   user_profile?: user_profile | null;
+}
+
+export interface reviewer {
+  id: number;
+  lecturer_id: number;
+  category: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deleted: boolean;
+  lecturer?: lecturer | null;
+  review?: review[];
 }
 
 export interface research_group {
@@ -166,7 +177,6 @@ export interface schema {
   position_schema?: position_schema[];
   proposal_suggestion?: proposal_suggestion[];
   cost_category?: cost_category[];
-  evaluation?: evaluation[];
   external_document_category?: external_document_category[];
 }
 
@@ -196,10 +206,10 @@ export interface proposal_suggestion {
   suggestion_cost?: suggestion_cost[];
   additional_document?: additional_document[];
   external_document?: external_document[];
-  review?: review[];
   logbook?: logbook[];
   proposal?: proposal | null;
   final_report?: final_report[];
+  evaluation?: evaluation[];
 }
 
 export interface proposal {
@@ -357,30 +367,53 @@ export interface log {
 
 export interface evaluation {
   id: number;
-  name: string | null;
+  proposal_suggestion_id: number | null;
   evaluation_phase: evaluation_phase | null;
-  schema_id: number | null;
+  category: string | null;
+  status: proposal_suggestion_status | null;
   createdAt: Date;
   updatedAt: Date;
   deleted: boolean;
-  schema?: schema | null;
+  proposal_suggestion?: proposal_suggestion | null;
   review?: review[];
 }
 
 export interface review {
   id: number;
   evaluation_id: number;
-  lecturer_id: number;
-  proposal_suggestion_id: number;
+  reviewer_id: number;
   note: string | null;
-  score: number | null;
-  status: string | null;
+  average_score: number | null;
+  status: proposal_suggestion_status | null;
   createdAt: Date;
   updatedAt: Date;
   deleted: boolean;
   evaluation?: evaluation;
-  lecturer?: lecturer;
-  proposal_suggestion?: proposal_suggestion;
+  reviewer?: reviewer;
+  criterion_score?: criterion_score[];
+}
+
+export interface criterion {
+  id: number;
+  name: string;
+  category: string | null;
+  phase: evaluation_phase;
+  createdAt: Date;
+  updatedAt: Date;
+  deleted: boolean;
+  criterion_score?: criterion_score[];
+}
+
+export interface criterion_score {
+  id: number;
+  criterion_id: number;
+  review_id: number;
+  score: number;
+  createdAt: Date;
+  updatedAt: Date;
+  deleted: boolean;
+  criterion?: criterion;
+  review?: review;
 }
 
 export interface external_document_category {

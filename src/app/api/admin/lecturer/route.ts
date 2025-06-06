@@ -32,6 +32,10 @@ export async function GET(req: NextRequest) {
             position: req.nextUrl.searchParams.get("get_position") === "true"
                 ? { where: { deleted: false } }
                 : false,
+
+            reviewer: req.nextUrl.searchParams.get("get_reviewer") === "true"
+                ? { where: {} }
+                : false,
         }
 
 
