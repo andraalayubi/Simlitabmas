@@ -342,7 +342,7 @@ const updateStatus = async (statusMayoritas: "diterima" | "ditolak") => {
                   (item) => item.reviewer?.lecturer_id === session.lecturer_id
                 )
                 .map((item) => (
-                  <div className="flex flex-col gap-4">
+                  <div key={item.id} className="flex flex-col gap-4">
                     <Card shadow="sm" padding="lg">
                       <Text size="lg" fw={600}>
                         Penilaian
