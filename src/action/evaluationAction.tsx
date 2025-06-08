@@ -108,10 +108,40 @@ const updateById = async (
     setLoading(false);
   }
 };
+
+const createEvaluation = async (
+  user_type: user_type,
+  data: any,
+) => {
+
+  try {
+    const response = await axios.post(`/api/${user_type}/evaluation`, data);
+
+    if (response.status === 200 || response.data.success == true) {
+      return {
+        success: true,
+        message: response.data.message,
+        data: response.data.data,
+      };
+    } else {
+      return {
+        success: false,
+        message: response.data.message,
+      };
+    }
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.response?.data?.message || "An unexpected error occurred",
+    };
+  }
+};
+
 const evaluationAction = {
     getEvaluation,
     getEvaluations,
-    updateById
+    updateById,
+    createEvaluation
 }
 
 

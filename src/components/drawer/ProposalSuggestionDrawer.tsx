@@ -24,6 +24,7 @@ import { IconAlertCircle } from "@tabler/icons-react";
 import { Workflow } from "src/lib/workflow";
 import proposalSuggestionAction from "src/action/proposalSuggestionAction";
 import useNotification from "../notification/notification";
+import evaluationAction from "src/action/evaluationAction";
 
 interface DrawerMenuProps {
   user_type: user_type;
@@ -53,6 +54,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
   const [roleAction, setRoleAction] = useState<string | null>(null);
   const [infoAction, setInfoAction] = useState<string>("");
   const workflow = new Workflow();
+  const isPenelitian = proposal_suggestion?.research_group_id !== null;
 
   // handle each role status phase condition
   const handleUpdate = async (approved: boolean = true) => {
@@ -127,11 +129,44 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
 
     if (response.success) {
       showNotification({ status: "success", message: response.message });
+
+      if (approved && roleAction === "approval") {
+        const isPenelitianSuggestion = isPenelitian ? "penelitian" : "pengmas";
+
+        if (user_type === "ketua_rg") {
+          createEvaluation("penelitian", "evaluasi_proposal");
+        } else if (user_type === "kaprodi") {
+          createEvaluation("pengmas", "evaluasi_proposal");
+        } else if (user_type === "lecturer") {
+          let evaluationPhase: "evaluasi_monev" | "evaluasi_akhir" | null =
+            null;
+          if (currentPhase === "monev") {
+            evaluationPhase = "evaluasi_monev";
+          } else if (currentPhase === "evaluasi_akhir") {
+            evaluationPhase = "evaluasi_akhir";
+          }
+          if (evaluationPhase) {
+            createEvaluation(isPenelitianSuggestion, evaluationPhase);
+          }
+        }
+      }
+
       handleClose();
     } else {
       showNotification({ status: "error", message: response.message });
       handleClose();
     }
+  };
+
+  const createEvaluation = async (
+    category: string,
+    evaluation_phase: string
+  ) => {
+    return await evaluationAction.createEvaluation(user_type, {
+      proposal_suggestion_id: proposal_suggestion.id,
+      category,
+      evaluation_phase,
+    });
   };
 
   // close drawer and reload parent data
@@ -141,10 +176,11 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
   };
 
   useEffect(() => {
+    console.log("fase apaaa " + currentPhase);
     if (proposal_suggestion?.research_group_id === null) {
       setType("pengmas");
     }
-    
+
     if (proposal_suggestion?.phase && proposal_suggestion?.status) {
       const action = workflow.getAction(
         proposal_suggestion.status,
@@ -164,7 +200,12 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
       setCurrentPhase(proposal_suggestion.phase);
       setCurrentStatus(proposal_suggestion.status);
     }
-  }, [proposal_suggestion?.phase!, proposal_suggestion?.status!, user_type, type]);
+  }, [
+    proposal_suggestion?.phase!,
+    proposal_suggestion?.status!,
+    user_type,
+    type,
+  ]);
 
   return (
     <Skeleton visible={loading}>
