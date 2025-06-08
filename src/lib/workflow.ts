@@ -323,4 +323,17 @@ export class Workflow {
         );
         return detail ? detail.info : '';
     }
+
+    public getAll(status: string, phase: string, type: string = 'penelitian') {
+        const details = this.getDetailsForPhaseAndType(phase, type);
+        const detail = details.find(
+            (d) => d.status === status
+        )
+        return detail ? {
+            info: detail.info,
+            role: detail.role,
+            action: detail.action,
+            status: detail.status
+        } : {};
+    }
 }
