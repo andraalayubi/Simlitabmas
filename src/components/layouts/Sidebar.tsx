@@ -17,6 +17,11 @@ import {
   IconTopologyStar,
   IconBooks,
   IconUserEdit,
+  IconUserCog,
+  IconPencilCog,
+  IconNotes,
+  IconPencilPlus,
+  IconUsersPlus,
 } from "@tabler/icons-react";
 
 // Tipe data untuk konfigurasi menu
@@ -88,6 +93,11 @@ const MENU_CONFIG: Record<string, MenuSection[]> = {
           icon: <IconUserEdit />,
           path: "/master/dosen",
         },
+        {
+          name: "Reviewer",
+          icon: <IconUserCog />,
+          path: "/master/reviewer",
+        },
       ],
     },
     {
@@ -108,6 +118,26 @@ const MENU_CONFIG: Record<string, MenuSection[]> = {
           icon: <IconBooks />,
           path: "/report/department",
         },
+        {
+          name: "Reviewer",
+          icon: <IconNotes />,
+          path: "/report/reviewer",
+        },
+      ],
+    },
+    {
+      title: "PLOTTING REVIEWER",
+      items: [
+        {
+          name: "Penelitian",
+          icon: <IconPencilPlus />,
+          path: "/plotting_reviewer/penelitian",
+        },
+        {
+          name: "Pengmas",
+          icon: <IconUsersPlus />,
+          path: "/plotting_reviewer/pengmas",
+        },
       ],
     },
     {
@@ -122,6 +152,11 @@ const MENU_CONFIG: Record<string, MenuSection[]> = {
           name: "Usulan",
           icon: <IconBookUpload />,
           path: "/konfigurasi/usulan",
+        },
+        {
+          name: "Kriteria Penilaian",
+          icon: <IconPencilCog />,
+          path: "/konfigurasi/kriteria_penilaian",
         },
       ],
     },
@@ -231,6 +266,21 @@ const MENU_CONFIG: Record<string, MenuSection[]> = {
         },
       ],
     },
+    {
+      title: "REVIEW",
+      items: [
+        {
+          name: "Penelitian",
+          icon: <IconBook />,
+          path: "/review/penelitian",
+        },
+        {
+          name: "Pengmas",
+          icon: <IconBook />,
+          path: "/review/pengmas",
+        },
+      ],
+    },
   ],
 };
 
@@ -243,7 +293,12 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ session, opened, toggle }) => {
   const pathname = usePathname();
   const role = session?.user_type!;
-  const menuSections = MENU_CONFIG[role] || MENU_CONFIG.dosen;
+  let menuSections = MENU_CONFIG[role] || MENU_CONFIG.dosen;
+
+  if (role === "lecturer" && session?.reviewer === false) {
+    // Hapus section yang title-nya "REVIEW"
+    menuSections = menuSections.filter((section) => section.title !== "REVIEW");
+  }
 
   const isActive = (item: MenuItem) => {
     return item.exact ? pathname === item.path : pathname.startsWith(item.path);

@@ -45,6 +45,28 @@ const OverviewKetuaRG = () => {
     setDrawerOpened(false);
   }, [getProposalSuggestion]);
 
+  const handleApproval = async () => {
+    if (!proposalSuggestion?.id) {
+      showNotification({
+        status: "error",
+        message: "Proposal ID tidak ditemukan.",
+      });
+      console.error("proposalSuggestion.id is null or undefined");
+      return;
+    }
+    const response = await proposalSuggestionAction.createEvaluation(
+      user_type,
+      setLoading,
+      proposalSuggestion?.id,
+    );
+
+    if (response.success) {
+      showNotification({ status: "success", message: response.message });
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  };
+
   useEffect(() => {
     getProposalSuggestion();
   }, [getProposalSuggestion]);
@@ -69,6 +91,9 @@ const OverviewKetuaRG = () => {
             <div className="flex space-x-4">
               <Button color="blue" onClick={() => setDrawerOpened(true)}>
                 Proses Usulan
+              </Button>
+              <Button color="blue" onClick={() => handleApproval()}>
+                Setuju
               </Button>
             </div>
           </div>

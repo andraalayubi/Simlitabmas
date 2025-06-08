@@ -5,6 +5,7 @@ export interface TableLayoutProps<TData extends Record<string, any>> {
   columns: MRT_ColumnDef<TData>[];
   data: TData[];
   isLoading?: boolean;
+  initialState?: any;
   enablePagination?: boolean;
   enableSorting?: boolean;
   enableColumnActions?: boolean;
@@ -22,6 +23,7 @@ const TableLayout = <TData extends Record<string, any>>({
   columns,
   data,
   isLoading = true,
+  initialState = {},
   enablePagination = true,
   enableSorting = true,
   enableColumnActions = true,
@@ -45,7 +47,7 @@ const TableLayout = <TData extends Record<string, any>>({
       enableExpandAll={enableExpandAll}
       renderDetailPanel={renderDetailPanel}
       mantineTableHeadCellProps={{ style: { backgroundColor: "#f5f5f5" } }}
-      initialState={{ showGlobalFilter: true }}
+      initialState={{ showGlobalFilter: true, ...initialState, }}
       state={{ showSkeletons: isLoading }}
       defaultColumn={{ grow: true, minSize: 100, maxSize: 1000 }}
       mantineTableBodyRowProps={({ row }) =>

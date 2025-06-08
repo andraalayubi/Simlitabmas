@@ -29,7 +29,9 @@ export async function createSession(user: user) {
         user_type: user.user_type, 
         lecturer_id: user.lecturer_id,
         department_id: user.lecturer?.department_id!,
-        research_group_id: user.lecturer?.research_group_id!
+        research_group_id: user.lecturer?.research_group_id!,
+        reviewer: Array.isArray(user.lecturer?.reviewer) &&
+          user.lecturer!.reviewer.some((r) => r.deleted === false)
     })
 
     cookies().set('session', session, {
