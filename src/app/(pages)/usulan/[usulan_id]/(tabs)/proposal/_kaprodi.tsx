@@ -127,8 +127,8 @@ const ProposalKaprodi = () => {
                   Hasil Reviewer 1
                 </Text>
                 <Text>
-                  Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                  amet sint.
+                  Permasalahan cukup jelas dan aktual. Namun perlu ditambahkan
+                  data statistik lokal.
                 </Text>
               </Card>
               <Card shadow="sm" padding="lg">
@@ -136,8 +136,8 @@ const ProposalKaprodi = () => {
                   Hasil Reviewer 2
                 </Text>
                 <Text>
-                  Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                  amet sint.
+                  Potensi dampak baik, namun keberlanjutan belum tergambarkan
+                  jelas.
                 </Text>
               </Card>
             </div>

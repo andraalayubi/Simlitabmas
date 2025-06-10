@@ -112,7 +112,6 @@ const ProposalKetuaRG = () => {
 
           {/* Kolom Tombol + Hasil Reviewer */}
           <div className="flex flex-col gap-4">
-            
             {/* Hasil Reviewer */}
             <div className="grid grid-cols-1 gap-4">
               <Card shadow="sm" padding="lg">
@@ -120,8 +119,8 @@ const ProposalKetuaRG = () => {
                   Hasil Reviewer 1
                 </Text>
                 <Text>
-                  Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                  amet sint.
+                  Permasalahan cukup jelas dan aktual. Namun perlu ditambahkan
+                  data statistik lokal.
                 </Text>
               </Card>
               <Card shadow="sm" padding="lg">
@@ -129,8 +128,8 @@ const ProposalKetuaRG = () => {
                   Hasil Reviewer 2
                 </Text>
                 <Text>
-                  Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                  amet sint.
+                  Potensi dampak baik, namun keberlanjutan belum tergambarkan
+                  jelas.
                 </Text>
               </Card>
             </div>
