@@ -60,7 +60,7 @@ const FinalReportCard: React.FC<FinalReportCardProps> = ({
           </Group>
 
           <Group gap="xs">
-            <ModalComponent title={final_report.file_url ? "Edit Final Report" : "Tambah Final Report"} disabled={!editable}>
+            <ModalComponent title={final_report.file_url ? "Edit Laporan" : "Tambah Laporan"} disabled={!editable}>
               {(close) => (
                 <EditFinalReportModal
                   final_report={final_report}

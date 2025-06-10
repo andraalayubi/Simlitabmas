@@ -125,7 +125,7 @@ const EditExternalDocumentModal: React.FC<EditExternalDocumentProps> = ({
             >
               {(props) => (
                 <Button {...props} variant="outline">
-                  Ganti File
+                  {external_document.file_url ? 'Ganti File' : 'Tambah File'}
                 </Button>
               )}
             </FileButton>

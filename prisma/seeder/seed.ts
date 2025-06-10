@@ -107,39 +107,6 @@ const external_document_categories = [
     { name: "Video Dokumentasi", schema_id: 5, description: "Rekaman kegiatan, wawancara mitra, dan hasil program yang diunggah ke media sosial/website." }
 ]
 
-const evaluations = [
-    {
-        schema_id: 1,
-        evaluation_phase: "evaluasi_proposal" as evaluation_phase,
-        name: "Evaluasi Proposal Skema 1"
-    },
-    {
-        schema_id: 1,
-        evaluation_phase: "evaluasi_monev" as evaluation_phase,
-        name: "Evaluasi Monev Skema 1"
-    },
-    {
-        schema_id: 1,
-        evaluation_phase: "evaluasi_akhir" as evaluation_phase,
-        name: "Evaluasi Akhir Skema 1"
-    },
-    {
-        schema_id: 2,
-        evaluation_phase: "evaluasi_proposal" as evaluation_phase,
-        name: "Evaluasi Proposal Skema 2"
-    },
-    {
-        schema_id: 2,
-        evaluation_phase: "evaluasi_monev" as evaluation_phase,
-        name: "Evaluasi Monev Skema 2"
-    },
-    {
-        schema_id: 2,
-        evaluation_phase: "evaluasi_akhir" as evaluation_phase,
-        name: "Evaluasi Akhir Skema 2"
-    },
-]
-
 const main = async () => {
     try {
         console.log("deleting all data and reset iteration...")
@@ -155,7 +122,6 @@ const main = async () => {
                 "positions", 
                 "position_schemas", 
                 "proposal_suggestions",
-                "evaluations",
                 "configurations"
             RESTART IDENTITY CASCADE;
         `);
@@ -268,12 +234,6 @@ const main = async () => {
             })
         );
         console.log("Inserting proposal suggestion and proposals for pengmas...");
-
-        // insert evaluations
-        await prisma.evaluation.createMany({
-            data: evaluations
-        })
-        console.log("Inserting evaluations...");
 
         // insert external document category
         await prisma.external_document_category.createMany({

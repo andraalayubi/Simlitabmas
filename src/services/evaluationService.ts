@@ -79,10 +79,22 @@ const update = async (evaluation_id: number, data: any) => {
     data: data
   });
 }
+
+const create = async (data: any) => {
+  return await prisma.evaluation.create({
+    data: {
+      ...data,
+      status: "menunggu_admin",
+    },
+  });
+};
+
+
 const evaluationService = {
     getById,
     getEvaluations,
-    update
+    update,
+    create
 };
 
 export default evaluationService;

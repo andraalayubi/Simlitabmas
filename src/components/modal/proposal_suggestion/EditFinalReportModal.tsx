@@ -114,7 +114,7 @@ const EditFinalReportModal: React.FC<EditFinalReportModalProps> = ({
           >
             {(props) => (
               <Button {...props} variant="outline">
-                Ganti File
+                {final_report.file_url ? 'Ganti File' : 'Tambah File'}
               </Button>
             )}
           </FileButton>

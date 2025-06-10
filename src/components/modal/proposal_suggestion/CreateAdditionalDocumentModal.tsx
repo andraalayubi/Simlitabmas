@@ -109,7 +109,7 @@ const AdditionalDocumentAddModal: React.FC<AdditionalDocumentAddModalProps> = ({
         >
           {(props) => (
             <Button {...props} variant="outline">
-              Ganti File
+              Tambah File
             </Button>
           )}
         </FileButton>

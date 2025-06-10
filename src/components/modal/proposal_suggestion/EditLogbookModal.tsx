@@ -114,7 +114,7 @@ const EditLogbookModal: React.FC<EditLogbookModalProps> = ({
           >
             {(props) => (
               <Button {...props} variant="outline">
-                Ganti File
+                {logbook.file_url ? 'Ganti File' : 'Tambah File'}
               </Button>
             )}
           </FileButton>

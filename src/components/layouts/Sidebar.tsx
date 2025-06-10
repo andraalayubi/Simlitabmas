@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
-import { Burger, ScrollArea } from "@mantine/core";
+import { Burger } from "@mantine/core";
 import Link from "next/link";
 import { SessionPayload } from "src/lib/encrypt";
 import {
@@ -306,8 +306,8 @@ const Sidebar: React.FC<SidebarProps> = ({ session, opened, toggle }) => {
 
   return (
     <div
-      className={`fixed h-full bg-white shadow-md p-2 transition-width duration-500 ${
-        opened ? "w-64" : "w-16"
+      className={`fixed h-full bg-white shadow-md p-2 transition-width ease-in-out duration-500 ${
+        opened ? "w-64" : "w-16 justify-items-center"
       }`}
     >
       <div className="flex justify-between items-center gap-6 m-3">
@@ -337,7 +337,7 @@ const Sidebar: React.FC<SidebarProps> = ({ session, opened, toggle }) => {
                       className={`flex items-center p-2 cursor-pointer rounded ${
                         isActive(item)
                           ? "bg-blue-800 text-white"
-                          : "text-gray-400 hover:bg-gray-200"
+                          : "text-gray-800 hover:bg-gray-200"
                       }`}
                     >
                       <span className="mr-2">{item.icon}</span>
