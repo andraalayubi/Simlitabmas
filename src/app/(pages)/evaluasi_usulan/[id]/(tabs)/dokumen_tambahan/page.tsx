@@ -4,8 +4,6 @@ import { useSession } from "src/components/session/session";
 import LoadingPage from "src/components/Loading/LoadingPage";
 import { useEffect } from "react";
 import AddtionalDocumentAdmin from "./_admin";
-import AddtionalDocumentKaprodi from "./_kaprodi";
-import AddtionalDocumentKetuaRG from "./_ketua_rg";
 import AddtionalDocumentLecturer from "./_lecturer";
 import React from "react";
 import { MantineReactTable, MRT_ColumnDef } from "mantine-react-table";
@@ -85,9 +83,5 @@ export default function DokumenTambahanPage() {
     return <AddtionalDocumentAdmin columns={columns} />;
   } else if (session?.user_type == "lecturer") {
     return <AddtionalDocumentLecturer session={session} handleView={handleView} />;
-  } else if (session?.user_type == "ketua_rg") {
-    return <AddtionalDocumentKetuaRG columns={columns} />;
-  } else if (session?.user_type == "kaprodi") {
-    return <AddtionalDocumentKaprodi columns={columns} />;
   }
 }

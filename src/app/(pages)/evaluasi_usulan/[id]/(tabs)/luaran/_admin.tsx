@@ -3,7 +3,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import useNotification from "src/components/notification/notification";
-import { external_document, proposal_suggestion } from "prisma/interfaces";
+import {
+  evaluation,
+  external_document,
+  proposal_suggestion,
+} from "prisma/interfaces";
 import externalDocumentAction from "src/action/externalDocumentAction";
 import { Skeleton, Stack, Text } from "@mantine/core";
 import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
@@ -11,18 +15,35 @@ import ExternalDocumentCard from "src/components/card/proposal_suggestion/Extern
 import ModalComponent from "src/components/modal/modal";
 import CreateExternalModal from "src/components/modal/proposal_suggestion/CreateExternalDocumentModal";
 import CreateExternalDocumentModal from "src/components/modal/proposal_suggestion/CreateExternalDocumentModal";
+import evaluationAction from "src/action/evaluationAction";
 
 const ExternalDocumentAdmin = () => {
   const user_type = "admin";
   const [loading, setLoading] = useState(true);
   const params = useParams();
-  const usulan_id = params.usulan_id[0];
+  const evaluation_id = params.id;
   const { showNotification } = useNotification();
   const [proposalSuggestion, setProposalSuggestion] =
     useState<proposal_suggestion | null>(null);
   const [external_documents, setExternalDocuments] = useState<
     external_document[]
   >([]);
+  const [evaluation, setEvaluation] = useState<evaluation | null>(null);
+  const usulan_id = Number(evaluation?.proposal_suggestion_id);
+
+  const getEvaluation = useCallback(async () => {
+    const response = await evaluationAction.getEvaluation(
+      user_type,
+      setLoading,
+      Number(evaluation_id)
+    );
+    if (response.success) {
+      showNotification({ status: "success", message: response.message });
+      setEvaluation(response.data);
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  }, [user_type, evaluation_id]);
 
   const getExternalDocuments = useCallback(async () => {
     const response = await externalDocumentAction.getExternalDocuments(
@@ -40,8 +61,14 @@ const ExternalDocumentAdmin = () => {
   }, [user_type, usulan_id]);
 
   useEffect(() => {
-    getExternalDocuments();
-  }, [getExternalDocuments]);
+    getEvaluation();
+  }, [getEvaluation]);
+
+  useEffect(() => {
+    if (evaluation?.proposal_suggestion_id) {
+      getExternalDocuments();
+    }
+  }, [evaluation]);
 
   return (
     <>
@@ -58,16 +85,6 @@ const ExternalDocumentAdmin = () => {
             <Text size="xl" fw={500}>
               Daftar Luaran Usulan :
             </Text>
-            <ModalComponent title="Tambah Luaran">
-              {(close) => (
-                <CreateExternalDocumentModal
-                  user_type={user_type}
-                  onClose={close}
-                  proposal_suggestion={proposalSuggestion!}
-                  onSuccess={getExternalDocuments}
-                />
-              )}
-            </ModalComponent>
           </div>
         </Skeleton>
 

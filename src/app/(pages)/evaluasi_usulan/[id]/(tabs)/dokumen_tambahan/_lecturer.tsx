@@ -18,10 +18,15 @@ import useNotification from "src/components/notification/notification";
 import fileAction from "src/action/fileAction";
 import TableLayout from "src/components/table/tableLayout";
 import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
-import { additional_document, proposal_suggestion } from "prisma/interfaces";
+import {
+  additional_document,
+  proposal_suggestion,
+  review,
+} from "prisma/interfaces";
 import { SessionPayload } from "src/lib/encrypt";
 import AdditionalDocumentAddModal from "src/components/modal/proposal_suggestion/CreateAdditionalDocumentModal";
 import AdditionalDocumentUpdateModal from "src/components/modal/proposal_suggestion/EditAdditionalDocumentModal";
+import reviewAction from "src/action/reviewAction";
 
 interface AdditionalDocumentLecturerProps {
   session: SessionPayload;
@@ -34,7 +39,7 @@ const AdditionalDocumentLecturer: React.FC<AdditionalDocumentLecturerProps> = ({
 }) => {
   const user_type = "lecturer";
   const params = useParams();
-  const proposal_suggestion_id = params.usulan_id;
+  const review_id = params.id;
   const { showNotification } = useNotification();
 
   // State for modals
@@ -49,6 +54,25 @@ const AdditionalDocumentLecturer: React.FC<AdditionalDocumentLecturerProps> = ({
   const [loading, setLoading] = useState(true);
   const [proposalSuggestion, setProposalSuggestion] =
     useState<proposal_suggestion | null>(null);
+  const [review, setReview] = useState<review | null>(null);
+  const proposal_suggestion_id = String(
+    review?.evaluation?.proposal_suggestion_id
+  );
+
+  const getReview = useCallback(async () => {
+    const response = await reviewAction.getById(
+      user_type,
+      setLoading,
+      Number(review_id),
+      { get_evaluation: true }
+    );
+    if (response.success) {
+      showNotification({ status: "success", message: response.message });
+      setReview(response.data);
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  }, [user_type, review_id]);
 
   const fetchDokumens = useCallback(async () => {
     const response = await additionalDocumentAction.getAdditionalDocuments(
@@ -68,15 +92,21 @@ const AdditionalDocumentLecturer: React.FC<AdditionalDocumentLecturerProps> = ({
 
       const isEditableByYear = response.data.open;
 
-      setIsEditable(isEditableByLecturer && isEditableByYear);      
+      setIsEditable(isEditableByLecturer && isEditableByYear);
     } else {
       showNotification({ status: "error", message: response.message });
     }
   }, [user_type, proposal_suggestion_id, session]);
-
+  
   useEffect(() => {
-    fetchDokumens();
-  }, [fetchDokumens]);
+    getReview();
+  }, [getReview]);
+  
+  useEffect(() => {
+    if (review?.evaluation?.proposal_suggestion_id) {
+      fetchDokumens();
+    }
+  }, [review]);
 
   const handleUpdateClick = (dokumen: additional_document) => {
     setSelectedDokumen(dokumen);
@@ -141,7 +171,11 @@ const AdditionalDocumentLecturer: React.FC<AdditionalDocumentLecturerProps> = ({
               <Button
                 onClick={open}
                 disabled={!isEditable}
-                className={isEditable ? "bg-blue-800 text-white" : "bg-gray-300 text-gray-600"}
+                className={
+                  isEditable
+                    ? "bg-blue-800 text-white"
+                    : "bg-gray-300 text-gray-600"
+                }
               >
                 Tambah Dokumen
               </Button>
