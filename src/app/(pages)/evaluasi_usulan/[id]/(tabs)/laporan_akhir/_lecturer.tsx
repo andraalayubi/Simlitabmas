@@ -23,6 +23,7 @@ import reviewAction from "src/action/reviewAction";
 import criterionScoreAction from "src/action/criterionScoreAction";
 import evaluationAction from "src/action/evaluationAction";
 import proposalSuggestionAction from "src/action/proposalSuggestionAction";
+import ReviewSummaryCard from "src/components/card/proposal_suggestion/ReviewSummaryCard";
 import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
 
 const FinalReportLecturer = ({ session }: { session: SessionPayload }) => {
@@ -81,6 +82,7 @@ const FinalReportLecturer = ({ session }: { session: SessionPayload }) => {
           proposal_suggestion_id: Number(proposal_suggestion_id),
           evaluation_phase,
           get_criterion: true,
+          get_reviewer: true,
         }
       );
 
@@ -203,10 +205,8 @@ const FinalReportLecturer = ({ session }: { session: SessionPayload }) => {
       }
     );
     if (response.success) {
-      const statusMayoritas = await checkingReviews(
-        evaluation_phase,
-        review?.evaluation?.category!
-      );
+      const statusMayoritas = await checkingReviews();
+      console.log("statussss" + statusMayoritas)
       if (statusMayoritas) {
         updateStatus(statusMayoritas);
       }
@@ -217,31 +217,37 @@ const FinalReportLecturer = ({ session }: { session: SessionPayload }) => {
     }
   };
 
-  const checkingReviews = async (
-    evaluation_phase: string,
-    category: string
-  ): Promise<"diterima" | "ditolak" | null> => {
-    const response = await reviewAction.getReviews("lecturer", setLoading, {
-      evaluation_phase,
-      category,
-    });
+  const checkingReviews = async (): Promise<"diterima" | "ditolak" | null> => {
+   if (!review?.evaluation_id) return null;
+
+  // Ambil semua review berdasarkan evaluation_id
+  const response = await reviewAction.getReviews("lecturer", setLoading, {
+    evaluation_id: review.evaluation_id,
+  });
 
     if (!response.success) return null;
 
-    const scoredReviews = response.data.filter(
-      (review: { average_score: null }) => review.average_score !== null
+    const allReviews = response.data;
+
+    // Jika jumlah reviewer belum mencapai 3, tidak lanjut
+    if (allReviews.length < 3) return null;
+
+    // Cek apakah semua sudah memberi skor
+    const isAllReviewed = allReviews.every(
+      (r: review) => r.average_score !== null
     );
 
-    if (scoredReviews.length < 3) return null; // Belum memenuhi syarat minimal 3 review
+    if (!isAllReviewed) return null;
 
+    // Hitung mayoritas
     const count = {
       diterima: 0,
       ditolak: 0,
     };
 
-    for (const review of scoredReviews) {
-      if (review.status === "diterima") count.diterima++;
-      else if (review.status === "ditolak") count.ditolak++;
+    for (const r of allReviews) {
+      if (r.status === "diterima") count.diterima++;
+      else if (r.status === "ditolak") count.ditolak++;
     }
 
     if (count.diterima > count.ditolak) return "diterima";
@@ -250,38 +256,37 @@ const FinalReportLecturer = ({ session }: { session: SessionPayload }) => {
     return null; // Tidak ada mayoritas
   };
 
-const updateStatus = async (statusMayoritas: "diterima" | "ditolak") => {
-  const proposal_suggestion_id = Number(
-    review?.evaluation?.proposal_suggestion?.id
-  );
-
-  // Update status pada tabel evaluation
-  await evaluationAction.updateById(
-    user_type,
-    setLoading,
-    Number(review?.evaluation_id),
-    { status: statusMayoritas }
-  );
-
-  // Jika diterima, lanjut ke fase penetapan
-  if (statusMayoritas === "diterima") {
-    await proposalSuggestionAction.updateStatusPhase(
-      user_type,
-      "penetapan_akhir",
-      "menunggu_admin",
-      proposal_suggestion_id
+  const updateStatus = async (statusMayoritas: "diterima" | "ditolak") => {
+    const proposal_suggestion_id = Number(
+      review?.evaluation?.proposal_suggestion?.id
     );
-  } else {
-    // Jika mayoritas ditolak, status langsung jadi ditolak dan phase tetap
-    await proposalSuggestionAction.updateStatusPhase(
-      user_type,
-      "evaluasi_akhir", // phase tidak diubah
-      "ditolak",
-      proposal_suggestion_id
-    );
-  }
-};
 
+    // Update status pada tabel evaluation
+    await evaluationAction.updateById(
+      user_type,
+      setLoading,
+      Number(review?.evaluation_id),
+      { status: statusMayoritas }
+    );
+
+    // Jika diterima, lanjut ke fase penetapan
+    if (statusMayoritas === "diterima") {
+      await proposalSuggestionAction.updateStatusPhase(
+        user_type,
+        "evaluasi_akhir",
+        "diterima",
+        proposal_suggestion_id
+      );
+    } else {
+      // Jika mayoritas ditolak, status langsung jadi ditolak dan phase tetap
+      await proposalSuggestionAction.updateStatusPhase(
+        user_type,
+        "evaluasi_akhir", // phase tidak diubah
+        "ditolak",
+        proposal_suggestion_id
+      );
+    }
+  };
 
   useEffect(() => {
     fetchData();
@@ -451,16 +456,22 @@ const updateStatus = async (statusMayoritas: "diterima" | "ditolak") => {
                       <Card shadow="sm" padding="lg">
                         <Text size="lg" fw={600}>
                           Penilaian
-                          {score.map((item) => (
+                        </Text>
+                        {score
+                          .filter(
+                            (item) =>
+                              item.review?.reviewer?.lecturer_id ===
+                              session.lecturer_id
+                          )
+                          .map((item) => (
                             <div
-                              key={item.criterion?.id}
+                              key={item.id}
                               className="items-center mt-2 flex justify-between"
                             >
                               <Text>{item.criterion?.name}</Text>
                               <Text>{item.score}</Text>
                             </div>
                           ))}
-                        </Text>
                       </Card>
                       <Card shadow="sm" padding="lg">
                         <Text size="lg" fw={600}>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
-import { proposal_suggestion } from "prisma/interfaces";
+import { proposal_suggestion, review } from "prisma/interfaces";
 import { useParams } from "next/navigation";
 import useNotification from "src/components/notification/notification";
 import { logbook } from "prisma/interfaces";
@@ -10,17 +10,35 @@ import { Skeleton, Stack } from "@mantine/core";
 import LogbookCard from "src/components/card/proposal_suggestion/LogbookCard";
 import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
 import { SessionPayload } from "src/lib/encrypt";
+import reviewAction from "src/action/reviewAction";
 
 const LogBookLecturer = ({ session }: { session: SessionPayload }) => {
   const user_type = "lecturer";
   const [loading, setLoading] = useState(true);
   const params = useParams();
-  const usulan_id = params.usulan_id;
+  const review_id = params.id;
   const { showNotification } = useNotification();
   const [proposalSuggestion, setProposalSuggestion] =
     useState<proposal_suggestion | null>(null);
   const [logbooks, setLogbooks] = useState<logbook[]>([]);
   const [editable, setEditable] = useState<boolean>(false);
+  const [review, setReview] = useState<review | null>(null);
+  const usulan_id = String(review?.evaluation?.proposal_suggestion_id);
+
+  const getReview = useCallback(async () => {
+    const response = await reviewAction.getById(
+      user_type,
+      setLoading,
+      Number(review_id),
+      { get_evaluation: true }
+    );
+    if (response.success) {
+      showNotification({ status: "success", message: response.message });
+      setReview(response.data);
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  }, [user_type, review_id]);
 
   const getLogbooks = useCallback(async () => {
     const response = await logbookAction.getLogbooks(
@@ -45,10 +63,14 @@ const LogBookLecturer = ({ session }: { session: SessionPayload }) => {
       showNotification({ status: "error", message: response.message });
     }
   }, [user_type, usulan_id, session]);
-
   useEffect(() => {
-    getLogbooks();
-  }, [getLogbooks]);
+    getReview();
+  }, [getReview]);
+  useEffect(() => {
+    if (review?.evaluation?.proposal_suggestion_id) {
+      getLogbooks();
+    }
+  }, [review]);
 
   return (
     <>

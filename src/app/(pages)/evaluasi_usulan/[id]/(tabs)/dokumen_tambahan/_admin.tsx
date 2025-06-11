@@ -18,7 +18,8 @@ import useNotification from "src/components/notification/notification";
 import fileAction from "src/action/fileAction";
 import TableLayout from "src/components/table/tableLayout";
 import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
-import { proposal_suggestion } from "prisma/interfaces";
+import { evaluation, proposal_suggestion } from "prisma/interfaces";
+import evaluationAction from "src/action/evaluationAction";
 
 interface Dokumen {
   id: number;
@@ -35,7 +36,7 @@ const AdditionalDocumentAdmin: React.FC<AdditionalDocumentAdminProps> = ({
 }) => {
   const user_type = "admin";
   const params = useParams();
-  const proposal_suggestion_id = params.usulan_id;
+  const evaluation_id = params.id;
   const { showNotification } = useNotification();
 
   const [dokumens, setDokumens] = useState<Dokumen[]>([]);
@@ -47,6 +48,22 @@ const AdditionalDocumentAdmin: React.FC<AdditionalDocumentAdminProps> = ({
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [newFileUrl, setNewFileUrl] = useState<string | null>(null);
   const [uploadLoading, setUploadLoading] = useState(false);
+  const [evaluation, setEvaluation] = useState<evaluation | null>(null);
+  const proposal_suggestion_id = String(evaluation?.proposal_suggestion_id);
+
+  const getEvaluation = useCallback(async () => {
+    const response = await evaluationAction.getEvaluation(
+      user_type,
+      setLoading,
+      Number(evaluation_id)
+    );
+    if (response.success) {
+      showNotification({ status: "success", message: response.message });
+      setEvaluation(response.data);
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+  }, [user_type, evaluation_id]);
 
   const fetchDokumens = useCallback(async () => {
     const response = await additionalDocumentAction.getAdditionalDocuments(
@@ -65,8 +82,14 @@ const AdditionalDocumentAdmin: React.FC<AdditionalDocumentAdminProps> = ({
   }, [user_type, proposal_suggestion_id]);
 
   useEffect(() => {
-    fetchDokumens();
-  }, [fetchDokumens]);
+    getEvaluation();
+  }, [getEvaluation]);
+
+  useEffect(() => {
+    if (evaluation?.proposal_suggestion_id) {
+      fetchDokumens();
+    }
+  }, [evaluation]);
 
   const handleUpload = async () => {
     if (!newFileUrl || !namaDokumen) return;

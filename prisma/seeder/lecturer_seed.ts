@@ -771,6 +771,63 @@ const lecturers = [
                 }
             ]
         }
+    },
+
+    {
+        name: "Dr. Selvia Kusuma M.Kom",
+        phone_number: "085163142721",
+        research_group_id: 14,
+        department_id: 5,
+        nidn: "199107222022032005",
+        nip: "199107222022032005",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.Kom",
+                field: "Informatic",
+                university: "ITS",
+                year: "2014"
+            },
+            {
+                degree: "S2",
+                code: "M.Kom",
+                field: "Informatics",
+                university: "ITS",
+                year: "2019"
+            }
+        ],
+        is_ketua_rg: true,
+        is_kaprodi: true,
+        highest_degree: "S2" as degree,
+        position_id: 3,
+        user: {
+            create: [
+                {
+                    name: "Dr. Selvia Kusuma M.Kom",
+                    email: "dosenSelvia@pens.ac.id",
+                    user_type: "lecturer",
+                    password: "selvia123!"
+                },
+                {
+                    name: "Dr. Selvia Kusuma M.Kom",
+                    email: "ketuargSelvia@pens.ac.id",
+                    user_type: "ketua_rg",
+                    password: "selvia123!"
+                },
+                {
+                    name: "Dr. Selvia Kusuma M.Kom",
+                    email: "kaprodiSelvia@pens.ac.id",
+                    user_type: "kaprodi",
+                    password: "selvia123!"
+                },
+                {
+                    name: "Dr. Selvia Kusuma M.Kom",
+                    email: "adminSelvia@pens.ac.id",
+                    user_type: "admin",
+                    password: "selvia123!"
+                },
+            ]
+        }
     }
 
 ]

@@ -44,7 +44,13 @@ export async function GET(req: NextRequest) {
 
         const include = {
             lecturer: req.nextUrl.searchParams.get("get_lecturer") === "true"
-                ? { where: { deleted: false } }
+                ? { include: {
+                        department: {
+                            select: {
+                                name: true
+                            }
+                        }
+                    } }
                 : false,
             review: req.nextUrl.searchParams.get("get_review") === "true"
                 ? { 

@@ -12,14 +12,14 @@ const TabMenus = [
   { value: "overview", path: "overview", tabName: "Overview" },
   { value: "proposal", path: "proposal", tabName: "Proposal" },
   // { value: "anggota", path: "anggota", tabName: "Anggota" },
-  // { value: "luaran", path: "luaran", tabName: "Luaran" },
-  // { value: "logbook", path: "logbook", tabName: "Logbook" },
-  // {
-  //   value: "dokumen_tambahan",
-  //   path: "dokumen_tambahan",
-  //   tabName: "Dokumen Tambahan",
-  // },
-  { value: "monev", path: "monev", tabName: "monev" },
+  { value: "luaran", path: "luaran", tabName: "Luaran" },
+  { value: "logbook", path: "logbook", tabName: "Logbook" },
+  {
+    value: "dokumen_tambahan",
+    path: "dokumen_tambahan",
+    tabName: "Dokumen Tambahan",
+  },
+  { value: "monev", path: "monev", tabName: "Monev" },
   { value: "laporan_akhir", path: "laporan_akhir", tabName: "Laporan Akhir" },
 ];
 
