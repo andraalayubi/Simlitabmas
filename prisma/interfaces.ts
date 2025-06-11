@@ -430,6 +430,10 @@ export interface external_document_category {
 export interface configuration {
   id: number;
   year_research_id: number | null;
+  template_proposal: string | null;
+  template_external_document: string | null;
+  template_logbook: string | null;
+  template_final_report: string | null;
   createdAt: Date;
   updatedAt: Date;
   year_research?: year_research | null;

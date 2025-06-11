@@ -65,12 +65,11 @@ export async function PUT(req: NextRequest) {
             await yearResearchService.update(lastConfig?.year_research_id!, { is_active: false })
         }
 
-        const config = await configurationService.update({ year_research_id: payload.year_research_id });
+        const config = await configurationService.update({ year_research_id: payload.year_research_id, template_proposal: payload.template_proposal, template_external_document: payload.template_external_document, template_logbook: payload.template_logbook, template_final_report: payload.template_final_report });
 
         // update active schema
         payload.schemas.map(async (item: any) => {
             return await schemaService.update(item.schema_id, { is_active: item.is_active });
-            // console.log(updated)
         })
 
         return NextResponse.json({

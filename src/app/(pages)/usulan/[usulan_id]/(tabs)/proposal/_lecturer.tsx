@@ -9,6 +9,7 @@ import proposalAction from "src/action/proposalAction";
 import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
 import PdfViewer from "src/components/pdf/pdfViewer";
 import { SessionPayload } from "src/lib/encrypt";
+import { IconEye } from "@tabler/icons-react";
 
 const ProposalLecturer = ({ session }: { session: SessionPayload }) => {
   const user_type = "lecturer";
@@ -21,6 +22,7 @@ const ProposalLecturer = ({ session }: { session: SessionPayload }) => {
     useState<proposal_suggestion | null>(null);
   const [proposalFile, setProposalFile] = useState<File | null>();
   const [isEditable, setIsEditable] = useState(false);
+  const [templateProposal, setTemplateProposal] = useState<string | null>(null);
 
   const getProposal = useCallback(async () => {
     const response = await proposalAction.getProposal(
@@ -33,6 +35,7 @@ const ProposalLecturer = ({ session }: { session: SessionPayload }) => {
       showNotification({ status: "success", message: response.message });
       setProposalSuggestion(response.data);
       setProposal(response.data.proposal);
+      setTemplateProposal(response.data.template_proposal);
 
       // check editable
       const isEditableByLecturer =
@@ -102,6 +105,32 @@ const ProposalLecturer = ({ session }: { session: SessionPayload }) => {
     getProposal();
   }, [getProposal]);
 
+  const handleView = (url: string | null) => {
+    if (url) {
+      const pdfUrl = `/api/file?name=${url}`;
+
+      // Membuka tab baru dengan PDF viewer
+      const viewerWindow = window.open("", "_blank");
+
+      if (viewerWindow) {
+        viewerWindow.document.write(`
+        <html>
+          <head>
+            <title>PDF Viewer</title>
+            <style>
+              body { margin: 0; }
+              iframe { width: 100%; height: 100vh; border: none; }
+            </style>
+          </head>
+          <body>
+            <iframe src="${pdfUrl}#toolbar=0"></iframe>
+          </body>
+        </html>
+      `);
+      }
+    }
+  };
+
   return (
     <>
       <div className="bg-white shadow sm:rounded-lg p-6">
@@ -160,6 +189,21 @@ const ProposalLecturer = ({ session }: { session: SessionPayload }) => {
                 </div>
               </div>
             )}
+
+            {/* Template Proposal Section */}
+            <div className="">
+              {templateProposal && (
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    handleView(templateProposal);
+                  }}
+                  leftSection={<IconEye size={18} />}
+                >
+                  Lihat Template Proposal
+                </Button>
+              )}
+            </div>
 
             {/* Hasil Reviewer */}
             <div className="grid grid-cols-1 gap-4">

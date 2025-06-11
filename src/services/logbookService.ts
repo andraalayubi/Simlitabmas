@@ -3,7 +3,7 @@ import prisma from "src/client/prisma";
 
 const getByProposalSuggestionId = async (proposalSuggestionId: number) => {
 
-    return await prisma.proposal_suggestion.findUnique({
+    const proposalSuggestion = await prisma.proposal_suggestion.findUnique({
         relationLoadStrategy: 'join',
         where: { id: proposalSuggestionId },
         include: {
@@ -14,7 +14,14 @@ const getByProposalSuggestionId = async (proposalSuggestionId: number) => {
             },
             year_research: true
         }
-    })
+    });
+
+    const configuration = await prisma.configuration.findFirst();
+    
+    return {
+        ...proposalSuggestion,
+        template_logbook: configuration?.template_logbook
+    }
 }
 
 interface Logbook {
