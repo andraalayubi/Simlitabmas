@@ -2,24 +2,21 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
-  Table,
   Badge,
-  TextInput,
   Group,
   Text,
   Paper,
   Container,
   Title,
   Select,
-  Progress,
   Grid,
-  RingProgress,
   Card,
   Skeleton,
 } from "@mantine/core";
+import { DonutChart, PieChart } from "@mantine/charts";
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
-import { lecturer, reviewer } from "prisma/interfaces";
+import { reviewer } from "prisma/interfaces";
 import useNotification from "src/components/notification/notification";
 import reviewerAction from "src/action/reviewerAction";
 import TableLayout from "src/components/table/tableLayout";
@@ -142,6 +139,90 @@ export default function ReviewerRekapPage() {
           Rekapitulasi Reviewer
         </Title>
       </Skeleton>
+
+      {/* Top Performers */}
+      <Paper withBorder p="md" mb="xl">
+        <Skeleton visible={loading}>
+          <Title order={3} mb="md">
+            Performa Reviewer Terbaik
+          </Title>
+        </Skeleton>
+        <Skeleton visible={loading}>
+          <Grid>
+            {[...filteredReviewers]
+              .sort((a, b) => {
+                const aTotal =
+                  a.review?.filter(
+                    (r) => r.status === "diterima" || r.status === "ditolak"
+                  ).length ?? 0;
+                const bTotal =
+                  b.review?.filter(
+                    (r) => r.status === "diterima" || r.status === "ditolak"
+                  ).length ?? 0;
+                return bTotal - aTotal;
+              })
+              .slice(0, 3)
+              .map((reviewer, index) => {
+                const penelitianCount =
+                  reviewer.review?.filter(
+                    (r) =>
+                      (r.status === "ditolak" || r.status === "diterima") &&
+                      r.evaluation?.category === "penelitian"
+                  ).length ?? 0;
+
+                const pengmasCount =
+                  reviewer.review?.filter(
+                    (r) =>
+                      (r.status === "ditolak" || r.status === "diterima") &&
+                      r.evaluation?.category === "pengmas"
+                  ).length ?? 0;
+
+                const total = penelitianCount + pengmasCount;
+
+                return (
+                  <Grid.Col key={reviewer.id} span={{ base: 12, md: 4 }}>
+                    <Card withBorder padding="lg" radius="md">
+                      <Group justify="center" mb="md"></Group>
+
+                      <DonutChart
+                      size={120}
+                        data={
+                          total > 0
+                            ? [
+                                {
+                                  name: "Penelitian",
+                                  value: penelitianCount,
+                                  color: "green",
+                                },
+                                {
+                                  name: "Pengmas",
+                                  value: pengmasCount,
+                                  color: "yellow",
+                                },
+                              ]
+                            : [{ name: "Kosong", value: 1, color: "gray" }]
+                        }
+                        // withTooltip
+                        // tooltipDataSource="segment"
+                        // mx="auto"
+                      />
+
+                      <Text ta="center" fw={500} size="lg">
+                        {reviewer?.lecturer?.name}
+                      </Text>
+                      <Text ta="center" c="dimmed" size="sm">
+                        {reviewer?.lecturer?.department?.name}
+                      </Text>
+                      <Group mt="md" justify="center">
+                        <Badge size="lg">Peringkat #{index + 1}</Badge>
+                      </Group>
+                    </Card>
+                  </Grid.Col>
+                );
+              })}
+          </Grid>
+        </Skeleton>
+      </Paper>
 
       {/* Filters */}
       <Skeleton visible={loading}>

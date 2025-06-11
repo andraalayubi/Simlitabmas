@@ -45,6 +45,17 @@ export async function GET(req: NextRequest) {
             criterion: req.nextUrl.searchParams.get("get_criterion") === "true"
                 ? true
                 : false,
+            review: req.nextUrl.searchParams.get("get_reviewer") === "true"
+                ? {
+                    include: {
+                        reviewer : {
+                            select: {
+                                lecturer_id: true
+                            }
+                        }
+                    }
+                }
+                : false,
         }
 
         const data = await criterionScoreService.getScore(filter, include);
