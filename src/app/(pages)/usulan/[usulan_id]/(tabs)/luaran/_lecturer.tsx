@@ -102,16 +102,30 @@ const ExternalDocumentLecturer = ({ session }: { session: SessionPayload }) => {
                 <></>
               )}
             </Text>
-            <ModalComponent title="Tambah Luaran" disabled={!editable}>
-              {(close) => (
-                <CreateExternalDocumentModal
-                  user_type={user_type}
-                  onClose={close}
-                  proposal_suggestion={proposalSuggestion!}
-                  onSuccess={getExternalDocuments}
-                />
+            {/* Template Luaran Section */}
+            <div className="flex gap-y-2 gap-x-4">
+              {templateExternalDocument && (
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    handleView(templateExternalDocument);
+                  }}
+                  leftSection={<IconEye size={18} />}
+                >
+                  Lihat Template Luaran
+                </Button>
               )}
-            </ModalComponent>
+              <ModalComponent title="Tambah Luaran" disabled={!editable}>
+                {(close) => (
+                  <CreateExternalDocumentModal
+                    user_type={user_type}
+                    onClose={close}
+                    proposal_suggestion={proposalSuggestion!}
+                    onSuccess={getExternalDocuments}
+                  />
+                )}
+              </ModalComponent>
+            </div>
           </div>
         </Skeleton>
 
@@ -129,21 +143,6 @@ const ExternalDocumentLecturer = ({ session }: { session: SessionPayload }) => {
               ))}
             </Stack>
           </Skeleton>
-        </div>
-
-        {/* Template Luaran Section */}
-        <div className="mt-4">
-          {templateExternalDocument && (
-            <Button
-              variant="outline"
-              onClick={() => {
-                handleView(templateExternalDocument);
-              }}
-              leftSection={<IconEye size={18} />}
-            >
-              Lihat Template Luaran
-            </Button>
-          )}
         </div>
       </div>
     </>
