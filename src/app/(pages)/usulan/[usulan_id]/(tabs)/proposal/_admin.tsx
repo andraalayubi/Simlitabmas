@@ -1,6 +1,13 @@
 "use client";
 
-import { Button, Skeleton, Card, Text, FileButton } from "@mantine/core";
+import {
+  Button,
+  Skeleton,
+  Card,
+  Text,
+  FileButton,
+  Divider,
+} from "@mantine/core";
 import { useParams } from "next/navigation";
 import { proposal, proposal_suggestion } from "prisma/interfaces";
 import React, { useCallback, useEffect, useState } from "react";
@@ -112,28 +119,30 @@ const ProposalAdmin = () => {
 
           {/* Kolom Tombol + Hasil Reviewer */}
           <div className="flex flex-col gap-4">
-
             {/* Hasil Reviewer */}
-            <div className="grid grid-cols-1 gap-4">
-              <Card shadow="sm" padding="lg">
-                <Text size="lg" fw={600}>
-                  Hasil Reviewer 1
-                </Text>
-                <Text>
-                  Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                  amet sint.
-                </Text>
-              </Card>
-              <Card shadow="sm" padding="lg">
-                <Text size="lg" fw={600}>
-                  Hasil Reviewer 2
-                </Text>
-                <Text>
-                  Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                  amet sint.
-                </Text>
-              </Card>
-            </div>
+            <Skeleton visible={loading}>
+              <div className="grid grid-cols-1 gap-4">
+                <div className="flex justify-center">
+                  <Text size="lg" fw={600}>
+                    Komentar Reviewer
+                  </Text>
+                </div>
+                <Divider size="md"></Divider>
+                {proposalSuggestion?.evaluation
+                  ?.filter((ev) => ev.evaluation_phase === "evaluasi_proposal")
+                  ?.flatMap(
+                    (ev) =>
+                      ev.review?.map((review) => (
+                        <Card shadow="sm" padding="lg" key={review.id}>
+                          <Text size="md" fw={600}>
+                            {review.reviewer?.lecturer?.name}
+                          </Text>
+                          <Text size="sm">{review.note ?? "-"}</Text>
+                        </Card>
+                      )) ?? []
+                  )}
+              </div>
+            </Skeleton>
           </div>
         </div>
       </div>

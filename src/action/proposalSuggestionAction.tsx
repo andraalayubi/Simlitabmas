@@ -1,6 +1,5 @@
-import { proposal_suggestion_phase } from "@prisma/client";
 import axios from "axios";
-import { proposal_suggestion_status, user_type } from "prisma/interfaces";
+import { proposal_suggestion_phase, proposal_suggestion_status, user_type } from "prisma/interfaces";
 
 const getProposalSuggestion = async (
   user_type: user_type,

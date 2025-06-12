@@ -22,6 +22,7 @@ import {
   IconNotes,
   IconPencilPlus,
   IconUsersPlus,
+  IconEdit,
 } from "@tabler/icons-react";
 
 // Tipe data untuk konfigurasi menu
@@ -271,12 +272,12 @@ const MENU_CONFIG: Record<string, MenuSection[]> = {
       items: [
         {
           name: "Penelitian",
-          icon: <IconBook />,
+          icon: <IconEdit />,
           path: "/review/penelitian",
         },
         {
           name: "Pengmas",
-          icon: <IconBook />,
+          icon: <IconUserEdit />,
           path: "/review/pengmas",
         },
       ],
