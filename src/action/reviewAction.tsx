@@ -14,7 +14,9 @@ const createReview = async (
     });
 
     const result = await response.json();
-
+      const notification = await axios.post(`/api/${user_type}/notification`, {
+        reviewer_id: reviewer_id
+      });
     if (response.status === 201 && result.success) {
       return {
         success: true,

@@ -29,7 +29,20 @@ const getByProposalSuggestionId = async (proposalSuggestionId: number) => {
         relationLoadStrategy: 'join',
         where: { id: proposalSuggestionId },
         include: {
-            proposal: true
+            proposal: true,
+            evaluation: {
+                include:  {
+                    review: {
+                        include: {
+                            reviewer: {
+                                include: {
+                                    lecturer: true
+                                }
+                            },
+                        }
+                    }
+                }
+            }
         }
     });
 

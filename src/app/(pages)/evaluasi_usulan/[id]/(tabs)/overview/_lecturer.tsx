@@ -46,29 +46,65 @@ const OverviewLecturer: React.FC<OverviewLecturerProps> = ({ session }) => {
       <Skeleton visible={loading}>
         <Card shadow="sm" padding="lg" mb="lg">
           <div className="flex justify-between">
-            <h2 className="text-xl font-semibold">Ringkasan Usulan</h2>
+            <h2 className="text-xl font-semibold">Ringkasan Review</h2>
           </div>
-          <div className="grid grid-cols-2 gap-4 mb-8">
-            <Text>Status Review:</Text>{" "}
-            <ProposalSuggestionStatusBadge
-              status={review?.status!}
-            />
-            <Text>Tahap Usulan:</Text>{" "}
-            <EvaluationPhaseBadge
-              phase={review?.evaluation?.evaluation_phase!}
-            />
-            <Text>Judul Usulan:</Text>
-            <Text>{review?.evaluation?.proposal_suggestion?.name}</Text>
-            <Text>Skema Penelitian:</Text>{" "}
+<div className="grid grid-cols-[auto_auto_1fr] gap-x-8 gap-y-4 my-8 items-baseline">
+            {/* Baris Judul Usulan */}
+            <Text className="font-medium">Judul Usulan</Text>
+            <Text>:</Text>
+            <Text className="col-span-1">{review?.evaluation?.proposal_suggestion?.name}</Text>
+
+            {/* Baris Tipe Usulan */}
+            <Text className="font-medium">Tipe Usulan</Text>
+            <Text>:</Text>
+            <Text>
+              {review?.evaluation?.proposal_suggestion?.research_group_id != null
+                ? "Penelitian"
+                : "Pengabdian Masyarakat"}
+            </Text>
+
+            {/* Baris Status Usulan */}
+            <Text className="font-medium">Status Review</Text>
+            <Text>:</Text>
+            <div>
+              <ProposalSuggestionStatusBadge
+                status={review?.status!}
+              />
+            </div>
+
+            {/* Baris Tahap Usulan */}
+            <Text className="font-medium">Tahap Evaluasi Usulan</Text>
+            <Text>:</Text>
+            <div>
+              <EvaluationPhaseBadge
+                phase={review?.evaluation?.evaluation_phase!}
+              />
+            </div>
+
+            {/* Baris Skema Penelitian */}
+            <Text className="font-medium">Skema Penelitian</Text>
+            <Text>:</Text>
             <Text>{review?.evaluation?.proposal_suggestion?.schema?.name}</Text>
-            <Text>Tahun:</Text>{" "}
-            <Text>
-              {review?.evaluation?.proposal_suggestion?.year_research?.year}
-            </Text>
-            <Text>Studi Program:</Text>{" "}
-            <Text>
-              {review?.evaluation?.proposal_suggestion?.department?.name}
-            </Text>
+
+            {/* Baris Tahun */}
+            <Text className="font-medium">Tahun</Text>
+            <Text>:</Text>
+            <Text>{review?.evaluation?.proposal_suggestion?.year_research?.year}</Text>
+
+            {/* Baris Research Group / Program Studi */}
+            {review?.evaluation?.proposal_suggestion?.research_group_id != null ? (
+              <>
+                <Text className="font-medium">Research Group</Text>
+                <Text>:</Text>
+                <Text>{review?.evaluation?.proposal_suggestion?.research_group?.name}</Text>
+              </>
+            ) : (
+              <>
+                <Text className="font-medium">Program Studi</Text>
+                <Text>:</Text>
+                <Text>{review?.evaluation?.proposal_suggestion?.department?.name}</Text>
+              </>
+            )}
           </div>
           {/* <TableOverview /> */}
         </Card>

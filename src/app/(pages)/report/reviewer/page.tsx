@@ -22,6 +22,7 @@ import reviewerAction from "src/action/reviewerAction";
 import TableLayout from "src/components/table/tableLayout";
 import React from "react";
 import { MRT_ColumnDef } from "mantine-react-table";
+import PieChartComponent from "src/components/chart/PieChartComponent";
 
 export default function ReviewerRekapPage() {
   const user_type = "admin";
@@ -184,27 +185,15 @@ export default function ReviewerRekapPage() {
                     <Card withBorder padding="lg" radius="md">
                       <Group justify="center" mb="md"></Group>
 
-                      <DonutChart
-                      size={120}
+                      <PieChartComponent
                         data={
                           total > 0
                             ? [
-                                {
-                                  name: "Penelitian",
-                                  value: penelitianCount,
-                                  color: "green",
-                                },
-                                {
-                                  name: "Pengmas",
-                                  value: pengmasCount,
-                                  color: "yellow",
-                                },
+                                { name: "Penelitian", value: penelitianCount },
+                                { name: "Pengmas", value: pengmasCount },
                               ]
-                            : [{ name: "Kosong", value: 1, color: "gray" }]
+                            : [{ name: "Kosong", value: 1 }]
                         }
-                        // withTooltip
-                        // tooltipDataSource="segment"
-                        // mx="auto"
                       />
 
                       <Text ta="center" fw={500} size="lg">
