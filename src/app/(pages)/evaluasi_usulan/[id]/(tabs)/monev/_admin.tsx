@@ -25,6 +25,9 @@ const MonevAdmin = () => {
   const { showNotification } = useNotification();
   const [evaluation, setEvaluation] = useState<evaluation | null>(null);
   const [reviews, setReviews] = useState<review[]>([]);
+  const finalReportFile = evaluation?.proposal_suggestion?.final_report?.find(
+    (file) => file.name === "Laporan Kemajuan"
+  );
 
   const getProposalSuggestion = useCallback(async () => {
     const response = await evaluationAction.getEvaluation(
@@ -87,8 +90,8 @@ const MonevAdmin = () => {
             <Skeleton visible={loading}>
               <PdfViewer
                 pdfUrl={
-                  evaluation?.proposal_suggestion?.proposal?.file_url
-                    ? `/api/file?name=${evaluation?.proposal_suggestion?.proposal?.file_url}`
+                  finalReportFile?.file_url
+                    ? `/api/file?name=${finalReportFile.file_url}`
                     : null
                 }
               />
@@ -106,8 +109,7 @@ const MonevAdmin = () => {
               <Divider size="md"></Divider>
               {reviews
                 .filter(
-                  (row) =>
-                    row.evaluation?.evaluation_phase === "evaluasi_monev"
+                  (row) => row.evaluation?.evaluation_phase === "evaluasi_monev"
                 )
                 .map((row) => (
                   <Card shadow="sm" padding="lg" key={row.id}>

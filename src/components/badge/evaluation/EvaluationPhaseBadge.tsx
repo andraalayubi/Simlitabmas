@@ -14,7 +14,7 @@ const phaseColors: Record<evaluation_phase, string> = {
 
 const phaseLabels: Record<evaluation_phase, string> = {
   evaluasi_proposal: "Evaluasi Proposal",
-  evaluasi_monev: "Monev",
+  evaluasi_monev: "Evaluasi Monev",
   evaluasi_akhir: "Evaluasi Akhir",
 };
 

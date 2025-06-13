@@ -307,7 +307,7 @@ export class Workflow {
     }
 
     // Method untuk mendapatkan action berdasarkan status, phase, role, dan type
-    public getAction(status: string, phase: string, role: string, type: string = 'default'): Action {
+    public getAction(status: string, phase: string, role: string, type: string = 'penelitian'): Action {
         const details = this.getDetailsForPhaseAndType(phase, type);
         const detail = details.find(
             (d) => d.status === status && d.role === role
@@ -316,11 +316,24 @@ export class Workflow {
     }
 
     // Method untuk mendapatkan info berdasarkan status, phase, role, dan type
-    public getInfo(status: string, phase: string, role: string, type: string = 'default'): String {
+    public getInfo(status: string, phase: string, role: string, type: string = 'penelitian'): String {
         const details = this.getDetailsForPhaseAndType(phase, type);
         const detail = details.find(
             (d) => d.status === status && d.role === role
         );
         return detail ? detail.info : '';
+    }
+
+    public getAll(status: string, phase: string, type: string = 'penelitian') {
+        const details = this.getDetailsForPhaseAndType(phase, type);
+        const detail = details.find(
+            (d) => d.status === status
+        )
+        return detail ? {
+            info: detail.info,
+            role: detail.role,
+            action: detail.action,
+            status: detail.status
+        } : {};
     }
 }

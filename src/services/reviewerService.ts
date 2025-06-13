@@ -27,10 +27,20 @@ const update = async (reviewer_id: number, reviewerData: any) => {
     })
 }
 
+const getById = async (id: number) => {
+    return await prisma.reviewer.findUnique({
+        where: { id: id },
+        include: {
+            lecturer: true
+        }
+    });
+}
+
 const reviewerService = {
     create,
     getByFilter,
-    update
+    update,
+    getById
 }
 
 export default reviewerService;

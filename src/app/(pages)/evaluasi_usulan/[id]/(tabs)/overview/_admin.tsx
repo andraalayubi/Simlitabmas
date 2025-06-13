@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Button, Card, Text } from "@mantine/core";
+import { Button, Card, Spoiler, Text } from "@mantine/core";
 import { Skeleton } from "@mantine/core";
 import { useParams } from "next/navigation";
 import useNotification from "src/components/notification/notification";
@@ -18,7 +18,10 @@ import { MRT_ColumnDef } from "mantine-react-table";
 import reviewAction from "src/action/reviewAction";
 import ActionButton from "src/components/button/actionButton";
 import EvaluationPhaseBadge from "src/components/badge/evaluation/EvaluationPhaseBadge";
-import { text } from "stream/consumers";
+import { IconInfoCircle } from "@tabler/icons-react";
+import { Workflow } from "src/lib/workflow";
+import * as XLSX from "xlsx";
+import saveAs from "file-saver";
 
 const OverviewAdmin = () => {
   const user_type = "admin";
@@ -32,6 +35,7 @@ const OverviewAdmin = () => {
   const [reviewers, setReviewers] = useState<reviewer[]>([]);
   const [reviews, setReviews] = useState<review[]>([]);
   const [existingReviewerIds, setExistingReviewerIds] = useState<number[]>([]);
+  const workflow = new Workflow();
 
   const getReviewers = useCallback(async () => {
     if (!evaluation?.category) return;
@@ -94,6 +98,37 @@ const OverviewAdmin = () => {
     getEvaluation();
     setDrawerOpened(false);
   }, [getEvaluation]);
+
+  const exportToExcel = () => {
+    if (reviews.length === 0) return;
+
+    const exportData = reviews.map((r) => ({
+      "Nama Reviewer": r.reviewer?.lecturer?.name ?? "-",
+      Nilai: r.average_score ?? "-",
+      Catatan: r.note ?? "-",
+      "Tahap Review":
+        r.evaluation?.evaluation_phase
+          ?.split("_")
+          .map((w) => w[0].toUpperCase() + w.slice(1))
+          .join(" ") ?? "-",
+      "Status Review": r.status,
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Data Review");
+
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+
+    const file = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+
+    saveAs(file, "data-review.xlsx");
+  };
 
   useEffect(() => {
     getEvaluation();
@@ -208,25 +243,102 @@ const OverviewAdmin = () => {
               </Button>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4 mb-8">
-            <Text>Status Usulan:</Text>{" "}
-            <ProposalSuggestionStatusBadge status={evaluation?.status!} />
-            <Text>Tahap Usulan:</Text>{" "}
-            <EvaluationPhaseBadge phase={evaluation?.evaluation_phase!} />
-            <Text>Judul Usulan:</Text>
-            <Text>{evaluation?.proposal_suggestion?.name}</Text>
-            <Text>Skema Penelitian:</Text>{" "}
+          <div className="grid grid-cols-[auto_auto_1fr] gap-x-8 gap-y-4 my-8 items-baseline">
+            {/* Baris Judul Usulan */}
+            <Text className="font-medium">Judul Usulan</Text>
+            <Text>:</Text>
+            <Text className="col-span-1">
+              {evaluation?.proposal_suggestion?.name}
+            </Text>
+
+            {/* Baris Tipe Usulan */}
+            <Text className="font-medium">Tipe Usulan</Text>
+            <Text>:</Text>
+            <Text>
+              {evaluation?.proposal_suggestion?.research_group_id != null
+                ? "Penelitian"
+                : "Pengabdian Masyarakat"}
+            </Text>
+
+            {/* Baris Status Usulan */}
+            <Text className="font-medium">Status Evaluasi Usulan</Text>
+            <Text>:</Text>
+            <div>
+              <ProposalSuggestionStatusBadge
+                status={evaluation?.proposal_suggestion?.status!}
+              />
+            </div>
+
+            {/* Baris Tahap Usulan */}
+            <Text className="font-medium">Tahap Evaluasi Usulan</Text>
+            <Text>:</Text>
+            <div>
+              <EvaluationPhaseBadge phase={evaluation?.evaluation_phase!} />
+            </div>
+
+            {/* Baris Proses */}
+            <Text className="font-medium">Proses</Text>
+            <Text>:</Text>
+            <div className="flex text-blue-600">
+              <span>
+                <IconInfoCircle />
+              </span>
+              <Spoiler
+                maxHeight={30}
+                showLabel="lihat"
+                hideLabel="sembunyi"
+                className="text-gray-600"
+              >
+                {
+                  workflow.getAll(
+                    evaluation?.proposal_suggestion?.status!,
+                    evaluation?.proposal_suggestion?.phase!,
+                    evaluation?.proposal_suggestion?.research_group_id! != null
+                      ? "penelitian"
+                      : "pengmas"
+                  ).info
+                }
+              </Spoiler>
+            </div>
+
+            {/* Baris Skema Penelitian */}
+            <Text className="font-medium">Skema Penelitian</Text>
+            <Text>:</Text>
             <Text>{evaluation?.proposal_suggestion?.schema?.name}</Text>
-            <Text>Tahun:</Text>{" "}
+
+            {/* Baris Tahun */}
+            <Text className="font-medium">Tahun</Text>
+            <Text>:</Text>
             <Text>{evaluation?.proposal_suggestion?.year_research?.year}</Text>
-            <Text>Studi Program:</Text>{" "}
-            <Text>{evaluation?.proposal_suggestion?.department?.name}</Text>
+
+            {/* Baris Research Group / Program Studi */}
+            {evaluation?.proposal_suggestion?.research_group_id != null ? (
+              <>
+                <Text className="font-medium">Research Group</Text>
+                <Text>:</Text>
+                <Text>
+                  {evaluation?.proposal_suggestion?.research_group?.name}
+                </Text>
+              </>
+            ) : (
+              <>
+                <Text className="font-medium">Program Studi</Text>
+                <Text>:</Text>
+                <Text>{evaluation?.proposal_suggestion?.department?.name}</Text>
+              </>
+            )}
           </div>
           {/* <TableOverview /> */}
         </Card>
       </Skeleton>
+
       <Skeleton visible={loading}>
-        <div>
+        <div className="flex ml-4">
+          <Button color="green" onClick={exportToExcel}>
+          Download Excel
+        </Button>
+        </div>
+        <div className="mt-4">
           <TableLayout
             columns={columns}
             data={reviews}
