@@ -115,7 +115,7 @@ const AdditionalDocumentLecturer: React.FC<AdditionalDocumentLecturerProps> = ({
             onClick={() => handleUpdateClick(row.original)}
             disabled={!isEditable}
           >
-            Update
+            Ubah Dokumen
           </Button>
         ),
       },

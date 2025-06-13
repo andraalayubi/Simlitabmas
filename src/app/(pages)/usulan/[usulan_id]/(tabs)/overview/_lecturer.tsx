@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Badge, Button, Card, Text } from "@mantine/core";
-import TableOverview from "src/components/usulan/overview/TableOverview";
+import { Button, Card, Divider, Spoiler, Text } from "@mantine/core";
 import { SessionPayload } from "src/lib/encrypt";
 import { Skeleton } from "@mantine/core";
 import { useParams } from "next/navigation";
@@ -10,6 +9,8 @@ import { proposal_suggestion } from "prisma/interfaces";
 import ProposalSuggestionPhaseBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionPhaseBadge";
 import ProposalSuggestionStatusBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionStatusBadge";
 import DrawerProposalSuggestion from "src/components/drawer/ProposalSuggestionDrawer";
+import { Workflow } from "src/lib/workflow";
+import { IconInfoCircle } from "@tabler/icons-react";
 
 interface OverviewLecturerProps {
   session: SessionPayload;
@@ -21,6 +22,8 @@ const OverviewLecturer: React.FC<OverviewLecturerProps> = ({ session }) => {
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [proposalSuggestion, setProposalSuggestion] =
     useState<proposal_suggestion | null>(null);
+
+  const workflow = new Workflow();
 
   const { showNotification } = useNotification();
   const params = useParams();
@@ -74,25 +77,94 @@ const OverviewLecturer: React.FC<OverviewLecturerProps> = ({ session }) => {
               </Button>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4 mb-8">
-            <Text>Status Usulan:</Text>{" "}
-            <ProposalSuggestionStatusBadge
-              status={proposalSuggestion?.status!}
-            />
-            <Text>Tahap Usulan:</Text>{" "}
-            <ProposalSuggestionPhaseBadge phase={proposalSuggestion?.phase!} />
-            <Text>Judul Usulan:</Text>
-            <Text>{proposalSuggestion?.name}</Text>
-            <Text>Skema Penelitian:</Text>{" "}
+          <Divider my="sm" />
+
+          <div className="grid grid-cols-[auto_auto_1fr] gap-x-8 gap-y-4 mb-8 items-baseline">
+            {/* Baris Judul Usulan */}
+            <Text className="font-medium">Judul Usulan</Text>
+            <Text>:</Text>
+            <Text className="col-span-1">{proposalSuggestion?.name}</Text>
+
+            {/* Baris Tipe Usulan */}
+            <Text className="font-medium">Tipe Usulan</Text>
+            <Text>:</Text>
+            <Text>
+              {proposalSuggestion?.research_group_id != null
+                ? "Penelitian"
+                : "Pengabdian Masyarakat"}
+            </Text>
+
+            {/* Baris Status Usulan */}
+            <Text className="font-medium">Status Usulan</Text>
+            <Text>:</Text>
+            <div>
+              <ProposalSuggestionStatusBadge
+                status={proposalSuggestion?.status!}
+              />
+            </div>
+
+            {/* Baris Tahap Usulan */}
+            <Text className="font-medium">Tahap Usulan</Text>
+            <Text>:</Text>
+            <div>
+              <ProposalSuggestionPhaseBadge
+                phase={proposalSuggestion?.phase!}
+              />
+            </div>
+
+            {/* Baris Proses */}
+            <Text className="font-medium">Proses</Text>
+            <Text>:</Text>
+            <div className="flex text-blue-600">
+              <span>
+                <IconInfoCircle />
+              </span>
+              <Spoiler
+                maxHeight={30}
+                showLabel="lihat"
+                hideLabel="sembunyi"
+                className="text-gray-600"
+              >
+                {
+                  workflow.getAll(
+                    proposalSuggestion?.status!,
+                    proposalSuggestion?.phase!,
+                    proposalSuggestion?.research_group_id! != null
+                      ? "penelitian"
+                      : "pengmas"
+                  ).info
+                }
+              </Spoiler>
+            </div>
+
+            {/* Baris Skema Penelitian */}
+            <Text className="font-medium">Skema Penelitian</Text>
+            <Text>:</Text>
             <Text>{proposalSuggestion?.schema?.name}</Text>
-            <Text>Tahun:</Text>{" "}
+
+            {/* Baris Tahun */}
+            <Text className="font-medium">Tahun</Text>
+            <Text>:</Text>
             <Text>{proposalSuggestion?.year_research?.year}</Text>
-            <Text>Studi Program:</Text>{" "}
-            <Text>{proposalSuggestion?.department?.name}</Text>
+
+            {/* Baris Research Group / Program Studi */}
+            {proposalSuggestion?.research_group_id != null ? (
+              <>
+                <Text className="font-medium">Research Group</Text>
+                <Text>:</Text>
+                <Text>{proposalSuggestion?.research_group?.name}</Text>
+              </>
+            ) : (
+              <>
+                <Text className="font-medium">Program Studi</Text>
+                <Text>:</Text>
+                <Text>{proposalSuggestion?.department?.name}</Text>
+              </>
+            )}
           </div>
-          {/* <TableOverview /> */}
         </Card>
       </Skeleton>
+
     </>
   );
 };

@@ -93,10 +93,25 @@ const AdditionalDocumentUpdateModal: React.FC<
       <TextInput
         label="Nama Dokumen"
         value={updateNamaDokumen}
+        className="mb-4"
         onChange={(e) => setUpdateNamaDokumen(e.currentTarget.value)}
         required
       />
-      <Group className="mt-4">
+      {updateSelectedFile ? (
+        <Text size="sm" c="blue">
+          Mengupload {updateSelectedFile.name}...
+        </Text>
+      ) : updateFileUrl ? (
+        <Text size="sm" c="green">
+          File terunggah: {updateFileUrl.split("/").pop()}
+        </Text>
+      ) : (
+        <Text size="sm" c="red">
+          Format file yang diizinkan: .pdf, .doc, .docx (Maksimal 10MB)
+        </Text>
+      )}
+
+      <Group className="mt-4" justify="space-between">
         <FileButton
           onChange={handleUpdateFileUpload}
           accept=".pdf,.doc,.docx"
@@ -108,24 +123,15 @@ const AdditionalDocumentUpdateModal: React.FC<
             </Button>
           )}
         </FileButton>
-        {updateSelectedFile && (
-          <Text size="sm" c="blue">
-            Mengupload {updateSelectedFile.name}...
-          </Text>
-        )}
-        {updateFileUrl && (
-          <Text size="sm" c="green">
-            File terunggah: {updateFileUrl.split("/").pop()}
-          </Text>
-        )}
+
+        <Button
+          onClick={handleUpdate}
+          className="bg-blue-800 text-white"
+          loading={updateUploadLoading}
+        >
+          Simpan
+        </Button>
       </Group>
-      <Button
-        onClick={handleUpdate}
-        className="mt-4 bg-blue-800 text-white"
-        loading={updateUploadLoading}
-      >
-        Update
-      </Button>
     </Modal>
   );
 };

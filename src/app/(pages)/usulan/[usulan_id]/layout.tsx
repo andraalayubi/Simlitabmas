@@ -111,7 +111,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             return;
           }
         }
-      } else {
+      } else if (user_type == "admin") {
         setIsAllowed(true);
         setLoading(false);
       }
