@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "@mantine/form";
+import { useForm, zodResolver } from "@mantine/form";
 import {
   TextInput,
   PasswordInput,
@@ -15,7 +15,6 @@ import {
   rem,
 } from "@mantine/core";
 import { useRouter } from "next/navigation";
-import { zodResolver } from "mantine-form-zod-resolver";
 import { loginSchema } from "./_schema";
 import { loginAction } from "./_action";
 import useNotification from "src/components/notification/notification";

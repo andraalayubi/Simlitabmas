@@ -47,6 +47,9 @@ const FinalReportLecturer = ({ session }: { session: SessionPayload }) => {
     (r) => r.reviewer?.lecturer_id === session.lecturer_id
   );
   const isSamePhase = evaluation_phase === review?.evaluation?.evaluation_phase;
+  const finalReportFile = review?.evaluation?.proposal_suggestion?.final_report?.find(
+    (file) => file.name === "Laporan Akhir"
+  );
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -312,8 +315,8 @@ const FinalReportLecturer = ({ session }: { session: SessionPayload }) => {
             <Skeleton visible={loading}>
               <PdfViewer
                 pdfUrl={
-                  review?.evaluation?.proposal_suggestion?.proposal?.file_url
-                    ? `/api/file?name=${review?.evaluation?.proposal_suggestion?.proposal?.file_url}`
+                  finalReportFile?.file_url
+                    ? `/api/file?name=${finalReportFile.file_url}`
                     : null
                 }
               />

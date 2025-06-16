@@ -15,7 +15,9 @@ const getById = async (id: number) => {
                     schema: true,
                     year_research: true,
                     proposal: true,
-                    department:true
+                    department:true,
+                    final_report:true,
+                    research_group: true
                 }
             },
             review: {

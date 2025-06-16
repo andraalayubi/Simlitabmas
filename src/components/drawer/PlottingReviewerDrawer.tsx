@@ -126,6 +126,7 @@ const handleSelectReviewer = (rev: reviewer) => {
     <Skeleton visible={loading}>
       <Drawer
         position="right"
+        size="450px"
         opened={opened}
         onClose={onClose}
         title={"Tetapkan Reviewer " + formattedType}

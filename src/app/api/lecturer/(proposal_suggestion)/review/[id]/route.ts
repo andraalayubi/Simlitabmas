@@ -19,10 +19,12 @@ export async function GET(req: NextRequest,  { params }: { params: Params }) {
                         proposal_suggestion : req.nextUrl.searchParams.get("get_proposal_suggestion") === "true"
                         ? {
                             include: {
+                                final_report: true,
                                 lecturer : true,
                                 year_research: true,
                                 schema: true,
                                 department: true,
+                                research_group: true,
                                 proposal: req.nextUrl.searchParams.get("get_proposal") === "true"
                                 ? true : false
                             }
