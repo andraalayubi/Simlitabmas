@@ -613,8 +613,12 @@ model external_document_category {
 }
 
 model configuration {
-  id               Int  @id @default(autoincrement())
-  year_research_id Int? @unique
+  id                          Int  @id @default(autoincrement())
+  year_research_id            Int? @unique
+  template_proposal           String?
+  template_external_document  String?
+  template_logbook            String?
+  template_final_report       String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

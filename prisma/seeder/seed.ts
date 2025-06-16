@@ -23,6 +23,7 @@ const research_groups = [
     { name: "Data Science for SDGs Applied Solution", description: "Data Science for SDGs Applied Solutions" },
     { name: "Digital Media", description: "Mengeksplorasi alat dan teknologi baru di media digital untuk kehidupan yang lebih baik" },
     { name: "Embedded AI", description: "Embedded artificial intelligence (AI) is the application of machine and deep learning in software at the device level. Software can be programmed to provide both predictive and reactive intelligence, based on the data that is collected and analyzed." },
+    { name: "Health Informatics", description: "Health Informatics research group aims at developing methods and technologies for the acquisition, processing, and study of patient data, which can come from hospital information system or user personalized data from wearable devices / application."}
 ]
 
 const departements = [
@@ -30,6 +31,7 @@ const departements = [
     { name: "Program Studi Teknik Informatika dan Komputer", description: "Program studi yang berfokus pada informatika dan ilmu komputer." },
     { name: "Program Studi Teknik Mekanika dan Energi", description: "Program studi yang mempelajari mekanika dan sistem energi." },
     { name: "Program Studi Teknologi Multimedia Kreatif", description: "Program studi yang berfokus pada multimedia dan industri kreatif." },
+    { name: "Program Studi Informatika Kesehatan", description: "Program studi yang berfokus pada sistem informasi teknologi pada kesehatan"}
 ];
 
 
@@ -107,39 +109,6 @@ const external_document_categories = [
     { name: "Video Dokumentasi", schema_id: 5, description: "Rekaman kegiatan, wawancara mitra, dan hasil program yang diunggah ke media sosial/website." }
 ]
 
-const evaluations = [
-    {
-        schema_id: 1,
-        evaluation_phase: "evaluasi_proposal" as evaluation_phase,
-        name: "Evaluasi Proposal Skema 1"
-    },
-    {
-        schema_id: 1,
-        evaluation_phase: "evaluasi_monev" as evaluation_phase,
-        name: "Evaluasi Monev Skema 1"
-    },
-    {
-        schema_id: 1,
-        evaluation_phase: "evaluasi_akhir" as evaluation_phase,
-        name: "Evaluasi Akhir Skema 1"
-    },
-    {
-        schema_id: 2,
-        evaluation_phase: "evaluasi_proposal" as evaluation_phase,
-        name: "Evaluasi Proposal Skema 2"
-    },
-    {
-        schema_id: 2,
-        evaluation_phase: "evaluasi_monev" as evaluation_phase,
-        name: "Evaluasi Monev Skema 2"
-    },
-    {
-        schema_id: 2,
-        evaluation_phase: "evaluasi_akhir" as evaluation_phase,
-        name: "Evaluasi Akhir Skema 2"
-    },
-]
-
 const main = async () => {
     try {
         console.log("deleting all data and reset iteration...")
@@ -155,7 +124,6 @@ const main = async () => {
                 "positions", 
                 "position_schemas", 
                 "proposal_suggestions",
-                "evaluations",
                 "configurations"
             RESTART IDENTITY CASCADE;
         `);
@@ -268,12 +236,6 @@ const main = async () => {
             })
         );
         console.log("Inserting proposal suggestion and proposals for pengmas...");
-
-        // insert evaluations
-        await prisma.evaluation.createMany({
-            data: evaluations
-        })
-        console.log("Inserting evaluations...");
 
         // insert external document category
         await prisma.external_document_category.createMany({

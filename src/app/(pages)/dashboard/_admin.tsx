@@ -3,19 +3,65 @@
 import React from "react";
 import { Card, SimpleGrid, Skeleton, Text } from "@mantine/core";
 import { MRT_ColumnDef } from "mantine-react-table";
-import { proposal_suggestion } from "prisma/interfaces";
+import {
+  proposal_suggestion,
+  proposal_suggestion_phase,
+  proposal_suggestion_status,
+} from "prisma/interfaces";
 import { useCallback, useEffect, useState } from "react";
-import { showNotification } from "@mantine/notifications";
+import useNotification from "src/components/notification/notification";
+import ProposalSuggestionPhaseBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionPhaseBadge";
+import ProposalSuggestionStatusBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionStatusBadge";
 import proposalSuggestionAction from "src/action/proposalSuggestionAction";
 import TableLayout from "src/components/table/tableLayout";
 
-const DashboardAdmin: React.FC<{ columns: MRT_ColumnDef<proposal_suggestion>[] }> = ({ columns }) => {
+function DashboardAdmin() {
   const user_type = "admin";
 
   const [usulan, setUsulan] = useState<proposal_suggestion[]>([]);
+  const { showNotification } = useNotification();
   const [usulanPenelitianCount, setUsulanPenelitianCount] = useState(0);
   const [usulanPengabdianCount, setUsulanPengabdianCount] = useState(0);
   const [loading, setLoading] = useState(true);
+
+  const columns = React.useMemo<MRT_ColumnDef<proposal_suggestion>[]>(
+      () => [
+        {
+          accessorKey: "name",
+          header: "Judul Penelitian",
+          size: 250,
+        },
+        {
+          accessorFn: (row) => row.schema?.name,
+          header: "Skema",
+          size: 100,
+        },
+        {
+          accessorKey: "lecturer.name",
+          header: "Pengusul",
+          size: 150,
+        },
+        {
+          accessorKey: "phase",
+          header: "Tahap Usulan",
+          Cell: ({ cell }) => (
+            <ProposalSuggestionPhaseBadge
+              phase={cell.getValue<proposal_suggestion_phase>()}
+            />
+          ),
+        },
+        {
+          accessorKey: "status",
+          header: "Status Usulan",
+          Cell: ({ cell }) => (
+            <ProposalSuggestionStatusBadge
+              status={cell.getValue<proposal_suggestion_status>()}
+            />
+          ),
+        },
+      ],
+      []
+    );
 
   const getProposalSuggestion = useCallback(async () => {
     const response = await proposalSuggestionAction.getDashboard(
@@ -26,9 +72,9 @@ const DashboardAdmin: React.FC<{ columns: MRT_ColumnDef<proposal_suggestion>[] }
     if (response.success) {
       showNotification({ status: "success", message: response.message });
       
-      setUsulan(response.data);
-      setUsulanPenelitianCount(response.data.filter((p: proposal_suggestion) => p.research_group_id !== null).length);
-      setUsulanPengabdianCount(response.data.filter((p: proposal_suggestion) => p.research_group_id === null).length);
+      setUsulan(response.data.list);
+      setUsulanPenelitianCount(response.data.count_penelitian);
+      setUsulanPengabdianCount(response.data.count_pengmas);
     } else {
       showNotification({ status: "error", message: response.message });
     }
@@ -51,18 +97,18 @@ const DashboardAdmin: React.FC<{ columns: MRT_ColumnDef<proposal_suggestion>[] }
           <Text size="xl" fw={700} ta="center">
             {usulanPenelitianCount}
           </Text>
-          <Text ta="center">Usulan Penelitian</Text>
+          <Text ta="center">Total Usulan Penelitian</Text>
         </Card>
         <Card shadow="sm" padding="lg">
           <Text size="xl" fw={700} ta="center">
             {usulanPengabdianCount}
           </Text>
-          <Text ta="center">Usulan Pengabdian</Text>
+          <Text ta="center">Total Usulan Pengabdian</Text>
         </Card>
       </SimpleGrid>
       <Card shadow="sm" padding="lg">
         <Text size="lg" fw={500} mb="md">
-          Usulan Terbaru
+          Usulan yang Perlu Ditindaklanjuti
         </Text>
         <TableLayout
           columns={columns}

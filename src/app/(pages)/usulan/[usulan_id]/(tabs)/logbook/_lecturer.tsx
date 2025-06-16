@@ -6,10 +6,11 @@ import { useParams } from "next/navigation";
 import useNotification from "src/components/notification/notification";
 import { logbook } from "prisma/interfaces";
 import logbookAction from "src/action/logbookAction";
-import { Skeleton, Stack } from "@mantine/core";
+import { Button, Skeleton, Stack } from "@mantine/core";
 import LogbookCard from "src/components/card/proposal_suggestion/LogbookCard";
 import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
 import { SessionPayload } from "src/lib/encrypt";
+import { IconEye } from "@tabler/icons-react";
 
 const LogBookLecturer = ({ session }: { session: SessionPayload }) => {
   const user_type = "lecturer";
@@ -21,6 +22,7 @@ const LogBookLecturer = ({ session }: { session: SessionPayload }) => {
     useState<proposal_suggestion | null>(null);
   const [logbooks, setLogbooks] = useState<logbook[]>([]);
   const [editable, setEditable] = useState<boolean>(false);
+  const [templateLogbook, setTemplateLogbook] = useState<string | null>(null);
 
   const getLogbooks = useCallback(async () => {
     const response = await logbookAction.getLogbooks(
@@ -33,6 +35,7 @@ const LogBookLecturer = ({ session }: { session: SessionPayload }) => {
       showNotification({ status: "success", message: response.message });
       setProposalSuggestion(response.data);
       setLogbooks(response.data.logbook);
+      setTemplateLogbook(response.data.template_logbook);
 
       //check editable
       const isEditableByLecturer =
@@ -49,6 +52,32 @@ const LogBookLecturer = ({ session }: { session: SessionPayload }) => {
   useEffect(() => {
     getLogbooks();
   }, [getLogbooks]);
+
+  const handleView = (url: string | null) => {
+    if (url) {
+      const pdfUrl = `/api/file?name=${url}`;
+
+      // Membuka tab baru dengan PDF viewer
+      const viewerWindow = window.open("", "_blank");
+
+      if (viewerWindow) {
+        viewerWindow.document.write(`
+        <html>
+          <head>
+            <title>PDF Viewer</title>
+            <style>
+              body { margin: 0; }
+              iframe { width: 100%; height: 100vh; border: none; }
+            </style>
+          </head>
+          <body>
+            <iframe src="${pdfUrl}#toolbar=0"></iframe>
+          </body>
+        </html>
+      `);
+      }
+    }
+  };
 
   return (
     <>
@@ -74,6 +103,21 @@ const LogBookLecturer = ({ session }: { session: SessionPayload }) => {
               ))}
             </Stack>
           </Skeleton>
+        </div>
+
+        {/* Template Logbook Section */}
+        <div className="mt-4">
+          {templateLogbook && (
+            <Button
+              variant="outline"
+              onClick={() => {
+                handleView(templateLogbook);
+              }}
+              leftSection={<IconEye size={18} />}
+            >
+              Lihat Template Logbook
+            </Button>
+          )}
         </div>
       </div>
     </>

@@ -111,8 +111,7 @@ const ProposalKetuaRG = () => {
           </div>
 
           {/* Kolom Tombol + Hasil Reviewer */}
-          <div className="flex flex-col gap-4">
-            
+          <div className="flex flex-col gap-4">            
                         {/* Hasil Reviewer */}
                         <Skeleton visible={loading}>
                           <div className="grid grid-cols-1 gap-4">

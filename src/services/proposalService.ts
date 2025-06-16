@@ -25,7 +25,7 @@ const getById = async (id: number) => {
 
 // get by proposal_suggestion_id
 const getByProposalSuggestionId = async (proposalSuggestionId: number) => {
-    return await prisma.proposal_suggestion.findUnique({
+    const proposalSuggestion = await prisma.proposal_suggestion.findUnique({
         relationLoadStrategy: 'join',
         where: { id: proposalSuggestionId },
         include: {
@@ -45,6 +45,13 @@ const getByProposalSuggestionId = async (proposalSuggestionId: number) => {
             }
         }
     });
+
+    const configuration = await prisma.configuration.findFirst();
+    
+    return {
+        ...proposalSuggestion,
+        template_proposal: configuration?.template_proposal
+    }
 };
 
 const update = async (proposal_suggestion_id: number, data: Proposal) => {

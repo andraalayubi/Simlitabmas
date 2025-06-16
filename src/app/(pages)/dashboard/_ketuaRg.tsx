@@ -3,20 +3,62 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Card, SimpleGrid, Text } from "@mantine/core";
 import { MRT_ColumnDef } from "mantine-react-table";
-import { proposal_suggestion } from "prisma/interfaces";
-import { showNotification } from "@mantine/notifications";
+import {
+  proposal_suggestion,
+  proposal_suggestion_phase,
+  proposal_suggestion_status,
+} from "prisma/interfaces";
 import proposalSuggestionAction from "src/action/proposalSuggestionAction";
 import TableLayout from "src/components/table/tableLayout";
+import useNotification from "src/components/notification/notification";
+import ProposalSuggestionPhaseBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionPhaseBadge";
+import ProposalSuggestionStatusBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionStatusBadge";
 
-const DashboardKetuaRG: React.FC<{
-  columns: MRT_ColumnDef<proposal_suggestion>[];
-}> = ({ columns }) => {
+function DashboardKetuaRG() {
   const user_type = "ketua_rg";
-
+  const { showNotification } = useNotification();
   const [usulan, setUsulan] = useState<proposal_suggestion[]>([]);
-  const [usulanPenelitianCount, setUsulanPenelitianCount] = useState(0);
-  const [usulanPengabdianCount, setUsulanPengabdianCount] = useState(0);
+  const [usulanRgCount, setUsulanRgCount] = useState(0);
   const [loading, setLoading] = useState(true);
+
+  const columns = React.useMemo<MRT_ColumnDef<proposal_suggestion>[]>(
+    () => [
+      {
+        accessorKey: "name",
+        header: "Judul Penelitian",
+        size: 250,
+      },
+      {
+        accessorFn: (row) => row.schema?.name,
+        header: "Skema",
+        size: 100,
+      },
+      {
+        accessorKey: "lecturer.name",
+        header: "Pengusul",
+        size: 150,
+      },
+      {
+        accessorKey: "phase",
+        header: "Tahap Usulan",
+        Cell: ({ cell }) => (
+          <ProposalSuggestionPhaseBadge
+            phase={cell.getValue<proposal_suggestion_phase>()}
+          />
+        ),
+      },
+      {
+        accessorKey: "status",
+        header: "Status Usulan",
+        Cell: ({ cell }) => (
+          <ProposalSuggestionStatusBadge
+            status={cell.getValue<proposal_suggestion_status>()}
+          />
+        ),
+      },
+    ],
+    []
+  );
 
   const getProposalSuggestion = useCallback(async () => {
     const response = await proposalSuggestionAction.getDashboard(
@@ -26,18 +68,9 @@ const DashboardKetuaRG: React.FC<{
 
     if (response.success) {
       showNotification({ status: "success", message: response.message });
-      
-      setUsulan(response.data);
-      setUsulanPenelitianCount(
-        response.data.filter(
-          (p: proposal_suggestion) => p.research_group_id !== null
-        ).length
-      );
-      setUsulanPengabdianCount(
-        response.data.filter(
-          (p: proposal_suggestion) => p.research_group_id === null
-        ).length
-      );
+
+      setUsulan(response.data.list);
+      setUsulanRgCount(response.data.count_in_research_group);
     } else {
       showNotification({ status: "error", message: response.message });
     }
@@ -58,20 +91,14 @@ const DashboardKetuaRG: React.FC<{
         </Card>
         <Card shadow="sm" padding="lg">
           <Text size="xl" fw={700} ta="center">
-            {usulanPenelitianCount}
+            {usulanRgCount}
           </Text>
-          <Text ta="center">Usulan Penelitian</Text>
+          <Text ta="center">Usulan di Research Group</Text>
         </Card>
-        {/* <Card shadow="sm" padding="lg">
-          <Text size="xl" fw={700} ta="center">
-            1
-          </Text>
-          <Text ta="center">Total Semua Usulan</Text>
-        </Card> */}
       </SimpleGrid>
       <Card shadow="sm" padding="lg">
         <Text size="lg" fw={500} mb="md">
-          Usulan Terbaru
+          Usulan yang Perlu Ditindaklanjuti
         </Text>
         <TableLayout
           columns={columns}
@@ -83,6 +110,6 @@ const DashboardKetuaRG: React.FC<{
       </Card>
     </div>
   );
-};
+}
 
 export default DashboardKetuaRG;
