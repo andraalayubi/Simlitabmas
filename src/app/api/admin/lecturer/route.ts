@@ -68,7 +68,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
             const kaprodi = await lecturerService.getByFilter(
                 { is_kaprodi: true, department_id: payload.department_id }, null)
 
-            if (kaprodi == null) {
+            if (kaprodi.length != 0) {
                 return NextResponse.json({
                     success: true,
                     message: "Another lecturer has become this department leader",
@@ -81,7 +81,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
             const ketua_rg = await lecturerService.getByFilter({
                 is_ketua_rg: true, research_group_id: payload.research_group_id
             }, null)
-            if (ketua_rg != null) {
+
+            if (ketua_rg.length != 0) {
                 return NextResponse.json({
                     success: true,
                     message: "Another lecturer has become this research group leader",
