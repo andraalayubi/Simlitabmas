@@ -46,6 +46,15 @@ enum proposal_suggestion_status {
   selesai
 }
 
+enum evaluation_status {
+  menunggu_admin
+  menunggu_review
+  ditolak
+  diterima
+  selesai
+  selesai_dengan_revisi
+}
+
 enum degree {
   S1
   S2
@@ -524,7 +533,7 @@ model evaluation {
   proposal_suggestion_id    Int?
   evaluation_phase          evaluation_phase?
   category                  String?
-  status                    proposal_suggestion_status?
+  status                    evaluation_status?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -543,7 +552,7 @@ model review {
   reviewer_id            Int
   note                   String?
   average_score          Float?
-  status                 proposal_suggestion_status?
+  status                 evaluation_status?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

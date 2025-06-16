@@ -33,42 +33,26 @@ const getById = async (id: number) => {
     });
 };
 
-type GetEvaluationsParams = {
-  phase: string;
-  type: string;
-  lecturerId?: number; // tetap opsional
-};
-
-async function getEvaluations({ phase, type, lecturerId }: GetEvaluationsParams) {
-  const where: any = {
-    evaluation_phase: phase as evaluation_phase,
-    category: type,
-  };
-
-  if (lecturerId !== undefined) {
-    where.review = {
-      some: {
-        reviewer: {
-          is: {
-            lecturerId,
-          },
-        },
-      },
-    };
-  }
+const getEvaluations = async(  filter: {
+    evaluation_phase?: string;
+    type?: string;
+  }) => {
 
   return await prisma.evaluation.findMany({
-    where,
+            where: {
+            category: filter.type,
+            evaluation_phase: filter.evaluation_phase as evaluation_phase
+        },
     include: {
       proposal_suggestion: {
         include: {
           lecturer: true,
           schema: true,
           year_research: true,
-          proposal: true,
+          // proposal: true,
         },
       },
-      review: true
+      // review: true
     },
   });
 }

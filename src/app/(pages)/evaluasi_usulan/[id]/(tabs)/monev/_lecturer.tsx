@@ -203,16 +203,12 @@ const MonevLecturer = ({ session }: { session: SessionPayload }) => {
       Number(review_id),
       {
         note: newNote,
-        status: selectedStatus,
+        status: "selesai",
         average_score: Number(averageScore.toFixed(2)),
       }
     );
     if (response.success) {
-      const statusMayoritas = await checkingReviews();
-      console.log("statussss" + statusMayoritas)
-      if (statusMayoritas) {
-        updateStatus(statusMayoritas);
-      }
+      updateStatus();
       fetchData();
       showNotification({ status: "success", message: response.message });
     } else {
@@ -220,46 +216,7 @@ const MonevLecturer = ({ session }: { session: SessionPayload }) => {
     }
   };
 
-  const checkingReviews = async (): Promise<"diterima" | "ditolak" | null> => {
-   if (!review?.evaluation_id) return null;
-
-  // Ambil semua review berdasarkan evaluation_id
-  const response = await reviewAction.getReviews("lecturer", setLoading, {
-    evaluation_id: review.evaluation_id,
-  });
-
-    if (!response.success) return null;
-
-    const allReviews = response.data;
-
-    // Jika jumlah reviewer belum mencapai 3, tidak lanjut
-    if (allReviews.length < 3) return null;
-
-    // Cek apakah semua sudah memberi skor
-    const isAllReviewed = allReviews.every(
-      (r: review) => r.average_score !== null
-    );
-
-    if (!isAllReviewed) return null;
-
-    // Hitung mayoritas
-    const count = {
-      diterima: 0,
-      ditolak: 0,
-    };
-
-    for (const r of allReviews) {
-      if (r.status === "diterima") count.diterima++;
-      else if (r.status === "ditolak") count.ditolak++;
-    }
-
-    if (count.diterima > count.ditolak) return "diterima";
-    if (count.ditolak > count.diterima) return "ditolak";
-
-    return null; // Tidak ada mayoritas
-  };
-
-  const updateStatus = async (statusMayoritas: "diterima" | "ditolak") => {
+  const updateStatus = async () => {
     const proposal_suggestion_id = Number(
       review?.evaluation?.proposal_suggestion?.id
     );
@@ -269,26 +226,16 @@ const MonevLecturer = ({ session }: { session: SessionPayload }) => {
       user_type,
       setLoading,
       Number(review?.evaluation_id),
-      { status: statusMayoritas }
+      { status: "selesai" }
     );
 
-    // Jika diterima, lanjut ke fase penetapan
-    if (statusMayoritas === "diterima") {
-      await proposalSuggestionAction.updateStatusPhase(
+    //lanjut ke fase penetapan
+    await proposalSuggestionAction.updateStatusPhase(
         user_type,
         "monev",
         "diterima",
         proposal_suggestion_id
       );
-    } else {
-      // Jika mayoritas ditolak, status langsung jadi ditolak dan phase tetap
-      await proposalSuggestionAction.updateStatusPhase(
-        user_type,
-        "monev", // phase tidak diubah
-        "ditolak",
-        proposal_suggestion_id
-      );
-    }
   };
 
   useEffect(() => {
@@ -427,22 +374,6 @@ const MonevLecturer = ({ session }: { session: SessionPayload }) => {
                         />
                       </Card>
 
-                      <Card shadow="sm" padding="lg">
-                        <div className="items-center mt-2 flex justify-between">
-                          <Text size="lg" fw={600}>
-                            Status :
-                          </Text>{" "}
-                          <Select
-                            placeholder="Pilih Status"
-                            data={[
-                              { value: "ditolak", label: "Tolak" },
-                              { value: "diterima", label: "Terima" },
-                            ]}
-                            value={selectedStatus}
-                            onChange={setSelectedStatus}
-                          />
-                        </div>
-                      </Card>
                       <div className="flex justify-end mt-4">
                         <Button
                           variant="outline"
