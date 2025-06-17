@@ -25,7 +25,7 @@ const TabMenus = [
     tabName: "Dokumen Tambahan",
   },
   { value: "laporan_akhir", path: "laporan_akhir", tabName: "Laporan Akhir" },
-  { value: "evaluasi", path: "evaluasi", tabName: "Evaluasi" },
+  // { value: "evaluasi", path: "evaluasi", tabName: "Evaluasi" },
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
