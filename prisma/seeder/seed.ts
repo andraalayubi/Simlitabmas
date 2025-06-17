@@ -1,7 +1,6 @@
-import { degree, PrismaClient } from '@prisma/client'
+import { degree, evaluation_phase, PrismaClient } from '@prisma/client'
 
 import bcrypt from "bcrypt";
-import { evaluation_phase } from 'prisma/interfaces';
 import proposalSuggestionsPenelitian from './penelitian_seed';
 import proposalSuggestionsPengmas from './pengmas_seed';
 import lecturers from './lecturer_seed';
@@ -109,6 +108,38 @@ const external_document_categories = [
     { name: "Video Dokumentasi", schema_id: 5, description: "Rekaman kegiatan, wawancara mitra, dan hasil program yang diunggah ke media sosial/website." }
 ]
 
+const criteria = [
+    { name: "Relevansi", category: "penelitian", phase: evaluation_phase.evaluasi_proposal},
+    { name: "Kualitas", category: "penelitian", phase: evaluation_phase.evaluasi_proposal},
+    { name: "Inovasi", category: "penelitian", phase: evaluation_phase.evaluasi_proposal},
+    { name: "Feasibilitas", category: "penelitian", phase: evaluation_phase.evaluasi_proposal},
+    { name: "Luaran yang Dijanjikan", category: "penelitian", phase: evaluation_phase.evaluasi_proposal},
+    { name: "Progress Pencapaian", category: "penelitian", phase: evaluation_phase.evaluasi_monev},
+    { name: "Efektivitas Metode", category: "penelitian", phase: evaluation_phase.evaluasi_monev},
+    { name: "Pemanfaatan Anggaran", category: "penelitian", phase: evaluation_phase.evaluasi_monev},
+    { name: "Dokumentasi dan Laporan", category: "penelitian", phase: evaluation_phase.evaluasi_monev},
+    { name: "Tantangan dan Solusi", category: "penelitian", phase: evaluation_phase.evaluasi_monev},
+    { name: "Kualitas Hasil", category: "penelitian", phase: evaluation_phase.evaluasi_akhir},
+    { name: "Dampak Nyata", category: "penelitian", phase: evaluation_phase.evaluasi_akhir},
+    { name: "Keberlanjutan", category: "penelitian", phase: evaluation_phase.evaluasi_akhir},
+    { name: "Publikasi dan Disemasi", category: "penelitian", phase: evaluation_phase.evaluasi_akhir},
+    { name: "Evaluasi Keseluruhan", category: "penelitian", phase: evaluation_phase.evaluasi_akhir},
+    { name: "Relevansi", category: "pengmas", phase: evaluation_phase.evaluasi_proposal},
+    { name: "Kualitas Program", category: "pengmas", phase: evaluation_phase.evaluasi_proposal},
+    { name: "Inovasi", category: "pengmas", phase: evaluation_phase.evaluasi_proposal},
+    { name: "Keberlanjutan", category: "pengmas", phase: evaluation_phase.evaluasi_proposal},
+    { name: "Implementasi Program", category: "pengmas", phase: evaluation_phase.evaluasi_monev},
+    { name: "Respon Masyarakat", category: "pengmas", phase: evaluation_phase.evaluasi_monev},
+    { name: "Efektivitas Metode", category: "pengmas", phase: evaluation_phase.evaluasi_monev},
+    { name: "Pemanfaatan Sumber Daya", category: "pengmas", phase: evaluation_phase.evaluasi_monev},
+    { name: "Dokumentasi dan Laporan", category: "pengmas", phase: evaluation_phase.evaluasi_monev},
+    { name: "Dampak Nyata", category: "pengmas", phase: evaluation_phase.evaluasi_akhir},
+    { name: "Keberlanjutan Program", category: "pengmas", phase: evaluation_phase.evaluasi_akhir},
+    { name: "Kepuasan Masyarakat", category: "pengmas", phase: evaluation_phase.evaluasi_akhir},
+    { name: "Disemasi dan Publikasi", category: "pengmas", phase: evaluation_phase.evaluasi_akhir},
+    { name: "Evaluasi Keseluruhan", category: "pengmas", phase: evaluation_phase.evaluasi_akhir},
+]
+
 const main = async () => {
     try {
         console.log("deleting all data and reset iteration...")
@@ -124,7 +155,8 @@ const main = async () => {
                 "positions", 
                 "position_schemas", 
                 "proposal_suggestions",
-                "configurations"
+                "configurations",
+                "criteria"
             RESTART IDENTITY CASCADE;
         `);
 
@@ -242,6 +274,13 @@ const main = async () => {
             data: external_document_categories
         })
         console.log("Inserting external category...");
+
+        // insert criterion
+        await prisma.criterion.createMany({
+            data: criteria,
+            skipDuplicates: true,
+        })
+        console.log("Inserting criterion...");
 
         console.log("Seeding selesai.");
     } catch (error) {
