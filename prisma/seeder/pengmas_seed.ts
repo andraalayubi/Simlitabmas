@@ -160,7 +160,7 @@ let proposalSuggestionsPengmas = [
         lecturer_member: {
             create: [
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -232,7 +232,7 @@ let proposalSuggestionsPengmas = [
         lecturer_member: {
             create: [
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -304,7 +304,7 @@ let proposalSuggestionsPengmas = [
         lecturer_member: {
             create: [
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -556,7 +556,7 @@ let proposalSuggestionsPengmas = [
         lecturer_member: {
             create: [
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -592,7 +592,7 @@ let proposalSuggestionsPengmas = [
         lecturer_member: {
             create: [
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -628,7 +628,7 @@ let proposalSuggestionsPengmas = [
         lecturer_member: {
             create: [
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -664,7 +664,7 @@ let proposalSuggestionsPengmas = [
         lecturer_member: {
             create: [
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -700,7 +700,7 @@ let proposalSuggestionsPengmas = [
         lecturer_member: {
             create: [
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -1060,7 +1060,7 @@ let proposalSuggestionsPengmas = [
         lecturer_member: {
             create: [
                 {
-                    lecturer_id: 14,
+                    lecturer_id: 2,
                     name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
                     research_group_id: null,
                     department_id: 2,
@@ -1095,6 +1095,13 @@ let proposalSuggestionsPengmas = [
         final_report: base_final_report,
         lecturer_member: {
             create: [
+                {
+                    lecturer_id: 2,
+                    name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+                    research_group_id: null,
+                    department_id: 2,
+                    nip: "33445567",
+                },
                 {
                     lecturer_id: 24,
                     name: "Cahyo Pratama",
