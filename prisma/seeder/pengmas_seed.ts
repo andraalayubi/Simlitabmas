@@ -36,7 +36,7 @@ let proposalSuggestionsPengmas = [
     {
         name: "Pelatihan Digital Marketing bagi UMKM Lokal di Era Industri 4.0",
         year_research_id: 1,
-        schema_id: 1,
+        schema_id: 4,
         lecturer_id: 16,
         department_id: 4,
         status: "menunggu_proposal" as proposal_suggestion_status,
@@ -72,7 +72,7 @@ let proposalSuggestionsPengmas = [
     {
         name: "Edukasi dan Implementasi Teknologi Hidroponik bagi Petani Perkotaan",
         year_research_id: 2, // 2024
-        schema_id: 2,
+        schema_id: 4,
         lecturer_id: 15,
         department_id: 3,
         status: "tersimpan" as proposal_suggestion_status,
@@ -108,7 +108,7 @@ let proposalSuggestionsPengmas = [
     {
         name: "Pemberdayaan Ibu Rumah Tangga melalui Program Wirausaha Kuliner Sehat",
         year_research_id: 2, // 2025
-        schema_id: 1,
+        schema_id: 4,
         lecturer_id: 15,
         department_id: 3,
         status: "menunggu_kaprodi" as proposal_suggestion_status,
@@ -143,7 +143,7 @@ let proposalSuggestionsPengmas = [
     // 4
     {
         year_research_id: 1,
-        schema_id: 2,
+        schema_id: 4,
         name: "Penggunaan Internet Aman dan Bijak untuk Pelajar di Sekolah Dasar",
         lecturer_id: 2,
         department_id: 2,
@@ -180,7 +180,7 @@ let proposalSuggestionsPengmas = [
     {
         name: "Workshop Fotografi dan Editing Konten Visual bagi Pelaku Usaha Kuliner",
         year_research_id: 2,
-        schema_id: 2,
+        schema_id: 4,
         lecturer_id: 16,
         department_id: 4,
         status: "diterima" as proposal_suggestion_status,
@@ -216,7 +216,7 @@ let proposalSuggestionsPengmas = [
     {
         name: "Pembuatan Aplikasi Mobile untuk Monitoring Kesehatan Lansia di Puskesmas",
         year_research_id: 2,
-        schema_id: 1,
+        schema_id: 4,
         lecturer_id: 2,
         department_id: 2,
         status: "menunggu_admin" as proposal_suggestion_status,
@@ -252,7 +252,7 @@ let proposalSuggestionsPengmas = [
     {
         name: "Pelatihan Desain Grafis bagi Anak Muda sebagai Bekal Karier Kreatif",
         year_research_id: 2,
-        schema_id: 2,
+        schema_id: 4,
         lecturer_id: 16,
         department_id: 4,
         status: "menunggu_review" as proposal_suggestion_status,
@@ -288,7 +288,7 @@ let proposalSuggestionsPengmas = [
     {
         name: "Pengenalan dan Pemanfaatan AI untuk Peningkatan Efisiensi Administrasi Desa",
         year_research_id: 2,
-        schema_id: 1,
+        schema_id: 4,
         lecturer_id: 2,
         department_id: 2,
         status: "ditolak" as proposal_suggestion_status,
@@ -324,7 +324,7 @@ let proposalSuggestionsPengmas = [
     {
         name: "Workshop Pengelolaan Sampah Organik menjadi Pupuk Kompos bagi Masyarakat Desa",
         year_research_id: 2,
-        schema_id: 2,
+        schema_id: 4,
         lecturer_id: 15,
         department_id: 3,
         status: "diterima" as proposal_suggestion_status,
@@ -360,7 +360,7 @@ let proposalSuggestionsPengmas = [
     {
         name: "Pemberdayaan Remaja Melalui Pelatihan Public Speaking dan Leadership",
         year_research_id: 2,
-        schema_id: 1,
+        schema_id: 4,
         lecturer_id: 13,
         department_id: 1,
         status: "menunggu_admin" as proposal_suggestion_status,
@@ -396,7 +396,7 @@ let proposalSuggestionsPengmas = [
     {
         name: "Instalasi Panel Surya Off-Grid untuk Desa Terpencil Berbasis Teknologi IoT",
         year_research_id: 2,
-        schema_id: 1,
+        schema_id: 4,
         lecturer_id: 13,
         department_id: 1,
         status: "menunggu_revisi" as proposal_suggestion_status,
@@ -432,7 +432,7 @@ let proposalSuggestionsPengmas = [
     {
         name: "Pelatihan Perbaikan Alat Elektronik Rumah Tangga bagi Pemuda Desa",
         year_research_id: 2,
-        schema_id: 1,
+        schema_id: 4,
         lecturer_id: 13,
         department_id: 1,
         status: "tersimpan" as proposal_suggestion_status,
@@ -468,7 +468,7 @@ let proposalSuggestionsPengmas = [
     {
         name: "Sistem Penerangan Jalan Umum Tenaga Hybrid (Angin-Surya) untuk Kawasan Pedesaan",
         year_research_id: 2,
-        schema_id: 1,
+        schema_id: 4,
         lecturer_id: 13,
         department_id: 1,
         status: "menunggu_laporan" as proposal_suggestion_status,
@@ -504,7 +504,7 @@ let proposalSuggestionsPengmas = [
     {
         name: "Workshop Pembuatan Charger Portabel Berbahan Dasar Limbah Baterai",
         year_research_id: 2,
-        schema_id: 1,
+        schema_id: 4,
         lecturer_id: 13,
         department_id: 1,
         status: "tersimpan" as proposal_suggestion_status,
@@ -539,7 +539,7 @@ let proposalSuggestionsPengmas = [
     // 15
     {
         year_research_id: 2,
-        schema_id: 2,
+        schema_id: 4,
         name: "Pelatihan Pembuatan Aplikasi Pencatatan Keuangan UMKM Berbasis Android",
         lecturer_id: 2,
         department_id: 2,
@@ -575,7 +575,7 @@ let proposalSuggestionsPengmas = [
     // 16
     {
         year_research_id: 2,
-        schema_id: 2,
+        schema_id: 4,
         name: "Sosialisasi Keamanan Data Pribadi dan Enkripsi untuk Komunitas Digital",
         lecturer_id: 2,
         department_id: 2,
@@ -611,7 +611,7 @@ let proposalSuggestionsPengmas = [
     // 17
     {
         year_research_id: 2,
-        schema_id: 2,
+        schema_id: 4,
         name: "Pengembangan Sistem Monitoring Tanaman Hidroponik Berbasis Raspberry Pi",
         lecturer_id: 2,
         department_id: 2,
@@ -647,7 +647,7 @@ let proposalSuggestionsPengmas = [
     // 18
     {
         year_research_id: 2,
-        schema_id: 2,
+        schema_id: 4,
         name: "Workshop Chatbot untuk Layanan Pelanggan Usaha Kecil",
         lecturer_id: 2,
         department_id: 2,
@@ -683,7 +683,7 @@ let proposalSuggestionsPengmas = [
     // 19
     {
         year_research_id: 2,
-        schema_id: 2,
+        schema_id: 4,
         name: "Pelatihan Pemrograman Dasar Python bagi Siswa SMA/SMK",
         lecturer_id: 2,
         department_id: 2,
@@ -720,7 +720,7 @@ let proposalSuggestionsPengmas = [
     {
         name: "Konversi Mesin Diesel ke Biodiesel untuk Kapal Nelayan Tradisional",
         year_research_id: 2, 
-        schema_id: 1,
+        schema_id: 4,
         lecturer_id: 15,
         department_id: 3,
         status: "tersimpan" as proposal_suggestion_status,
@@ -756,7 +756,7 @@ let proposalSuggestionsPengmas = [
     {
         name: "Pelatihan Perawatan Mesin Pertanian Berkelanjutan di Daerah Agraris",
         year_research_id: 2, 
-        schema_id: 1,
+        schema_id: 4,
         lecturer_id: 15,
         department_id: 3,
         status: "menunggu_admin" as proposal_suggestion_status,
@@ -792,7 +792,7 @@ let proposalSuggestionsPengmas = [
     {
         name: "Pemasangan Biogas dari Limbah Ternak untuk Rumah Tangga Pedesaan",
         year_research_id: 2, 
-        schema_id: 1,
+        schema_id: 4,
         lecturer_id: 15,
         department_id: 3,
         status: "menunggu_review" as proposal_suggestion_status,
@@ -828,7 +828,7 @@ let proposalSuggestionsPengmas = [
     {
         name: "Workshop Energi Mikrohidro untuk Pembangkit Listrik Komunitas Pegunungan",
         year_research_id: 2, 
-        schema_id: 1,
+        schema_id: 4,
         lecturer_id: 15,
         department_id: 3,
         status: "ditolak" as proposal_suggestion_status,
@@ -864,7 +864,7 @@ let proposalSuggestionsPengmas = [
     {
         name: "Pelatihan Animasi 2D untuk Promosi Budaya Lokal melalui Media Sosial",
         year_research_id: 2,
-        schema_id: 2,
+        schema_id: 4,
         lecturer_id: 16,
         department_id: 4,
         status: "diterima" as proposal_suggestion_status,
@@ -900,7 +900,7 @@ let proposalSuggestionsPengmas = [
     {
         name: "Pengembangan Konten Edukasi Interaktif tentang Sejarah Lokal Berbasis Augmented Reality",
         year_research_id: 2,
-        schema_id: 2,
+        schema_id: 4,
         lecturer_id: 16,
         department_id: 4,
         status: "menunggu_admin" as proposal_suggestion_status,
@@ -936,7 +936,7 @@ let proposalSuggestionsPengmas = [
     {
         name: "Sosialisasi Desain Kemasan Produk UMKM dengan Tools Digital Kreatif",
         year_research_id: 2,
-        schema_id: 2,
+        schema_id: 4,
         lecturer_id: 16,
         department_id: 4,
         status: "selesai" as proposal_suggestion_status,
@@ -964,6 +964,150 @@ let proposalSuggestionsPengmas = [
                     research_group_id: null,
                     department_id: 3,
                     nip: "33445568",
+                }
+            ],
+        },
+    },
+    // 27
+    {
+        name: "Pengembangan Konten Edukasi Interaktif tentang Sejarah Lokal Berbasis Augmented Reality",
+        year_research_id: 3,
+        schema_id: 5,
+        lecturer_id: 24,
+        department_id: 4,
+        status: "menunggu_proposal" as proposal_suggestion_status,
+        phase: "pengajuan" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Pengembangan Konten Edukasi Interaktif tentang Sejarah Lokal Berbasis Augmented Reality"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 16,
+                    name: "Kholid Fathoni , S.Kom., MT.",
+                    research_group_id: null,
+                    department_id: 4,
+                    nip: "33445569",
+                },
+                {
+                    lecturer_id: 2,
+                    name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+                    research_group_id: null,
+                    department_id: 2,
+                    nip: "33445567",
+                }
+            ],
+        },
+    },
+    
+    {
+        name: "Pengembangan Aplikasi Pendidikan Interaktif untuk Meningkatkan Keterampilan Pemrograman",
+        year_research_id: 3,
+        schema_id: 5,
+        lecturer_id: 24,
+        department_id: 4,
+        status: "tersimpan" as proposal_suggestion_status,
+        phase: "pengajuan" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Pengembangan Aplikasi Pendidikan Interaktif untuk Meningkatkan Keterampilan Pemrograman"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 16,
+                    name: "Kholid Fathoni , S.Kom., MT.",
+                    research_group_id: null,
+                    department_id: 4,
+                    nip: "33445569",
+                },
+                {
+                    lecturer_id: 2,
+                    name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+                    research_group_id: null,
+                    department_id: 2,
+                    nip: "33445567",
+                }
+            ],
+        },
+    },
+
+    {
+        year_research_id: 3,
+        schema_id: 4,
+        name: "Penggunaan Internet Aman dan Bijak untuk Remaja",
+        lecturer_id: 2,
+        department_id: 2,
+        status: "diterima" as proposal_suggestion_status,
+        phase: "pengajuan" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Penggunaan Internet Aman dan Bijak untuk Remaja"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 2,
+                    name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+                    research_group_id: null,
+                    department_id: 2,
+                    nip: "33445567",
+                },
+                {
+                    lecturer_id: 16,
+                    name: "Kholid Fathoni , S.Kom., MT.",
+                    research_group_id: null,
+                    department_id: 4,
+                    nip: "33445569",
+                }
+            ],
+        },
+    },
+
+    {
+        year_research_id: 3,
+        schema_id: 4,
+        name: "Pengembangan Aplikasi Kerja Sama dengan Pemerintah",
+        lecturer_id: 2,
+        department_id: 2,
+        status: "menunggu_proposal" as proposal_suggestion_status,
+        phase: "pengajuan" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Pengembangan Aplikasi Kerja Sama dengan Pemerintah"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 2,
+                    name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+                    research_group_id: null,
+                    department_id: 2,
+                    nip: "33445567",
+                },
+                {
+                    lecturer_id: 24,
+                    name: "Cahyo Pratama",
+                    research_group_id: 9,
+                    department_id: 2,
+                    nip: "33445569",
                 }
             ],
         },

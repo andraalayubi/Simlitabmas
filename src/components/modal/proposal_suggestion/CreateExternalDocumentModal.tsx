@@ -114,7 +114,7 @@ const CreateExternalDocumentModal: React.FC<CreateExternalModalProps> = ({
               /> */}
           
           <Select
-                label="Pilih Category Luaran"
+                label="Pilih Kategori Luaran"
                 placeholder="pilih kategori luaran"
                 required
                 data={externalDocumentCategories}

@@ -828,8 +828,58 @@ const lecturers = [
                 },
             ]
         }
-    }
+    },
 
+    {
+        name: "Cahyo Pratama",
+        phone_number: "081953025113",
+        research_group_id: 9,
+        department_id: 4,
+        nidn: "199107222022032006",
+        nip: "19910720220306",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.Kom",
+                field: "Informatic",
+                university: "ITS",
+                year: "2014"
+            },
+            {
+                degree: "S2",
+                code: "M.Kom",
+                field: "Informatics",
+                university: "ITS",
+                year: "2019"
+            }
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: true,
+        highest_degree: "S2" as degree,
+        position_id: 3,
+        user: {
+            create: [
+                {
+                    name: "Cahyo Pratama",
+                    email: "dosenCahyo@pens.ac.id",
+                    user_type: "lecturer",
+                    password: "dosenCahyo123!"
+                },
+                {
+                    name: "Cahyo Pratama",
+                    email: "kaprodiCahyo@pens.ac.id",
+                    user_type: "kaprodi",
+                    password: "kaprodiCahyo123!"
+                },
+                {
+                    name: "Cahyo Pratama",
+                    email: "adminCahyo@pens.ac.id",
+                    user_type: "admin",
+                    password: "adminCahyo123!"
+                },
+            ]
+        }
+    }
 ]
 
 
