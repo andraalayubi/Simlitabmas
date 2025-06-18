@@ -879,6 +879,57 @@ const lecturers = [
                 },
             ]
         }
+    },
+
+    {
+        name: "Ahmad",
+        phone_number: "081953025113",
+        research_group_id: 15,
+        department_id: 4,
+        nidn: "199107221022032006",
+        nip: "19910721220306",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.Kom",
+                field: "Informatic",
+                university: "ITS",
+                year: "2014"
+            },
+            {
+                degree: "S2",
+                code: "M.Kom",
+                field: "Informatics",
+                university: "ITS",
+                year: "2019"
+            }
+        ],
+        is_ketua_rg: true,
+        is_kaprodi: false,
+        highest_degree: "S2" as degree,
+        position_id: 2,
+        user: {
+            create: [
+                {
+                    name: "Ahmad",
+                    email: "dosenAhmad@gmail.com",
+                    user_type: "lecturer",
+                    password: "Ahmad123!"
+                },
+                {
+                    name: "Ahmad",
+                    email: "ketuargAhmad@gmail.com",
+                    user_type: "ketua_rg",
+                    password: "Ahmad123!"
+                },
+                {
+                    name: "Ahmad",
+                    email: "adminAhmad@gmail.com",
+                    user_type: "admin",
+                    password: "Ahmad123!"
+                },
+            ]
+        }
     }
 ]
 

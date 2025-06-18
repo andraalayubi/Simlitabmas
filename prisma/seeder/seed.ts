@@ -22,7 +22,8 @@ const research_groups = [
     { name: "Data Science for SDGs Applied Solution", description: "Data Science for SDGs Applied Solutions" },
     { name: "Digital Media", description: "Mengeksplorasi alat dan teknologi baru di media digital untuk kehidupan yang lebih baik" },
     { name: "Embedded AI", description: "Embedded artificial intelligence (AI) is the application of machine and deep learning in software at the device level. Software can be programmed to provide both predictive and reactive intelligence, based on the data that is collected and analyzed." },
-    { name: "Health Informatics", description: "Health Informatics research group aims at developing methods and technologies for the acquisition, processing, and study of patient data, which can come from hospital information system or user personalized data from wearable devices / application."}
+    { name: "Health Informatics", description: "Health Informatics research group aims at developing methods and technologies for the acquisition, processing, and study of patient data, which can come from hospital information system or user personalized data from wearable devices / application."},
+    { name: "System and Automation", description: "This research group focuses information technologies and its automation"}
 ]
 
 const departements = [
