@@ -13,6 +13,8 @@ import {
   student_member,
   vendor_member,
   schema,
+  proposal_suggestion_phase,
+  proposal_suggestion_status,
 } from "prisma/interfaces";
 import AnggotaModal from "src/components/modal/anggota/anggota";
 import ModalComponent from "src/components/modal/modal";
@@ -63,7 +65,7 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
       setProposalSuggestion(response.data);
       setSchema(response.data.schema);
       setLoadProposal(false);
-      
+
       if (!response.data.schema.is_lecturer) {
         setLecturers([response.data.lecturer]);
       } else {
@@ -74,9 +76,30 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
       const isEditableByLecturer =
         response.data.lecturer_id === session.lecturer_id;
 
+      // check by workflow
+      type PartialEditableRules = Partial<
+        Record<proposal_suggestion_phase, proposal_suggestion_status[]>
+      >;
+      const editableRules: PartialEditableRules = {
+        pengajuan: ["menunggu_proposal", "tersimpan"],
+        evaluasi_proposal: [],
+        penetapan: [],
+        monev: [],
+        evaluasi_akhir: [],
+        penetapan_akhir: [],
+      };
+
+      const isEditableByConditions =
+        editableRules[
+          response.data.phase as proposal_suggestion_phase
+        ]?.includes(response.data.status as proposal_suggestion_status) ||
+        false;
+
       const isEditableByYear = response.data.open;
 
-      setIsEditable(isEditableByLecturer && isEditableByYear);
+      setIsEditable(
+        isEditableByLecturer && isEditableByYear && isEditableByConditions
+      );
     } else {
       showNotification({ status: "error", message: response.message });
     }
@@ -171,19 +194,17 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
                 </Tabs.List>
               </div>
               <div>
-                  <ModalComponent title="Tambah Anggota" disabled={!isEditable}>
-                    {(close) => (
-                      <AnggotaModal
-                        user_type={user_type}
-                        onClose={close}
-                        usulan_id={usulan_id}
-                        tabActive={tabActive}
-                        refreshData={() =>
-                          setRefreshTrigger((prev) => prev + 1)
-                        }
-                      />
-                    )}
-                  </ModalComponent>
+                <ModalComponent title="Tambah Anggota" disabled={!isEditable}>
+                  {(close) => (
+                    <AnggotaModal
+                      user_type={user_type}
+                      onClose={close}
+                      usulan_id={usulan_id}
+                      tabActive={tabActive}
+                      refreshData={() => setRefreshTrigger((prev) => prev + 1)}
+                    />
+                  )}
+                </ModalComponent>
               </div>
             </div>
             <Tabs.Panel value="lecturer">

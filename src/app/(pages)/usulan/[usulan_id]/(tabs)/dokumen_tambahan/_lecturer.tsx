@@ -18,7 +18,12 @@ import useNotification from "src/components/notification/notification";
 import fileAction from "src/action/fileAction";
 import TableLayout from "src/components/table/tableLayout";
 import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
-import { additional_document, proposal_suggestion } from "prisma/interfaces";
+import {
+  additional_document,
+  proposal_suggestion,
+  proposal_suggestion_phase,
+  proposal_suggestion_status,
+} from "prisma/interfaces";
 import { SessionPayload } from "src/lib/encrypt";
 import AdditionalDocumentAddModal from "src/components/modal/proposal_suggestion/CreateAdditionalDocumentModal";
 import AdditionalDocumentUpdateModal from "src/components/modal/proposal_suggestion/EditAdditionalDocumentModal";
@@ -66,9 +71,30 @@ const AdditionalDocumentLecturer: React.FC<AdditionalDocumentLecturerProps> = ({
       const isEditableByLecturer =
         response.data.lecturer_id === session.lecturer_id;
 
+      // check by workflow
+      type PartialEditableRules = Partial<
+        Record<proposal_suggestion_phase, proposal_suggestion_status[]>
+      >;
+      const editableRules: PartialEditableRules = {
+        pengajuan: ["menunggu_proposal", "tersimpan"],
+        evaluasi_proposal: [],
+        penetapan: ["menunggu_revisi", "tersimpan"],
+        monev: ["menunggu_laporan", "tersimpan"],
+        evaluasi_akhir: ["menunggu_laporan", "tersimpan"],
+        penetapan_akhir: [],
+      };
+
+      const isEditableByConditions =
+        editableRules[
+          response.data.phase as proposal_suggestion_phase
+        ]?.includes(response.data.status as proposal_suggestion_status) ||
+        false;
+
       const isEditableByYear = response.data.open;
 
-      setIsEditable(isEditableByLecturer && isEditableByYear);      
+      setIsEditable(
+        isEditableByLecturer && isEditableByYear && isEditableByConditions
+      );
     } else {
       showNotification({ status: "error", message: response.message });
     }
@@ -141,7 +167,11 @@ const AdditionalDocumentLecturer: React.FC<AdditionalDocumentLecturerProps> = ({
               <Button
                 onClick={open}
                 disabled={!isEditable}
-                className={isEditable ? "bg-blue-800 text-white" : "bg-gray-300 text-gray-600"}
+                className={
+                  isEditable
+                    ? "bg-blue-800 text-white"
+                    : "bg-gray-300 text-gray-600"
+                }
               >
                 Tambah Dokumen
               </Button>

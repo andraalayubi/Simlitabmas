@@ -9,7 +9,7 @@ import {
   Divider,
 } from "@mantine/core";
 import { useParams } from "next/navigation";
-import { proposal, proposal_suggestion } from "prisma/interfaces";
+import { proposal, proposal_suggestion, proposal_suggestion_phase, proposal_suggestion_status } from "prisma/interfaces";
 import React, { useCallback, useEffect, useState } from "react";
 import useNotification from "src/components/notification/notification";
 import proposalAction from "src/action/proposalAction";
@@ -48,12 +48,23 @@ const ProposalLecturer = ({ session }: { session: SessionPayload }) => {
       const isEditableByLecturer =
         response.data.lecturer_id === session.lecturer_id;
 
-      const isEditableByConditions =
-        (response.data.phase === "pengajuan" &&
-          response.data.status === "menunggu_proposal") ||
-        (response.data.phase === "penetapan" &&
-          response.data.status === "menunggu_revisi");
+      // check by workflow
+      type PartialEditableRules = Partial<Record<proposal_suggestion_phase, proposal_suggestion_status[]>>;
+      const editableRules: PartialEditableRules = {
+        pengajuan: ["menunggu_proposal", "tersimpan"],
+        evaluasi_proposal: [],
+        penetapan: ["menunggu_revisi", "tersimpan"],
+        monev: [],
+        evaluasi_akhir: [],
+        penetapan_akhir: [],
+      };
 
+      const isEditableByConditions =
+        editableRules[
+          response.data.phase as proposal_suggestion_phase
+        ]?.includes(response.data.status as proposal_suggestion_status) || false;
+      
+      // check by year research
       const isEditableByYear = response.data.open;
 
       setIsEditable(

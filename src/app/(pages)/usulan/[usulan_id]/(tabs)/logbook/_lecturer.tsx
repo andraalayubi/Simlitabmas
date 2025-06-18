@@ -1,7 +1,11 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
-import { proposal_suggestion } from "prisma/interfaces";
+import {
+  proposal_suggestion,
+  proposal_suggestion_phase,
+  proposal_suggestion_status,
+} from "prisma/interfaces";
 import { useParams } from "next/navigation";
 import useNotification from "src/components/notification/notification";
 import { logbook } from "prisma/interfaces";
@@ -21,7 +25,8 @@ const LogBookLecturer = ({ session }: { session: SessionPayload }) => {
   const [proposalSuggestion, setProposalSuggestion] =
     useState<proposal_suggestion | null>(null);
   const [logbooks, setLogbooks] = useState<logbook[]>([]);
-  const [editable, setEditable] = useState<boolean>(false);
+  const [editableEarly, setEditableEarly] = useState<boolean>(false);
+  const [editableLate, setEditableLate] = useState<boolean>(false);
   const [templateLogbook, setTemplateLogbook] = useState<string | null>(null);
 
   const getLogbooks = useCallback(async () => {
@@ -41,9 +46,43 @@ const LogBookLecturer = ({ session }: { session: SessionPayload }) => {
       const isEditableByLecturer =
         response.data.lecturer_id === session.lecturer_id;
 
+      type PartialEditableRules = Partial<
+        Record<proposal_suggestion_phase, proposal_suggestion_status[]>
+      >;
+      const editableEarlyRules: PartialEditableRules = {
+        pengajuan: [],
+        evaluasi_proposal: [],
+        penetapan: [],
+        monev: ["menunggu_laporan", "tersimpan"],
+        evaluasi_akhir: [],
+        penetapan_akhir: [],
+      };
+
+      const isEditableEarlyByConditions =
+        editableEarlyRules[
+          response.data.phase as proposal_suggestion_phase
+        ]?.includes(response.data.status as proposal_suggestion_status) ||
+        false;
+
+       const editableLateRules: PartialEditableRules = {
+        pengajuan: [],
+        evaluasi_proposal: [],
+        penetapan: [],
+        monev: [],
+        evaluasi_akhir: ["menunggu_laporan", "tersimpan"],
+        penetapan_akhir: [],
+      };
+      const isEditableLateByConditions =
+        editableLateRules[
+          response.data.phase as proposal_suggestion_phase
+        ]?.includes(response.data.status as proposal_suggestion_status) ||
+        false;
+
+      // check by year research
       const isEditableByYear = response.data.open;
 
-      setEditable(isEditableByLecturer && isEditableByYear);
+      setEditableEarly(isEditableByLecturer && isEditableByYear && isEditableEarlyByConditions) ;
+      setEditableLate(isEditableByLecturer && isEditableByYear && isEditableLateByConditions);
     } else {
       showNotification({ status: "error", message: response.message });
     }
@@ -92,15 +131,16 @@ const LogBookLecturer = ({ session }: { session: SessionPayload }) => {
         <div className="mt-6">
           <Skeleton visible={loading}>
             <Stack gap="md">
-              {logbooks.map((logbook) => (
+              {logbooks.slice(0,2).map((logbook, index) => (
                 <LogbookCard
                   key={logbook.id}
                   logbook={logbook}
                   onSuccess={getLogbooks}
                   user_type={user_type}
-                  editable={editable}
+                  editable={index === 0 ? editableEarly : editableLate}
                 />
               ))}
+           
             </Stack>
           </Skeleton>
         </div>

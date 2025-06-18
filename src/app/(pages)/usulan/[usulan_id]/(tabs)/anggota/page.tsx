@@ -78,7 +78,6 @@ export default function AnggotaPage() {
     );
   
     if(session?.user_type == "admin") {
-      console.log('admin');
       
       return <Skeleton visible={sessionLoading}><AnggotaAdmin columnsLecturer={columnsLecturer} columnsStudent={columnsStudent} columnsVendor={columnsVendor}/></Skeleton>
     } else if (session?.user_type == "lecturer") {

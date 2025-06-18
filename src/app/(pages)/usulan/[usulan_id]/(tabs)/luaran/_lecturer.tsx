@@ -3,7 +3,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import useNotification from "src/components/notification/notification";
-import { external_document, proposal_suggestion } from "prisma/interfaces";
+import {
+  external_document,
+  proposal_suggestion,
+  proposal_suggestion_phase,
+  proposal_suggestion_status,
+} from "prisma/interfaces";
 import externalDocumentAction from "src/action/externalDocumentAction";
 import { Button, Skeleton, Stack, Text } from "@mantine/core";
 import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
@@ -45,9 +50,31 @@ const ExternalDocumentLecturer = ({ session }: { session: SessionPayload }) => {
       const isEditableByLecturer =
         response.data.lecturer_id === session.lecturer_id;
 
+      // check by workflow
+      type PartialEditableRules = Partial<
+        Record<proposal_suggestion_phase, proposal_suggestion_status[]>
+      >;
+      const editableRules: PartialEditableRules = {
+        pengajuan: ["menunggu_proposal", "tersimpan"],
+        evaluasi_proposal: [],
+        penetapan: [],
+        monev: [],
+        evaluasi_akhir: [],
+        penetapan_akhir: [],
+      };
+
+      const isEditableByConditions =
+        editableRules[
+          response.data.phase as proposal_suggestion_phase
+        ]?.includes(response.data.status as proposal_suggestion_status) ||
+        false;
+
+      // check by year research
       const isEditableByYear = response.data.open;
 
-      setEditable(isEditableByLecturer && isEditableByYear);
+      setEditable(
+        isEditableByLecturer && isEditableByYear && isEditableByConditions
+      );
     } else {
       showNotification({ status: "error", message: response.message });
     }
@@ -122,6 +149,7 @@ const ExternalDocumentLecturer = ({ session }: { session: SessionPayload }) => {
                     onClose={close}
                     proposal_suggestion={proposalSuggestion!}
                     onSuccess={getExternalDocuments}
+                    disabled={!editable}
                   />
                 )}
               </ModalComponent>

@@ -21,6 +21,7 @@ interface CreateExternalModalProps {
   proposal_suggestion: proposal_suggestion;
   onClose: () => void;
   onSuccess: () => void;
+  disabled: boolean;
 }
 
 const CreateExternalDocumentModal: React.FC<CreateExternalModalProps> = ({
@@ -28,6 +29,7 @@ const CreateExternalDocumentModal: React.FC<CreateExternalModalProps> = ({
   proposal_suggestion,
   onClose,
   onSuccess,
+  disabled,
 }: CreateExternalModalProps) => {
   const { showNotification } = useNotification();
   const [loading, setLoading] = useState(false);
@@ -120,7 +122,7 @@ const CreateExternalDocumentModal: React.FC<CreateExternalModalProps> = ({
                 searchable
               />
               <Group justify="flex-end" mt="xl">
-                <Button fullWidth type="submit" disabled={loading} size="md">
+                <Button fullWidth type="submit" disabled={loading && disabled} size="md">
                   Tambahkan Luaran
                 </Button>
               </Group>
