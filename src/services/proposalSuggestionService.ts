@@ -81,6 +81,9 @@ const getByFilter = async (filter: {
             research_group: include?.research_group,
             year_research: include?.year_research,
             department: include?.department,
+        },
+        orderBy: {
+            id: "desc"
         }
     });
 };

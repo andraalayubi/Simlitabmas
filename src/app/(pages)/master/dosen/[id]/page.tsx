@@ -62,7 +62,7 @@ const EditLecturerPage = () => {
   const theme = useMantineTheme();
   const user_type = "admin";
   const params = useParams();
-  const lecturer_id = parseInt(params.id);
+  const lecturer_id = parseInt(params.id as string);
   const { showNotification } = useNotification();
   const [loading, setLoading] = useState(false);
 
