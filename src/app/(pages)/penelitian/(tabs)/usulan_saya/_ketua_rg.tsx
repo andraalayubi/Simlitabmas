@@ -79,7 +79,6 @@ const UsulanSayaKetuaRG: React.FC<UsulanSayaKetuaRGProps> = ({ columns }) => {
                 type="penelitian"
                 lecturer={lecturer}
                 refreshData={() => getProposalSuggestion()}
-                proposal_suggestion_type={"penelitian"}
               />
             )}
           </ModalComponent>

@@ -75,8 +75,8 @@ const SemuaUsulanLecturer: React.FC<SemuaUsulanLecturerProps> = ({
               showResearchGroup={true}
               type="penelitian"
               lecturer={lecturer}
-              refreshData={() => getProposalSuggestion()} 
-              proposal_suggestion_type={"penelitian"}            />
+              refreshData={() => getProposalSuggestion()}
+            />
           )}
         </ModalComponent>
       </div>
