@@ -151,6 +151,7 @@ const main = async () => {
                 "users", 
                 "research_groups", 
                 "departments", 
+                "lecturer_members",
                 "year_researches", 
                 "schemas", 
                 "positions", 

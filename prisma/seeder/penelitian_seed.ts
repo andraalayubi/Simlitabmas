@@ -689,7 +689,7 @@ let proposalSuggestionsPenelitian = [
                     nip: "22334455",
                 },
                 {
-                    lecturer_id: 13,
+                    lecturer_id: 5,
                     name: "Dr. Agus Indra Gunawan",
                     research_group_id: 13,
                     department_id: 3,
@@ -985,7 +985,7 @@ let proposalSuggestionsPenelitian = [
                     nip: "11223344",
                 },
                 {
-                    lecturer_id: 12,
+                    lecturer_id: 5,
                     name: "Dr. Agus Indra Gunawan",
                     research_group_id: 12,
                     department_id: 3,

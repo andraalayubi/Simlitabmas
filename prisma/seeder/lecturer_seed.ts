@@ -35,7 +35,7 @@ const lecturers = [
         is_ketua_rg: true,
         is_kaprodi: false,
         highest_degree: "S3" as degree,
-        position_id: 1,
+        position_id: 2,
         user: {
             create: [
                 { name: "Admin Mirza", email: "adminMirza@gmail.com", user_type: "admin" as user_type, password: "Mirza123!" },
@@ -132,7 +132,7 @@ const lecturers = [
         is_ketua_rg: true,
         is_kaprodi: false,
         highest_degree: "S3" as degree,
-        position_id: 1,
+        position_id: 2,
         user: {
             create: [
                 { name: "Dosen Sritrusta", email: "dosen.sritrusta@pens.ac.id", user_type: "lecturer", password: "DosenSritrusta2023!" },
@@ -204,7 +204,7 @@ const lecturers = [
         is_ketua_rg: true,
         is_kaprodi: false,
         highest_degree: "S2" as degree,
-        position_id: 1,
+        position_id: 2,
         user: {
             create: [
                 { name: "Dosen Rifah", email: "rifah.amalia@pens.ac.id", user_type: "lecturer" as user_type, password: "Rifah123!" },
@@ -312,7 +312,7 @@ const lecturers = [
         is_ketua_rg: true,
         is_kaprodi: false,
         highest_degree: "S2" as degree,
-        position_id: 1,
+        position_id: 2,
         user: {
             create: [
                 { name: "Dosen Ronny", email: "ronny.susetyoko@pens.ac.id", user_type: "lecturer" as user_type, password: "DosenRonny2023!" },
@@ -405,7 +405,7 @@ const lecturers = [
     {
         name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
         phone_number: "085163142760",
-        research_group_id: null,
+        research_group_id: 13,
         department_id: 2,
         nidn: "3122500057",
         nip: "33445567",
@@ -448,7 +448,7 @@ const lecturers = [
     {
         name: "Mohammad Nasyir Tamara, S.ST., M.T.",
         phone_number: "085163142760",
-        research_group_id: null,
+        research_group_id: 4,
         department_id: 3,
         nidn: "3122500058",
         nip: "33445568",
@@ -491,7 +491,7 @@ const lecturers = [
     {
         name: "Kholid Fathoni , S.Kom., MT.",
         phone_number: "085163142760",
-        research_group_id: null,
+        research_group_id: 5,
         department_id: 4,
         nidn: "3122500059",
         nip: "33445569",
@@ -533,7 +533,7 @@ const lecturers = [
     {
         name: "Budi Santoso, S.T., M.Eng.",
         phone_number: "085163142760",
-        research_group_id: null,
+        research_group_id: 6,
         department_id: 3,
         nidn: "3122500001",
         nip: "33445570",
@@ -571,7 +571,7 @@ const lecturers = [
     {
         name: "Anisa Rahma, S.Kom., M.Kom.",
         phone_number: "085163142760",
-        research_group_id: null,
+        research_group_id: 7,
         department_id: 1,
         nidn: "3122500002",
         nip: "33445571",
@@ -609,7 +609,7 @@ const lecturers = [
     {
         name: "Hendra Pratama, S.T., M.Sc., Ph.D.",
         phone_number: "085163142760",
-        research_group_id: null,
+        research_group_id: 8,
         department_id: 4,
         nidn: "3122500003",
         nip: "33445572",
@@ -639,7 +639,7 @@ const lecturers = [
         is_ketua_rg: false,
         is_kaprodi: false,
         highest_degree: "S3" as degree,
-        position_id: 1,
+        position_id: 2,
         user: {
             create: [
                 {
@@ -654,7 +654,7 @@ const lecturers = [
     {
         name: "Dewi Anggraeni, S.Si., M.T.",
         phone_number: "085163142760",
-        research_group_id: null,
+        research_group_id: 9,
         department_id: 2,
         nidn: "3122500004",
         nip: "33445573",
@@ -692,7 +692,7 @@ const lecturers = [
     {
         name: "Rudi Hermawan, S.T., M.Eng., Ph.D.",
         phone_number: "085163142760",
-        research_group_id: null,
+        research_group_id: 10,
         department_id: 1,
         nidn: "3122500005",
         nip: "33445574",
@@ -737,7 +737,7 @@ const lecturers = [
     {
         name: "Fitria Wulandari, S.Kom., M.Kom.",
         phone_number: "085163142760",
-        research_group_id: null,
+        research_group_id: 11,
         department_id: 4,
         nidn: "3122500006",
         nip: "33445575",

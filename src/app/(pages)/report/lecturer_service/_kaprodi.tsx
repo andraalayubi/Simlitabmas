@@ -49,8 +49,8 @@ type LecturerWithCount = lecturer & {
 
 type LecturerWithCountKey = keyof LecturerWithCount;
 
-export default function LecturerRankingPage() {
-  const user_type = "admin";
+export default function LecturerRankingKaprodiPage() {
+  const user_type = "kaprodi";
   const { showNotification } = useNotification();
   const [loading, setLoading] = useState(false);
 
@@ -63,11 +63,10 @@ export default function LecturerRankingPage() {
     | "ranking"
   >("totalScore");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-  const [departmentFilter, setDepartmentFilter] = useState<string | null>(null);
   const [lecturers, setLecturers] = useState<LecturerWithCount[]>([]);
 
   const getLecturer = useCallback(async () => {
-    const response = await reportAction.getLecturer(user_type, setLoading);
+    const response = await reportAction.getLecturer(user_type, setLoading, null);
 
     if (response.success) {
       console.log(response.data);
@@ -81,11 +80,6 @@ export default function LecturerRankingPage() {
   useEffect(() => {
     getLecturer();
   }, [getLecturer]);
-
-  // Get unique departments for filter
-  const departments = Array.from(
-    new Set(lecturers.map((lecturer) => lecturer.department?.name!))
-  );
 
   // Calculate sorted scores for dynamic badge/label assignment
   const sortedScores = [
@@ -105,8 +99,7 @@ export default function LecturerRankingPage() {
   const filteredLecturers = lecturers
     .filter(
       (lecturer) =>
-        lecturer.name.toLowerCase().includes(search.toLowerCase()) &&
-        (!departmentFilter || lecturer.department?.name === departmentFilter)
+        lecturer.name.toLowerCase().includes(search.toLowerCase())
     )
     .sort((a, b) => {
       let aValue, bValue;
@@ -163,7 +156,7 @@ export default function LecturerRankingPage() {
     <Container size="xl" py="xl">
       <Skeleton visible={loading}>
         <Title order={1} mb="lg">
-          Peringkat Performa Dosen Penelitian
+          Peringkat Performa Dosen
         </Title>
       </Skeleton>
 
@@ -207,9 +200,6 @@ export default function LecturerRankingPage() {
                     <Text ta="center" fw={500} size="lg">
                       {lecturer.name}
                     </Text>
-                    <Text ta="center" c="dimmed" size="sm">
-                      {lecturer.department?.name}
-                    </Text>
                     <Group mt="md" justify="center">
                       <Badge
                         color={getBadgeColor(
@@ -237,15 +227,6 @@ export default function LecturerRankingPage() {
             onChange={(event) => setSearch(event.currentTarget.value)}
             leftSection={<IconSearch size={16} />}
             style={{ flex: 1 }}
-          />
-
-          <Select
-            placeholder="Filter Departemen"
-            data={departments.map((dept) => ({ value: dept, label: dept }))}
-            value={departmentFilter}
-            onChange={setDepartmentFilter}
-            clearable
-            style={{ width: 200 }}
           />
 
           <Select
@@ -296,16 +277,9 @@ export default function LecturerRankingPage() {
                 </Table.Th>
                 <Table.Th
                   style={{ cursor: "pointer" }}
-                  onClick={() => handleSortChange("department")}
-                >
-                  Departemen{" "}
-                  {sortBy === "department" && (sortOrder === "asc" ? "↑" : "↓")}
-                </Table.Th>
-                <Table.Th
-                  style={{ cursor: "pointer" }}
                   onClick={() => handleSortChange("proposalCount")}
                 >
-                  Usulan Penelitian{" "}
+                  Usulan Pengabdian{" "}
                   {sortBy === "proposalCount" &&
                     (sortOrder === "asc" ? "↑" : "↓")}
                 </Table.Th>
@@ -313,7 +287,7 @@ export default function LecturerRankingPage() {
                   style={{ cursor: "pointer" }}
                   onClick={() => handleSortChange("participationCount")}
                 >
-                  Partisipasi Penelitian{" "}
+                  Partisipasi Pengabdian{" "}
                   {sortBy === "participationCount" &&
                     (sortOrder === "asc" ? "↑" : "↓")}
                 </Table.Th>
@@ -332,7 +306,6 @@ export default function LecturerRankingPage() {
                 <Table.Tr key={lecturer.id}>
                   <Table.Td>{rankMap[lecturer.id]}</Table.Td>
                   <Table.Td>{lecturer.name}</Table.Td>
-                  <Table.Td>{lecturer.department?.name}</Table.Td>
                   <Table.Td>{lecturer._count.proposal_suggestion}</Table.Td>
                   <Table.Td>
                     {lecturer._count.lecturer_member -
