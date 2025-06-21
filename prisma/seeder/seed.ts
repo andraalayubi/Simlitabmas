@@ -40,6 +40,15 @@ const year_researches = [
     { year: 2024, open_date: new Date("2024-01-01"), closed_date: new Date("2024-12-31"), is_active: false },
     { year: 2025, open_date: new Date("2025-01-01"), closed_date: new Date("2025-12-31"), is_active: true },
     { year: 2026, open_date: new Date("2026-01-01"), closed_date: new Date("2026-12-31"), is_active: false },
+    { year: 2022, open_date: new Date("2022-01-01"), closed_date: new Date("2022-12-31"), is_active: false },
+    { year: 2021, open_date: new Date("2021-01-01"), closed_date: new Date("2021-12-31"), is_active: false },
+    { year: 2020, open_date: new Date("2020-01-01"), closed_date: new Date("2020-12-31"), is_active: false },
+    { year: 2019, open_date: new Date("2019-01-01"), closed_date: new Date("2019-12-31"), is_active: false },
+    { year: 2018, open_date: new Date("2018-01-01"), closed_date: new Date("2018-12-31"), is_active: false },
+    { year: 2017, open_date: new Date("2017-01-01"), closed_date: new Date("2017-12-31"), is_active: false },
+    { year: 2016, open_date: new Date("2016-01-01"), closed_date: new Date("2016-12-31"), is_active: false },
+    { year: 2015, open_date: new Date("2015-01-01"), closed_date: new Date("2015-12-31"), is_active: false },
+    { year: 2014, open_date: new Date("2014-01-01"), closed_date: new Date("2014-12-31"), is_active: false },
 ];
 
 
@@ -48,23 +57,23 @@ const configuration = {
 }
 
 const positions = [
-    { name: "Lecturer", description: "A position for teaching and contributing to research activities." },
+    { name: "Lecturer", description: "A position for teaching and contributing to research activities." }, 
     {
         name: "Guru Besar",
         description: "Jabatan akademik tertinggi dengan kewajiban utama melakukan penelitian unggulan, membimbing penelitian doktoral, dan berkontribusi secara signifikan dalam pengembangan ilmu pengetahuan di tingkat nasional maupun internasional."
-    },
+    }, // Professor / full processor
     {
         name: "Lektor Kepala",
         description: "Jabatan akademik madya yang berperan aktif dalam penelitian, menjadi pembimbing utama mahasiswa magister dan doktor, serta menghasilkan publikasi ilmiah bereputasi nasional dan internasional."
-    },
+    }, // Associate Professor
     {
         name: "Lektor",
         description: "Jabatan akademik yang mendukung kegiatan penelitian, aktif dalam publikasi ilmiah, serta terlibat dalam bimbingan tugas akhir dan penelitian mahasiswa tingkat sarjana dan magister."
-    },
+    }, // Assistant Professor
     {
         name: "Asisten Ahli",
         description: "Jabatan akademik awal yang mulai terlibat dalam kegiatan penelitian, mendukung penulisan karya ilmiah, serta berpartisipasi dalam kegiatan ilmiah dan seminar akademik."
-    }
+    } // Assistant Professor
 ];
 
 const schemas = [

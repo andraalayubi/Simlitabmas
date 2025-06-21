@@ -78,10 +78,12 @@ export default function LecturerResearchRankingAdminPage() {
     { value: string; label: string }[]
   >([]);
   const [lecturers, setLecturers] = useState<LecturerWithCount[]>([]);
-  
+
   // State untuk filter
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
-  const [selectedResearchGroup, setSelectedResearchGroup] = useState<string | null>(null);
+  const [selectedResearchGroup, setSelectedResearchGroup] = useState<
+    string | null
+  >(null);
 
   const getYearResearches = useCallback(async () => {
     const response = await yearResearchAction.getYearResearches(
@@ -114,18 +116,22 @@ export default function LecturerResearchRankingAdminPage() {
   const getLecturers = useCallback(async () => {
     // Bangun objek filter berdasarkan state yang dipilih
     const filter: any = {};
-    
+
     if (selectedYear) {
       filter.year_research_id = selectedYear;
     }
-    
+
     if (selectedResearchGroup) {
       filter.research_group_id = selectedResearchGroup;
     }
 
-    filter.type = "penelitian"
+    filter.type = "penelitian";
 
-    const response = await reportAction.getLecturerResearch(user_type, setLoading, filter);
+    const response = await reportAction.getLecturerResearch(
+      user_type,
+      setLoading,
+      filter
+    );
 
     if (response.success) {
       setLecturers(response.data);
@@ -143,9 +149,8 @@ export default function LecturerResearchRankingAdminPage() {
 
   // Filter dan sort lecturers (local filtering hanya untuk search)
   const filteredLecturers = lecturers
-    .filter(
-      (lecturer) =>
-        lecturer.name.toLowerCase().includes(search.toLowerCase())
+    .filter((lecturer) =>
+      lecturer.name.toLowerCase().includes(search.toLowerCase())
     )
     .sort((a, b) => {
       let aValue, bValue;

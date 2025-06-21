@@ -994,6 +994,623 @@ let proposalSuggestionsPenelitian = [
             ],
         },
     },
+
+    // 27
+    {
+        name: "Numerical analysis of ultrasound propagation and reflection intensity for biological acoustic impedance microscope",
+        year_research_id: 2,
+        schema_id: 3,
+        lecturer_id: 5,
+        research_group_id: 5,
+        department_id: 1,
+        status: "selesai" as proposal_suggestion_status,
+        phase: "penetapan_akhir" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Numerical analysis of ultrasound propagation and reflection intensity for biological acoustic impedance microscope"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 5,
+                    name: "Dr. Agus Indra Gunawan",
+                    research_group_id: 5,
+                    department_id: 1,
+                    nip: "197304131998031001",
+                }
+            ],
+        },
+    },
+
+    // 28
+    {
+        name: "Numerical analysis of acoustic impedance microscope utilizing acoustic lens transducer to examine cultured cells",
+        year_research_id: 12, // 2015
+        schema_id: 3,
+        lecturer_id: 5,
+        research_group_id: 5,
+        department_id: 1,
+        status: "selesai" as proposal_suggestion_status,
+        phase: "penetapan_akhir" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Numerical analysis of acoustic impedance microscope utilizing acoustic lens transducer to examine cultured cells"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 5,
+                    name: "Dr. Agus Indra Gunawan",
+                    research_group_id: 5,
+                    department_id: 1,
+                    nip: "197304131998031001",
+                }
+            ],
+        },
+    },
+
+    // 29
+    {
+        name: "A Study for Estimation of Bio Organism Content in Aquaculture Pond Based on Image Color and Light Intensity",
+        year_research_id: 8, // 2019
+        schema_id: 3,
+        lecturer_id: 5,
+        research_group_id: 5,
+        department_id: 1,
+        status: "selesai" as proposal_suggestion_status,
+        phase: "penetapan_akhir" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "A Study for Estimation of Bio Organism Content in Aquaculture Pond Based on Image Color and Light Intensity"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 5,
+                    name: "Dr. Agus Indra Gunawan",
+                    research_group_id: 5,
+                    department_id: 1,
+                    nip: "197304131998031001",
+                }
+            ],
+        },
+    },
+
+    // 30
+    {
+        name: "Characterizing acoustic impedance of several saline solution utilizing range finder acoustic sensor",
+        year_research_id: 10, // 2017
+        schema_id: 3,
+        lecturer_id: 5,
+        research_group_id: 5,
+        department_id: 1,
+        status: "selesai" as proposal_suggestion_status,
+        phase: "penetapan_akhir" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Characterizing acoustic impedance of several saline solution utilizing range finder acoustic sensor"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 5,
+                    name: "Dr. Agus Indra Gunawan",
+                    research_group_id: 5,
+                    department_id: 1,
+                    nip: "197304131998031001",
+                }
+            ],
+        },
+    },
+
+    // 31
+    {
+        name: "Melanoma image classification based on MobileNetV2 network",
+        year_research_id: 5, // 2022
+        schema_id: 3,
+        lecturer_id: 8,
+        research_group_id: 8,
+        department_id: 1,
+        status: "selesai" as proposal_suggestion_status,
+        phase: "penetapan_akhir" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Melanoma image classification based on MobileNetV2 network"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 8,
+                    name: "Rika Rokhana",
+                    research_group_id: 8,
+                    department_id: 1,
+                    nip: "89012345",
+                }
+            ],
+        },
+    },
+
+    // 32
+    {
+        name: "Convolutional neural network untuk pendeteksian patah tulang femur pada citra ultrasonik b–mode",
+        year_research_id: 8, // 2019
+        schema_id: 3,
+        lecturer_id: 8,
+        research_group_id: 8,
+        department_id: 1,
+        status: "selesai" as proposal_suggestion_status,
+        phase: "penetapan_akhir" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Convolutional neural network untuk pendeteksian patah tulang femur pada citra ultrasonik b–mode"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 8,
+                    name: "Rika Rokhana",
+                    research_group_id: 8,
+                    department_id: 1,
+                    nip: "89012345",
+                }
+            ],
+        },
+    },
+
+    // 33
+    {
+        name: "Deep convolutional neural network for melanoma image classification",
+        year_research_id: 7, // 2020
+        schema_id: 3,
+        lecturer_id: 8,
+        research_group_id: 8,
+        department_id: 1,
+        status: "selesai" as proposal_suggestion_status,
+        phase: "penetapan_akhir" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Deep convolutional neural network for melanoma image classification"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 8,
+                    name: "Rika Rokhana",
+                    research_group_id: 8,
+                    department_id: 1,
+                    nip: "89012345",
+                }
+            ],
+        },
+    },
+
+    // 34
+    {
+        name: "Deteksi Penyakit Mata Pada Citra Fundus Menggunakan Convolutional Neural Network (CNN).",
+        year_research_id: 5, // 2022
+        schema_id: 3,
+        lecturer_id: 8,
+        research_group_id: 8,
+        department_id: 1,
+        status: "selesai" as proposal_suggestion_status,
+        phase: "penetapan_akhir" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Deteksi Penyakit Mata Pada Citra Fundus Menggunakan Convolutional Neural Network (CNN)."
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 8,
+                    name: "Rika Rokhana",
+                    research_group_id: 8,
+                    department_id: 1,
+                    nip: "89012345",
+                }
+            ],
+        },
+    },
+
+    // 35
+    {
+        name: "Multi-class image classification based on mobilenetv2 for detecting the proper use of face mask",
+        year_research_id: 6, // 2021
+        schema_id: 3,
+        lecturer_id: 8,
+        research_group_id: 8,
+        department_id: 1,
+        status: "selesai" as proposal_suggestion_status,
+        phase: "penetapan_akhir" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Multi-class image classification based on mobilenetv2 for detecting the proper use of face mask"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 8,
+                    name: "Rika Rokhana",
+                    research_group_id: 8,
+                    department_id: 1,
+                    nip: "89012345",
+                }
+            ],
+        },
+    },
+
+    // 36
+    {
+        name: "Identifikasi Kerusakan Pankreas Melalui Iridology Menggunakan Metode Bayes Untuk Pengenalan Diabetes Mellitus",
+        year_research_id: 12, // 2015
+        schema_id: 3,
+        lecturer_id: 32,
+        research_group_id: 8,
+        department_id: 1,
+        status: "selesai" as proposal_suggestion_status,
+        phase: "penetapan_akhir" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Identifikasi Kerusakan Pankreas Melalui Iridology Menggunakan Metode Bayes Untuk Pengenalan Diabetes Mellitus"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 32,
+                    name: "Moch. Rochmad, S.T., M.T.,",
+                    research_group_id: 8,
+                    department_id: 1,
+                    nip: "198103202000121002",
+                }
+            ],
+        },
+    },
+
+    // 37
+    {
+        name: "Deteksi semangat hidup seseorang melalui pengenalan pola iris mata berbasis artificial neural network",
+        year_research_id: 12, // 2015
+        schema_id: 3,
+        lecturer_id: 32,
+        research_group_id: 8,
+        department_id: 1,
+        status: "selesai" as proposal_suggestion_status,
+        phase: "penetapan_akhir" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Deteksi semangat hidup seseorang melalui pengenalan pola iris mata berbasis artificial neural network"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 32,
+                    name: "Moch. Rochmad, S.T., M.T.,",
+                    research_group_id: 8,
+                    department_id: 1,
+                    nip: "198103202000121002",
+                }
+            ],
+        },
+    },
+
+    // 38
+    {
+        name: "IMPLEMENTATION EYES MOVEMENT TO HELP COMMUNICATION PERSONS DISABILITIES",
+        year_research_id: 9, // 2018
+        schema_id: 3,
+        lecturer_id: 32,
+        research_group_id: 8,
+        department_id: 1,
+        status: "selesai" as proposal_suggestion_status,
+        phase: "penetapan_akhir" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "IMPLEMENTATION EYES MOVEMENT TO HELP COMMUNICATION PERSONS DISABILITIES"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 32,
+                    name: "Moch. Rochmad, S.T., M.T.,",
+                    research_group_id: 8,
+                    department_id: 1,
+                    nip: "198103202000121002",
+                }
+            ],
+        },
+    },
+
+    // 39
+    {
+        name: "Pemanfaatan modul wireless X-bee pro untuk Electrocardiograf (ECG) Terhubung ke Personal Computer (PC)",
+        year_research_id: 13, // 2009 (diasumsikan id 13 untuk tahun 2009)
+        schema_id: 3,
+        lecturer_id: 32,
+        research_group_id: 8,
+        department_id: 1,
+        status: "selesai" as proposal_suggestion_status,
+        phase: "penetapan_akhir" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Pemanfaatan modul wireless X-bee pro untuk Electrocardiograf (ECG) Terhubung ke Personal Computer (PC)"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 32,
+                    name: "Moch. Rochmad, S.T., M.T.,",
+                    research_group_id: 8,
+                    department_id: 1,
+                    nip: "198103202000121002",
+                }
+            ],
+        },
+    },
+
+    // 40
+    {
+        name: "Design and analyze detector stress level based oxihaemoglobin (HbO2) in blood",
+        year_research_id: 13, // 2009
+        schema_id: 3,
+        lecturer_id: 32,
+        research_group_id: 8,
+        department_id: 1,
+        status: "selesai" as proposal_suggestion_status,
+        phase: "penetapan_akhir" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Design and analyze detector stress level based oxihaemoglobin (HbO2) in blood"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 32,
+                    name: "Moch. Rochmad, S.T., M.T.,",
+                    research_group_id: 8,
+                    department_id: 1,
+                    nip: "198103202000121002",
+                }
+            ],
+        },
+    },
+
+    // 41
+    {
+        name: "Rancang Bangun Alat Ukur Kadar Gula Darah, Kolestrol, dan Asam Urat Non-Invasif Berbasis Internet of Things (IoT)",
+        year_research_id: 1, // 2023
+        schema_id: 3,
+        lecturer_id: 32,
+        research_group_id: 8,
+        department_id: 1,
+        status: "selesai" as proposal_suggestion_status,
+        phase: "penetapan_akhir" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Rancang Bangun Alat Ukur Kadar Gula Darah, Kolestrol, dan Asam Urat Non-Invasif Berbasis Internet of Things (IoT)"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 32,
+                    name: "Moch. Rochmad, S.T., M.T.,",
+                    research_group_id: 8,
+                    department_id: 1,
+                    nip: "198103202000121002",
+                }
+            ],
+        },
+    },
+
+    // 42
+    {
+        name: "Performansi Neuro Fuzzy untuk Peramalan Data Time Series",
+        year_research_id: 12,
+        schema_id: 3,
+        lecturer_id: 10,
+        research_group_id: 10,
+        department_id: 2,
+        status: "selesai" as proposal_suggestion_status,
+        phase: "penetapan_akhir" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Performansi Neuro Fuzzy untuk Peramalan Data Time Series"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 10,
+                    name: "Arna Fariza",
+                    research_group_id: 10,
+                    department_id: 2,
+                    nip: "3122500053",
+                }
+            ],
+        },
+    },
+    // 43
+    {
+        name: "Age estimation system using deep residual network classification method",
+        year_research_id: 8,
+        schema_id: 3,
+        lecturer_id: 10,
+        research_group_id: 10,
+        department_id: 2,
+        status: "selesai" as proposal_suggestion_status,
+        phase: "penetapan_akhir" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Age estimation system using deep residual network classification method"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 10,
+                    name: "Arna Fariza",
+                    research_group_id: 10,
+                    department_id: 2,
+                    nip: "3122500053",
+                }
+            ],
+        },
+    },
+    // 44
+    {
+        name: "Prediksi Curah Hujan Menggunakan Long Short Term Memory",
+        year_research_id: 5,
+        schema_id: 3,
+        lecturer_id: 10,
+        research_group_id: 10,
+        department_id: 2,
+        status: "selesai" as proposal_suggestion_status,
+        phase: "penetapan_akhir" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Prediksi Curah Hujan Menggunakan Long Short Term Memory"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 10,
+                    name: "Arna Fariza",
+                    research_group_id: 10,
+                    department_id: 2,
+                    nip: "3122500053",
+                }
+            ],
+        },
+    },
+    // 45
+    {
+        name: "Automatic tooth and background segmentation in dental x-ray using U-Net convolution network",
+        year_research_id: 7,
+        schema_id: 3,
+        lecturer_id: 10,
+        research_group_id: 10,
+        department_id: 2,
+        status: "selesai" as proposal_suggestion_status,
+        phase: "penetapan_akhir" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Automatic tooth and background segmentation in dental x-ray using U-Net convolution network"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 10,
+                    name: "Arna Fariza",
+                    research_group_id: 10,
+                    department_id: 2,
+                    nip: "3122500053",
+                }
+            ],
+        },
+    },
+    // 46
+    {
+        name: "Urban flood risk assessment in sidoarjo, indonesia, using fuzzy multi-criteria decision making",
+        year_research_id: 7,
+        schema_id: 3,
+        lecturer_id: 10,
+        research_group_id: 10,
+        department_id: 2,
+        status: "selesai" as proposal_suggestion_status,
+        phase: "penetapan_akhir" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Urban flood risk assessment in sidoarjo, indonesia, using fuzzy multi-criteria decision making"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 10,
+                    name: "Arna Fariza",
+                    research_group_id: 10,
+                    department_id: 2,
+                    nip: "3122500053",
+                }
+            ],
+        },
+    },
+    
 ];
 
 

@@ -71,6 +71,41 @@ const getLecturerPerformance = async (filter: any) => {
     }));
 };
 
+const getResearchGroupPerformance = async (filter: any) => {
+    // Filter untuk proposal_suggestion
+    const proposalFilter: any = {};
+    
+    if (filter.year_research_id !== undefined) {
+        proposalFilter.year_research_id = filter.year_research_id;
+    }
+
+    // 1. Ambil semua research group
+    const researchGroups = await prisma.research_group.findMany();
+
+    // 2. Dapatkan ID research group untuk proses agregasi
+    const researchGroupIds = researchGroups.map(rg => rg.id);
+
+    // 3. Hitung jumlah proposal_suggestion per research group
+    const proposalCounts = await prisma.proposal_suggestion.groupBy({
+        by: ['research_group_id'],
+        where: {
+            research_group_id: { in: researchGroupIds },
+            ...proposalFilter
+        },
+        _count: {
+            research_group_id: true
+        }
+    });
+
+    // 4. Gabungkan hasil agregasi dengan data research group
+    return researchGroups.map(researchGroup => ({
+        ...researchGroup,
+        proposal_suggestion_count: proposalCounts.find(
+            p => p.research_group_id === researchGroup.id
+        )?._count?.research_group_id || 0
+    }));
+};
+
 //get report lecturer by department id
 const getLecturerByDepartmentId = async (departmentId: number) => {
     return await prisma.lecturer.findMany({
@@ -110,7 +145,8 @@ const getLecturerByResearchGroupId = async (researchGroupId: number) => {
 const reportService = {
     getLecturerPerformance,
     getLecturerByDepartmentId,
-    getLecturerByResearchGroupId
+    getLecturerByResearchGroupId,
+    getResearchGroupPerformance,
 };
 
 export default reportService;

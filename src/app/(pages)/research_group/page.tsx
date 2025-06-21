@@ -181,16 +181,16 @@ export default function ResearchGroupPage() {
       <Skeleton visible={loading}>
         <Tabs defaultValue="research" mb="xl">
           <Tabs.List mb="md">
-            <Tabs.Tab value="research">Usulan</Tabs.Tab>
+            <Tabs.Tab value="research">Penelitian</Tabs.Tab>
             <Tabs.Tab value="members">Anggota</Tabs.Tab>
           </Tabs.List>
 
           <Tabs.Panel value="research">
             <Card withBorder shadow="sm">
               <Card.Section withBorder inheritPadding py="xs">
-                <Title order={3}>Usulan</Title>
+                <Title order={3}>Penelitian</Title>
                 <Text c="dimmed" size="sm">
-                  Usulan penelitian terbaru yang sedang aktif
+                  Daftar Usulan Penelitian 
                 </Text>
               </Card.Section>
               <Box mt="md">

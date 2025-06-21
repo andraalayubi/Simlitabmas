@@ -23,7 +23,6 @@ import { lecturer } from "prisma/interfaces";
 import useNotification from "src/components/notification/notification";
 import reportAction from "src/action/reportAction";
 import yearResearchAction from "src/action/yearResearchAction";
-import researchGroupAction from "src/action/researchGroupAction";
 import { SessionPayload } from "src/lib/encrypt";
 
 // Function to get badge color based on dynamic top scores
@@ -182,7 +181,7 @@ export default function LecturerResearchRankingKetuaRgPage({
     <Container size="xl" py="xl">
       <Skeleton visible={loading}>
         <Title order={1} mb="lg">
-          Laporan Partisipasi Dosen pada Penelitian
+          Laporan Partisipasi Dosen di RG {lecturers[0].research_group?.name!}
         </Title>
       </Skeleton>
 
