@@ -24,6 +24,8 @@ import useNotification from "src/components/notification/notification";
 import reportAction from "src/action/reportAction";
 import yearResearchAction from "src/action/yearResearchAction";
 import { SessionPayload } from "src/lib/encrypt";
+import { useRouter } from "next/navigation";
+import { encode } from "src/lib/sqids";
 
 // Function to get badge color based on dynamic top scores
 const getBadgeColor = (index: number) => {
@@ -65,7 +67,7 @@ export default function LecturerResearchRankingKetuaRgPage({
   const user_type = "ketua_rg";
   const { showNotification } = useNotification();
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<
     | LecturerWithCountKey
@@ -124,6 +126,10 @@ export default function LecturerResearchRankingKetuaRgPage({
     }
   }, [user_type, selectedYear]); // Tambahkan dependency
 
+  const handlePush = (id: number) => {
+    router.push(`/profile/${encode(id)}`);
+  };
+
   useEffect(() => {
     getYearResearches();
     getLecturers();
@@ -181,7 +187,7 @@ export default function LecturerResearchRankingKetuaRgPage({
     <Container size="xl" py="xl">
       <Skeleton visible={loading}>
         <Title order={1} mb="lg">
-          Laporan Partisipasi Dosen di RG {lecturers[0].research_group?.name!}
+          Laporan Partisipasi Dosen di RG {lecturers[0]?.research_group?.name ?? ""}
         </Title>
       </Skeleton>
 
@@ -296,7 +302,10 @@ export default function LecturerResearchRankingKetuaRgPage({
             </Table.Thead>
             <Table.Tbody>
               {filteredLecturers.map((lecturer, index) => (
-                <Table.Tr key={lecturer.id}>
+                <Table.Tr
+                  key={lecturer.id}
+                  onClick={() => handlePush(lecturer.id)}
+                >
                   <Table.Td>{index + 1}</Table.Td>
                   <Table.Td>{lecturer.name}</Table.Td>
                   <Table.Td>{lecturer.position?.name}</Table.Td>

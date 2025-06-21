@@ -24,6 +24,9 @@ import useNotification from "src/components/notification/notification";
 import reportAction from "src/action/reportAction";
 import yearResearchAction from "src/action/yearResearchAction";
 import researchGroupAction from "src/action/researchGroupAction";
+import Link from "next/link";
+import { encode } from "src/lib/sqids";
+import { useRouter } from "next/navigation";
 
 // Function to get badge color based on dynamic top scores
 const getBadgeColor = (index: number) => {
@@ -61,7 +64,7 @@ export default function LecturerResearchRankingAdminPage() {
   const user_type = "admin";
   const { showNotification } = useNotification();
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<
     | LecturerWithCountKey
@@ -140,6 +143,10 @@ export default function LecturerResearchRankingAdminPage() {
       showNotification({ status: "error", message: response.message });
     }
   }, [user_type, selectedYear, selectedResearchGroup]); // Tambahkan dependency
+
+  const handlePush = (id: number) => {
+    router.push(`/profile/${encode(id)}`);
+  };
 
   useEffect(() => {
     getYearResearches();
@@ -323,7 +330,10 @@ export default function LecturerResearchRankingAdminPage() {
             </Table.Thead>
             <Table.Tbody>
               {filteredLecturers.map((lecturer, index) => (
-                <Table.Tr key={lecturer.id}>
+                <Table.Tr
+                  key={lecturer.id}
+                  onClick={() => handlePush(lecturer.id)}
+                >
                   <Table.Td>{index + 1}</Table.Td>
                   <Table.Td>{lecturer.name}</Table.Td>
                   <Table.Td>{lecturer.position?.name}</Table.Td>

@@ -23,6 +23,7 @@ import {
   IconTrophy,
   IconBook,
   IconHeartHandshake,
+  IconTrendingUp,
 } from "@tabler/icons-react";
 import { getDegreeType } from "src/lib/degree";
 import { showNotification } from "@mantine/notifications";
@@ -32,6 +33,16 @@ import { lecturer } from "prisma/interfaces";
 import { useParams } from "next/navigation";
 import lecturerAction from "src/action/lecturerAction";
 import { decode } from "src/lib/sqids";
+import { LineChart } from "@mantine/charts";
+
+const researchTrendData = [
+  { year: "2019", penelitian: 2 },
+  { year: "2020", penelitian: 4 },
+  { year: "2021", penelitian: 3 },
+  { year: "2022", penelitian: 6 },
+  { year: "2023", penelitian: 8 },
+  { year: "2024", penelitian: 5 },
+];
 
 interface degreesArray {
   code: string;
@@ -52,6 +63,7 @@ const ProfilePage = () => {
   const [leaderProposal, setLeaderProposal] = useState(0);
   const [penelitianCount, setPenelitianCount] = useState(0);
   const [pengmasCount, setPengmasCount] = useState(0);
+  const [yearResearches, setYearResearches] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const getUserLecturers = useCallback(async (lecturerId: number) => {
@@ -70,6 +82,7 @@ const ProfilePage = () => {
         setPenelitianCount(response.data.penelitianCount);
         setPengmasCount(response.data.pengmasCount);
         setLecturerNotFound(false);
+        setYearResearches(response.data.proposalsByYear);
         showNotification({ status: "success", message: response.message });
       } else {
         setLecturerNotFound(true);
@@ -195,7 +208,7 @@ const ProfilePage = () => {
                   <Text color="dimmed" size="sm">
                     Nomor Telepon
                   </Text>
-                  <Text>{professorData?.phone_number || '-'}</Text>
+                  <Text>{professorData?.phone_number || "-"}</Text>
                 </Grid.Col>
               </Grid>
             </Skeleton>
@@ -249,7 +262,7 @@ const ProfilePage = () => {
                       {leaderProposal}
                     </Text>
                     <Text size="sm" color="dimmed" ta="center">
-                      kali menjadi ketua penelitian/pengmas
+                      Kali Menjadi Ketua Penelitian
                     </Text>
                   </Stack>
                 </Paper>
@@ -263,7 +276,7 @@ const ProfilePage = () => {
                       {penelitianCount}
                     </Text>
                     <Text size="sm" color="dimmed" ta="center">
-                      penelitian yang telah diikuti
+                      Penelitian telah diikuti
                     </Text>
                   </Stack>
                 </Paper>
@@ -277,13 +290,40 @@ const ProfilePage = () => {
                       {pengmasCount}
                     </Text>
                     <Text size="sm" color="dimmed" ta="center">
-                      pengmas yang telah diikuti
+                      Pengmas yang telah diikuti
                     </Text>
                   </Stack>
                 </Paper>
               </Grid.Col>
             </Grid>
           </Skeleton>
+          <Divider my="md" />
+
+          {/* Research Trend Chart */}
+          <Box mb="md">
+            <Skeleton visible={loading}>
+              <Group align="center" mb="xs">
+                <IconTrendingUp size={20} />
+                <Text fw={600} size="lg">
+                  Tren Penelitian
+                </Text>
+              </Group>
+            </Skeleton>
+
+            <Skeleton visible={loading}>
+              <Paper withBorder p="md" radius="md">
+                <LineChart
+                  h={300}
+                  withLegend
+                  data={yearResearches}
+                  dataKey="year"
+                  curveType="linear"
+                  series={[{ name: "count", label: "Jumlah penelitian" }]}
+                  type="default"
+                ></LineChart>
+              </Paper>
+            </Skeleton>
+          </Box>
         </>
       )}
     </Card>
