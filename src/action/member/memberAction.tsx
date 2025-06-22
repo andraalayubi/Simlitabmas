@@ -110,10 +110,42 @@ const addLecturerMember = async (
   }
 };
 
+const deleteLecturerMember = async (
+  user_type: user_type,
+  memberId: number,
+  setLoading: (loading: boolean) => void
+) => {
+  try {
+    setLoading(true);
+    const response = await axios.delete(`/api/${user_type}/member/0/lecturer?memberId=${memberId}`);
+
+    if (response.status === 200 && response.data.success) {
+      return {
+        success: true,
+        message: "Successfully deleted the lecturer member",
+      };
+    } else {
+      return {
+        success: false,
+        message: response.data?.message || "Failed to delete the lecturer member. Please try again.",
+      };
+    }
+  } catch (error: any) {
+    console.error('Error deleting lecturer member:', error);
+    return {
+      success: false,
+      message: error.response?.data?.message || error.message || 'Gagal menghapus anggota dosen'
+    };
+  } finally {
+    setLoading(false);
+  }
+};
+
 const memberAction = {
   getProposalSchema,
   getAvailableLecturerMember,
-  addLecturerMember
+  addLecturerMember,
+  deleteLecturerMember
 }
 
 export default memberAction;

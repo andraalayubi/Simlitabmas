@@ -29,13 +29,15 @@ interface AnggotaAdminProps {
   columnsLecturer: MRT_ColumnDef<lecturer>[];
   columnsStudent: MRT_ColumnDef<student_member>[];
   columnsVendor: MRT_ColumnDef<vendor_member>[];
+  refreshTriggers: number;
 }
 
-const MemberAdmin: React.FC<AnggotaAdminProps> = ({
+const MemberLecturer: React.FC<AnggotaAdminProps> = ({
   session,
   columnsLecturer,
   columnsStudent,
   columnsVendor,
+  refreshTriggers,
 }) => {
   const user_type = "lecturer";
   const [lecturers, setLecturers] = useState<lecturer[]>([]);
@@ -103,7 +105,7 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
     } else {
       showNotification({ status: "error", message: response.message });
     }
-  }, [user_type, usulan_id, refreshTrigger, session]);
+  }, [user_type, usulan_id, refreshTrigger, refreshTriggers, session]);
 
   const getLecturers = useCallback(async () => {
     const response = await lecturerAction.getLecturerMember(
@@ -160,7 +162,7 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
         getVendors();
         break;
     }
-  }, [usulan_id, tabActive, getStudents, getVendors, refreshTrigger]);
+  }, [usulan_id, tabActive, getStudents, getVendors, refreshTrigger, refreshTriggers]);
 
   return (
     <>
@@ -235,4 +237,4 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
   );
 };
 
-export default MemberAdmin;
+export default MemberLecturer;
