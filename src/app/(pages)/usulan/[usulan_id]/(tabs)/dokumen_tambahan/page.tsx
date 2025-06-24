@@ -7,15 +7,6 @@ import AddtionalDocumentAdmin from "./_admin";
 import AddtionalDocumentKaprodi from "./_kaprodi";
 import AddtionalDocumentKetuaRG from "./_ketua_rg";
 import AddtionalDocumentLecturer from "./_lecturer";
-import React from "react";
-import { MantineReactTable, MRT_ColumnDef } from "mantine-react-table";
-import { Button } from "@mantine/core";
-
-interface Dokumen {
-  id: number;
-  name: string;
-  fileUrl: string;
-}
 
 export default function DokumenTambahanPage() {
   const { session, loading: sessionLoading } = useSession();
@@ -46,31 +37,6 @@ export default function DokumenTambahanPage() {
     }
   };
 
-  const columns = React.useMemo<MRT_ColumnDef<Dokumen>[]>(
-    () => [
-      {
-        accessorKey: "name",
-        header: "Nama Dokumen",
-        size: 300,
-      },
-      {
-        accessorKey: "file_url",
-        header: "File",
-        size: 150,
-        Cell: ({ cell }) => (
-          <Button
-            variant="outline"
-            onClick={() => handleView(cell.getValue<string>())}
-            disabled={!cell.getValue<string>()}
-          >
-            Lihat Dokumen
-          </Button>
-        ),
-      },
-    ],
-    []
-  );
-
   useEffect(() => {
     if (!sessionLoading) {
       //   fetchDetailUsulanByUsulanId();
@@ -82,12 +48,12 @@ export default function DokumenTambahanPage() {
   }
 
   if (session?.user_type == "admin") {
-    return <AddtionalDocumentAdmin columns={columns} />;
+    return <AddtionalDocumentAdmin session={session} handleView={handleView} />;
   } else if (session?.user_type == "lecturer") {
     return <AddtionalDocumentLecturer session={session} handleView={handleView} />;
   } else if (session?.user_type == "ketua_rg") {
-    return <AddtionalDocumentKetuaRG columns={columns} />;
+    return <AddtionalDocumentKetuaRG session={session} handleView={handleView} />;
   } else if (session?.user_type == "kaprodi") {
-    return <AddtionalDocumentKaprodi columns={columns} />;
+    return <AddtionalDocumentKaprodi session={session} handleView={handleView} />;
   }
 }

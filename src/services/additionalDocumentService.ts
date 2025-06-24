@@ -29,10 +29,20 @@ const update = async (data: any) => {
     });
 };
 
+const deleteDocument = async (id: number, proposal_suggestion_id: number) => {
+    return await prisma.additional_document.delete({
+        where: {
+            id: id,
+            proposal_suggestion_id: proposal_suggestion_id,
+        }
+    });
+};
+
 const evaluationService = {
     getById,
     create,
-    update
+    update,
+    delete: deleteDocument
 };
 
 export default evaluationService;

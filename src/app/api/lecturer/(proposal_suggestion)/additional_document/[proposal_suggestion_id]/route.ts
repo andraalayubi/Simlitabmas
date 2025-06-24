@@ -72,3 +72,25 @@ export async function PUT(req: NextRequest) {
         }, { status: 500 });
     }
 }
+
+export async function DELETE(req: NextRequest, { params }: { params: Params }) {
+    try {
+        const proposalSuggestionId = parseInt(params.proposal_suggestion_id, 10);
+        const body = await req.json();
+        const id = parseInt(body.id, 10);
+
+        const result = await additionalDocumentService.delete(id, proposalSuggestionId);
+
+        return NextResponse.json({
+            success: true,
+            data: result,
+            message: "Additional document deleted successfully"
+        }, { status: 200 });
+    } catch (error: any) {
+        console.error("Error deleting additional document:", error);
+        return NextResponse.json({
+            success: false,
+            message: `Internal Server Error: ${error.message}`,
+        }, { status: 500 });
+    }
+}
