@@ -96,10 +96,6 @@ const AdditionalDocumentLecturer: React.FC<AdditionalDocumentLecturerProps> = ({
       showNotification({ status: "error", message: response.message });
     }
   }, [user_type, proposal_suggestion_id, session]);
-  console.log(user_type);
-  console.log(proposal_suggestion_id);
-  console.log(session);
-  
 
   useEffect(() => {
     fetchDokumens();
