@@ -166,6 +166,7 @@ export default function ConfigurationCriterionPage() {
                     <Table.Thead>
                       <Table.Tr>
                         <Table.Th>Nama Kriteria</Table.Th>
+                        <Table.Th>Bobot Kriteria</Table.Th>
                         <Table.Th>Aksi</Table.Th>
                       </Table.Tr>
                     </Table.Thead>
@@ -174,6 +175,7 @@ export default function ConfigurationCriterionPage() {
                         (criteria: criterion, index: number) => (
                           <Table.Tr key={index}>
                             <Table.Td>{criteria.name}</Table.Td>
+                                                        <Table.Td>{criteria.weight}</Table.Td>
                             <Table.Td>
                               <ActionButton
                                 type="delete"

@@ -11,6 +11,7 @@ export async function POST(request: NextRequest) {
             name: body.name,
             category: body.type,
             phase: body.phase,
+            weight: body.weight
         };
 
         const criterion = await criterionService.create(newCriterion);

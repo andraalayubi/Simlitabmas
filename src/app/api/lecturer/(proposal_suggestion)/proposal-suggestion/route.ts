@@ -31,6 +31,7 @@ export async function GET(req: NextRequest) {
             research_group: req.nextUrl.searchParams.get("get_research_group") === "true",
             year_research: req.nextUrl.searchParams.get("get_year_research") === "true",
             department: req.nextUrl.searchParams.get("get_department") === "true",
+            evaluation: req.nextUrl.searchParams.get("get_evaluation") === "true",
         };
 
         const proposal_suggestions = await proposalSuggestionService.getByFilter(filter, include);
