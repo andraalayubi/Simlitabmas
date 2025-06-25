@@ -37,6 +37,7 @@ const getByFilter = async (filter: {
     research_group?: boolean;
     year_research?: boolean;
     department?: boolean;
+    evaluation?: boolean;
 }) => {
     let whereClause: any = {
         id: filter.id,
@@ -81,6 +82,7 @@ const getByFilter = async (filter: {
             research_group: include?.research_group,
             year_research: include?.year_research,
             department: include?.department,
+            evaluation: include?.evaluation
         }
     });
 };

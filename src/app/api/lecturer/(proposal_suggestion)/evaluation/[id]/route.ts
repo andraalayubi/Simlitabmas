@@ -32,7 +32,8 @@ export async function PATCH(request: NextRequest,  { params }: { params: Params 
         const body = await request.json();
         
         const updateEvaluation = {
-            status: body.status
+            status: body.status,
+            score: body.score
         };
 
         const review = await evaluationService.update(evaluationId, updateEvaluation);

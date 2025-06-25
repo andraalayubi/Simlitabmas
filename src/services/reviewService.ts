@@ -1,4 +1,4 @@
-import { evaluation_phase, evaluation_status } from "prisma/interfaces";
+import { evaluation_phase, proposal_suggestion_status } from "prisma/interfaces";
 import prisma from "../client/prisma";
 
 const create = async (evaluationId: number, reviewerId: number) => {
@@ -7,7 +7,7 @@ const create = async (evaluationId: number, reviewerId: number) => {
     data: {
       evaluation_id: evaluationId,
       reviewer_id: reviewerId,
-      status: "menunggu_review" as evaluation_status,
+      status: "menunggu_review"
     },
   });
 
@@ -26,7 +26,7 @@ const create = async (evaluationId: number, reviewerId: number) => {
       data: { status: "menunggu_review",
               proposal_suggestion: {
                 update: {
-                  status: "menunggu_review",
+                  status: "menunggu_review" as proposal_suggestion_status,
                 },
               },
             },

@@ -6,8 +6,6 @@ export type config_type = "system" | "user" | "proposal";
 
 export type proposal_suggestion_status = "menunggu_proposal" | "menunggu_rg" | "menunggu_kaprodi" | "menunggu_admin" | "menunggu_review" | "menunggu_revisi" | "menunggu_laporan" | "tersimpan" | "menunggu" | "ditolak" | "diterima" | "selesai";
 
-export type evaluation_status = "menunggu_admin" | "menunggu_review" | "ditolak" | "diterima" | "selesai" | "selesai_dengan_revisi";
-
 export type degree = "S1" | "S2" | "S3";
 
 export type evaluation_phase = "evaluasi_proposal" | "evaluasi_monev" | "evaluasi_akhir";
@@ -372,7 +370,8 @@ export interface evaluation {
   proposal_suggestion_id: number | null;
   evaluation_phase: evaluation_phase | null;
   category: string | null;
-  status: evaluation_status | null;
+  status: proposal_suggestion_status | null;
+  score: number | null;
   createdAt: Date;
   updatedAt: Date;
   deleted: boolean;
@@ -386,7 +385,7 @@ export interface review {
   reviewer_id: number;
   note: string | null;
   average_score: number | null;
-  status: evaluation_status | null;
+  status: proposal_suggestion_status | null;
   createdAt: Date;
   updatedAt: Date;
   deleted: boolean;
@@ -398,6 +397,7 @@ export interface review {
 export interface criterion {
   id: number;
   name: string;
+  weight: number;
   category: string | null;
   phase: evaluation_phase;
   createdAt: Date;
