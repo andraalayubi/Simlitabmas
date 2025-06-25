@@ -28,8 +28,16 @@ export default function AuditLecturerPage() {
       },
       {
         accessorKey: "position.name",
-        header: "Jabatan",
+        header: "Jabatan Fungsional",
         size: 100,
+        Cell: ({ cell }) => {
+          const value = cell.getValue();
+          if (value === "Lecturer") {
+            return <span>Tanpa Jabatan</span>;
+          } else {
+            return <>{value}</>;
+          }
+        },
       },
       {
         accessorKey: "highest_degree",
@@ -52,7 +60,9 @@ export default function AuditLecturerPage() {
 
   const getLecturers = useCallback(async () => {
     const response = await lecturerAction.getLecturers(user_type, setLoading, {
-      get_position: true, get_department: true, get_research_group: true
+      get_position: true,
+      get_department: true,
+      get_research_group: true,
     });
 
     if (response.success) {

@@ -61,6 +61,7 @@ const LogBookAdmin = () => {
                   onSuccess={getLogbooks}
                   user_type={user_type}
                   editable={false}
+                  setLoading={setLoading}
                 />
               ))}
             </Stack>

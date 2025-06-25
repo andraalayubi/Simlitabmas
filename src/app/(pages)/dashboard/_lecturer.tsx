@@ -108,7 +108,7 @@ function DashboardLecturer() {
       </SimpleGrid>
       <Card shadow="sm" padding="lg">
         <Text size="lg" fw={500} mb="md">
-          Usulan Terbaru
+          Usulan yang Perlu Ditindaklanjuti
         </Text>
         <TableLayout
           columns={columns}

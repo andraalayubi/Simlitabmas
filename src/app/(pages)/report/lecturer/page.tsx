@@ -3,9 +3,7 @@
 import React from "react";
 import LoadingPage from "src/components/Loading/LoadingPage";
 import { useSession } from "src/components/session/session";
-import LecturerRankingAdmin from "./_admin";
-import LecturerRankingKetuaRG from "./_ketuaRg";
-import LecturerRankingKaprodi from "./_kaprodi";
+import LecturerRankingKaprodi from "../lecturer/_kaprodi";
 
 export default function LecturerRanking() {
   const { session, loading: sessionLoading } = useSession();
@@ -13,13 +11,8 @@ export default function LecturerRanking() {
   if (sessionLoading) {
     return <LoadingPage />;
   }
-  console.log(session);
 
-  if (session?.user_type === "admin") {
-    return <LecturerRankingAdmin />;
-  } else if (session?.user_type === "ketua_rg") {
-    return <LecturerRankingKetuaRG />;
-  } else if (session?.user_type === "kaprodi") {
+  if (session?.user_type === "kaprodi") {
     return <LecturerRankingKaprodi />;
   } else {
     if (typeof window !== "undefined") {

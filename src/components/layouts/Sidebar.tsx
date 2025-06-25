@@ -23,6 +23,8 @@ import {
   IconPencilPlus,
   IconUsersPlus,
   IconEdit,
+  IconUserHexagon,
+  IconUserPin,
 } from "@tabler/icons-react";
 
 // Tipe data untuk konfigurasi menu
@@ -105,9 +107,14 @@ const MENU_CONFIG: Record<string, MenuSection[]> = {
       title: "LAPORAN",
       items: [
         {
-          name: "Dosen",
+          name: "Penelitian Dosen",
+          icon: <IconUserPin />,
+          path: "/report/lecturer_research",
+        },
+        {
+          name: "Pengabdian Dosen",
           icon: <IconUserStar />,
-          path: "/report/lecturer",
+          path: "/report/lecturer_service",
         },
         {
           name: "Research Group",
@@ -194,7 +201,7 @@ const MENU_CONFIG: Record<string, MenuSection[]> = {
         {
           name: "Laporan",
           icon: <IconBooks />,
-          path: "/report/lecturer",
+          path: "/report/lecturer_service",
         },
       ],
     },
@@ -226,17 +233,22 @@ const MENU_CONFIG: Record<string, MenuSection[]> = {
       ],
     },
     {
-      title: "RESEARCH GROUP",
+      title: "LAPORAN",
+      items: [
+        {
+          name: "Penelitian Dosen",
+          icon: <IconUserPin />,
+          path: "/report/lecturer_research",
+        },
+      ],
+    },
+    {
+      title: "MASTER",
       items: [
         {
           name: "Research Group",
-          icon: <IconBuildingCommunity />,
-          path: "/research_group",
-        },
-        {
-          name: "Laporan",
           icon: <IconTopologyStar />,
-          path: "/report/lecturer",
+          path: "/research_group",
         },
       ],
     },

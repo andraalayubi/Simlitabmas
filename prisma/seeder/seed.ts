@@ -1,7 +1,6 @@
-import { degree, PrismaClient } from '@prisma/client'
+import { degree, evaluation_phase, PrismaClient } from '@prisma/client'
 
 import bcrypt from "bcrypt";
-import { evaluation_phase } from 'prisma/interfaces';
 import proposalSuggestionsPenelitian from './penelitian_seed';
 import proposalSuggestionsPengmas from './pengmas_seed';
 import lecturers from './lecturer_seed';
@@ -23,7 +22,8 @@ const research_groups = [
     { name: "Data Science for SDGs Applied Solution", description: "Data Science for SDGs Applied Solutions" },
     { name: "Digital Media", description: "Mengeksplorasi alat dan teknologi baru di media digital untuk kehidupan yang lebih baik" },
     { name: "Embedded AI", description: "Embedded artificial intelligence (AI) is the application of machine and deep learning in software at the device level. Software can be programmed to provide both predictive and reactive intelligence, based on the data that is collected and analyzed." },
-    { name: "Health Informatics", description: "Health Informatics research group aims at developing methods and technologies for the acquisition, processing, and study of patient data, which can come from hospital information system or user personalized data from wearable devices / application."}
+    { name: "Health Informatics", description: "Health Informatics research group aims at developing methods and technologies for the acquisition, processing, and study of patient data, which can come from hospital information system or user personalized data from wearable devices / application."},
+    { name: "System and Automation", description: "This research group focuses information technologies and its automation"}
 ]
 
 const departements = [
@@ -40,6 +40,15 @@ const year_researches = [
     { year: 2024, open_date: new Date("2024-01-01"), closed_date: new Date("2024-12-31"), is_active: false },
     { year: 2025, open_date: new Date("2025-01-01"), closed_date: new Date("2025-12-31"), is_active: true },
     { year: 2026, open_date: new Date("2026-01-01"), closed_date: new Date("2026-12-31"), is_active: false },
+    { year: 2022, open_date: new Date("2022-01-01"), closed_date: new Date("2022-12-31"), is_active: false },
+    { year: 2021, open_date: new Date("2021-01-01"), closed_date: new Date("2021-12-31"), is_active: false },
+    { year: 2020, open_date: new Date("2020-01-01"), closed_date: new Date("2020-12-31"), is_active: false },
+    { year: 2019, open_date: new Date("2019-01-01"), closed_date: new Date("2019-12-31"), is_active: false },
+    { year: 2018, open_date: new Date("2018-01-01"), closed_date: new Date("2018-12-31"), is_active: false },
+    { year: 2017, open_date: new Date("2017-01-01"), closed_date: new Date("2017-12-31"), is_active: false },
+    { year: 2016, open_date: new Date("2016-01-01"), closed_date: new Date("2016-12-31"), is_active: false },
+    { year: 2015, open_date: new Date("2015-01-01"), closed_date: new Date("2015-12-31"), is_active: false },
+    { year: 2014, open_date: new Date("2014-01-01"), closed_date: new Date("2014-12-31"), is_active: false },
 ];
 
 
@@ -48,23 +57,23 @@ const configuration = {
 }
 
 const positions = [
-    { name: "Lecturer", description: "A position for teaching and contributing to research activities." },
+    { name: "Lecturer", description: "A position for teaching and contributing to research activities." }, 
     {
         name: "Guru Besar",
         description: "Jabatan akademik tertinggi dengan kewajiban utama melakukan penelitian unggulan, membimbing penelitian doktoral, dan berkontribusi secara signifikan dalam pengembangan ilmu pengetahuan di tingkat nasional maupun internasional."
-    },
+    }, // Professor / full processor
     {
         name: "Lektor Kepala",
         description: "Jabatan akademik madya yang berperan aktif dalam penelitian, menjadi pembimbing utama mahasiswa magister dan doktor, serta menghasilkan publikasi ilmiah bereputasi nasional dan internasional."
-    },
+    }, // Associate Professor
     {
         name: "Lektor",
         description: "Jabatan akademik yang mendukung kegiatan penelitian, aktif dalam publikasi ilmiah, serta terlibat dalam bimbingan tugas akhir dan penelitian mahasiswa tingkat sarjana dan magister."
-    },
+    }, // Assistant Professor
     {
         name: "Asisten Ahli",
         description: "Jabatan akademik awal yang mulai terlibat dalam kegiatan penelitian, mendukung penulisan karya ilmiah, serta berpartisipasi dalam kegiatan ilmiah dan seminar akademik."
-    }
+    } // Assistant Professor
 ];
 
 const schemas = [
@@ -109,6 +118,38 @@ const external_document_categories = [
     { name: "Video Dokumentasi", schema_id: 5, description: "Rekaman kegiatan, wawancara mitra, dan hasil program yang diunggah ke media sosial/website." }
 ]
 
+const criteria = [
+    { name: "Relevansi", category: "penelitian", phase: evaluation_phase.evaluasi_proposal},
+    { name: "Kualitas", category: "penelitian", phase: evaluation_phase.evaluasi_proposal},
+    { name: "Inovasi", category: "penelitian", phase: evaluation_phase.evaluasi_proposal},
+    { name: "Feasibilitas", category: "penelitian", phase: evaluation_phase.evaluasi_proposal},
+    { name: "Luaran yang Dijanjikan", category: "penelitian", phase: evaluation_phase.evaluasi_proposal},
+    { name: "Progress Pencapaian", category: "penelitian", phase: evaluation_phase.evaluasi_monev},
+    { name: "Efektivitas Metode", category: "penelitian", phase: evaluation_phase.evaluasi_monev},
+    { name: "Pemanfaatan Anggaran", category: "penelitian", phase: evaluation_phase.evaluasi_monev},
+    { name: "Dokumentasi dan Laporan", category: "penelitian", phase: evaluation_phase.evaluasi_monev},
+    { name: "Tantangan dan Solusi", category: "penelitian", phase: evaluation_phase.evaluasi_monev},
+    { name: "Kualitas Hasil", category: "penelitian", phase: evaluation_phase.evaluasi_akhir},
+    { name: "Dampak Nyata", category: "penelitian", phase: evaluation_phase.evaluasi_akhir},
+    { name: "Keberlanjutan", category: "penelitian", phase: evaluation_phase.evaluasi_akhir},
+    { name: "Publikasi dan Disemasi", category: "penelitian", phase: evaluation_phase.evaluasi_akhir},
+    { name: "Evaluasi Keseluruhan", category: "penelitian", phase: evaluation_phase.evaluasi_akhir},
+    { name: "Relevansi", category: "pengmas", phase: evaluation_phase.evaluasi_proposal},
+    { name: "Kualitas Program", category: "pengmas", phase: evaluation_phase.evaluasi_proposal},
+    { name: "Inovasi", category: "pengmas", phase: evaluation_phase.evaluasi_proposal},
+    { name: "Keberlanjutan", category: "pengmas", phase: evaluation_phase.evaluasi_proposal},
+    { name: "Implementasi Program", category: "pengmas", phase: evaluation_phase.evaluasi_monev},
+    { name: "Respon Masyarakat", category: "pengmas", phase: evaluation_phase.evaluasi_monev},
+    { name: "Efektivitas Metode", category: "pengmas", phase: evaluation_phase.evaluasi_monev},
+    { name: "Pemanfaatan Sumber Daya", category: "pengmas", phase: evaluation_phase.evaluasi_monev},
+    { name: "Dokumentasi dan Laporan", category: "pengmas", phase: evaluation_phase.evaluasi_monev},
+    { name: "Dampak Nyata", category: "pengmas", phase: evaluation_phase.evaluasi_akhir},
+    { name: "Keberlanjutan Program", category: "pengmas", phase: evaluation_phase.evaluasi_akhir},
+    { name: "Kepuasan Masyarakat", category: "pengmas", phase: evaluation_phase.evaluasi_akhir},
+    { name: "Disemasi dan Publikasi", category: "pengmas", phase: evaluation_phase.evaluasi_akhir},
+    { name: "Evaluasi Keseluruhan", category: "pengmas", phase: evaluation_phase.evaluasi_akhir},
+]
+
 const main = async () => {
     try {
         console.log("deleting all data and reset iteration...")
@@ -119,12 +160,14 @@ const main = async () => {
                 "users", 
                 "research_groups", 
                 "departments", 
+                "lecturer_members",
                 "year_researches", 
                 "schemas", 
                 "positions", 
                 "position_schemas", 
                 "proposal_suggestions",
-                "configurations"
+                "configurations",
+                "criteria"
             RESTART IDENTITY CASCADE;
         `);
 
@@ -242,6 +285,13 @@ const main = async () => {
             data: external_document_categories
         })
         console.log("Inserting external category...");
+
+        // insert criterion
+        await prisma.criterion.createMany({
+            data: criteria,
+            skipDuplicates: true,
+        })
+        console.log("Inserting criterion...");
 
         console.log("Seeding selesai.");
     } catch (error) {

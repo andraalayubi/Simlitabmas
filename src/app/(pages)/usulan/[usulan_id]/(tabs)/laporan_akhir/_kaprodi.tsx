@@ -62,6 +62,7 @@ const FinalReportKaprodi = () => {
                   onSuccess={getFinalReports}
                   user_type={user_type}
                   editable={false}
+                  setLoading={setLoading}
                 />
               ))}
             </Stack>

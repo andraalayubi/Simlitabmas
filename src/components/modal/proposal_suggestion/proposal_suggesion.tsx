@@ -23,7 +23,6 @@ interface ProposalSuggestionModalProps {
   type: string;
   lecturer: lecturer;
   refreshData: () => void;
-  proposal_suggestion_type: string;
 }
 
 const transformData = <T extends {
@@ -45,7 +44,6 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
   type,
   lecturer,
   refreshData,
-  proposal_suggestion_type,
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [schemas, setSchemas] = useState<{ value: string; label: string }[]>([]);
@@ -57,7 +55,7 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
     
     // get schema by type
     let schemaFilters = null
-    if (proposal_suggestion_type == 'penelitian') {
+    if (type == 'penelitian') {
       schemaFilters = { is_active: true, min_degree: lecturer.highest_degree, type: "penelitian", position_id: lecturer.position_id }
     } else {
       schemaFilters = { is_active: true, type: 'pengmas' }
@@ -91,6 +89,7 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
       setSchemas(transformedSchemas);
       setYearResearches(transformedYearResearches);
       setResearchGroups(transformedResearchGroups);
+      form.setFieldValue("year_research_id", transformedYearResearches.length === 1 ? transformedYearResearches[0].value : "");
     } else {
       const errorResponse = responses.find((response) => !response.success);
       showNotification({
@@ -102,7 +101,6 @@ const ProposalSuggestionModal: React.FC<ProposalSuggestionModalProps> = ({
 
   useEffect(() => {
     getData();
-    console.log(lecturer);
   }, [getData]);
 
   const form = useForm({

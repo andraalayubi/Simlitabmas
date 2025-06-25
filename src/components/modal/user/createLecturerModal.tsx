@@ -147,6 +147,11 @@ const CreateLecturerModal: React.FC<CreateLecturerModalProps> = ({
                 placeholder="912093093212"
                 {...lecturerForm.getInputProps("nidn")}
               />
+              <TextInput
+                label="Nomor Telepon"
+                placeholder="08123456789"
+                {...lecturerForm.getInputProps("phone_number")}
+              />
               <Select
                 label="Pilih Research Group"
                 placeholder="pilih research group"

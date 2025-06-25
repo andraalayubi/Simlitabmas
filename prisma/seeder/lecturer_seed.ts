@@ -35,7 +35,7 @@ const lecturers = [
         is_ketua_rg: true,
         is_kaprodi: false,
         highest_degree: "S3" as degree,
-        position_id: 1,
+        position_id: 2,
         user: {
             create: [
                 { name: "Admin Mirza", email: "adminMirza@gmail.com", user_type: "admin" as user_type, password: "Mirza123!" },
@@ -118,7 +118,7 @@ const lecturers = [
     },
     // Human Centric Multimedia (RG 4) / lecturer id 4
     {
-        name: "Sritrusta Sukaridhoto, ST., Ph.D.",
+        name: "Sritrusta Sukaridhoto",
         phone_number: "085163142760",
         research_group_id: 4,
         department_id: 4,
@@ -132,7 +132,7 @@ const lecturers = [
         is_ketua_rg: true,
         is_kaprodi: false,
         highest_degree: "S3" as degree,
-        position_id: 1,
+        position_id: 4,
         user: {
             create: [
                 { name: "Dosen Sritrusta", email: "dosen.sritrusta@pens.ac.id", user_type: "lecturer", password: "DosenSritrusta2023!" },
@@ -146,17 +146,18 @@ const lecturers = [
         name: "Dr. Agus Indra Gunawan",
         phone_number: "085163142760",
         research_group_id: 5,
-        department_id: 3,
+        department_id: 1,
         nidn: "0413123456",
         nip: "197304131998031001",
         degree: [
-            { degree: "S1", code: "S.T.", field: "Aquacultural Engineering", university: "IPB", year: "1998" },
-            { degree: "S3", code: "Dr.Eng", field: "Applied Technology", university: "Kyushu University", year: "2010" }
+            { degree: "S1", code: "S.T.", field: "Teknik Elektro", university: "ITS", year: "1998" },
+            { degree: "S2", code: "M.T.", field: "Teknik Elektro", university: "Darmstadt University of Applied Sciences", year: "1998" },
+            { degree: "S3", code: "Dr.Eng", field: "Teknik Elektro", university: "Toyohashi University of Technology", year: "2010" }
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
         highest_degree: "S3" as degree,
-        position_id: 2,
+        position_id: 4,
         user: {
             create: [
                 { name: "Dosen Agus", email: "agus.gunawan@pens.ac.id", user_type: "lecturer", password: "DosenAgus2023!" },
@@ -191,7 +192,7 @@ const lecturers = [
 
     // Bio Electrochemistry System (RG 7) / lecturer id 7
     {
-        name: "Ri'fah Amalia",
+        name: "Rif'ah Amalia",
         phone_number: "085163142760",
         research_group_id: 7,
         department_id: 1,
@@ -204,7 +205,7 @@ const lecturers = [
         is_ketua_rg: true,
         is_kaprodi: false,
         highest_degree: "S2" as degree,
-        position_id: 1,
+        position_id: 4,
         user: {
             create: [
                 { name: "Dosen Rifah", email: "rifah.amalia@pens.ac.id", user_type: "lecturer" as user_type, password: "Rifah123!" },
@@ -218,7 +219,7 @@ const lecturers = [
         name: "Rika Rokhana",
         phone_number: "085163142760",
         research_group_id: 8,
-        department_id: 3,
+        department_id: 2,
         nidn: "3122500051",
         nip: "89012345",
         degree: [
@@ -228,7 +229,7 @@ const lecturers = [
         is_ketua_rg: true,
         is_kaprodi: false,
         highest_degree: "S3" as degree,
-        position_id: 2,
+        position_id: 3,
         user: {
             create: [
                 { name: "Dosen Rika", email: "rika.rokhana@pens.ac.id", user_type: "lecturer" as user_type, password: "Rika123!" },
@@ -242,7 +243,7 @@ const lecturers = [
         name: "Ferry Astika Saputra",
         phone_number: "085163142760",
         research_group_id: 9,
-        department_id: 1,
+        department_id: 2,
         nidn: "3122500052",
         nip: "90123456",
         degree: [
@@ -266,16 +267,17 @@ const lecturers = [
         name: "Arna Fariza",
         phone_number: "085163142760",
         research_group_id: 10,
-        department_id: 1,
+        department_id: 2,
         nidn: "3122500053",
         nip: "01234567",
         degree: [
-            { degree: "S1", code: "S.Kom", field: "Information Systems", university: "ITS", year: "2013" },
-            { degree: "S2", code: "M.Eng", field: "Business Intelligence", university: "NTU Singapore", year: "2017" }
+            { degree: "S1", code: "S.T", field: "Informatics", university: "ITS", year: "1996" },
+            { degree: "S2", code: "M.T", field: "Informatics", university: "ITS", year: "2003" },
+            { degree: "S3", code: "Ph.D", field: "COmputer Science", university: "ITS", year: "2020" }
         ] as JsonArray,
         is_ketua_rg: true,
         is_kaprodi: false,
-        highest_degree: "S2" as degree,
+        highest_degree: "S3" as degree,
         position_id: 2,
         user: {
             create: [
@@ -312,7 +314,7 @@ const lecturers = [
         is_ketua_rg: true,
         is_kaprodi: false,
         highest_degree: "S2" as degree,
-        position_id: 1,
+        position_id: 2,
         user: {
             create: [
                 { name: "Dosen Ronny", email: "ronny.susetyoko@pens.ac.id", user_type: "lecturer" as user_type, password: "DosenRonny2023!" },
@@ -405,7 +407,7 @@ const lecturers = [
     {
         name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
         phone_number: "085163142760",
-        research_group_id: null,
+        research_group_id: 13,
         department_id: 2,
         nidn: "3122500057",
         nip: "33445567",
@@ -448,7 +450,7 @@ const lecturers = [
     {
         name: "Mohammad Nasyir Tamara, S.ST., M.T.",
         phone_number: "085163142760",
-        research_group_id: null,
+        research_group_id: 4,
         department_id: 3,
         nidn: "3122500058",
         nip: "33445568",
@@ -491,7 +493,7 @@ const lecturers = [
     {
         name: "Kholid Fathoni , S.Kom., MT.",
         phone_number: "085163142760",
-        research_group_id: null,
+        research_group_id: 12,
         department_id: 4,
         nidn: "3122500059",
         nip: "33445569",
@@ -533,7 +535,7 @@ const lecturers = [
     {
         name: "Budi Santoso, S.T., M.Eng.",
         phone_number: "085163142760",
-        research_group_id: null,
+        research_group_id: 6,
         department_id: 3,
         nidn: "3122500001",
         nip: "33445570",
@@ -571,7 +573,7 @@ const lecturers = [
     {
         name: "Anisa Rahma, S.Kom., M.Kom.",
         phone_number: "085163142760",
-        research_group_id: null,
+        research_group_id: 7,
         department_id: 1,
         nidn: "3122500002",
         nip: "33445571",
@@ -609,7 +611,7 @@ const lecturers = [
     {
         name: "Hendra Pratama, S.T., M.Sc., Ph.D.",
         phone_number: "085163142760",
-        research_group_id: null,
+        research_group_id: 8,
         department_id: 4,
         nidn: "3122500003",
         nip: "33445572",
@@ -639,7 +641,7 @@ const lecturers = [
         is_ketua_rg: false,
         is_kaprodi: false,
         highest_degree: "S3" as degree,
-        position_id: 1,
+        position_id: 2,
         user: {
             create: [
                 {
@@ -654,7 +656,7 @@ const lecturers = [
     {
         name: "Dewi Anggraeni, S.Si., M.T.",
         phone_number: "085163142760",
-        research_group_id: null,
+        research_group_id: 9,
         department_id: 2,
         nidn: "3122500004",
         nip: "33445573",
@@ -692,7 +694,7 @@ const lecturers = [
     {
         name: "Rudi Hermawan, S.T., M.Eng., Ph.D.",
         phone_number: "085163142760",
-        research_group_id: null,
+        research_group_id: 10,
         department_id: 1,
         nidn: "3122500005",
         nip: "33445574",
@@ -737,7 +739,7 @@ const lecturers = [
     {
         name: "Fitria Wulandari, S.Kom., M.Kom.",
         phone_number: "085163142760",
-        research_group_id: null,
+        research_group_id: 11,
         department_id: 4,
         nidn: "3122500006",
         nip: "33445575",
@@ -796,7 +798,7 @@ const lecturers = [
                 year: "2019"
             }
         ],
-        is_ketua_rg: true,
+        is_ketua_rg: false,
         is_kaprodi: true,
         highest_degree: "S2" as degree,
         position_id: 3,
@@ -828,8 +830,757 @@ const lecturers = [
                 },
             ]
         }
-    }
+    },
 
+    {
+        name: "Cahyo Pratama",
+        phone_number: "081953025113",
+        research_group_id: 9,
+        department_id: 4,
+        nidn: "199107222022032006",
+        nip: "19910720220306",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.Kom",
+                field: "Informatic",
+                university: "ITS",
+                year: "2014"
+            },
+            {
+                degree: "S2",
+                code: "M.Kom",
+                field: "Informatics",
+                university: "ITS",
+                year: "2019"
+            }
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: true,
+        highest_degree: "S2" as degree,
+        position_id: 3,
+        user: {
+            create: [
+                {
+                    name: "Cahyo Pratama",
+                    email: "dosenCahyo@pens.ac.id",
+                    user_type: "lecturer",
+                    password: "dosenCahyo123!"
+                },
+                {
+                    name: "Cahyo Pratama",
+                    email: "kaprodiCahyo@pens.ac.id",
+                    user_type: "kaprodi",
+                    password: "kaprodiCahyo123!"
+                },
+                {
+                    name: "Cahyo Pratama",
+                    email: "adminCahyo@pens.ac.id",
+                    user_type: "admin",
+                    password: "adminCahyo123!"
+                },
+            ]
+        }
+    },
+
+    {
+        name: "Ahmad",
+        phone_number: "081953025113",
+        research_group_id: 15,
+        department_id: 4,
+        nidn: "199107221022032006",
+        nip: "19910721220306",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.Kom",
+                field: "Informatic",
+                university: "ITS",
+                year: "2014"
+            },
+            {
+                degree: "S2",
+                code: "M.Kom",
+                field: "Informatics",
+                university: "ITS",
+                year: "2019"
+            }
+        ],
+        is_ketua_rg: true,
+        is_kaprodi: false,
+        highest_degree: "S2" as degree,
+        position_id: 2,
+        user: {
+            create: [
+                {
+                    name: "Ahmad",
+                    email: "dosenAhmad@gmail.com",
+                    user_type: "lecturer",
+                    password: "Ahmad123!"
+                },
+                {
+                    name: "Ahmad",
+                    email: "ketuargAhmad@gmail.com",
+                    user_type: "ketua_rg",
+                    password: "Ahmad123!"
+                },
+                {
+                    name: "Ahmad",
+                    email: "adminAhmad@gmail.com",
+                    user_type: "admin",
+                    password: "Ahmad123!"
+                },
+            ]
+        }
+    },
+
+    // add valid data
+    {
+        name: "Setiawardhana",
+        phone_number: "081234567890",
+        research_group_id: 5,
+        department_id: 2,
+        nidn: "0024087701",
+        nip: "19801121220301",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.T.",
+                field: "Teknik Elektro",
+                university: "ITS",
+                year: "2000"
+            },
+            {
+                degree: "S2",
+                code: "M.T.",
+                field: "Teknik Elektro",
+                university: "ITS",
+                year: "2010"
+            },
+            {
+                degree: "S3",
+                code: "Ph.D",
+                field: "Teknik Elektro",
+                university: "ITS",
+                year: "2021"
+            }
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S3",
+        position_id: 3,
+        user: {
+            create: [{
+                name: "Setiawardhana",
+                email: "setiawardhana@univ.ac.id",
+                user_type: "lecturer",
+                password: "Setiawardhana123!"
+            }]
+        }
+    },
+    {
+        name: "Ardik Wijayanto",
+        phone_number: "082345678901",
+        research_group_id: 5,
+        department_id: 1,
+        nidn: "1985121200000002",
+        nip: "197706202002121002",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.T.",
+                field: "Teknik Elektro",
+                university: "ITS",
+                year: "2000"
+            },
+            {
+                degree: "S2",
+                code: "M.T.",
+                field: "Teknik Elektro",
+                university: "ITS",
+                year: "2010"
+            },
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S2",
+        position_id: 4,
+        user: {
+            create: [{
+                name: "Ardik Wijayanto",
+                email: "ardik.wijayanto@univ.ac.id",
+                user_type: "lecturer",
+                password: "ArdikWijayanto123!"
+            }]
+        }
+    },
+    {
+        name: "Taufiqurrahman",
+        phone_number: "083456789012",
+        research_group_id: 5,
+        department_id: 1,
+        nidn: "1987081500000003",
+        nip: "19870815220303",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.T.",
+                field: "Teknik Elektro",
+                university: "ITS",
+                year: "2000"
+            },
+            {
+                degree: "S2",
+                code: "M.T.",
+                field: "Teknik Elektro",
+                university: "ITS",
+                year: "2010"
+            },
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S2",
+        position_id: 5,
+        user: {
+            create: [{
+                name: "Taufiqurrahman",
+                email: "taufiqurrahman@univ.ac.id",
+                user_type: "lecturer",
+                password: "Taufiqurrahman123!"
+            }]
+        }
+    },
+    {
+        name: "Santi Anggraini",
+        phone_number: "084567890123",
+        research_group_id: 5,
+        department_id: 1,
+        nidn: "1990021400000004",
+        nip: "19900214220304",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.T.",
+                field: "Teknik Elektro",
+                university: "ITS",
+                year: "2000"
+            },
+            {
+                degree: "S2",
+                code: "M.T.",
+                field: "Teknik Elektro",
+                university: "ITS",
+                year: "2010"
+            },
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S2",
+        position_id: 5,
+        user: {
+            create: [{
+                name: "Santi Anggraini",
+                email: "santi.anggraini@univ.ac.id",
+                user_type: "lecturer",
+                password: "SantiAnggraini123!"
+            }]
+        }
+    },
+    {
+        name: "Hanny Megawati R",
+        phone_number: "085678901234",
+        research_group_id: 5,
+        department_id: 1,
+        nidn: "1993041000000005",
+        nip: "19930410220305",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.T.",
+                field: "Teknik Elektro",
+                university: "ITS",
+                year: "2000"
+            },
+            {
+                degree: "S2",
+                code: "M.T.",
+                field: "Teknik Elektro",
+                university: "ITS",
+                year: "2010"
+            },
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S2",
+        position_id: 3,
+        user: {
+            create: [{
+                name: "Hanny Megawati R",
+                email: "hanny.megawati@univ.ac.id",
+                user_type: "lecturer",
+                password: "HannyMegawatiR123!"
+            }]
+        }
+    },
+
+    {
+        name: "Dr. Zainal Arief, S.T., M.T.",
+        phone_number: "081234567890",
+        research_group_id: 8,
+        department_id: 1,
+        nidn: "197012151995021001",
+        nip: "197012151995021001",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.T.",
+                field: "Teknik Elektro",
+                university: "ITS",
+                year: "1995"
+            },
+            {
+                degree: "S2",
+                code: "M.T.",
+                field: "Teknik Elektro",
+                university: "Nara Institute Of Science And Technology",
+                year: "2002"
+            },
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S2",
+        position_id: 2,
+        user: {
+            create: [{
+                name: "Zainal Arief",
+                email: "zainal.arief@univ.ac.id",
+                user_type: "lecturer",
+                password: "ZainalArief123!"
+            }]
+        }
+    },
+    {
+        name: "Moch. Rochmad, S.T., M.T.",
+        phone_number: "082345678901",
+        research_group_id: 8,
+        department_id: 1,
+        nidn: "198103202000121002",
+        nip: "198103202000121002",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.T.",
+                field: "Teknik Elektronika",
+                university: "ITS",
+                year: "2000"
+            },
+            {
+                degree: "S2",
+                code: "M.T.",
+                field: "Teknik Elektronika",
+                university: "ITS",
+                year: "2007"
+            }
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S2",
+        position_id: 3,
+        user: {
+            create: [{
+                name: "Moch. Rochmad",
+                email: "moch.rochmad@univ.ac.id",
+                user_type: "lecturer",
+                password: "MochRochmad123!"
+            }]
+        }
+    },
+    {
+        name: "Kemalasari, S.T., M.Eng.",
+        phone_number: "083456789012",
+        research_group_id: 8,
+        department_id: 1,
+        nidn: "198511182005022003",
+        nip: "198511182005022003",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.T.",
+                field: "Teknik Elektronika",
+                university: "ITS",
+                year: "2000"
+            },
+            {
+                degree: "S2",
+                code: "M.T.",
+                field: "Teknik Elektronika",
+                university: "ITS",
+                year: "2007"
+            }
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S2",
+        position_id: 5,
+        user: {
+            create: [{
+                name: "Kemalasari",
+                email: "kemalasari@univ.ac.id",
+                user_type: "lecturer",
+                password: "Kemalasari123!"
+            }]
+        }
+    },
+    {
+        name: "Dr. Paulus Susetyo Wardana, S.T., M.T.",
+        phone_number: "084567890123",
+        research_group_id: 8,
+        department_id: 1,
+        nidn: "197809052001121004",
+        nip: "197809052001121004",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.T.",
+                field: "Teknik Elektronika",
+                university: "ITS",
+                year: "2000"
+            },
+            {
+                degree: "S2",
+                code: "M.T.",
+                field: "Teknik Elektronika",
+                university: "ITS",
+                year: "2007"
+            }
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S2",
+        position_id: 5,
+        user: {
+            create: [{
+                name: "Paulus Susetyo Wardana",
+                email: "paulus.wardana@univ.ac.id",
+                user_type: "lecturer",
+                password: "PaulusWardana123!"
+            }]
+        }
+    },
+    {
+        name: "Agrippina Waya R.G, S.T., M.Sc.",
+        phone_number: "085678901234",
+        research_group_id: 8,
+        department_id: 1,
+        nidn: "198904172010122005",
+        nip: "198904172010122005",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.T.",
+                field: "Teknik Biomedis",
+                university: "ITS",
+                year: "2010"
+            },
+            {
+                degree: "S2",
+                code: "M.Sc.",
+                field: "Biomedical Engineering",
+                university: "Universitas Airlangga",
+                year: "2016"
+            }
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S2",
+        position_id: 5,
+        user: {
+            create: [{
+                name: "Agrippina Waya R.G",
+                email: "agrippina.waya@univ.ac.id",
+                user_type: "lecturer",
+                password: "AgrippinaWaya123!"
+            }]
+        }
+    },
+    {
+        name: "Firman Isma S., S.T., M.Eng.",
+        phone_number: "086789012345",
+        research_group_id: 8,
+        department_id: 1,
+        nidn: "198306212003121006",
+        nip: "198306212003121006",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.T.",
+                field: "Biomedical Engineering",
+                university: "Airlangga University",
+                year: "2016"
+            },
+            {
+                degree: "S2",
+                code: "M.T.",
+                field: "Bioengineering",
+                university: "Imperial College London",
+                year: "2010"
+            },
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S2",
+        position_id: 5,
+        user: {
+            create: [{
+                name: "Firman Isma S.",
+                email: "firman.isma@univ.ac.id",
+                user_type: "lecturer",
+                password: "FirmanIsma123!"
+            }]
+        }
+    },
+
+    // 37
+    {
+        name: "Dian Septiani Santoso",
+        phone_number: "085163142760",
+        research_group_id: 10,
+        department_id: 2,
+        nidn: "3122500053321",
+        nip: "01234567213",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.Kom",
+                field: "Informatika",
+                university: "ITS",
+                year: "2013"
+            },
+            {
+                degree: "S2",
+                code: "M.Kom",
+                field: "Informatika",
+                university: "ITS",
+                year: "2017"
+            }
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S2",
+        position_id: 5,
+        user: {
+            create: [
+                {
+                    name: "Dian Septiani Santoso",
+                    email: "dian.septiani@pens.ac.id",
+                    user_type: "lecturer",
+                    password: "DianSeptiani123!"
+                }
+            ]
+        }
+    },
+
+    // 38
+    {
+        name: "Fitrah Maharani Humaira",
+        phone_number: "085163142761",
+        research_group_id: 10,
+        department_id: 2,
+        nidn: "31225000549",
+        nip: "01234568",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.Kom",
+                field: "Informatika",
+                university: "ITS",
+                year: "2013"
+            },
+            {
+                degree: "S2",
+                code: "M.Kom",
+                field: "Informatika",
+                university: "ITS",
+                year: "2017"
+            }
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S2",
+        position_id: 5,
+        user: {
+            create: [
+                {
+                    name: "Fitrah Maharani Humaira",
+                    email: "fitrah.maharani@pens.ac.id",
+                    user_type: "lecturer",
+                    password: "FitrahMaharani123!"
+                }
+            ]
+        }
+    },
+
+    // 39
+    {
+        name: "Fitri Setyorini",
+        phone_number: "085163142762",
+        research_group_id: 10,
+        department_id: 2,
+        nidn: "197707072001122001",
+        nip: "197707072001122001",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.Kom",
+                field: "Informatika",
+                university: "ITS",
+                year: "2013"
+            },
+            {
+                degree: "S2",
+                code: "M.Kom",
+                field: "Informatika",
+                university: "ITS",
+                year: "2017"
+            }
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S2",
+        position_id: 4,
+        user: {
+            create: [
+                {
+                    name: "Fitri Setyorini",
+                    email: "fitri.setyorini@pens.ac.id",
+                    user_type: "lecturer",
+                    password: "FitriSetyorini123!"
+                }
+            ]
+        }
+    },
+
+    // 40
+    {
+        name: "Hero Yudo Martono",
+        phone_number: "085163142763",
+        research_group_id: 10,
+        department_id: 2,
+        nidn: "197811032005011002",
+        nip: "197811032005011002",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.Kom",
+                field: "Informatika",
+                university: "ITS",
+                year: "2013"
+            },
+            {
+                degree: "S2",
+                code: "M.Kom",
+                field: "Informatika",
+                university: "ITS",
+                year: "2017"
+            }
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S2",
+        position_id: 5,
+        user: {
+            create: [
+                {
+                    name: "Hero Yudo Martono",
+                    email: "hero.martono@pens.ac.id",
+                    user_type: "lecturer",
+                    password: "HeroMartono123!"
+                }
+            ]
+        }
+    },
+
+    // 41
+    {
+        name: "Rengga Asmara",
+        phone_number: "085163142764",
+        research_group_id: 10,
+        department_id: 2,
+        nidn: "198105082005011002",
+        nip: "198105082005011002",
+        degree: [
+             {
+                degree: "S1",
+                code: "S.Kom",
+                field: "Informatika",
+                university: "ITS",
+                year: "2013"
+            },
+            {
+                degree: "S2",
+                code: "M.Kom",
+                field: "Informatika",
+                university: "ITS",
+                year: "2017"
+            }
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S2",
+        position_id: 4,
+        user: {
+            create: [
+                {
+                    name: "Rengga Asmara",
+                    email: "rengga.asmara@pens.ac.id",
+                    user_type: "lecturer",
+                    password: "RenggaAsmara123!"
+                }
+            ]
+        }
+    },
+
+    // 42
+    {
+        name: "Wiratmoko Yuwono",
+        phone_number: "085163142765",
+        research_group_id: 10,
+        department_id: 2,
+        nidn: "197911212005011003",
+        nip: "197911212005011003",
+        degree: [
+            {
+                degree: "S1",
+                code: "S.T",
+                field: "Teknologi Informasi",
+                university: "UGM",
+                year: "2013"
+            },
+            {
+                degree: "S2",
+                code: "M.Kom",
+                field: "Komputasi Awan",
+                university: "UI",
+                year: "2018"
+            }
+        ],
+        is_ketua_rg: false,
+        is_kaprodi: false,
+        highest_degree: "S2",
+        position_id: 3,
+        user: {
+            create: [
+                {
+                    name: "Wiratmoko Yuwono",
+                    email: "wiratmoko.yuwono@pens.ac.id",
+                    user_type: "lecturer",
+                    password: "WiratmokoYuwono123!"
+                }
+            ]
+        }
+    },
+
+    
 ]
 
 

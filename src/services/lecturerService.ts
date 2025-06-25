@@ -88,12 +88,12 @@ const getLecturerIdsBySchema = async (proposalSuggestionId: number) => {
     const schema = proposalSuggestion?.schema;
 
     const positionSchemas = await prisma.position_schema.findMany({
-        where: {schema_id: proposalSuggestion?.schema_id!}
+        where: { schema_id: proposalSuggestion?.schema_id! }
     })
 
     const allowedlecturerIds = [];
 
-    const lecturers  = await prisma.lecturer.findMany();
+    const lecturers = await prisma.lecturer.findMany();
 
     const degreeHierarchy = ['S1', 'S2', 'S3'];
     const minDegreeIndex = degreeHierarchy.indexOf(schema?.min_degree!);
@@ -102,9 +102,9 @@ const getLecturerIdsBySchema = async (proposalSuggestionId: number) => {
 
     const allowedLecturers = lecturers.filter(lecturer => {
         const lecturerDegreeIndex = degreeHierarchy.indexOf(lecturer.highest_degree!);
-        
+
         const isDegreeValid = lecturerDegreeIndex >= minDegreeIndex;
-        
+
         // Cek position_id
         const isPositionValid = allowedPositionIds.includes(lecturer.position_id!);
 
@@ -139,31 +139,31 @@ const addLecturerMember = async (proposalSuggestionId: number, anggota: lecturer
 
 // get data for profile
 const getProfile = async (id: number) => {
-    const result = await prisma.$queryRaw<any[]>`
-    SELECT 
-      l.*,
-      d.id as department_id, d.name as department_name,
-      rg.id as research_group_id, rg.name as research_group_name,
-      p.id as position_id, p.name as position_name,
-      (SELECT COUNT(*) FROM proposal_suggestions WHERE lecturer_id = l.id) as leader_proposal,
-      (SELECT COUNT(*) FROM lecturer_members JOIN proposal_suggestions ps ON ps.id = lecturer_members.proposal_suggestion_id WHERE lecturer_members.lecturer_id = l.id AND ps.research_group_id IS NOT NULL) as penelitian_count,
-      (SELECT COUNT(*) FROM lecturer_members JOIN proposal_suggestions ps ON ps.id = lecturer_members.proposal_suggestion_id WHERE lecturer_members.lecturer_id = l.id AND ps.research_group_id IS NULL) as pengmas_count
-    FROM lecturers l
-    LEFT JOIN departments d ON l.department_id = d.id
-    LEFT JOIN research_groups rg ON l.research_group_id = rg.id
-    LEFT JOIN positions p ON l.position_id = p.id    
-    WHERE l.id = ${id}
-  `;
+    // Jalankan query utama dan query tahun secara paralel
+    const [mainResult, proposalsByYear] = await Promise.all([
+        prisma.$queryRaw<any[]>`
+      SELECT 
+        l.*,
+        d.id as department_id, d.name as department_name,
+        rg.id as research_group_id, rg.name as research_group_name,
+        p.id as position_id, p.name as position_name,
+        (SELECT COUNT(*) FROM proposal_suggestions ps WHERE lecturer_id = l.id AND ps.research_group_id IS NOT NULL) as leader_proposal,
+        (SELECT COUNT(*) FROM lecturer_members JOIN proposal_suggestions ps ON ps.id = lecturer_members.proposal_suggestion_id WHERE lecturer_members.lecturer_id = l.id AND ps.research_group_id IS NOT NULL) as penelitian_count,
+        (SELECT COUNT(*) FROM lecturer_members JOIN proposal_suggestions ps ON ps.id = lecturer_members.proposal_suggestion_id WHERE lecturer_members.lecturer_id = l.id AND ps.research_group_id IS NULL) as pengmas_count
+      FROM lecturers l
+      LEFT JOIN departments d ON l.department_id = d.id
+      LEFT JOIN research_groups rg ON l.research_group_id = rg.id
+      LEFT JOIN positions p ON l.position_id = p.id    
+      WHERE l.id = ${id}
+    `,
+        getProposalSuggestionssByYear(id)
+    ]);
 
-    if (Array.isArray(result) && result.length > 0) {
-        // Convert BigInt values to numbers or strings
+    if (Array.isArray(mainResult) && mainResult.length > 0) {
+        // Convert BigInt values
         const processedResult: { [key: string]: any } = {};
-        for (const [key, value] of Object.entries(result[0])) {
-            if (typeof value === 'bigint') {
-                processedResult[key] = Number(value);
-            } else {
-                processedResult[key] = value;
-            }
+        for (const [key, value] of Object.entries(mainResult[0])) {
+            processedResult[key] = typeof value === 'bigint' ? Number(value) : value;
         }
 
         return {
@@ -173,16 +173,45 @@ const getProfile = async (id: number) => {
             nidn: processedResult.nidn,
             degree: processedResult.degree,
             phone_number: processedResult.phone_number,
-            department: processedResult.department_id ? { id: processedResult.department_id, name: processedResult.department_name } : null,
-            research_group: processedResult.research_group_id ? { id: processedResult.research_group_id, name: processedResult.research_group_name } : null,
-            position: processedResult.position_id ? { id: processedResult.position_id, name: processedResult.position_name } : null,
+            department: processedResult.department_id ? {
+                id: processedResult.department_id,
+                name: processedResult.department_name
+            } : null,
+            research_group: processedResult.research_group_id ? {
+                id: processedResult.research_group_id,
+                name: processedResult.research_group_name
+            } : null,
+            position: processedResult.position_id ? {
+                id: processedResult.position_id,
+                name: processedResult.position_name
+            } : null,
             penelitianCount: Number(processedResult.penelitian_count),
             pengmasCount: Number(processedResult.pengmas_count),
             leaderProposal: Number(processedResult.leader_proposal),
+            proposalsByYear: proposalsByYear, // Data dari fungsi terpisah
         };
     }
 
     return null;
+};
+
+const getProposalSuggestionssByYear = async (lecturerId: number) => {
+    const result = await prisma.$queryRaw<any[]>`
+    SELECT 
+      yr.id AS year_id,
+      yr.year,
+      COUNT(ps.id)::int AS count
+    FROM year_researches yr
+    LEFT JOIN proposal_suggestions ps ON ps.year_research_id = yr.id
+      AND (ps.lecturer_id = ${lecturerId} OR ps.id IN (
+        SELECT proposal_suggestion_id 
+        FROM lecturer_members 
+        WHERE lecturer_id = ${lecturerId}
+      ))
+    GROUP BY yr.id, yr.year
+    ORDER BY yr.year ASC
+  `;
+    return result;
 };
 
 const lecturerService = {

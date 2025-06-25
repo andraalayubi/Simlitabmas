@@ -110,11 +110,42 @@ const addStudentMember = async (
   }
 };
 
+const deleteStudentMember = async (
+  user_type: user_type,
+  memberId: number,
+  setLoading: (loading: boolean) => void
+) => {
+  try {
+    setLoading(true);
+    const response = await axios.delete(`/api/${user_type}/member/0/student?memberId=${memberId}`);
+
+    if (response.status === 200 && response.data.success) {
+      return {
+        success: true,
+        message: "Successfully deleted the student member",
+      };
+    } else {
+      return {
+        success: false,
+        message: response.data?.message || "Failed to delete the student member. Please try again.",
+      };
+    }
+  } catch (error: any) {
+    console.error('Error deleting student member:', error);
+    return {
+      success: false,
+      message: error.response?.data?.message || error.message || 'Gagal menghapus anggota mahasiswa'
+    };
+  } finally {
+    setLoading(false);
+  }
+};
 
 const memberAction = {
   getStudentMember,
   getDepartments,
-  addStudentMember
+  addStudentMember,
+  deleteStudentMember
 }
 
 export default memberAction;

@@ -37,6 +37,13 @@ export const createLecturerSchema = z.object({
   nidn: z.coerce.number({
     invalid_type_error: "NIDN must be a number",
   }),
+  phone_number: z.string()
+    .nonempty({
+      message: "Phone number is required",
+    })
+    .regex(/^(\+62|0)\d{8,15}$/, {
+      message: "Phone number must start with +62 or 0 and be 8-15 digits long"
+    }),
   department_id: z.string().nonempty({
     message: "Department is required",
   }),

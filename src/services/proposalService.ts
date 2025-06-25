@@ -77,12 +77,20 @@ const updateByProposalSection = async (proposal_suggestion_id: number, section: 
     });
 }
 
+const deleteProposal = async (proposal_suggestion_id: number) => {
+    return await prisma.proposal.update({
+        where: { proposal_suggestion_id },
+        data: { file_url: null },
+    });
+}
+
 const proposalService = {
     getById,
     getByProposalSuggestionId,
     update,
     create,
     updateByProposalSection,
+    deleteProposal,
 }
 
 

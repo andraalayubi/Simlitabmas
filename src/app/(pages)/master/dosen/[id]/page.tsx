@@ -62,7 +62,7 @@ const EditLecturerPage = () => {
   const theme = useMantineTheme();
   const user_type = "admin";
   const params = useParams();
-  const lecturer_id = parseInt(params.id[0]);
+  const lecturer_id = parseInt(params.id as string);
   const { showNotification } = useNotification();
   const [loading, setLoading] = useState(false);
 
@@ -99,20 +99,19 @@ const EditLecturerPage = () => {
         showNotification({ status: "success", message: response.message });
 
         const data = response.data;
-
         lecturerForm.setValues({
           name: data.name,
           nip: data.nip,
           nidn: data.nidn,
           position: data.position.name,
           phone_number: data.phone_number,
-          education: data.degree.map((item: any) => ({
+          education: data.degree ? data.degree.map((item: any) => ({
             code: item.code,
             degree: item.degree,
             field: item.field,
             university: item.university,
             year: item.year,
-          })),
+          })) : [],
         });
       } else {
         showNotification({ status: "error", message: response.message });

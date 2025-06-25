@@ -1,6 +1,9 @@
 import { Button, Card, Group, Text } from "@mantine/core";
 import { IconFile } from "@tabler/icons-react";
 import { final_report, user_type } from "prisma/interfaces";
+import { useState } from "react";
+import finalReportAction from "src/action/finalReportAction";
+import DeleteConfirmationModal from "src/components/modal/confirmation/DeleteConfirmationModal";
 import ModalComponent from "src/components/modal/modal";
 import EditFinalReportModal from "src/components/modal/proposal_suggestion/EditFinalReportModal";
 
@@ -9,14 +12,21 @@ interface FinalReportCardProps {
   onSuccess: () => void;
   user_type: user_type;
   editable: boolean;
+  showNotification?: any;
+  setLoading: (loading: boolean) => void;
 }
 
 const FinalReportCard: React.FC<FinalReportCardProps> = ({
   final_report,
   onSuccess,
   user_type,
-  editable
+  editable,
+  showNotification,
+  setLoading,
 }) => {
+  const [deleteModalOpened, setDeleteModalOpened] = useState(false);
+  const [finalReportToDelete, setFinalReportToDelete] = useState<final_report | null>(null); 
+
   const handleView = (url: string | null) => {
     if (url) {
       const pdfUrl = `/api/file?name=${url}`;
@@ -43,11 +53,45 @@ const FinalReportCard: React.FC<FinalReportCardProps> = ({
     }
   };
 
-  console.log(final_report);
+  const confirmDelete = async () => {
+    const response = await finalReportAction.deleteFinalReport(
+      finalReportToDelete?.id!,
+      finalReportToDelete?.proposal_suggestion_id!,
+      user_type,
+      setLoading
+    );
+
+    if (response.success) {
+      showNotification({ status: "success", message: response.message });
+      onSuccess();
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+
+    setDeleteModalOpened(false);
+  };
+
+  const openDeleteModal = (final_report: final_report) => {
+    setFinalReportToDelete(final_report);
+    setDeleteModalOpened(true);
+  };
 
   return (
     <>
-      <Card key={final_report.id} shadow="sm" padding="lg" radius="md" withBorder>
+    <DeleteConfirmationModal
+      opened={deleteModalOpened}
+      onClose={() => setDeleteModalOpened(false)}
+      onConfirm={confirmDelete}
+      itemName={final_report?.name || 'Laporan Akhir'}
+    />
+
+      <Card
+        key={final_report.id}
+        shadow="sm"
+        padding="lg"
+        radius="md"
+        withBorder
+      >
         <Group justify="space-between">
           <Group gap="sm">
             <IconFile size={24} />
@@ -60,7 +104,10 @@ const FinalReportCard: React.FC<FinalReportCardProps> = ({
           </Group>
 
           <Group gap="xs">
-            <ModalComponent title={final_report.file_url ? "Edit Laporan" : "Tambah Laporan"} disabled={!editable}>
+            <ModalComponent
+              title={final_report.file_url ? "Edit Laporan" : "Tambah Laporan"}
+              disabled={!editable}
+            >
               {(close) => (
                 <EditFinalReportModal
                   final_report={final_report}
@@ -75,8 +122,18 @@ const FinalReportCard: React.FC<FinalReportCardProps> = ({
               onClick={() => handleView(final_report.file_url)}
               disabled={!final_report.file_url}
             >
-              Lihat Final Report
+              Lihat Laporan
             </Button>
+            {final_report.file_url && user_type === "lecturer" && (
+              <Button
+                variant="outline"
+                color="red"
+                onClick={() => openDeleteModal(final_report)}
+                disabled={!editable}
+              >
+                Hapus Laporan
+              </Button>
+            )}
           </Group>
         </Group>
       </Card>

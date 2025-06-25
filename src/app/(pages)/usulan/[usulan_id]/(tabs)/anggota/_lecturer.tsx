@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { showNotification } from "@mantine/notifications";
 import { useParams } from "next/navigation";
-import { Skeleton, Tabs } from "@mantine/core";
+import { Skeleton, Tabs, Button, Text, Group, Modal } from "@mantine/core";
 import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggestion/ProposalSuggestionSummaryCard.tsx";
 import { MRT_ColumnDef } from "mantine-react-table";
 import TableLayout from "src/components/table/tableLayout";
@@ -13,6 +13,8 @@ import {
   student_member,
   vendor_member,
   schema,
+  proposal_suggestion_phase,
+  proposal_suggestion_status,
 } from "prisma/interfaces";
 import AnggotaModal from "src/components/modal/anggota/anggota";
 import ModalComponent from "src/components/modal/modal";
@@ -29,7 +31,7 @@ interface AnggotaAdminProps {
   columnsVendor: MRT_ColumnDef<vendor_member>[];
 }
 
-const MemberAdmin: React.FC<AnggotaAdminProps> = ({
+const MemberLecturer: React.FC<AnggotaAdminProps> = ({
   session,
   columnsLecturer,
   columnsStudent,
@@ -48,6 +50,9 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
   const [loadProposal, setLoadProposal] = useState(true);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [isEditable, setIsEditable] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState<lecturer | student_member | vendor_member | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const params = useParams();
   const usulan_id = Number(params.usulan_id);
 
@@ -63,7 +68,7 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
       setProposalSuggestion(response.data);
       setSchema(response.data.schema);
       setLoadProposal(false);
-      
+
       if (!response.data.schema.is_lecturer) {
         setLecturers([response.data.lecturer]);
       } else {
@@ -74,9 +79,30 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
       const isEditableByLecturer =
         response.data.lecturer_id === session.lecturer_id;
 
+      // check by workflow
+      type PartialEditableRules = Partial<
+        Record<proposal_suggestion_phase, proposal_suggestion_status[]>
+      >;
+      const editableRules: PartialEditableRules = {
+        pengajuan: ["menunggu_proposal", "tersimpan"],
+        evaluasi_proposal: [],
+        penetapan: [],
+        monev: [],
+        evaluasi_akhir: [],
+        penetapan_akhir: [],
+      };
+
+      const isEditableByConditions =
+        editableRules[
+          response.data.phase as proposal_suggestion_phase
+        ]?.includes(response.data.status as proposal_suggestion_status) ||
+        false;
+
       const isEditableByYear = response.data.open;
 
-      setIsEditable(isEditableByLecturer && isEditableByYear);
+      setIsEditable(
+        isEditableByLecturer && isEditableByYear && isEditableByConditions
+      );
     } else {
       showNotification({ status: "error", message: response.message });
     }
@@ -139,8 +165,116 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
     }
   }, [usulan_id, tabActive, getStudents, getVendors, refreshTrigger]);
 
+  // Fungsi handleDelete yang bisa menangani semua tipe data
+  const handleDelete = async (item: lecturer | student_member | vendor_member) => {
+    if (!item) return;
+    
+    try {
+      setDeleteLoading(true);
+      let response;
+      
+      if ("nip" in item) {
+        response = await memberAction.deleteLecturerMember(user_type, item.id, setDeleteLoading);
+      } else if ("nrp" in item) {
+        response = await studentAction.deleteStudentMember(user_type, item.id, setDeleteLoading);
+      } else {
+        response = await vendorAction.deleteVendorMember(user_type, item.id, setDeleteLoading);
+      }
+
+      if (response.success) {
+        showNotification({ status: "success", message: response.message });
+        setRefreshTrigger(prev => prev + 1);
+      } else {
+        showNotification({ status: "error", message: response.message });
+      }
+    } catch (error: any) {
+      console.error('Error in handleDelete:', error);
+      showNotification({ 
+        status: "error", 
+        message: error.response?.data?.message || 'Terjadi kesalahan saat menghapus data' 
+      });
+    } finally {
+      setDeleteLoading(false);
+      setDeleteModal(false);
+      setItemToDelete(null);
+    }
+  };
+
+  const closeDeleteModal = () => {
+    setDeleteModal(false);
+    setItemToDelete(null);
+  };
+
+  // Generate columns with delete action
+  const commonActionsColumn = useMemo(() => 
+    isEditable
+      ? [
+          {
+            id: "actions",
+            header: "Aksi",
+            Cell: ({ row }: { row: any }) => (
+              <Button
+                variant="outlined"
+                color="error"
+                size="xs"
+                onClick={() => {
+                  setItemToDelete(row.original);
+                  setDeleteModal(true);
+                }}
+              >
+                Hapus
+              </Button>
+            ),
+            size: 100,
+          },
+        ]
+      : [],
+    [isEditable]
+  );
+
+  const columnsLecturerWithAction = useMemo(() => [
+    ...columnsLecturer,
+    ...commonActionsColumn
+  ], [columnsLecturer, commonActionsColumn]);
+
+  const columnsStudentWithAction = useMemo(() => [
+    ...columnsStudent,
+    ...commonActionsColumn
+  ], [columnsStudent, commonActionsColumn]);
+
+  const columnsVendorWithAction = useMemo(() => [
+    ...columnsVendor,
+    ...commonActionsColumn
+  ], [columnsVendor, commonActionsColumn]);
+
   return (
     <>
+      {/* Modal Konfirmasi Hapus */}
+      <Modal
+        opened={deleteModal}
+        onClose={closeDeleteModal}
+        title="Konfirmasi Hapus"
+        size="sm"
+        centered
+      >
+        <Text size="sm" mb="md">
+          Apakah Anda yakin ingin menghapus {itemToDelete && ("nip" in itemToDelete ? 'dosen' : 
+                                      "nrp" in itemToDelete ? 'mahasiswa' : 'vendor')} ini?
+        </Text>
+        <Group justify="right">
+          <Button variant="default" onClick={closeDeleteModal} size="xs">
+            Batal
+          </Button>
+          <Button 
+            color="red" 
+            onClick={() => handleDelete(itemToDelete!)} 
+            loading={deleteLoading}
+            size="xs"
+          >
+            Ya, Hapus
+          </Button>
+        </Group>
+      </Modal>
       <div className="px-4 py-6">
         {/* Baris Judul, Status, dan Tahap Usulan */}
         <Skeleton visible={loadProposal}>
@@ -171,38 +305,36 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
                 </Tabs.List>
               </div>
               <div>
-                  <ModalComponent title="Tambah Anggota" disabled={!isEditable}>
-                    {(close) => (
-                      <AnggotaModal
-                        user_type={user_type}
-                        onClose={close}
-                        usulan_id={usulan_id}
-                        tabActive={tabActive}
-                        refreshData={() =>
-                          setRefreshTrigger((prev) => prev + 1)
-                        }
-                      />
-                    )}
-                  </ModalComponent>
+                <ModalComponent title="Tambah Anggota" disabled={!isEditable}>
+                  {(close) => (
+                    <AnggotaModal
+                      user_type={user_type}
+                      onClose={close}
+                      usulan_id={usulan_id}
+                      tabActive={tabActive}
+                      refreshData={() => setRefreshTrigger((prev) => prev + 1)}
+                    />
+                  )}
+                </ModalComponent>
               </div>
             </div>
             <Tabs.Panel value="lecturer">
               <TableLayout
-                columns={columnsLecturer}
+                columns={columnsLecturerWithAction}
                 data={lecturers}
                 isLoading={loading}
               />
             </Tabs.Panel>
             <Tabs.Panel value="student">
               <TableLayout
-                columns={columnsStudent}
+                columns={columnsStudentWithAction}
                 data={students}
                 isLoading={loading}
               />
             </Tabs.Panel>
             <Tabs.Panel value="vendor">
               <TableLayout
-                columns={columnsVendor}
+                columns={columnsVendorWithAction}
                 data={vendors}
                 isLoading={loading}
               />
@@ -214,4 +346,4 @@ const MemberAdmin: React.FC<AnggotaAdminProps> = ({
   );
 };
 
-export default MemberAdmin;
+export default MemberLecturer;

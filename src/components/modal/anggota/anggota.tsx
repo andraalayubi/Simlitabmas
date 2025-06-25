@@ -200,6 +200,7 @@ const AnggotaModal: React.FC<AnggotaModalProps> = ({
             label="Pilih Dosen"
             placeholder="Pilih Dosen"
             data={members}
+            searchable
             {...lecturerForm.getInputProps("anggota")}
           />
       )}

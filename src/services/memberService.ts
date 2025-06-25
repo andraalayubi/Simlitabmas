@@ -78,6 +78,36 @@ const addVendorMember = async (data: any) => {
   });
 }
 
+// Soft delete lecturer member by ID
+const deleteLecturerMember = async (id: number) => {
+  return await prisma.lecturer_member.update({
+    where: { id },
+    data: { 
+      deleted: true
+    }
+  });
+}
+
+// Soft delete student member by ID
+const deleteStudentMember = async (id: number) => {
+  return await prisma.student_member.update({
+    where: { id },
+    data: { 
+      deleted: true
+    }
+  });
+}
+
+// Soft delete vendor member by ID
+const deleteVendorMember = async (id: number) => {
+  return await prisma.vendor_member.update({
+    where: { id },
+    data: { 
+      deleted: true
+    }
+  });
+}
+
 const memberService = {
   getLecturerByIds,
   getLecturerMembers,
@@ -85,6 +115,9 @@ const memberService = {
   addStudentMember,
   getVendorMembers,
   addVendorMember,
+  deleteLecturerMember,
+  deleteStudentMember,
+  deleteVendorMember
 }
 
 export default memberService;

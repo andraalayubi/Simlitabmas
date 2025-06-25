@@ -52,10 +52,23 @@ const create = async (proposal_suggestion_id: number, data: Logbook) => {
     })
 }
 
+const deleteLogbook = async (logbook_id: number, proposal_suggestion_id: number) => {
+    return prisma.logbook.update({
+        where: {
+            id: logbook_id,
+            proposal_suggestion_id: proposal_suggestion_id
+        },
+        data: {
+            file_url: null
+        }
+    })
+}
+
 const logbookService = {
-    update,
+update,
     create,
     getByProposalSuggestionId,
+    delete: deleteLogbook,
 }
 
 

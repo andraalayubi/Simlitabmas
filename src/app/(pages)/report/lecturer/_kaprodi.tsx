@@ -66,7 +66,7 @@ export default function LecturerRankingPage() {
   const [lecturers, setLecturers] = useState<LecturerWithCount[]>([]);
 
   const getLecturer = useCallback(async () => {
-    const response = await reportAction.getLecturer(user_type, setLoading);
+    const response = await reportAction.getLecturer(user_type, setLoading, null);
 
     if (response.success) {
       console.log(response.data);
