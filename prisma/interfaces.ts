@@ -371,6 +371,7 @@ export interface evaluation {
   evaluation_phase: evaluation_phase | null;
   category: string | null;
   status: proposal_suggestion_status | null;
+  score: number | null;
   createdAt: Date;
   updatedAt: Date;
   deleted: boolean;
@@ -396,6 +397,7 @@ export interface review {
 export interface criterion {
   id: number;
   name: string;
+  weight: number;
   category: string | null;
   phase: evaluation_phase;
   createdAt: Date;

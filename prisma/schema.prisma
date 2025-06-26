@@ -525,6 +525,7 @@ model evaluation {
   evaluation_phase          evaluation_phase?
   category                  String?
   status                    proposal_suggestion_status?
+  score                     Float?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -560,6 +561,7 @@ model review {
 model criterion {
   id        Int     @id @default(autoincrement())
   name      String
+  weight    Int
   category  String?
   phase     evaluation_phase
 

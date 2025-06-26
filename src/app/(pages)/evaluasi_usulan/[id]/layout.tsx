@@ -21,6 +21,7 @@ const TabMenus = [
   },
   { value: "monev", path: "monev", tabName: "Monev" },
   { value: "laporan_akhir", path: "laporan_akhir", tabName: "Laporan Akhir" },
+  { value: "riwayat_pengusul", path: "riwayat_pengusul", tabName: "Riwayat Pengusul" },
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {

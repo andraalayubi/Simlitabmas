@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Group,
+  NumberInput,
   ScrollArea,
   Stack,
   TextInput,
@@ -34,7 +35,15 @@ const CreateCriterionModal: React.FC<CreateCriterionModalProps> = ({
   const form = useForm({
     initialValues: {
       name: "",
+      weight: 0,
     },
+    validate: {
+    name: (value) => (value.trim().length === 0 ? "Nama kriteria wajib diisi" : null),
+    weight: (value) =>
+      value === 0
+        ? "Bobot kriteria tidak boleh 0"
+        : null,
+  },
     validateInputOnChange: true,
   });
 
@@ -71,10 +80,18 @@ const CreateCriterionModal: React.FC<CreateCriterionModalProps> = ({
         <Stack gap="sm">
           <TextInput
             label="Nama Kriteria"
-            placeholder="Input Kriteria"
+            placeholder="Input Nama"
             {...form.getInputProps("name")}
           />
-
+          <NumberInput
+            label="Bobot Kriteria"
+            placeholder="Input Bobot"
+            {...form.getInputProps("weight")}
+            allowDecimal={false}
+            allowNegative={false}
+            min={0}
+            max={10}
+          />
           <Group justify="flex-end" mt="xl">
             <Button fullWidth type="submit" loading={loading} size="md">
               Simpan Kriteria

@@ -15,7 +15,7 @@ import TableLayout from "src/components/table/tableLayout";
 import { useParams } from "next/navigation";
 import reviewAction from "src/action/reviewAction";
 
-export default function AllEvaluationPage() {
+export default function AllReviewPage() {
   const user_type = "lecturer";
   const type = "pengmas";
   const { session, loading: sessionLoading } = useSession();
@@ -92,7 +92,7 @@ export default function AllEvaluationPage() {
     <Skeleton visible={sessionLoading}>
       <div className="flex justify-between items-center pt-5 pb-2 px-6">
         <Text size="lg" fw={700}>
-          Daftar Evaluasi
+          Daftar Review
         </Text>
       </div>
       <div>

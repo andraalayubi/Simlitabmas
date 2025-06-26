@@ -15,6 +15,7 @@ const getProposalSuggestion = async (
       get_research_group: 'true',
       get_year_research: 'true',
       get_department: 'true',
+      get_evaluation: 'true',
       ...Object.fromEntries(
         Object.entries(params).map(([key, value]) => [key, String(value)])
       )

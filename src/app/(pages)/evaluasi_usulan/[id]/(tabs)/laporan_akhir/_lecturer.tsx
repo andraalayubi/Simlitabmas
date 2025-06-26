@@ -39,7 +39,7 @@ const FinalReportLecturer = ({ session }: { session: SessionPayload }) => {
   const review_id = params.id as string;
   const [scores, setScores] = useState<{ [key: number]: number }>({});
   const [newNote, setNewNote] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+  // const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
   const proposal_suggestion_id = review?.evaluation?.proposal_suggestion_id;
   const [reviews, setReviews] = useState<review[]>([]);
   const averageScore = review?.average_score;
@@ -153,17 +153,20 @@ const FinalReportLecturer = ({ session }: { session: SessionPayload }) => {
   const handleAddScore = async () => {
     let hasError = false;
     let totalScore = 0;
-    let count = 0;
+    let totalWeight = 0;
+    let count = 0
 
     for (const criterion of criteria) {
       const score = scores[criterion.id];
-      const criterion_id = criterion.id;
+     const criterion_id = criterion.id;
+      const weight = criterion.weight ?? 1;
 
-      if (score === undefined || score === null || !selectedStatus || !newNote)
+      if (score === undefined || score === null || !newNote)
         continue;
 
-      totalScore += score;
-      count++;
+      totalScore += score*weight;
+      totalWeight += weight;
+      count++
 
       const response = await criterionScoreAction.create(
         user_type,
@@ -182,14 +185,14 @@ const FinalReportLecturer = ({ session }: { session: SessionPayload }) => {
     }
 
     if (!hasError) {
-      const averageScore = count > 0 ? totalScore / count : 0;
+      const averageScore = count > 0 ? totalScore / totalWeight : 0;
       handleUpdateReview(averageScore);
       showNotification({ status: "success", message: "Berhasil disimpan." });
     }
   };
 
   const handleUpdateReview = async (averageScore: number) => {
-    if (!selectedStatus || isNaN(averageScore)) {
+    if (!(averageScore)) {
       showNotification({
         status: "warning",
         message: "Status atau skor tidak valid",
@@ -203,16 +206,16 @@ const FinalReportLecturer = ({ session }: { session: SessionPayload }) => {
       Number(review_id),
       {
         note: newNote,
-        status: selectedStatus,
+        status: "diterima",
         average_score: Number(averageScore.toFixed(2)),
       }
     );
     if (response.success) {
-      const statusMayoritas = await checkingReviews();
-      console.log("statussss" + statusMayoritas)
-      if (statusMayoritas) {
-        updateStatus(statusMayoritas);
-      }
+      const result = await checkingReviews();
+      console.log("statussss" + result)
+      if (result.finalStatus) {
+  await updateStatus(result.finalStatus, result.evaluationAverage!); // non-null assertion karena sudah dicek
+}
       fetchData();
       showNotification({ status: "success", message: response.message });
     } else {
@@ -220,56 +223,60 @@ const FinalReportLecturer = ({ session }: { session: SessionPayload }) => {
     }
   };
 
-  const checkingReviews = async (): Promise<"diterima" | "ditolak" | null> => {
-   if (!review?.evaluation_id) return null;
+  const checkingReviews = async (): Promise<{
+  finalStatus: "diterima" | "ditolak" | null;
+  evaluationAverage: number | null;
+}> => {
+  if (!review?.evaluation_id) return { finalStatus: null, evaluationAverage: null };
 
-  // Ambil semua review berdasarkan evaluation_id
   const response = await reviewAction.getReviews("lecturer", setLoading, {
     evaluation_id: review.evaluation_id,
   });
 
-    if (!response.success) return null;
+  if (!response.success) return { finalStatus: null, evaluationAverage: null };
 
-    const allReviews = response.data;
+  const allReviews = response.data;
 
-    // Jika jumlah reviewer belum mencapai 3, tidak lanjut
-    if (allReviews.length < 3) return null;
+  if (allReviews.length < 3) return { finalStatus: null, evaluationAverage: null };
 
-    // Cek apakah semua sudah memberi skor
-    const isAllReviewed = allReviews.every(
-      (r: review) => r.average_score !== null
-    );
+  const reviewed = allReviews.filter((r: review) => r.average_score !== null);
 
-    if (!isAllReviewed) return null;
+  if (reviewed.length < 3) return { finalStatus: null, evaluationAverage: null };
 
-    // Hitung mayoritas
-    const count = {
-      diterima: 0,
-      ditolak: 0,
-    };
+  // Hitung rata-rata skor dari semua review
+  const totalScore = reviewed.reduce((sum: any, r: { average_score: any; }) => sum + (r.average_score || 0), 0);
+const evaluationAverage = parseFloat((totalScore / reviewed.length).toFixed(2));
 
-    for (const r of allReviews) {
-      if (r.status === "diterima") count.diterima++;
-      else if (r.status === "ditolak") count.ditolak++;
-    }
-
-    if (count.diterima > count.ditolak) return "diterima";
-    if (count.ditolak > count.diterima) return "ditolak";
-
-    return null; // Tidak ada mayoritas
+  // Hitung mayoritas status
+  const count = {
+    diterima: 0,
+    ditolak: 0,
   };
 
-  const updateStatus = async (statusMayoritas: "diterima" | "ditolak") => {
+  for (const r of reviewed) {
+    if (r.status === "diterima") count.diterima++;
+    else if (r.status === "ditolak") count.ditolak++;
+  }
+
+  let finalStatus: "diterima" | "ditolak" | null = null;
+  if (count.diterima > count.ditolak) finalStatus = "diterima";
+  else if (count.ditolak > count.diterima) finalStatus = "ditolak";
+
+  return { finalStatus, evaluationAverage };
+};
+
+
+  const updateStatus = async (statusMayoritas: "diterima" | "ditolak", score: number) => {
     const proposal_suggestion_id = Number(
       review?.evaluation?.proposal_suggestion?.id
     );
 
-    // Update status pada tabel evaluation
+    // Update tabel evaluation
     await evaluationAction.updateById(
       user_type,
       setLoading,
       Number(review?.evaluation_id),
-      { status: statusMayoritas }
+      { status: statusMayoritas, score: score}
     );
 
     // Jika diterima, lanjut ke fase penetapan
@@ -377,7 +384,7 @@ const FinalReportLecturer = ({ session }: { session: SessionPayload }) => {
                       <Text size="lg" fw={600}>
                         Status
                       </Text>
-                      <Text className="mt-2 capitalize">{item.status}</Text>
+                      <Text className="mt-2 capitalize">Selesai</Text>
                     </Card>
                   </div>
                 ))
@@ -426,23 +433,6 @@ const FinalReportLecturer = ({ session }: { session: SessionPayload }) => {
                           onChange={(e) => setNewNote(e.currentTarget.value)}
                         />
                       </Card>
-
-                      <Card shadow="sm" padding="lg">
-                        <div className="items-center mt-2 flex justify-between">
-                          <Text size="lg" fw={600}>
-                            Status :
-                          </Text>{" "}
-                          <Select
-                            placeholder="Pilih Status"
-                            data={[
-                              { value: "ditolak", label: "Tolak" },
-                              { value: "diterima", label: "Terima" },
-                            ]}
-                            value={selectedStatus}
-                            onChange={setSelectedStatus}
-                          />
-                        </div>
-                      </Card>
                       <div className="flex justify-end mt-4">
                         <Button
                           variant="outline"
@@ -488,7 +478,7 @@ const FinalReportLecturer = ({ session }: { session: SessionPayload }) => {
                           Status
                         </Text>
                         <Text className="mt-2 capitalize">
-                          {review?.status}
+                          Selesai
                         </Text>
                       </Card>
                     </>
