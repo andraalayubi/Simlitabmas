@@ -15,7 +15,7 @@ const ExternalDocumentKaprodi = () => {
   const user_type = "kaprodi";
   const [loading, setLoading] = useState(true);
   const params = useParams();
-  const usulan_id = params.usulan_id[0];
+  const usulan_id = params.usulan_id;
   const { showNotification } = useNotification();
   const [proposalSuggestion, setProposalSuggestion] =
     useState<proposal_suggestion | null>(null);
@@ -26,7 +26,7 @@ const ExternalDocumentKaprodi = () => {
   const getExternalDocuments = useCallback(async () => {
     const response = await externalDocumentAction.getExternalDocuments(
       user_type,
-      usulan_id,
+      usulan_id as string,
       setLoading
     );
     if (response.success) {
@@ -57,13 +57,14 @@ const ExternalDocumentKaprodi = () => {
             <Text size="xl" fw={500}>
               Daftar Luaran Usulan :
             </Text>
-            <ModalComponent title="Tambah Luaran">
+            <ModalComponent title="Tambah Luaran" disabled={true}>
               {(close) => (
                 <CreateExternalDocumentModal
                   user_type={user_type}
                   onClose={close}
                   proposal_suggestion={proposalSuggestion!}
                   onSuccess={getExternalDocuments}
+                  disabled={true}
                 />
               )}
             </ModalComponent>
@@ -80,6 +81,7 @@ const ExternalDocumentKaprodi = () => {
                   onSuccess={getExternalDocuments}
                   user_type={user_type}
                   editable={false}
+                  setLoading={setLoading}
                 />
               ))}
             </Stack>

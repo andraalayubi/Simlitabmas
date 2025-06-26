@@ -167,6 +167,8 @@ const ExternalDocumentLecturer = ({ session }: { session: SessionPayload }) => {
                   onSuccess={getExternalDocuments}
                   user_type={user_type}
                   editable={editable}
+                  showNotification={showNotification}
+                  setLoading={setLoading}
                 />
               ))}
             </Stack>
