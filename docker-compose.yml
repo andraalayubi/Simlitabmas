@@ -7,7 +7,7 @@ services:
       dockerfile: docker/app/Dockerfile
     container_name: simlitabmas_app
     ports:
-      - "3001:3000"
+      - "3000:3000"
     env_file:
       - ./.env
     # environment:
