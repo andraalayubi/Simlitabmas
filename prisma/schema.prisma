@@ -561,7 +561,7 @@ model review {
 model criterion {
   id        Int     @id @default(autoincrement())
   name      String
-  weight    Int
+  weight    Int?
   category  String?
   phase     evaluation_phase
 
