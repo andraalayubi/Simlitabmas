@@ -397,7 +397,7 @@ export interface review {
 export interface criterion {
   id: number;
   name: string;
-  weight: number;
+  weight: number | null;
   category: string | null;
   phase: evaluation_phase;
   createdAt: Date;
