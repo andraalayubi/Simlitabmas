@@ -5,4 +5,4 @@
 
 */
 -- AlterTable
-ALTER TABLE "criteria" ADD COLUMN     "weight" INTEGER NOT NULL;
+ALTER TABLE "criteria" ADD COLUMN     "weight" INTEGER;
