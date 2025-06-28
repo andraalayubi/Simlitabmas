@@ -26,6 +26,12 @@ const AddReviewer: React.FC<AddReviewerProps> = ({
       lecturer_id: "",
       category: "",
     },
+      validate: {
+    lecturer_id: (value) =>
+      value.trim() === "" ? "Dosen harus dipilih" : null,
+    category: (value) =>
+      value.trim() === "" ? "Tipe harus dipilih" : null,
+  },
     validateInputOnChange: true,
   });
 

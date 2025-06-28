@@ -123,6 +123,7 @@ const ExternalDocumentAdmin = ({ session }: { session: SessionPayload }) => {
                     onClose={close}
                     proposal_suggestion={proposalSuggestion!}
                     onSuccess={getExternalDocuments}
+                    disabled={true}
                   />
                 )}
               </ModalComponent>
@@ -140,6 +141,7 @@ const ExternalDocumentAdmin = ({ session }: { session: SessionPayload }) => {
                   onSuccess={getExternalDocuments}
                   user_type={user_type}
                   editable={false}
+                  setLoading={setLoading}
                 />
               ))}
             </Stack>

@@ -16,7 +16,7 @@ const create = async (data: any) => {
     // Jika ditemukan, update menjadi aktif kembali
     return await prisma.criterion.update({
       where: { id: existing.id },
-      data: { deleted: false },
+      data: { ...data ,deleted: false },
     });
   }
 

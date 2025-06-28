@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Skeleton, Card, FileButton, Text, Divider } from "@mantine/core";
+import { Skeleton, Card, Text, Divider } from "@mantine/core";
 import { useParams } from "next/navigation";
 import { proposal, proposal_suggestion } from "prisma/interfaces";
 import React, { useCallback, useEffect, useState } from "react";
@@ -18,7 +18,6 @@ const ProposalKetuaRG = () => {
   const [proposal, setProposal] = useState<proposal | null>(null);
   const [proposalSuggestion, setProposalSuggestion] =
     useState<proposal_suggestion | null>(null);
-  const [proposalFile, setProposalFile] = useState<File | null>();
 
   const getProposal = useCallback(async () => {
     const response = await proposalAction.getProposal(
@@ -35,50 +34,6 @@ const ProposalKetuaRG = () => {
       showNotification({ status: "error", message: response.message });
     }
   }, [user_type, usulan_id]); // use cache if user_type and usulan_id are same
-
-  // update proposal
-  const updateProposal = async () => {
-    const response = await proposalAction.updateProposal(
-      proposal,
-      proposalSuggestion!.id,
-      user_type,
-      setLoading
-    );
-
-    if (response.success) {
-      showNotification({ status: "success", message: response.message });
-      getProposal();
-    } else {
-      showNotification({ status: "error", message: response.message });
-    }
-  };
-
-  const handleFileUpload = async (file: File | null) => {
-    if (!file) {
-      showNotification({
-        status: "error",
-        message: "Pilih file terlebih dahulu!",
-      });
-      return;
-    }
-
-    const response = await proposalAction.uploadProposalFile(file!, setLoading);
-    if (response.success) {
-      setProposal((prev) =>
-        prev ? { ...prev, file_url: response.data.filename } : null
-      );
-      showNotification({
-        status: "success",
-        message: response.message,
-      });
-    } else {
-      showNotification({ status: "error", message: response.message });
-    }
-  };
-
-  const clearProposalFile = () => {
-    setProposalFile(null);
-  };
 
   useEffect(() => {
     getProposal();
@@ -111,31 +66,36 @@ const ProposalKetuaRG = () => {
           </div>
 
           {/* Kolom Tombol + Hasil Reviewer */}
-          <div className="flex flex-col gap-4">            
-                        {/* Hasil Reviewer */}
-                        <Skeleton visible={loading}>
-                          <div className="grid grid-cols-1 gap-4">
-                            <div className="flex justify-center">
-                              <Text size="lg" fw={600}>
-                                Komentar Reviewer
-                              </Text>
-                            </div>
-                            <Divider size="md"></Divider>
-                            {proposalSuggestion?.evaluation
-                              ?.filter((ev) => ev.evaluation_phase === "evaluasi_proposal")
-                              ?.flatMap(
-                                (ev) =>
-                                  ev.review?.map((review) => (
-                                    <Card shadow="sm" padding="lg" key={review.id}>
-                                      <Text size="md" fw={600}>
-                                        {review.reviewer?.lecturer?.name}
-                                      </Text>
-                                      <Text size="sm">{review.note ?? "-"}</Text>
-                                    </Card>
-                                  )) ?? []
-                              )}
-                          </div>
-                        </Skeleton>
+          <div className="flex flex-col gap-4">
+            {/* Hasil Reviewer */}
+            <Skeleton visible={loading}>
+              {proposalSuggestion?.evaluation?.flatMap((ev) => ev.review)
+                ?.length ? (
+                <div className="grid grid-cols-1 gap-4">
+                  <div className="flex justify-center">
+                    <Text size="lg" fw={600}>
+                      Komentar Reviewer
+                    </Text>
+                  </div>
+                  <Divider size="md"></Divider>
+                  {proposalSuggestion?.evaluation
+                    ?.filter(
+                      (ev) => ev.evaluation_phase === "evaluasi_proposal"
+                    )
+                    ?.flatMap(
+                      (ev) =>
+                        ev.review?.map((review) => (
+                          <Card shadow="sm" padding="lg" key={review.id}>
+                            <Text size="md" fw={600}>
+                              {review.reviewer?.lecturer?.name}
+                            </Text>
+                            <Text size="sm">{review.note ?? "-"}</Text>
+                          </Card>
+                        )) ?? []
+                    )}
+                </div>
+              ) : null}
+            </Skeleton>
           </div>
         </div>
       </div>

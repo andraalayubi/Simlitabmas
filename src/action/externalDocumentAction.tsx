@@ -1,4 +1,3 @@
-import Dashboard from "@/app/(pages)/dashboard/page";
 import axios from "axios";
 import { external_document, user_type } from "prisma/interfaces";
 
@@ -17,6 +16,7 @@ const getExternalDocuments = async (
       }
     );
     const result = await response.json();
+    console.log(result);
     if (result.status === 200 || result.success == true) {
       return {
         success: true,

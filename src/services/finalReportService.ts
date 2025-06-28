@@ -51,10 +51,23 @@ const create = async (proposal_suggestion_id: number, data: FinalReport) => {
     })
 }
 
+const deleteFinalReport = async (final_report_id: number, proposal_suggestion_id: number) => {
+    return prisma.final_report.update({
+        where: {
+            id: final_report_id,
+            proposal_suggestion_id: proposal_suggestion_id
+        },
+        data: {
+            file_url: null
+        }
+    })
+}
+
 const finalReportService = {
     update,
     create,
     getByProposalSuggestionId,
+    delete: deleteFinalReport,
 }
 
 export default finalReportService

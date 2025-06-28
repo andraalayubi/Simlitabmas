@@ -1,22 +1,32 @@
 import { Button, Card, Group, Text } from "@mantine/core";
-import { IconFile } from "@tabler/icons-react";
+import { IconFile, IconTrash } from "@tabler/icons-react";
 import { logbook, user_type } from "prisma/interfaces";
-import ModalComponent from "src/components/modal/modal";
+import { useState } from "react";
+import logbookAction from "src/action/logbookAction";
 import EditLogbookModal from "src/components/modal/proposal_suggestion/EditLogbookModal";
+import ModalComponent from "src/components/modal/modal";
+import DeleteConfirmationModal from "src/components/modal/confirmation/DeleteConfirmationModal";
 
 interface LogbookCardProps {
   logbook: logbook;
   onSuccess: () => void;
   user_type: user_type;
   editable: boolean;
+  showNotification?: any;
+  setLoading: (loading: boolean) => void;
 }
 
 const LogbookCard: React.FC<LogbookCardProps> = ({
   logbook,
   onSuccess,
   user_type,
-  editable
+  editable,
+  showNotification,
+  setLoading,
 }) => {
+  const [deleteModalOpened, setDeleteModalOpened] = useState(false);
+  const [logbookToDelete, setLogbookToDelete] = useState<logbook | null>(null);
+
   const handleView = (url: string | null) => {
     if (url) {
       const pdfUrl = `/api/file?name=${url}`;
@@ -43,8 +53,40 @@ const LogbookCard: React.FC<LogbookCardProps> = ({
     }
   };
 
+  const confirmDelete = async () => {
+    const response = await logbookAction.deleteLogbook(
+      logbookToDelete?.id!,
+      logbookToDelete?.proposal_suggestion_id!,
+      user_type,
+      setLoading
+    );
+
+    if (response.success) {
+      showNotification({ status: "success", message: response.message });
+      onSuccess();
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+
+    setDeleteModalOpened(false);
+  };
+
+  const openDeleteModal = (logbook: logbook) => {
+    setLogbookToDelete(logbook);
+    setDeleteModalOpened(true);
+  };
+  console.log(user_type);
+  
+
   return (
     <>
+      <DeleteConfirmationModal
+        opened={deleteModalOpened}
+        onClose={() => setDeleteModalOpened(false)}
+        onConfirm={confirmDelete}
+        itemName={logbook?.name || 'Logbook'}
+      />
+
       <Card key={logbook.id} shadow="sm" padding="lg" radius="md" withBorder>
         <Group justify="space-between">
           <Group gap="sm">
@@ -58,7 +100,10 @@ const LogbookCard: React.FC<LogbookCardProps> = ({
           </Group>
 
           <Group gap="xs">
-            <ModalComponent title={logbook.file_url ? 'Edit Logbook' : 'Tambah Logbook'} disabled={!editable}>
+            <ModalComponent
+              title={logbook.file_url ? "Edit Logbook" : "Tambah Logbook"}
+              disabled={!editable}
+            >
               {(close) => (
                 <EditLogbookModal
                   logbook={logbook}
@@ -75,6 +120,16 @@ const LogbookCard: React.FC<LogbookCardProps> = ({
             >
               Lihat Logbook
             </Button>
+            {logbook.file_url && user_type === "lecturer" && (
+              <Button
+                variant="outline"
+                color="red"
+                onClick={() => openDeleteModal(logbook)}
+                disabled={!editable}
+              >
+                Hapus Logbook
+              </Button>
+            )}
           </Group>
         </Group>
       </Card>

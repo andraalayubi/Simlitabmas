@@ -122,7 +122,7 @@ const AdditionalDocumentAddModal: React.FC<AdditionalDocumentAddModalProps> = ({
           >
             Batal
           </Button>
-          <Button onClick={handleUpload} className="bg-blue-800 text-white">
+          <Button onClick={handleUpload} className="bg-blue-800 text-white" disabled={loading || uploadLoading}>
             Simpan
           </Button>
         </div>

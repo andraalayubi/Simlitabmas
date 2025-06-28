@@ -22,6 +22,7 @@ import { IconInfoCircle } from "@tabler/icons-react";
 import { Workflow } from "src/lib/workflow";
 import * as XLSX from "xlsx";
 import saveAs from "file-saver";
+import Link from "next/link";
 
 const OverviewAdmin = () => {
   const user_type = "admin";
@@ -264,9 +265,7 @@ const OverviewAdmin = () => {
             <Text className="font-medium">Status Evaluasi Usulan</Text>
             <Text>:</Text>
             <div>
-              <ProposalSuggestionStatusBadge
-                status={evaluation?.proposal_suggestion?.status!}
-              />
+              <ProposalSuggestionStatusBadge status={evaluation?.status!} />
             </div>
 
             {/* Baris Tahap Usulan */}
@@ -279,7 +278,7 @@ const OverviewAdmin = () => {
             {/* Baris Proses */}
             <Text className="font-medium">Proses</Text>
             <Text>:</Text>
-            <div className="flex text-blue-600">
+            <div className="flex text-blue-600 gap-2">
               <span>
                 <IconInfoCircle />
               </span>
@@ -299,6 +298,14 @@ const OverviewAdmin = () => {
                   ).info
                 }
               </Spoiler>
+              {evaluation?.status == "diterima" ? (
+                <Link
+                  href={`/usulan/${evaluation?.proposal_suggestion_id}`}
+                  passHref
+                >
+                  [Disini]
+                </Link>
+              ) : null}
             </div>
 
             {/* Baris Skema Penelitian */}
@@ -335,8 +342,8 @@ const OverviewAdmin = () => {
       <Skeleton visible={loading}>
         <div className="flex ml-4">
           <Button color="green" onClick={exportToExcel}>
-          Download Excel
-        </Button>
+            Download Excel
+          </Button>
         </div>
         <div className="mt-4">
           <TableLayout

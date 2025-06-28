@@ -146,6 +146,8 @@ const FinalReportLecturer = ({ session }: { session: SessionPayload }) => {
                   onSuccess={getFinalReports}
                   user_type={user_type}
                   editable={index === 0 ? editableEarly : editableLate}
+                  showNotification={showNotification}
+                  setLoading={setLoading}
                 />
               ))}
             </Stack>

@@ -682,7 +682,7 @@ let proposalSuggestionsPengmas = [
     },
     // 19
     {
-        year_research_id: 2,
+        year_research_id: 3,
         schema_id: 4,
         name: "Pelatihan Pemrograman Dasar Python bagi Siswa SMA/SMK",
         lecturer_id: 2,
@@ -701,7 +701,7 @@ let proposalSuggestionsPengmas = [
             create: [
                 {
                     lecturer_id: 2,
-                    name: "Prof. M. Udin Harun Al Rasyid , S.Kom., Ph.D",
+                    name: "Andra Al Ayubi",
                     research_group_id: null,
                     department_id: 2,
                     nip: "33445567",
@@ -1004,7 +1004,7 @@ let proposalSuggestionsPengmas = [
             ],
         },
     },
-    
+    // 28
     {
         name: "Pengembangan Aplikasi Pendidikan Interaktif untuk Meningkatkan Keterampilan Pemrograman",
         year_research_id: 3,
@@ -1076,7 +1076,7 @@ let proposalSuggestionsPengmas = [
             ],
         },
     },
-
+    // 30
     {
         year_research_id: 3,
         schema_id: 4,
@@ -1108,6 +1108,42 @@ let proposalSuggestionsPengmas = [
                     research_group_id: 9,
                     department_id: 2,
                     nip: "33445569",
+                }
+            ],
+        },
+    },
+    // 31
+    {
+        year_research_id: 3,
+        schema_id: 4,
+        name: "Pengembangan Aplikasi Pendidikan Berbasis Game untuk Meningkatkan Kemampuan Berpikir Kritis",
+        lecturer_id: 2,
+        department_id: 2,
+        status: "menunggu_laporan" as proposal_suggestion_status,
+        phase: "monev" as proposal_suggestion_phase,
+        is_active: true,
+        proposal: {
+            create: {
+                name: "Pengembangan Aplikasi Pendidikan Berbasis Game untuk Meningkatkan Kemampuan Berpikir Kritis"
+            }
+        },
+        logbook: base_logbook,
+        final_report: base_final_report,
+        lecturer_member: {
+            create: [
+                {
+                    lecturer_id: 2,
+                    name: "Andra Al Ayubi",
+                    research_group_id: null,
+                    department_id: 2,
+                    nip: "33445567",
+                },
+                {
+                    lecturer_id: 13,
+                    name: "Dr. Arif Irwansyah, S.T., M.Eng",
+                    research_group_id: 13,
+                    department_id: 1,
+                    nip: "33445566",
                 }
             ],
         },

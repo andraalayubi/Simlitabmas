@@ -4,10 +4,10 @@ import { Skeleton } from "@mantine/core";
 import { useParams } from "next/navigation";
 import useNotification from "src/components/notification/notification";
 import { review } from "prisma/interfaces";
-import ProposalSuggestionStatusBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionStatusBadge";
 import reviewAction from "src/action/reviewAction";
 import EvaluationPhaseBadge from "src/components/badge/evaluation/EvaluationPhaseBadge";
 import { SessionPayload } from "src/lib/encrypt";
+import EvaluationStatusBadge from "src/components/badge/evaluation/EvaluationStatusBadge";
 
 interface OverviewLecturerProps {
   session: SessionPayload;
@@ -67,7 +67,7 @@ const OverviewLecturer: React.FC<OverviewLecturerProps> = ({ session }) => {
             <Text className="font-medium">Status Review</Text>
             <Text>:</Text>
             <div>
-              <ProposalSuggestionStatusBadge
+              <EvaluationStatusBadge
                 status={review?.status!}
               />
             </div>

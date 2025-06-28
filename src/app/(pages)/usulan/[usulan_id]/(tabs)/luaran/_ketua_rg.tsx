@@ -122,6 +122,7 @@ const ExternalDocumentKetuaRG = ({ session }: { session: SessionPayload }) => {
                     onClose={close}
                     proposal_suggestion={proposalSuggestion!}
                     onSuccess={getExternalDocuments}
+                    disabled={!editable}
                   />
                 )}
               </ModalComponent>
@@ -139,6 +140,7 @@ const ExternalDocumentKetuaRG = ({ session }: { session: SessionPayload }) => {
                   onSuccess={getExternalDocuments}
                   user_type={user_type}
                   editable={false}
+                  setLoading={setLoading}
                 />
               ))}
             </Stack>

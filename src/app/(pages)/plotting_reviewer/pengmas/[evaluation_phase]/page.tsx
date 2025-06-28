@@ -5,14 +5,14 @@ import { useSession } from "src/components/session/session";
 import { MRT_ColumnDef } from "mantine-react-table";
 import {
   evaluation,
-  proposal_suggestion_status,
+  evaluation_status,
 } from "prisma/interfaces";
-import ProposalSuggestionStatusBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionStatusBadge";
 import { Skeleton, Text } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import TableLayout from "src/components/table/tableLayout";
 import { useParams } from "next/navigation";
 import evaluationAction from "src/action/evaluationAction";
+import EvaluationStatusBadge from "src/components/badge/evaluation/EvaluationStatusBadge";
 
 export default function AllEvaluationPage() {
   const user_type = "admin";
@@ -70,8 +70,8 @@ export default function AllEvaluationPage() {
         accessorKey: "status",
         header: "Status Evaluation",
         Cell: ({ cell }) => (
-          <ProposalSuggestionStatusBadge
-            status={cell.getValue<proposal_suggestion_status>()}
+          <EvaluationStatusBadge
+            status={cell.getValue<evaluation_status>()}
           />
         ),
       },

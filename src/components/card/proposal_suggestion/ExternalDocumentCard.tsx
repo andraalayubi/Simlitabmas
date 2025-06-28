@@ -3,12 +3,17 @@ import { Button, Card, Group, Text } from "@mantine/core";
 import { IconFile } from "@tabler/icons-react";
 import ModalComponent from "src/components/modal/modal";
 import EditExternalDocumentModal from "src/components/modal/proposal_suggestion/EditExternalDocumentModal";
+import DeleteConfirmationModal from "src/components/modal/confirmation/DeleteConfirmationModal";
+import { useState } from "react";
+import externalDocumentAction from "src/action/externalDocumentAction";
 
 interface ExternalDucmentCardProps {
   external_document: external_document;
   onSuccess: () => void;
   user_type: user_type;
   editable: boolean;
+  showNotification?: any;
+  setLoading: (loading: boolean) => void;
 }
 
 const ExternalDocumentCard: React.FC<ExternalDucmentCardProps> = ({
@@ -16,7 +21,13 @@ const ExternalDocumentCard: React.FC<ExternalDucmentCardProps> = ({
   onSuccess,
   user_type,
   editable,
+  showNotification,
+  setLoading,
 }) => {
+  const [deleteModalOpened, setDeleteModalOpened] = useState(false);
+  const [externalDocumentToDelete, setExternalDocumentToDelete] =
+    useState<external_document | null>(null);
+
   const handleView = (url: string | null) => {
     if (url) {
       const pdfUrl = `/api/file?name=${url}`;
@@ -43,8 +54,38 @@ const ExternalDocumentCard: React.FC<ExternalDucmentCardProps> = ({
     }
   };
 
+  const confirmDelete = async () => {
+    const response = await externalDocumentAction.deleteExternalDocument(
+      externalDocumentToDelete?.id!,
+      externalDocumentToDelete?.proposal_suggestion_id!,
+      user_type,
+      setLoading
+    );
+
+    if (response.success) {
+      showNotification({ status: "success", message: response.message });
+      onSuccess();
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+
+    setDeleteModalOpened(false);
+  };
+
+  const openDeleteModal = (external_document: external_document) => {
+    setExternalDocumentToDelete(external_document);
+    setDeleteModalOpened(true);
+  };
+
   return (
     <>
+      <DeleteConfirmationModal
+        opened={deleteModalOpened}
+        onClose={() => setDeleteModalOpened(false)}
+        onConfirm={confirmDelete}
+        itemName={external_document?.name || "Luaran"}
+      />
+
       <Card
         key={external_document.id}
         shadow="sm"
@@ -61,8 +102,7 @@ const ExternalDocumentCard: React.FC<ExternalDucmentCardProps> = ({
                 {external_document.status}
               </Text>
               <Text size="sm" c="dimmed">
-                Kategori Luaran :{" "}
-                {external_document.category_name}
+                Kategori Luaran : {external_document.category_name}
               </Text>
             </div>
           </Group>
@@ -85,6 +125,16 @@ const ExternalDocumentCard: React.FC<ExternalDucmentCardProps> = ({
             >
               Lihat Luaran
             </Button>
+            { user_type === "lecturer" && (
+              <Button
+                variant="outline"
+                color="red"
+                onClick={() => openDeleteModal(external_document)}
+                disabled={!editable}
+              >
+                Hapus Luaran
+              </Button>
+            )}
           </Group>
         </Group>
       </Card>

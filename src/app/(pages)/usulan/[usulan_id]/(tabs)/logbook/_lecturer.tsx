@@ -138,6 +138,8 @@ const LogBookLecturer = ({ session }: { session: SessionPayload }) => {
                   onSuccess={getLogbooks}
                   user_type={user_type}
                   editable={index === 0 ? editableEarly : editableLate}
+                  showNotification={showNotification}
+                  setLoading={setLoading}
                 />
               ))}
            

@@ -9,7 +9,12 @@ import {
   Divider,
 } from "@mantine/core";
 import { useParams } from "next/navigation";
-import { proposal, proposal_suggestion, proposal_suggestion_phase, proposal_suggestion_status } from "prisma/interfaces";
+import {
+  proposal,
+  proposal_suggestion,
+  proposal_suggestion_phase,
+  proposal_suggestion_status,
+} from "prisma/interfaces";
 import React, { useCallback, useEffect, useState } from "react";
 import useNotification from "src/components/notification/notification";
 import proposalAction from "src/action/proposalAction";
@@ -17,6 +22,7 @@ import ProposalSuggestionSummaryCard from "src/components/card/proposal_suggesti
 import PdfViewer from "src/components/pdf/pdfViewer";
 import { SessionPayload } from "src/lib/encrypt";
 import { IconEye } from "@tabler/icons-react";
+import DeleteConfirmationModal from "src/components/modal/confirmation/DeleteConfirmationModal";
 
 const ProposalLecturer = ({ session }: { session: SessionPayload }) => {
   const user_type = "lecturer";
@@ -27,7 +33,8 @@ const ProposalLecturer = ({ session }: { session: SessionPayload }) => {
   const [proposal, setProposal] = useState<proposal | null>(null);
   const [proposalSuggestion, setProposalSuggestion] =
     useState<proposal_suggestion | null>(null);
-  const [proposalFile, setProposalFile] = useState<File | null>();
+  const [proposalFile, setProposalFile] = useState<File | null>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
   const [templateProposal, setTemplateProposal] = useState<string | null>(null);
 
@@ -43,13 +50,16 @@ const ProposalLecturer = ({ session }: { session: SessionPayload }) => {
       setProposalSuggestion(response.data);
       setProposal(response.data.proposal);
       setTemplateProposal(response.data.template_proposal);
+      console.log(response.data);
 
       // check editable
       const isEditableByLecturer =
         response.data.lecturer_id === session.lecturer_id;
 
       // check by workflow
-      type PartialEditableRules = Partial<Record<proposal_suggestion_phase, proposal_suggestion_status[]>>;
+      type PartialEditableRules = Partial<
+        Record<proposal_suggestion_phase, proposal_suggestion_status[]>
+      >;
       const editableRules: PartialEditableRules = {
         pengajuan: ["menunggu_proposal", "tersimpan"],
         evaluasi_proposal: [],
@@ -62,8 +72,9 @@ const ProposalLecturer = ({ session }: { session: SessionPayload }) => {
       const isEditableByConditions =
         editableRules[
           response.data.phase as proposal_suggestion_phase
-        ]?.includes(response.data.status as proposal_suggestion_status) || false;
-      
+        ]?.includes(response.data.status as proposal_suggestion_status) ||
+        false;
+
       // check by year research
       const isEditableByYear = response.data.open;
 
@@ -75,23 +86,6 @@ const ProposalLecturer = ({ session }: { session: SessionPayload }) => {
     }
   }, [user_type, usulan_id, session]); // use cache if user_type and usulan_id are same
 
-  // update proposal
-  const updateProposal = async () => {
-    const response = await proposalAction.updateProposal(
-      proposal,
-      proposalSuggestion!.id,
-      user_type,
-      setLoading
-    );
-
-    if (response.success) {
-      showNotification({ status: "success", message: response.message });
-      getProposal();
-    } else {
-      showNotification({ status: "error", message: response.message });
-    }
-  };
-
   const handleFileUpload = async (file: File | null) => {
     if (!file) {
       showNotification({
@@ -101,22 +95,58 @@ const ProposalLecturer = ({ session }: { session: SessionPayload }) => {
       return;
     }
 
-    const response = await proposalAction.uploadProposalFile(file!, setLoading);
-    if (response.success) {
-      setProposal((prev) =>
-        prev ? { ...prev, file_url: response.data.filename } : null
-      );
-      showNotification({
-        status: "success",
-        message: response.message,
-      });
+    const uploadResponse = await proposalAction.uploadProposalFile(
+      file!,
+      setLoading
+    );
+    if (uploadResponse.success) {
+      const updatedProposal = proposal
+        ? { ...proposal, file_url: uploadResponse.data.filename }
+        : null;
+      setProposal(updatedProposal);
+
+      // Automatically save the proposal after successful upload
+      if (updatedProposal) {
+        const saveResponse = await proposalAction.updateProposal(
+          updatedProposal,
+          proposalSuggestion!.id,
+          user_type,
+          setLoading
+        );
+
+        if (saveResponse.success) {
+          showNotification({
+            status: "success",
+            message: "File berhasil diupload dan disimpan",
+          });
+          getProposal();
+        } else {
+          showNotification({ status: "error", message: saveResponse.message });
+        }
+      }
     } else {
-      showNotification({ status: "error", message: response.message });
+      showNotification({ status: "error", message: uploadResponse.message });
     }
   };
 
-  const clearProposalFile = () => {
-    setProposalFile(null);
+  const handleDelete = async () => {
+    if (proposalSuggestion) {
+      const deleteResponse = await proposalAction.deleteProposal(
+        proposalSuggestion.id,
+        user_type,
+        setLoading
+      );
+
+      if (deleteResponse.success) {
+        showNotification({
+          status: "success",
+          message: "File berhasil dihapus",
+        });
+        getProposal();
+      } else {
+        showNotification({ status: "error", message: deleteResponse.message });
+      }
+    }
   };
 
   useEffect(() => {
@@ -151,6 +181,14 @@ const ProposalLecturer = ({ session }: { session: SessionPayload }) => {
 
   return (
     <>
+      <DeleteConfirmationModal
+        opened={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={handleDelete}
+        itemName="file proposal"
+        message="Apakah Anda yakin ingin menghapus"
+      />
+
       <div className="bg-white shadow sm:rounded-lg p-6">
         {/* Baris Judul, Status, dan Tahap Usulan */}
         <Skeleton visible={loading}>
@@ -179,39 +217,38 @@ const ProposalLecturer = ({ session }: { session: SessionPayload }) => {
           <div className="flex flex-col gap-4">
             {/* Tombol Upload dan Simpan */}
             {isEditable && (
-              <div className="flex flex-col gap-x-2 gap-y-3">
+              <div className="flex flex-col gap-x-2 gap-y-3 w-full">
                 <div className="text-sm text-gray-500">
                   Format file yang diizinkan: .pdf, .doc, .docx (Maksimal 10MB)
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 w-full">
                   <FileButton
                     onChange={(file) => {
-                      // Langsung gunakan file dari parameter onChange
                       setProposalFile(file);
                       handleFileUpload(file);
                     }}
                     accept="application/pdf"
                   >
-                    {(props) => <Button {...props}>Upload Proposal</Button>}
+                    {(props) => <Button className="w-full" {...props}>Upload Proposal</Button>}
                   </FileButton>
-                  {/* <Button disabled={!proposalFile} color="red" onClick={clearProposalFile}>
-                Hapus File
-              </Button> */}
+
                   <Button
+                    className="w-full"
                     variant="outline"
-                    onClick={updateProposal}
-                    // disabled={!proposalFile}
+                    color="red"
+                    onClick={() => setIsDeleteModalOpen(true)}
                   >
-                    Simpan
+                    Hapus Proposal
                   </Button>
                 </div>
               </div>
             )}
 
             {/* Template Proposal Section */}
-            <div className="">
+            <div className="w-full">
               {templateProposal && (
                 <Button
+                  className="w-full"
                   variant="outline"
                   onClick={() => {
                     handleView(templateProposal);
@@ -225,27 +262,32 @@ const ProposalLecturer = ({ session }: { session: SessionPayload }) => {
 
             {/* Hasil Reviewer */}
             <Skeleton visible={loading}>
-              <div className="grid grid-cols-1 gap-4">
-                <div className="flex justify-center">
-                  <Text size="lg" fw={600}>
-                    Komentar Reviewer
-                  </Text>
+              {proposalSuggestion?.evaluation?.flatMap((ev) => ev.review)
+                ?.length ? (
+                <div className="grid grid-cols-1 gap-4">
+                  <div className="flex justify-center">
+                    <Text size="lg" fw={600}>
+                      Komentar Reviewer
+                    </Text>
+                  </div>
+                  <Divider size="md"></Divider>
+                  {proposalSuggestion?.evaluation
+                    ?.filter(
+                      (ev) => ev.evaluation_phase === "evaluasi_proposal"
+                    )
+                    ?.flatMap(
+                      (ev) =>
+                        ev.review?.map((review) => (
+                          <Card shadow="sm" padding="lg" key={review.id}>
+                            <Text size="md" fw={600}>
+                              {review.reviewer?.lecturer?.name}
+                            </Text>
+                            <Text size="sm">{review.note ?? "-"}</Text>
+                          </Card>
+                        )) ?? []
+                    )}
                 </div>
-                <Divider size="md"></Divider>
-                {proposalSuggestion?.evaluation
-                  ?.filter((ev) => ev.evaluation_phase === "evaluasi_proposal")
-                  ?.flatMap(
-                    (ev) =>
-                      ev.review?.map((review) => (
-                        <Card shadow="sm" padding="lg" key={review.id}>
-                          <Text size="md" fw={600}>
-                            {review.reviewer?.lecturer?.name}
-                          </Text>
-                          <Text size="sm">{review.note ?? "-"}</Text>
-                        </Card>
-                      )) ?? []
-                  )}
-              </div>
+              ) : null}
             </Skeleton>
           </div>
         </div>

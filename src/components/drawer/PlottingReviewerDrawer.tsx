@@ -14,7 +14,6 @@ import {
 import {
   evaluation,
   evaluation_phase,
-  review,
   reviewer,
   user_type,
 } from "prisma/interfaces";

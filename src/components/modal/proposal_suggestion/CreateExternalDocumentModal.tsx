@@ -121,7 +121,7 @@ const CreateExternalDocumentModal: React.FC<CreateExternalModalProps> = ({
                 {...externalDocumentForm.getInputProps("external_document_category_id")}
                 searchable
               />
-              <Group justify="flex-end" mt="xl">
+              <Group justify="flex-end" mt="md">
                 <Button fullWidth type="submit" disabled={loading && disabled} size="md">
                   Tambahkan Luaran
                 </Button>
