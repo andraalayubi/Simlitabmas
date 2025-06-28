@@ -46,7 +46,7 @@ export async function PUT(req: NextRequest) {
 
             // update all proposal suggestion 'open' column
             await proposalSuggestionService.updateByWhere(
-                { year_research_id: year_research_id },
+                { year_research_id: year_research_id, is_active: true },
                 { open: true }
             )
 
@@ -54,7 +54,7 @@ export async function PUT(req: NextRequest) {
                 {
                     year_research_id: {
                         not: year_research_id
-                    }
+                    }, is_active: true
                 },
                 { open: false }
             )

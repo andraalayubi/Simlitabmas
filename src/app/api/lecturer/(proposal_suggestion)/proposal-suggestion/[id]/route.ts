@@ -52,3 +52,24 @@ export async function PUT(req: NextRequest, { params }: { params: Params }) {
         }, { status: 500 });
     }
 }
+
+export async function DELETE(req: NextRequest, { params }: { params: Params }) {
+    const proposal_suggestion_id = parseInt(params.id);
+
+    try {
+        const session = await getSession();
+
+        const proposal_suggestion = await proposalSuggestionService.deleteById(proposal_suggestion_id)
+        
+        return NextResponse.json({
+            success: true,
+            message: "Success delete proposal suggestion",
+            data: proposal_suggestion
+        }, { status: 200 })
+    } catch (error: any) {
+        return NextResponse.json({
+            success: false,
+            message: `Internal Server error: ${error.message}`
+        }, { status: 500 });
+    }
+}

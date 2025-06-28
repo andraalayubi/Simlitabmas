@@ -5,7 +5,7 @@ import { Skeleton } from "@mantine/core";
 import { useParams } from "next/navigation";
 import proposalSuggestionAction from "src/action/proposalSuggestionAction";
 import useNotification from "src/components/notification/notification";
-import { proposal_suggestion } from "prisma/interfaces";
+import { proposal_suggestion, proposal_suggestion_phase, proposal_suggestion_status } from "prisma/interfaces";
 import ProposalSuggestionPhaseBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionPhaseBadge";
 import ProposalSuggestionStatusBadge from "src/components/badge/proposal_suggestion/ProposalSuggestionStatusBadge";
 import DrawerProposalSuggestion from "src/components/drawer/ProposalSuggestionDrawer";
@@ -22,6 +22,7 @@ const OverviewLecturer: React.FC<OverviewLecturerProps> = ({ session }) => {
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [proposalSuggestion, setProposalSuggestion] =
     useState<proposal_suggestion | null>(null);
+  const [editable, setEditable] = useState<boolean>(false);
 
   const workflow = new Workflow();
 
@@ -39,6 +40,36 @@ const OverviewLecturer: React.FC<OverviewLecturerProps> = ({ session }) => {
     if (response.success) {
       showNotification({ status: "success", message: response.message });
       setProposalSuggestion(response.data);
+
+      //check editable
+            const isEditableByLecturer =
+              response.data.lecturer_id === session.lecturer_id;
+      
+            // check by workflow
+            type PartialEditableRules = Partial<
+              Record<proposal_suggestion_phase, proposal_suggestion_status[]>
+            >;
+            const editableRules: PartialEditableRules = {
+              pengajuan: ["menunggu_proposal", "tersimpan"],
+              evaluasi_proposal: [],
+              penetapan: [],
+              monev: [],
+              evaluasi_akhir: [],
+              penetapan_akhir: [],
+            };
+      
+            const isEditableByConditions =
+              editableRules[
+                response.data.phase as proposal_suggestion_phase
+              ]?.includes(response.data.status as proposal_suggestion_status) ||
+              false;
+      
+            // check by year research
+            const isEditableByYear = response.data.open;
+      
+            setEditable(
+              isEditableByLecturer && isEditableByYear && isEditableByConditions
+            );
     } else {
       showNotification({ status: "error", message: response.message });
     }
@@ -62,9 +93,10 @@ const OverviewLecturer: React.FC<OverviewLecturerProps> = ({ session }) => {
           proposal_suggestion={proposalSuggestion}
           opened={drawerOpened}
           onClose={() => setDrawerOpened(false)}
-          editable={false}
+          editable={editable}
           loading={loading}
           onSuccess={handleSuccess}
+          setLoading={setLoading}
         />
       )}
       <Skeleton visible={loading}>

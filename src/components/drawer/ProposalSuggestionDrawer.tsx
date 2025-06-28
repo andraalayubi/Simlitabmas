@@ -25,6 +25,9 @@ import { Workflow } from "src/lib/workflow";
 import proposalSuggestionAction from "src/action/proposalSuggestionAction";
 import useNotification from "../notification/notification";
 import evaluationAction from "src/action/evaluationAction";
+import DeleteConfirmationModal from "../modal/confirmation/DeleteConfirmationModal";
+import { useRouter } from "next/navigation";
+import ActionConfirmationModal from "../modal/confirmation/ActionConfirmationModal";
 
 interface DrawerMenuProps {
   user_type: user_type;
@@ -34,6 +37,7 @@ interface DrawerMenuProps {
   loading: boolean;
   editable: boolean;
   onSuccess: () => void;
+  setLoading: (loading: boolean) => void;
 }
 
 const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
@@ -44,6 +48,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
   loading,
   editable,
   onSuccess,
+  setLoading,
 }) => {
   const { showNotification } = useNotification();
   const [type, setType] = useState("penelitian");
@@ -53,8 +58,13 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
   const [currentStatus, setCurrentStatus] = useState<string | null>();
   const [roleAction, setRoleAction] = useState<string | null>(null);
   const [infoAction, setInfoAction] = useState<string>("");
+  const [name, setName] = useState<string>("");
   const workflow = new Workflow();
   const isPenelitian = proposal_suggestion?.research_group_id !== null;
+  const router = useRouter();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [actionType, setActionType] = useState<string | null>(null);
 
   // handle each role status phase condition
   const handleUpdate = async (approved: boolean = true) => {
@@ -207,7 +217,85 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
     type,
   ]);
 
+  const handleUpdateName = async () => {
+    const response = await proposalSuggestionAction.updateName(
+      user_type,
+      proposal_suggestion.id,
+      name,
+      setLoading
+    );
+
+    if (response.success) {
+      showNotification({ status: "success", message: response.message });
+      handleClose();
+    } else {
+      showNotification({ status: "error", message: response.message });
+      handleClose();
+    }
+  };
+
+  const handleDelete = async () => {
+    const response = await proposalSuggestionAction.deleteProposalSuggestion(
+      user_type,
+      proposal_suggestion.id,
+      setLoading
+    );
+
+    if (response.success) {
+      router.push("/dashboard");
+      showNotification({ status: "success", message: response.message });
+    } else {
+      showNotification({ status: "error", message: response.message });
+    }
+    setIsDeleteModalOpen(false);
+  };
+
+  const getModalConfig = () => {
+    if (actionType === 'accept') {
+      return {
+        title: 'Menyetujui',
+        confirmText: 'Ya, Terima',
+        confirmColor: 'green',
+        onConfirm: () => handleUpdate(true)
+      };
+    } else if (actionType === 'reject') {
+      return {
+        title: 'Menolak',
+        confirmText: 'Ya, Tolak',
+        confirmColor: 'red',
+        onConfirm: () => handleUpdate(false)
+      };
+    } else if (actionType === 'next') {
+      return {
+        title: 'Melanjutkan',
+        confirmText: 'Ya, Saya Yakin',
+        confirmColor: 'green',
+        onConfirm: () => handleUpdate()
+      };
+    }
+  };
+
+  const modalConfig = getModalConfig();
+
   return (
+    <>
+      <DeleteConfirmationModal
+        opened={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={handleDelete}
+        itemName="usulan ini"
+        message="Apakah Anda yakin ingin menghapus"
+      />
+
+      <ActionConfirmationModal
+        opened={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={modalConfig?.onConfirm!}
+        itemName={modalConfig?.title!}
+        confirmLabel={modalConfig?.confirmText}
+        confirmColor={modalConfig?.confirmColor}
+      />
+    
     <Skeleton visible={loading}>
       <Drawer
         position="right"
@@ -242,7 +330,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
                       <Button
                         fullWidth
                         color="green"
-                        onClick={() => handleUpdate(true)}
+                        onClick={() => {handleClose(); setShowModal(true); setActionType("accept")}}
                       >
                         Terima
                       </Button>
@@ -250,7 +338,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
                         fullWidth
                         variant="outline"
                         color="red"
-                        onClick={() => handleUpdate(false)}
+                        onClick={() => {handleClose(); setShowModal(true); setActionType("reject")}}
                       >
                         Tolak
                       </Button>
@@ -264,7 +352,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
                     <Button
                       fullWidth
                       color="blue"
-                      onClick={() => handleUpdate()}
+                      onClick={() => {handleClose(); setShowModal(true); setActionType("next")}}
                     >
                       Lanjutkan Tahap
                     </Button>
@@ -296,7 +384,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
                       <Button
                         fullWidth
                         color="green"
-                        onClick={() => handleUpdate(true)}
+                        onClick={() => {handleClose(); setShowModal(true); setActionType("accept")}}
                       >
                         Setujui
                       </Button>
@@ -304,7 +392,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
                         fullWidth
                         variant="outline"
                         color="red"
-                        onClick={() => handleUpdate(false)}
+                        onClick={() => {handleClose(); setShowModal(true); setActionType("reject")}}
                       >
                         Tolak
                       </Button>
@@ -337,7 +425,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
                       <Button
                         fullWidth
                         color="green"
-                        onClick={() => handleUpdate(true)}
+                        onClick={() => {handleClose(); setShowModal(true); setActionType("accept")}}
                       >
                         Setujui
                       </Button>
@@ -345,7 +433,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
                         fullWidth
                         variant="outline"
                         color="red"
-                        onClick={() => handleUpdate(false)}
+                        onClick={() => {handleClose(); setShowModal(true); setActionType("reject")}}
                       >
                         Tolak
                       </Button>
@@ -378,7 +466,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
                       <Button
                         fullWidth
                         color="green"
-                        onClick={() => handleUpdate(true)}
+                        onClick={() => {handleClose(); setShowModal(true); setActionType("accept")}}
                       >
                         Setujui
                       </Button>
@@ -386,7 +474,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
                         fullWidth
                         variant="outline"
                         color="red"
-                        onClick={() => handleUpdate(false)}
+                        onClick={() => {handleClose(); setShowModal(true); setActionType("reject")}}
                       >
                         Tolak
                       </Button>
@@ -417,7 +505,7 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
                     <Button
                       fullWidth
                       color="blue"
-                      onClick={() => handleUpdate()}
+                      onClick={() => {handleClose(); setShowModal(true); setActionType("next")}}
                     >
                       Lanjutkan Tahap
                     </Button>
@@ -431,7 +519,8 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
           <TextInput
             label="Judul"
             defaultValue={proposal_suggestion?.name}
-            readOnly
+            onChange={(e) => setName(e.target.value)}
+            readOnly={!editable}
           />
           <TextInput
             label="Pengusul"
@@ -479,12 +568,18 @@ const DrawerProposalSuggestion: React.FC<DrawerMenuProps> = ({
             <Text size="sm">Tahap Usulan : </Text>
             <ProposalSuggestionPhaseBadge phase={proposal_suggestion?.phase!} />
           </div>
-          <Button variant="filled" color="blue" disabled={!editable}>
+          <Button variant="filled" color="blue" disabled={!editable} onClick={handleUpdateName}>
             Simpan Perubahan
           </Button>
+          {editable && (
+            <Button variant="filled" color="red" onClick={() => {handleClose(); setIsDeleteModalOpen(true)}}>
+              Hapus Usulan
+            </Button>
+          )}
         </Stack>
       </Drawer>
     </Skeleton>
+    </>
   );
 };
 

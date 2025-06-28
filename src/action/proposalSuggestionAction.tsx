@@ -1,3 +1,4 @@
+import { user_type } from "@prisma/client";
 import axios from "axios";
 import { proposal_suggestion_phase, proposal_suggestion_status, user_type } from "prisma/interfaces";
 
@@ -232,12 +233,84 @@ const getDashboard = async (
   }
 };
 
+const updateName = async (
+  user_type: user_type,
+  proposal_suggestion_id: number,
+  name: string,
+  setLoading: (loading: boolean) => void,
+) => {
+  setLoading(true);
+
+  try {
+    const response = await axios.put(
+      `/api/${user_type}/proposal-suggestion/${proposal_suggestion_id}`,
+      {
+        name: name,
+      }
+    );
+
+    if (response.status === 200 || response.data.success == true) {
+      return {
+        success: true,
+        message: response.data.message,
+      };
+    } else {
+      return {
+        success: false,
+        message: response.data.message,
+      };
+    }
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.response?.data?.message || "An unexpected error occurred",
+    };
+  } finally {
+    setLoading(false);
+  }
+};
+
+const deleteProposalSuggestion = async (
+  user_type: user_type,
+  proposal_suggestion_id: number,
+  setLoading: (loading: boolean) => void
+) => {
+  setLoading(true);
+
+  try {
+    const response = await axios.delete(
+      `/api/${user_type}/proposal-suggestion/${proposal_suggestion_id}`
+    );
+
+    if (response.status === 200 || response.data.success == true) {
+      return {
+        success: true,
+        message: response.data.message,
+      };
+    } else {
+      return {
+        success: false,
+        message: response.data.message,
+      };
+    }
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.response?.data?.message || "An unexpected error occurred",
+    };
+  } finally {
+    setLoading(false);
+  }
+}
+
 const proposalSuggestionAction = {
   getProposalSuggestion,
   getById,
   createProposalSuggestion,
   updateStatusPhase,
   getDashboard,
+  updateName,
+  deleteProposalSuggestion
 };
 
 export default proposalSuggestionAction;

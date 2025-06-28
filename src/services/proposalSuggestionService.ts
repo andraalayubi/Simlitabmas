@@ -7,7 +7,7 @@ import { evaluation_phase, proposal_suggestion, proposal_suggestion_phase, propo
 const getById = async (id: number) => {
 
     return await prisma.proposal_suggestion.findUnique({
-        where: { id: id },
+        where: { id: id, is_active: true },
     })
 }
 
@@ -15,7 +15,7 @@ const getById = async (id: number) => {
 const getByLecturerId = async (lecturer_id: number) => {
 
     return await prisma.proposal_suggestion.findMany({
-        where: { lecturer_id: lecturer_id },
+        where: { lecturer_id: lecturer_id, is_active: true },
     })
 
 }
@@ -26,7 +26,7 @@ const getByFilter = async (filter: {
     status?: proposal_suggestion_status;
     year_research_id?: number;
     schema_id?: number;
-    lecturer_id?: number;
+    lecturer_id?: number | null;
     research_group_id?: number | null;
     department_id?: number;
     is_active?: boolean;
@@ -150,6 +150,15 @@ const createEvaluation = async(
     return evaluation;
 }
 
+const deleteById = async (id: number) => {
+    return await prisma.proposal_suggestion.update({
+        data: {
+            is_active: false
+        },
+        where: { id: id }
+    })
+}
+
 const proposalSuggestionService = {
     getById,
     getByLecturerId,
@@ -157,7 +166,8 @@ const proposalSuggestionService = {
     create,
     update,
     updateByWhere,
-    createEvaluation
+    createEvaluation,
+    deleteById
 }
 
 export default proposalSuggestionService
