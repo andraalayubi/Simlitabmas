@@ -35,15 +35,6 @@ import lecturerAction from "src/action/lecturerAction";
 import { decode } from "src/lib/sqids";
 import { LineChart } from "@mantine/charts";
 
-const researchTrendData = [
-  { year: "2019", penelitian: 2 },
-  { year: "2020", penelitian: 4 },
-  { year: "2021", penelitian: 3 },
-  { year: "2022", penelitian: 6 },
-  { year: "2023", penelitian: 8 },
-  { year: "2024", penelitian: 5 },
-];
-
 interface degreesArray {
   code: string;
   year: string;
