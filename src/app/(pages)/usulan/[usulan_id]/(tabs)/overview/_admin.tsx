@@ -60,6 +60,7 @@ const OverviewAdmin = () => {
           editable={false}
           loading={loading}
           onSuccess={handleSuccess}
+          setLoading={setLoading}
         />
       )}
 
